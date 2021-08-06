@@ -26,4 +26,3 @@ yarn-error.log*
 .idea/
 /src/types.tsx
 /schema.graphql
-/package-lock.json
