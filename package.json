@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "set PORT=8080 && react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && echo '/* /index.html 200' | cat >build/_redirects",
     "test": "react-scripts test",
     "codegen": "graphql-codegen --config codegen.yml"
   },
