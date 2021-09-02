@@ -1,8 +1,7 @@
-import React, { Component } from "react";
-import '../../stylesheets/header.sass'
+import React from "react";
 import { useLocation } from "react-router-dom";
 
-import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
+import { Container, Dropdown, Navbar, Nav } from "react-bootstrap";
 import routes from "routes.js";
 
 const Header = () => {

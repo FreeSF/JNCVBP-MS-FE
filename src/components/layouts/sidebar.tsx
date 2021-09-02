@@ -3,9 +3,6 @@ import { useLocation, NavLink } from "react-router-dom";
 
 import { Nav } from "react-bootstrap";
 
-import logo from "assets/img/reactlogo.png";
-import sidebarImage from "assets/img/sidebar-3.jpg";
-
 function Sidebar({ color, image, routes }) {
   const location = useLocation();
   const activeRoute = (routeName) => {

@@ -22,13 +22,10 @@ const App = () => {
   return (
     <div className="wrapper">
       <Sidebar color={"black"} image={""} routes={routes} />
-
       <div className='main-panel'>
         <Header />
         <div className="content">
-          <Switch>
-            {getRoutes(routes)}
-          </Switch>
+          <Switch> {getRoutes(routes)} </Switch>
         </div>
         <Footer />
       </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import '../stylesheets/homePage.sass'
 import ChartistGraph from "react-chartist";
 import { Button, Card, Table, Container, Row, Col, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 const HomePage = () => {
