@@ -10,35 +10,41 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-boost';
 import * as Constants from "./utils/constants";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./assets/css/animate.min.css";
+import "./assets/scss/light-bootstrap-dashboard-react.scss?v=2.0.0";
+import "./assets/css/demo.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 const httpLink = createHttpLink(
-    {
-        uri: Constants.API_URL
-    }
+  {
+    uri: Constants.API_URL
+  }
 );
 
 const cache = new InMemoryCache();
 
 const client = new ApolloClient(
-    {
-        link: httpLink,
-        cache
-    }
+  {
+    link: httpLink,
+    cache
+  }
 );
 
 client.writeData(
-    {
-        data: {
-            someData: 'x'
-        }
-    });
+  {
+    data: {
+      someData: 'x'
+    }
+  });
 
 ReactDOM.render(
   <React.StrictMode>
-      <ApolloProvider client={client}>
-          <BrowserRouter>
-              <App/>
-          </BrowserRouter>
-      </ApolloProvider>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
