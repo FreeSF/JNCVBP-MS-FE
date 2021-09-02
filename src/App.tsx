@@ -1,32 +1,40 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 //import './App.css';
-import {Route, RouteComponentProps, Switch} from 'react-router-dom'
-import HomePage from "./components/homePage";
+import { Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './stylesheets/App.sass'
-import TheNavBar from "./components/theNavBar";
-import TheFooter from "./components/theFooter";
-import VolunteersPage from "./components/Volunteers/VolunteersPage";
-import EditVolunteerPage from "./components/Volunteers/EditVolunteerPage";
-import ShowVolunteerPage from "./components/Volunteers/ShowVolunteerPage";
+import Header from "components/layouts/header";
+import Footer from "components/layouts/footer";
+import Sidebar from "components/layouts/sidebar";
+
+import routes from "routes.js";
+
+const getRoutes = (routes) => {
+  return routes.map((prop, key) =>
+    <Route exact
+      path={prop.path}
+      render={(props) => <prop.component {...props} />}
+      key={key}
+    />
+  )
+};
 
 const App = () => {
+  return (
+    <div className="wrapper">
+      <Sidebar color={"black"} image={""} routes={routes} />
 
-    return (
-        <div className="App">
-            <TheNavBar/>
-            <div className='app-container'>
-                <Switch>
-                    {/* All Routing here */}
-                    <Route exact path='/' component={HomePage} />
-                    <Route exact path='/volunteers' component={VolunteersPage}/>
-                    <Route exact path='/volunteers/:id/edit' component={EditVolunteerPage}/>
-                    <Route exact path='/volunteers/create' component={EditVolunteerPage}/>
-                    <Route exact path='/volunteers/:id' component={ShowVolunteerPage}/>
-                </Switch>
-            </div>
-            <TheFooter/>
+      <div className='main-panel'>
+        <Header />
+        <div className="content">
+          <Switch>
+            {getRoutes(routes)}
+          </Switch>
         </div>
-    )
+        <Footer />
+      </div>
+
+    </div>
+  )
 };
 
 export default App;
