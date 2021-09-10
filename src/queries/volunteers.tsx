@@ -2,7 +2,7 @@ import {gql} from "apollo-boost";
 
 const allFieldsFragment = gql`
     fragment volunteerAllFields on Volunteer {
-        _id, name
+        id, name
     }
 `;
 
@@ -16,8 +16,8 @@ export const GET_VOLUNTEERS = gql`
 `;
 
 export const FIND_VOLUNTEER = gql`
-    query findVolunteer($_id: String!) {
-        volunteer(_id: $_id) {
+    query findVolunteer($id: String!) {
+        volunteer(id: $id) {
             ...volunteerAllFields
         }
     }
@@ -25,8 +25,8 @@ export const FIND_VOLUNTEER = gql`
 `;
 
 export const EDIT_VOLUNTEER = gql`
-    mutation editVolunteer($_id: String!, $name: String){
-        editVolunteer(_id: $_id, name: $name) {
+    mutation editVolunteer($id: ID!, $name: String){
+        updateVolunteer(updateVolunteerInput: {id: $id, name: $name}) {
             ...volunteerAllFields
         }
     }
@@ -43,7 +43,7 @@ export const CREATE_VOLUNTEER = gql`
 `;
 
 export const DELETE_VOLUNTEER = gql`
-    mutation deleteVolunteer($_id: String!) {
-        deleteVolunteer(_id: $_id)
+    mutation deleteVolunteer($id: String!) {
+        removeVolunteer(id: $id) {id}
     }
 `;

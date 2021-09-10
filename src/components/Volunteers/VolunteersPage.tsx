@@ -12,7 +12,7 @@ import {
 
 const fieldsFragmeent = gql`
     fragment volunteerfields on Volunteer {
-        _id, name, __typename
+        id, name, __typename
     }
 `;
 
@@ -27,7 +27,7 @@ const getVolunteeers = gql`
 
 const VolunteersPage = (props: RouteComponentProps) => {
 
-  const { loading, data } = useQuery<GetVolunteersQuery>(getVolunteeers);
+  const { loading, data } = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
 
   const [deleteClient, deletedClient] = useMutation<
     DeleteVolunteerMutation,
@@ -39,7 +39,7 @@ const VolunteersPage = (props: RouteComponentProps) => {
   const handleCreate = () => props.history.push('/volunteers/create')
   const handleEdit = (id: string) => props.history.push('/volunteers/' + id + '/edit')
   // const handleShow = (id: string) => props.history.push('/volunteers/' + id)
-  const handleDelete = (id: string) => deleteClient({ variables: { _id: id } });
+  const handleDelete = (id: string) => deleteClient({ variables: { id: id } });
 
   return (
     <Container fluid>
@@ -50,7 +50,8 @@ const VolunteersPage = (props: RouteComponentProps) => {
               <Card.Title as="h4">Lista de Voluntarios
                 <Button className="pull-right ml-2" variant="primary" onClick={handleCreate}> Agregar </Button>
               </Card.Title>
-              <p className="cardu-category">({data && data.volunteers.length}) Voluntarios registrados en el sistema </p>
+              {/*<p className="cardu-category">({data && data.volunteers.length}) Voluntarios registrados en el
+                sistema </p>*/}
             </Card.Header>
             <Card.Body className="table-full-width table-responsive px-0">
               <Table className="table-hover table-striped">
@@ -64,13 +65,13 @@ const VolunteersPage = (props: RouteComponentProps) => {
                 <tbody>
                   {loading ? <Spinner /> : (
                     data && data.volunteers.map(volunteer =>
-                      <tr>
-                        <td>{volunteer._id}</td>
+                      <tr key={volunteer.id}>
+                        <td>{volunteer.id}</td>
                         <td>{volunteer.name}</td>
                         <td>
-                          <Button className="btn-fill btn-sm" variant="success" onClick={() => handleEdit(volunteer._id)}> Editar </Button>
+                          <Button className="btn-fill btn-sm" variant="success" onClick={() => handleEdit(volunteer.id)}> Editar </Button>
                           {/* <Button className="btn-fill btn-sm ml-2" variant="info" onClick={() => handleShow(volunteer._id)}> Ver </Button> */}
-                          <Button className="btn-sm ml-2" variant="danger" onClick={() => handleDelete(volunteer._id)}> Eliminar </Button>
+                          <Button className="btn-sm ml-2" variant="danger" onClick={() => handleDelete(volunteer.id)}> Eliminar </Button>
                         </td>
                       </tr>
                     ))}
