@@ -25,7 +25,7 @@ export const FIND_VOLUNTEER = gql`
 `;
 
 export const EDIT_VOLUNTEER = gql`
-    mutation editVolunteer($id: ID!, $name: String){
+    mutation editVolunteer($id: String!, $name: String){
         updateVolunteer(updateVolunteerInput: {id: $id, name: $name}) {
             ...volunteerAllFields
         }

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { RouteComponentProps } from "react-router-dom"
-import { useLazyQuery } from "@apollo/react-hooks";
+import { useLazyQuery } from "react-apollo";
 import { FindVolunteerQuery, FindVolunteerQueryVariables } from "../../types";
 import { FIND_VOLUNTEER } from "../../queries/volunteers";
 import Spinner from "../spinner";

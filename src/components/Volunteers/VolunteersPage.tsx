@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, RouteComponentProps } from "react-router-dom"
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from 'react-apollo';
 import { DeleteVolunteerMutation, DeleteVolunteerMutationVariables, GetVolunteersQuery } from "../../types";
 import { DELETE_VOLUNTEER, GET_VOLUNTEERS } from "../../queries/volunteers";
 import Spinner from "../spinner";

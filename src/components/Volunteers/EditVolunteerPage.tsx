@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from "react"
 import { Link, RouteComponentProps } from "react-router-dom"
-import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery, useMutation } from 'react-apollo';
 import Spinner from "../spinner";
 import {
   CreateVolunteerInput,
@@ -17,7 +17,7 @@ import {
 } from "react-bootstrap";
 
 interface theProps extends RouteComponentProps {
-  id: String
+  id: string
 }
 
 // Can be moved up to make the constants

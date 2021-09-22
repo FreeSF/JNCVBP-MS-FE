@@ -17,8 +17,26 @@ export type Scalars = {
   Float: number;
 };
 
+export type CreateDutyInput = {
+  name: Scalars['String'];
+  isDeletable?: Maybe<Scalars['Boolean']>;
+  description?: Maybe<Scalars['String']>;
+};
+
+export type CreateUserInput = {
+  name: Scalars['String'];
+};
+
 export type CreateVolunteerInput = {
   name: Scalars['String'];
+};
+
+export type Duty = {
+  __typename?: 'Duty';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  isDeletable?: Maybe<Scalars['Boolean']>;
+  description?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -26,6 +44,12 @@ export type Mutation = {
   createVolunteer: Volunteer;
   updateVolunteer: Volunteer;
   removeVolunteer: Volunteer;
+  createUser: User;
+  updateUser: User;
+  removeUser: User;
+  createDuty: Duty;
+  updateDuty: Duty;
+  removeDuty: Duty;
 };
 
 
@@ -43,10 +67,44 @@ export type MutationRemoveVolunteerArgs = {
   id: Scalars['String'];
 };
 
+
+export type MutationCreateUserArgs = {
+  createUserInput: CreateUserInput;
+};
+
+
+export type MutationUpdateUserArgs = {
+  updateUserInput: UpdateUserInput;
+};
+
+
+export type MutationRemoveUserArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationCreateDutyArgs = {
+  createDutyInput: CreateDutyInput;
+};
+
+
+export type MutationUpdateDutyArgs = {
+  updateDutyInput: UpdateDutyInput;
+};
+
+
+export type MutationRemoveDutyArgs = {
+  id: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   volunteers: Array<Volunteer>;
   volunteer: Volunteer;
+  users: Array<User>;
+  user: User;
+  duties: Array<Duty>;
+  duty: Duty;
 };
 
 
@@ -54,9 +112,37 @@ export type QueryVolunteerArgs = {
   id: Scalars['String'];
 };
 
+
+export type QueryUserArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryDutyArgs = {
+  id: Scalars['String'];
+};
+
+export type UpdateDutyInput = {
+  name?: Maybe<Scalars['String']>;
+  isDeletable?: Maybe<Scalars['Boolean']>;
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+};
+
+export type UpdateUserInput = {
+  name?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+};
+
 export type UpdateVolunteerInput = {
   name?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+};
+
+export type User = {
+  __typename?: 'User';
   id: Scalars['ID'];
+  name: Scalars['String'];
 };
 
 export type Volunteer = {
@@ -111,7 +197,7 @@ export type FindVolunteerQuery = (
 );
 
 export type EditVolunteerMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['String'];
   name?: Maybe<Scalars['String']>;
 }>;
 
@@ -245,7 +331,7 @@ export function withFindVolunteer<TProps, TChildProps = {}, TDataName extends st
 };
 export type FindVolunteerQueryResult = ApolloReactCommon.QueryResult<FindVolunteerQuery, FindVolunteerQueryVariables>;
 export const EditVolunteerDocument = gql`
-    mutation editVolunteer($id: ID!, $name: String) {
+    mutation editVolunteer($id: String!, $name: String) {
   updateVolunteer(updateVolunteerInput: {id: $id, name: $name}) {
     ...volunteerAllFields
   }
