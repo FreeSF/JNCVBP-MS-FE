@@ -47,7 +47,6 @@
     ]
   },
   "devDependencies": {
-    "@apollo/react-hooks": "^4.0.0",
     "@graphql-codegen/cli": "1.15.4",
     "@graphql-codegen/typescript": "^1.21.1",
     "@graphql-codegen/typescript-operations": "^1.17.15",

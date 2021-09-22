@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from "react"
 import { Link, RouteComponentProps } from "react-router-dom"
-import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery, useMutation } from 'react-apollo';
 import Spinner from "../spinner";
 import {
   CreateVolunteerInput,
@@ -17,7 +17,7 @@ import {
 } from "react-bootstrap";
 
 interface theProps extends RouteComponentProps {
-  id: String
+  id: string
 }
 
 // Can be moved up to make the constants
@@ -39,20 +39,20 @@ const EditVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
 
   useEffect(() => {
     if (mode === EDIT)
-      loadVolunteer({ variables: { _id: props.match.params.id } })
+      loadVolunteer({ variables: { id: props.match.params.id } })
   }, []);
 
   if (loadResult.loading)
     return <Spinner />;
 
   const handleSubmit = () => {
-    let values = formRef.getState().values;
+    const values = formRef.getState().values;
 
     if (mode === EDIT) {
       editVolunteer({
         variables: {
           ...values,
-          _id: volunteer._id
+          id: volunteer.id
         }
       }).then(() => {
         props.history.push('/volunteers');
@@ -93,7 +93,7 @@ const EditVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
                       <Col className="pr-1" md="5">
                         <Form.Group>
                           <label>ID (disabled)</label>
-                          <Form.Control defaultValue="Identificador" value={volunteer?._id} disabled type="text" ></Form.Control>
+                          <Form.Control defaultValue="Identificador" value={volunteer?.id} disabled type="text" ></Form.Control>
                         </Form.Group>
                       </Col>
 
