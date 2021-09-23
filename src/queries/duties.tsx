@@ -2,7 +2,7 @@ import { gql } from "apollo-boost";
 
 const allFieldsFragment = gql`
     fragment dutyAllFields on Duty {
-        _id, name, isDeletable, description
+        id, name, isDeletable, description
     }
 `;
 
@@ -16,8 +16,8 @@ export const GET_DUTIES = gql`
 `;
 
 export const FIND_DUTY = gql`
-    query findDuty($_id: String!) {
-        duty(_id: $_id) {
+    query findDuty($id: String!) {
+        duty(id: $id) {
             ...dutyAllFields
         }
     }
@@ -25,8 +25,8 @@ export const FIND_DUTY = gql`
 `;
 
 export const EDIT_DUTY = gql`
-    mutation editDuty($_id: String!, $name: String!, $isDeletable: Boolean, $description: String){
-        editDuty(_id: $_id, name: $name, description: $description) {
+    mutation editDuty($id: String!, $name: String!, $isDeletable: Boolean, $description: String){
+        updateDuty(updateDutyInput: {id: $id, name: $name, description: $description}) {
             ...dutyAllFields
         }
     }
@@ -43,7 +43,7 @@ export const CREATE_DUTY = gql`
 `;
 
 export const DELETE_DUTY = gql`
-    mutation deleteDuty($_id: String!) {
-        deleteDuty(_id: $_id)
+    mutation deleteDuty($id: String!) {
+        removeDuty(id: $id) {id}
     }
 `;

@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from "react"
 import { Link, RouteComponentProps } from "react-router-dom"
-import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery, useMutation } from 'react-apollo';
 import Spinner from "../spinner";
 import {
   CreateDutyInput,
@@ -39,20 +39,20 @@ const EditDutyPage = (props: RouteComponentProps<{ id: string }>) => {
 
   useEffect(() => {
     if (mode === EDIT)
-      loadDuty({ variables: { _id: props.match.params.id } })
+      loadDuty({ variables: { id: props.match.params.id } })
   }, []);
 
   if (loadResult.loading)
     return <Spinner />;
 
   const handleSubmit = () => {
-    let values = formRef.getState().values;
+    const values = formRef.getState().values;
 
     if (mode === EDIT) {
       editDuty({
         variables: {
           ...values,
-          _id: duty._id
+          id: duty.id
         }
       }).then(() => {
         props.history.push('/duties');

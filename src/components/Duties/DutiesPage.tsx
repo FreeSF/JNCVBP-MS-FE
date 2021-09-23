@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, RouteComponentProps } from "react-router-dom"
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from 'react-apollo';
 import { DeleteDutyMutation, DeleteDutyMutationVariables, GetDutiesQuery } from "../../types";
 import { DELETE_DUTY, GET_DUTIES } from "../../queries/duties";
 import Spinner from "../spinner";
@@ -22,7 +22,7 @@ const DutiesPage = (props: RouteComponentProps) => {
 
   const handleCreate = () => props.history.push('/duties/create')
   const handleEdit = (id: string) => props.history.push('/duties/' + id + '/edit')
-  const handleDelete = (id: string) => deleteClient({ variables: { _id: id } });
+  const handleDelete = (id: string) => deleteClient({ variables: { id: id } });
 
   console.log(data)
   return (
@@ -52,8 +52,8 @@ const DutiesPage = (props: RouteComponentProps) => {
                         <td>{duty.name}</td>
                         <td>{duty.description}</td>
                         <td>
-                          <Button className="btn-fill btn-sm" variant="success" onClick={() => handleEdit(duty._id)}> Editar </Button>
-                          {duty.isDeletable && <Button className="btn-sm ml-2" variant="danger" onClick={() => handleDelete(duty._id)}> Eliminar </Button>}
+                          <Button className="btn-fill btn-sm" variant="success" onClick={() => handleEdit(duty.id)}> Editar </Button>
+                          {duty.isDeletable && <Button className="btn-sm ml-2" variant="danger" onClick={() => handleDelete(duty.id)}> Eliminar </Button>}
                         </td>
                       </tr>
                     ))}
