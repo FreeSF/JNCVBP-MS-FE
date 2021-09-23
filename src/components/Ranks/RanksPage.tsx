@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, RouteComponentProps } from "react-router-dom"
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from 'react-apollo';
 import { DeleteRankMutation, DeleteRankMutationVariables, GetRanksQuery } from "../../types";
 import { DELETE_RANK, GET_RANKS } from "../../queries/ranks";
 import Spinner from "../spinner";
@@ -22,9 +22,8 @@ const RanksPage = (props: RouteComponentProps) => {
 
   const handleCreate = () => props.history.push('/ranks/create')
   const handleEdit = (id: string) => props.history.push('/ranks/' + id + '/edit')
-  const handleDelete = (id: string) => deleteClient({ variables: { _id: id } });
+  const handleDelete = (id: string) => deleteClient({ variables: { id: id } });
 
-  console.log(data)
   return (
     <Container fluid>
       <Row>
@@ -52,8 +51,8 @@ const RanksPage = (props: RouteComponentProps) => {
                         <td>{rank.name}</td>
                         <td>{rank.description}</td>
                         <td>
-                          <Button className="btn-fill btn-sm" variant="success" onClick={() => handleEdit(rank._id)}> Editar </Button>
-                          {rank.isDeletable && <Button className="btn-sm ml-2" variant="danger" onClick={() => handleDelete(rank._id)}> Eliminar </Button>}
+                          <Button className="btn-fill btn-sm" variant="success" onClick={() => handleEdit(rank.id)}> Editar </Button>
+                          {rank.isDeletable && <Button className="btn-sm ml-2" variant="danger" onClick={() => handleDelete(rank.id)}> Eliminar </Button>}
                         </td>
                       </tr>
                     ))}

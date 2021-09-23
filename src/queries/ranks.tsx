@@ -2,7 +2,7 @@ import { gql } from "apollo-boost";
 
 const allFieldsFragment = gql`
     fragment rankAllFields on Rank {
-        _id, name, isDeletable, description
+        id, name, isDeletable, description
     }
 `;
 
@@ -16,8 +16,8 @@ export const GET_RANKS = gql`
 `;
 
 export const FIND_RANK = gql`
-    query findRank($_id: String!) {
-        rank(_id: $_id) {
+    query findRank($id: String!) {
+        rank(id: $id) {
             ...rankAllFields
         }
     }
@@ -25,8 +25,8 @@ export const FIND_RANK = gql`
 `;
 
 export const EDIT_RANK = gql`
-    mutation editRank($_id: String!, $name: String!, $isDeletable: Boolean, $description: String){
-        editRank(_id: $_id, name: $name, description: $description) {
+    mutation editRank($id: String!, $name: String!, $isDeletable: Boolean, $description: String){
+        updateRank(updateRankInput: {id: $id, name: $name, description: $description}) {
             ...rankAllFields
         }
     }
@@ -43,7 +43,7 @@ export const CREATE_RANK = gql`
 `;
 
 export const DELETE_RANK = gql`
-    mutation deleteRank($_id: String!) {
-        deleteRank(_id: $_id)
+    mutation deleteRank($id: String!) {
+        removeRank(id: $id) {id}
     }
 `;

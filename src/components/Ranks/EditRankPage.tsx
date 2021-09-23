@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from "react"
 import { Link, RouteComponentProps } from "react-router-dom"
-import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery, useMutation } from 'react-apollo';
 import Spinner from "../spinner";
 import {
   CreateRankInput,
@@ -39,20 +39,20 @@ const EditRankPage = (props: RouteComponentProps<{ id: string }>) => {
 
   useEffect(() => {
     if (mode === EDIT)
-      loadRank({ variables: { _id: props.match.params.id } })
+      loadRank({ variables: { id: props.match.params.id } })
   }, []);
 
   if (loadResult.loading)
     return <Spinner />;
 
   const handleSubmit = () => {
-    let values = formRef.getState().values;
+    const values = formRef.getState().values;
 
     if (mode === EDIT) {
       editRank({
         variables: {
           ...values,
-          _id: rank._id
+          id: rank.id
         }
       }).then(() => {
         props.history.push('/ranks');
