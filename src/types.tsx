@@ -29,13 +29,17 @@ export type CreateRankInput = {
   description?: Maybe<Scalars['String']>;
 };
 
+export type CreateUserInput = {
+  name: Scalars['String'];
+};
+
 export type CreateVolunteerInput = {
   name: Scalars['String'];
 };
 
 export type Duty = {
   __typename?: 'Duty';
-  _id: Scalars['ID'];
+  id: Scalars['String'];
   name: Scalars['String'];
   isDeletable?: Maybe<Scalars['Boolean']>;
   description?: Maybe<Scalars['String']>;
@@ -43,15 +47,33 @@ export type Duty = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createUser: User;
+  updateUser: User;
+  removeUser: User;
   createDuty: Duty;
-  deleteDuty: Scalars['Boolean'];
-  editDuty: Duty;
+  updateDuty: Duty;
+  removeDuty: Duty;
   createRank: Rank;
-  deleteRank: Scalars['Boolean'];
-  editRank: Rank;
+  updateRank: Rank;
+  removeRank: Rank;
   createVolunteer: Volunteer;
-  deleteVolunteer: Scalars['Boolean'];
-  editVolunteer: Volunteer;
+  updateVolunteer: Volunteer;
+  removeVolunteer: Volunteer;
+};
+
+
+export type MutationCreateUserArgs = {
+  createUserInput: CreateUserInput;
+};
+
+
+export type MutationUpdateUserArgs = {
+  updateUserInput: UpdateUserInput;
+};
+
+
+export type MutationRemoveUserArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -60,16 +82,13 @@ export type MutationCreateDutyArgs = {
 };
 
 
-export type MutationDeleteDutyArgs = {
-  _id: Scalars['String'];
+export type MutationUpdateDutyArgs = {
+  updateDutyInput: UpdateDutyInput;
 };
 
 
-export type MutationEditDutyArgs = {
-  isDeletable?: Maybe<Scalars['Boolean']>;
-  description?: Maybe<Scalars['String']>;
-  name: Scalars['String'];
-  _id: Scalars['String'];
+export type MutationRemoveDutyArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -78,16 +97,13 @@ export type MutationCreateRankArgs = {
 };
 
 
-export type MutationDeleteRankArgs = {
-  _id: Scalars['String'];
+export type MutationUpdateRankArgs = {
+  updateRankInput: UpdateRankInput;
 };
 
 
-export type MutationEditRankArgs = {
-  isDeletable?: Maybe<Scalars['Boolean']>;
-  description?: Maybe<Scalars['String']>;
-  name: Scalars['String'];
-  _id: Scalars['String'];
+export type MutationRemoveRankArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -96,58 +112,94 @@ export type MutationCreateVolunteerArgs = {
 };
 
 
-export type MutationDeleteVolunteerArgs = {
-  _id: Scalars['String'];
+export type MutationUpdateVolunteerArgs = {
+  updateVolunteerInput: UpdateVolunteerInput;
 };
 
 
-export type MutationEditVolunteerArgs = {
-  name?: Maybe<Scalars['String']>;
-  _id: Scalars['String'];
+export type MutationRemoveVolunteerArgs = {
+  id: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  duty: Duty;
+  users: Array<User>;
+  user: User;
   duties: Array<Duty>;
-  rank: Rank;
+  duty: Duty;
   ranks: Array<Rank>;
-  volunteer: Volunteer;
+  rank: Rank;
   volunteers: Array<Volunteer>;
+  volunteer: Volunteer;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['String'];
 };
 
 
 export type QueryDutyArgs = {
-  _id: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
 export type QueryRankArgs = {
-  _id: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
 export type QueryVolunteerArgs = {
-  _id: Scalars['String'];
+  id: Scalars['String'];
 };
 
 export type Rank = {
   __typename?: 'Rank';
-  _id: Scalars['ID'];
+  id: Scalars['String'];
   name: Scalars['String'];
   isDeletable?: Maybe<Scalars['Boolean']>;
   description?: Maybe<Scalars['String']>;
 };
 
+export type UpdateDutyInput = {
+  name?: Maybe<Scalars['String']>;
+  isDeletable?: Maybe<Scalars['Boolean']>;
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+};
+
+export type UpdateRankInput = {
+  name?: Maybe<Scalars['String']>;
+  isDeletable?: Maybe<Scalars['Boolean']>;
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+};
+
+export type UpdateUserInput = {
+  name?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+};
+
+export type UpdateVolunteerInput = {
+  name?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+};
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
 export type Volunteer = {
   __typename?: 'Volunteer';
-  _id: Scalars['ID'];
+  id: Scalars['String'];
   name: Scalars['String'];
 };
 
 export type VolunteerfieldsFragment = (
   { __typename: 'Volunteer' }
-  & Pick<Volunteer, '_id' | 'name'>
+  & Pick<Volunteer, 'id' | 'name'>
 );
 
 export type GetVolunteeersQueryVariables = Exact<{ [key: string]: never; }>;
@@ -163,7 +215,7 @@ export type GetVolunteeersQuery = (
 
 export type DutyAllFieldsFragment = (
   { __typename?: 'Duty' }
-  & Pick<Duty, '_id' | 'name' | 'isDeletable' | 'description'>
+  & Pick<Duty, 'id' | 'name' | 'isDeletable' | 'description'>
 );
 
 export type GetDutiesQueryVariables = Exact<{ [key: string]: never; }>;
@@ -178,7 +230,7 @@ export type GetDutiesQuery = (
 );
 
 export type FindDutyQueryVariables = Exact<{
-  _id: Scalars['String'];
+  id: Scalars['String'];
 }>;
 
 
@@ -191,7 +243,7 @@ export type FindDutyQuery = (
 );
 
 export type EditDutyMutationVariables = Exact<{
-  _id: Scalars['String'];
+  id: Scalars['String'];
   name: Scalars['String'];
   isDeletable?: Maybe<Scalars['Boolean']>;
   description?: Maybe<Scalars['String']>;
@@ -200,7 +252,7 @@ export type EditDutyMutationVariables = Exact<{
 
 export type EditDutyMutation = (
   { __typename?: 'Mutation' }
-  & { editDuty: (
+  & { updateDuty: (
     { __typename?: 'Duty' }
     & DutyAllFieldsFragment
   ) }
@@ -220,18 +272,21 @@ export type CreateDutyMutation = (
 );
 
 export type DeleteDutyMutationVariables = Exact<{
-  _id: Scalars['String'];
+  id: Scalars['String'];
 }>;
 
 
 export type DeleteDutyMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'deleteDuty'>
+  & { removeDuty: (
+    { __typename?: 'Duty' }
+    & Pick<Duty, 'id'>
+  ) }
 );
 
 export type RankAllFieldsFragment = (
   { __typename?: 'Rank' }
-  & Pick<Rank, '_id' | 'name' | 'isDeletable' | 'description'>
+  & Pick<Rank, 'id' | 'name' | 'isDeletable' | 'description'>
 );
 
 export type GetRanksQueryVariables = Exact<{ [key: string]: never; }>;
@@ -246,7 +301,7 @@ export type GetRanksQuery = (
 );
 
 export type FindRankQueryVariables = Exact<{
-  _id: Scalars['String'];
+  id: Scalars['String'];
 }>;
 
 
@@ -259,7 +314,7 @@ export type FindRankQuery = (
 );
 
 export type EditRankMutationVariables = Exact<{
-  _id: Scalars['String'];
+  id: Scalars['String'];
   name: Scalars['String'];
   isDeletable?: Maybe<Scalars['Boolean']>;
   description?: Maybe<Scalars['String']>;
@@ -268,7 +323,7 @@ export type EditRankMutationVariables = Exact<{
 
 export type EditRankMutation = (
   { __typename?: 'Mutation' }
-  & { editRank: (
+  & { updateRank: (
     { __typename?: 'Rank' }
     & RankAllFieldsFragment
   ) }
@@ -288,18 +343,21 @@ export type CreateRankMutation = (
 );
 
 export type DeleteRankMutationVariables = Exact<{
-  _id: Scalars['String'];
+  id: Scalars['String'];
 }>;
 
 
 export type DeleteRankMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'deleteRank'>
+  & { removeRank: (
+    { __typename?: 'Rank' }
+    & Pick<Rank, 'id'>
+  ) }
 );
 
 export type VolunteerAllFieldsFragment = (
   { __typename?: 'Volunteer' }
-  & Pick<Volunteer, '_id' | 'name'>
+  & Pick<Volunteer, 'id' | 'name'>
 );
 
 export type GetVolunteersQueryVariables = Exact<{ [key: string]: never; }>;
@@ -314,7 +372,7 @@ export type GetVolunteersQuery = (
 );
 
 export type FindVolunteerQueryVariables = Exact<{
-  _id: Scalars['String'];
+  id: Scalars['String'];
 }>;
 
 
@@ -327,14 +385,14 @@ export type FindVolunteerQuery = (
 );
 
 export type EditVolunteerMutationVariables = Exact<{
-  _id: Scalars['String'];
+  id: Scalars['String'];
   name?: Maybe<Scalars['String']>;
 }>;
 
 
 export type EditVolunteerMutation = (
   { __typename?: 'Mutation' }
-  & { editVolunteer: (
+  & { updateVolunteer: (
     { __typename?: 'Volunteer' }
     & VolunteerAllFieldsFragment
   ) }
@@ -354,25 +412,28 @@ export type CreateVolunteerMutation = (
 );
 
 export type DeleteVolunteerMutationVariables = Exact<{
-  _id: Scalars['String'];
+  id: Scalars['String'];
 }>;
 
 
 export type DeleteVolunteerMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'deleteVolunteer'>
+  & { removeVolunteer: (
+    { __typename?: 'Volunteer' }
+    & Pick<Volunteer, 'id'>
+  ) }
 );
 
 export const VolunteerfieldsFragmentDoc = gql`
     fragment volunteerfields on Volunteer {
-  _id
+  id
   name
   __typename
 }
     `;
 export const DutyAllFieldsFragmentDoc = gql`
     fragment dutyAllFields on Duty {
-  _id
+  id
   name
   isDeletable
   description
@@ -380,7 +441,7 @@ export const DutyAllFieldsFragmentDoc = gql`
     `;
 export const RankAllFieldsFragmentDoc = gql`
     fragment rankAllFields on Rank {
-  _id
+  id
   name
   isDeletable
   description
@@ -388,7 +449,7 @@ export const RankAllFieldsFragmentDoc = gql`
     `;
 export const VolunteerAllFieldsFragmentDoc = gql`
     fragment volunteerAllFields on Volunteer {
-  _id
+  id
   name
 }
     `;
@@ -447,8 +508,8 @@ export function withGetDuties<TProps, TChildProps = {}, TDataName extends string
 };
 export type GetDutiesQueryResult = ApolloReactCommon.QueryResult<GetDutiesQuery, GetDutiesQueryVariables>;
 export const FindDutyDocument = gql`
-    query findDuty($_id: String!) {
-  duty(_id: $_id) {
+    query findDuty($id: String!) {
+  duty(id: $id) {
     ...dutyAllFields
   }
 }
@@ -474,8 +535,8 @@ export function withFindDuty<TProps, TChildProps = {}, TDataName extends string 
 };
 export type FindDutyQueryResult = ApolloReactCommon.QueryResult<FindDutyQuery, FindDutyQueryVariables>;
 export const EditDutyDocument = gql`
-    mutation editDuty($_id: String!, $name: String!, $isDeletable: Boolean, $description: String) {
-  editDuty(_id: $_id, name: $name, description: $description) {
+    mutation editDuty($id: String!, $name: String!, $isDeletable: Boolean, $description: String) {
+  updateDuty(updateDutyInput: {id: $id, name: $name, description: $description}) {
     ...dutyAllFields
   }
 }
@@ -532,8 +593,10 @@ export function withCreateDuty<TProps, TChildProps = {}, TDataName extends strin
 export type CreateDutyMutationResult = ApolloReactCommon.MutationResult<CreateDutyMutation>;
 export type CreateDutyMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateDutyMutation, CreateDutyMutationVariables>;
 export const DeleteDutyDocument = gql`
-    mutation deleteDuty($_id: String!) {
-  deleteDuty(_id: $_id)
+    mutation deleteDuty($id: String!) {
+  removeDuty(id: $id) {
+    id
+  }
 }
     `;
 export type DeleteDutyMutationFn = ApolloReactCommon.MutationFunction<DeleteDutyMutation, DeleteDutyMutationVariables>;
@@ -586,8 +649,8 @@ export function withGetRanks<TProps, TChildProps = {}, TDataName extends string 
 };
 export type GetRanksQueryResult = ApolloReactCommon.QueryResult<GetRanksQuery, GetRanksQueryVariables>;
 export const FindRankDocument = gql`
-    query findRank($_id: String!) {
-  rank(_id: $_id) {
+    query findRank($id: String!) {
+  rank(id: $id) {
     ...rankAllFields
   }
 }
@@ -613,8 +676,8 @@ export function withFindRank<TProps, TChildProps = {}, TDataName extends string 
 };
 export type FindRankQueryResult = ApolloReactCommon.QueryResult<FindRankQuery, FindRankQueryVariables>;
 export const EditRankDocument = gql`
-    mutation editRank($_id: String!, $name: String!, $isDeletable: Boolean, $description: String) {
-  editRank(_id: $_id, name: $name, description: $description) {
+    mutation editRank($id: String!, $name: String!, $isDeletable: Boolean, $description: String) {
+  updateRank(updateRankInput: {id: $id, name: $name, description: $description}) {
     ...rankAllFields
   }
 }
@@ -671,8 +734,10 @@ export function withCreateRank<TProps, TChildProps = {}, TDataName extends strin
 export type CreateRankMutationResult = ApolloReactCommon.MutationResult<CreateRankMutation>;
 export type CreateRankMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateRankMutation, CreateRankMutationVariables>;
 export const DeleteRankDocument = gql`
-    mutation deleteRank($_id: String!) {
-  deleteRank(_id: $_id)
+    mutation deleteRank($id: String!) {
+  removeRank(id: $id) {
+    id
+  }
 }
     `;
 export type DeleteRankMutationFn = ApolloReactCommon.MutationFunction<DeleteRankMutation, DeleteRankMutationVariables>;
@@ -725,8 +790,8 @@ export function withGetVolunteers<TProps, TChildProps = {}, TDataName extends st
 };
 export type GetVolunteersQueryResult = ApolloReactCommon.QueryResult<GetVolunteersQuery, GetVolunteersQueryVariables>;
 export const FindVolunteerDocument = gql`
-    query findVolunteer($_id: String!) {
-  volunteer(_id: $_id) {
+    query findVolunteer($id: String!) {
+  volunteer(id: $id) {
     ...volunteerAllFields
   }
 }
@@ -752,8 +817,8 @@ export function withFindVolunteer<TProps, TChildProps = {}, TDataName extends st
 };
 export type FindVolunteerQueryResult = ApolloReactCommon.QueryResult<FindVolunteerQuery, FindVolunteerQueryVariables>;
 export const EditVolunteerDocument = gql`
-    mutation editVolunteer($_id: String!, $name: String) {
-  editVolunteer(_id: $_id, name: $name) {
+    mutation editVolunteer($id: String!, $name: String) {
+  updateVolunteer(updateVolunteerInput: {id: $id, name: $name}) {
     ...volunteerAllFields
   }
 }
@@ -810,8 +875,10 @@ export function withCreateVolunteer<TProps, TChildProps = {}, TDataName extends 
 export type CreateVolunteerMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerMutation>;
 export type CreateVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolunteerMutation, CreateVolunteerMutationVariables>;
 export const DeleteVolunteerDocument = gql`
-    mutation deleteVolunteer($_id: String!) {
-  deleteVolunteer(_id: $_id)
+    mutation deleteVolunteer($id: String!) {
+  removeVolunteer(id: $id) {
+    id
+  }
 }
     `;
 export type DeleteVolunteerMutationFn = ApolloReactCommon.MutationFunction<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>;
