@@ -47,3 +47,12 @@ export const CREATE_SERVICE = gql`
     }
     ${serviceAllFieldsFragment}
 `;
+
+export const REMOVE_SERVICE = gql`
+    mutation removeService($id: String!) {
+        removeService(id: $id) {
+            ...servicesAllFields
+        }
+    }
+    ${serviceAllFieldsFragment}
+`;

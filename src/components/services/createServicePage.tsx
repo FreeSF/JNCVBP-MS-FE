@@ -3,7 +3,7 @@ import {Form, FormApi, Text, Select} from "informed";
 import {RouteComponentProps} from "react-router-dom";
 import {useLazyQuery, useMutation, useQuery} from "react-apollo";
 import {
-  CreateServiceInput,
+  CreateServiceInput, CreateServiceMutation, CreateServiceMutationVariables,
   GetVolunteersQuery,
   Service
 } from "../../types";
@@ -17,11 +17,11 @@ const CreateServicePage:React.FC<TheProps> = props => {
 
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateServiceInput>>(null);
 
-  const [createService, createdService] = useMutation<{ createService: Service }, { input: CreateServiceInput }>(CREATE_SERVICE);
+  const [createService, createdService] = useMutation<CreateServiceMutation, CreateServiceMutationVariables>(CREATE_SERVICE);
 
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
 
-  const [volunteersQuantity, setVolunteersQuantity] = useState(2);
+  const [volunteersQuantity, setVolunteersQuantity] = useState(0);
 
   if(getVolunteersQuery.loading)
     return <Spinner/>
