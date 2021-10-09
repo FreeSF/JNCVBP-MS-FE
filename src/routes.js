@@ -5,6 +5,9 @@ import HomePage from "components/homePage";
 import VolunteersPage from "components/Volunteers/VolunteersPage";
 import EditVolunteerPage from "components/Volunteers/EditVolunteerPage";
 import ShowVolunteerPage from "components/Volunteers/ShowVolunteerPage";
+import ServicesPage from "./components/services/servicesPage";
+import ShowServicePage from "./components/services/showServicePage";
+import CreateServicePage from "./components/services/createServicePage";
 
 const routes = [
   {
@@ -25,8 +28,18 @@ const routes = [
     path: "/services",
     name: "Servicios",
     icon: "fas fa-ambulance",
-    component: HomePage,
+    component: ServicesPage,
     showOnSidebar: true
+  },
+  {
+    path: "/services/create",
+    name: "Crear Servicio",
+    component: CreateServicePage
+  },
+  {
+    path: "/services/:id",
+    name: "Servicios",
+    component: ShowServicePage
   },
   {
     path: "/volunteers",

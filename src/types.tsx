@@ -23,6 +23,11 @@ export type CreateDutyInput = {
   description?: Maybe<Scalars['String']>;
 };
 
+export type CreateServiceInput = {
+  description: Scalars['String'];
+  volunteers: Array<ServiceVolunteersInput>;
+};
+
 export type CreateUserInput = {
   name: Scalars['String'];
 };
@@ -33,7 +38,7 @@ export type CreateVolunteerInput = {
 
 export type Duty = {
   __typename?: 'Duty';
-  id: Scalars['ID'];
+  id: Scalars['String'];
   name: Scalars['String'];
   isDeletable?: Maybe<Scalars['Boolean']>;
   description?: Maybe<Scalars['String']>;
@@ -50,6 +55,9 @@ export type Mutation = {
   createDuty: Duty;
   updateDuty: Duty;
   removeDuty: Duty;
+  createService: Service;
+  updateService: Service;
+  removeService: Service;
 };
 
 
@@ -97,6 +105,21 @@ export type MutationRemoveDutyArgs = {
   id: Scalars['String'];
 };
 
+
+export type MutationCreateServiceArgs = {
+  createServiceInput: CreateServiceInput;
+};
+
+
+export type MutationUpdateServiceArgs = {
+  updateServiceInput: UpdateServiceInput;
+};
+
+
+export type MutationRemoveServiceArgs = {
+  id: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   volunteers: Array<Volunteer>;
@@ -105,6 +128,8 @@ export type Query = {
   user: User;
   duties: Array<Duty>;
   duty: Duty;
+  services: Array<Service>;
+  service: Service;
 };
 
 
@@ -122,10 +147,28 @@ export type QueryDutyArgs = {
   id: Scalars['String'];
 };
 
+
+export type QueryServiceArgs = {
+  id: Scalars['String'];
+};
+
+export type Service = {
+  __typename?: 'Service';
+  id: Scalars['String'];
+  description: Scalars['String'];
+  volunteers: Array<Volunteer>;
+};
+
 export type UpdateDutyInput = {
   name?: Maybe<Scalars['String']>;
   isDeletable?: Maybe<Scalars['Boolean']>;
   description?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+};
+
+export type UpdateServiceInput = {
+  description?: Maybe<Scalars['String']>;
+  volunteers?: Maybe<Array<ServiceVolunteersInput>>;
   id: Scalars['String'];
 };
 
@@ -141,14 +184,18 @@ export type UpdateVolunteerInput = {
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['ID'];
+  id: Scalars['String'];
   name: Scalars['String'];
 };
 
 export type Volunteer = {
   __typename?: 'Volunteer';
-  id: Scalars['ID'];
+  id: Scalars['String'];
   name: Scalars['String'];
+};
+
+export type ServiceVolunteersInput = {
+  id: Scalars['String'];
 };
 
 export type VolunteerfieldsFragment = (
@@ -165,6 +212,65 @@ export type GetVolunteeersQuery = (
     { __typename?: 'Volunteer' }
     & VolunteerfieldsFragment
   )> }
+);
+
+export type ServicesAllFieldsFragment = (
+  { __typename?: 'Service' }
+  & Pick<Service, 'id' | 'description'>
+  & { volunteers: Array<(
+    { __typename?: 'Volunteer' }
+    & VolunteerAllFieldsFragment
+  )> }
+);
+
+export type GetServicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetServicesQuery = (
+  { __typename?: 'Query' }
+  & { services: Array<(
+    { __typename?: 'Service' }
+    & ServicesAllFieldsFragment
+  )> }
+);
+
+export type FindServiceQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type FindServiceQuery = (
+  { __typename?: 'Query' }
+  & { service: (
+    { __typename?: 'Service' }
+    & ServicesAllFieldsFragment
+  ) }
+);
+
+export type EditServiceMutationVariables = Exact<{
+  input: UpdateServiceInput;
+}>;
+
+
+export type EditServiceMutation = (
+  { __typename?: 'Mutation' }
+  & { updateService: (
+    { __typename?: 'Service' }
+    & ServicesAllFieldsFragment
+  ) }
+);
+
+export type CreateServiceMutationVariables = Exact<{
+  input: CreateServiceInput;
+}>;
+
+
+export type CreateServiceMutation = (
+  { __typename?: 'Mutation' }
+  & { createService: (
+    { __typename?: 'Service' }
+    & ServicesAllFieldsFragment
+  ) }
 );
 
 export type VolunteerAllFieldsFragment = (
@@ -249,6 +355,15 @@ export const VolunteerAllFieldsFragmentDoc = gql`
   name
 }
     `;
+export const ServicesAllFieldsFragmentDoc = gql`
+    fragment servicesAllFields on Service {
+  id
+  description
+  volunteers {
+    ...volunteerAllFields
+  }
+}
+    ${VolunteerAllFieldsFragmentDoc}`;
 export const GetVolunteeersDocument = gql`
     query getVolunteeers {
   volunteers {
@@ -276,6 +391,118 @@ export function withGetVolunteeers<TProps, TChildProps = {}, TDataName extends s
     });
 };
 export type GetVolunteeersQueryResult = ApolloReactCommon.QueryResult<GetVolunteeersQuery, GetVolunteeersQueryVariables>;
+export const GetServicesDocument = gql`
+    query getServices {
+  services {
+    ...servicesAllFields
+  }
+}
+    ${ServicesAllFieldsFragmentDoc}`;
+export type GetServicesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetServicesQuery, GetServicesQueryVariables>, 'query'>;
+
+    export const GetServicesComponent = (props: GetServicesComponentProps) => (
+      <ApolloReactComponents.Query<GetServicesQuery, GetServicesQueryVariables> query={GetServicesDocument} {...props} />
+    );
+    
+export type GetServicesProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetServicesQuery, GetServicesQueryVariables>
+    } & TChildProps;
+export function withGetServices<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetServicesQuery,
+  GetServicesQueryVariables,
+  GetServicesProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetServicesQuery, GetServicesQueryVariables, GetServicesProps<TChildProps, TDataName>>(GetServicesDocument, {
+      alias: 'getServices',
+      ...operationOptions
+    });
+};
+export type GetServicesQueryResult = ApolloReactCommon.QueryResult<GetServicesQuery, GetServicesQueryVariables>;
+export const FindServiceDocument = gql`
+    query findService($id: String!) {
+  service(id: $id) {
+    ...servicesAllFields
+  }
+}
+    ${ServicesAllFieldsFragmentDoc}`;
+export type FindServiceComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<FindServiceQuery, FindServiceQueryVariables>, 'query'> & ({ variables: FindServiceQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const FindServiceComponent = (props: FindServiceComponentProps) => (
+      <ApolloReactComponents.Query<FindServiceQuery, FindServiceQueryVariables> query={FindServiceDocument} {...props} />
+    );
+    
+export type FindServiceProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<FindServiceQuery, FindServiceQueryVariables>
+    } & TChildProps;
+export function withFindService<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  FindServiceQuery,
+  FindServiceQueryVariables,
+  FindServiceProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, FindServiceQuery, FindServiceQueryVariables, FindServiceProps<TChildProps, TDataName>>(FindServiceDocument, {
+      alias: 'findService',
+      ...operationOptions
+    });
+};
+export type FindServiceQueryResult = ApolloReactCommon.QueryResult<FindServiceQuery, FindServiceQueryVariables>;
+export const EditServiceDocument = gql`
+    mutation editService($input: UpdateServiceInput!) {
+  updateService(updateServiceInput: $input) {
+    ...servicesAllFields
+  }
+}
+    ${ServicesAllFieldsFragmentDoc}`;
+export type EditServiceMutationFn = ApolloReactCommon.MutationFunction<EditServiceMutation, EditServiceMutationVariables>;
+export type EditServiceComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<EditServiceMutation, EditServiceMutationVariables>, 'mutation'>;
+
+    export const EditServiceComponent = (props: EditServiceComponentProps) => (
+      <ApolloReactComponents.Mutation<EditServiceMutation, EditServiceMutationVariables> mutation={EditServiceDocument} {...props} />
+    );
+    
+export type EditServiceProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<EditServiceMutation, EditServiceMutationVariables>
+    } & TChildProps;
+export function withEditService<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  EditServiceMutation,
+  EditServiceMutationVariables,
+  EditServiceProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, EditServiceMutation, EditServiceMutationVariables, EditServiceProps<TChildProps, TDataName>>(EditServiceDocument, {
+      alias: 'editService',
+      ...operationOptions
+    });
+};
+export type EditServiceMutationResult = ApolloReactCommon.MutationResult<EditServiceMutation>;
+export type EditServiceMutationOptions = ApolloReactCommon.BaseMutationOptions<EditServiceMutation, EditServiceMutationVariables>;
+export const CreateServiceDocument = gql`
+    mutation createService($input: CreateServiceInput!) {
+  createService(createServiceInput: $input) {
+    ...servicesAllFields
+  }
+}
+    ${ServicesAllFieldsFragmentDoc}`;
+export type CreateServiceMutationFn = ApolloReactCommon.MutationFunction<CreateServiceMutation, CreateServiceMutationVariables>;
+export type CreateServiceComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreateServiceMutation, CreateServiceMutationVariables>, 'mutation'>;
+
+    export const CreateServiceComponent = (props: CreateServiceComponentProps) => (
+      <ApolloReactComponents.Mutation<CreateServiceMutation, CreateServiceMutationVariables> mutation={CreateServiceDocument} {...props} />
+    );
+    
+export type CreateServiceProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<CreateServiceMutation, CreateServiceMutationVariables>
+    } & TChildProps;
+export function withCreateService<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  CreateServiceMutation,
+  CreateServiceMutationVariables,
+  CreateServiceProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, CreateServiceMutation, CreateServiceMutationVariables, CreateServiceProps<TChildProps, TDataName>>(CreateServiceDocument, {
+      alias: 'createService',
+      ...operationOptions
+    });
+};
+export type CreateServiceMutationResult = ApolloReactCommon.MutationResult<CreateServiceMutation>;
+export type CreateServiceMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateServiceMutation, CreateServiceMutationVariables>;
 export const GetVolunteersDocument = gql`
     query getVolunteers {
   volunteers {

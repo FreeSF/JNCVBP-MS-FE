@@ -1,6 +1,6 @@
-import React, { createRef, useEffect, useState } from "react"
-import { Link, RouteComponentProps } from "react-router-dom"
-import { useQuery, useLazyQuery, useMutation } from 'react-apollo';
+import React, {useEffect, useState} from "react"
+import {RouteComponentProps} from "react-router-dom"
+import {useLazyQuery, useMutation} from 'react-apollo';
 import Spinner from "../spinner";
 import {
   CreateVolunteerInput,
@@ -10,23 +10,18 @@ import {
   FindVolunteerQueryVariables,
   Volunteer
 } from "../../types";
-import { CREATE_VOLUNTEER, EDIT_VOLUNTEER, FIND_VOLUNTEER, GET_VOLUNTEERS } from "../../queries/volunteers";
-import { Text, Form as IForm, FormApi } from 'informed'; //Form
-import {
-  Button, Card, Col, Form, Container, Row
-} from "react-bootstrap";
+import {CREATE_VOLUNTEER, EDIT_VOLUNTEER, FIND_VOLUNTEER, GET_VOLUNTEERS} from "../../queries/volunteers";
+import {Form as IForm, FormApi, Text} from 'informed'; //Form
+import {Button, Card, Col, Container, Form, Row} from "react-bootstrap";
+import {MODE_CREATE, MODE_EDIT} from "../../utils/constants";
 
 interface theProps extends RouteComponentProps {
   id: string
 }
 
-// Can be moved up to make the constants
-const CREATE = 'CREATE';
-const EDIT = 'EDIT';
-
 const EditVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
 
-  const mode = props.match.params.id ? EDIT : CREATE;
+  const mode = props.match.params.id ? MODE_CREATE : MODE_EDIT;
   const [loadVolunteer, loadResult] = useLazyQuery<FindVolunteerQuery, FindVolunteerQueryVariables>(FIND_VOLUNTEER);
   const [editVolunteer, editedVolunteer] = useMutation<
     EditVolunteerMutation,
@@ -38,7 +33,7 @@ const EditVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
   const [formRef, setFormRef] = useState<FormApi<Volunteer>>(null);
 
   useEffect(() => {
-    if (mode === EDIT)
+    if (mode === MODE_EDIT)
       loadVolunteer({ variables: { id: props.match.params.id } })
   }, []);
 
@@ -48,7 +43,7 @@ const EditVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
   const handleSubmit = () => {
     const values = formRef.getState().values;
 
-    if (mode === EDIT) {
+    if (mode === MODE_EDIT) {
       editVolunteer({
         variables: {
           ...values,
@@ -59,7 +54,7 @@ const EditVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
       });
     }
 
-    if (mode === CREATE) {
+    if (mode === MODE_CREATE) {
       createVolunteer({
         variables: {
           input: { ...values }
