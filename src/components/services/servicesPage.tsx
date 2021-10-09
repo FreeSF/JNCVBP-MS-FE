@@ -53,6 +53,7 @@ const columns: ColumnDescription[] = [
     formatter: (cell, row) => (
       <div>
         <Button className="btn-fill btn-sm" href={`/services/${row.id}`} variant="success">Ver</Button>
+        <Button className="btn-fill btn-sm" href={`/services/${row.id}/edit`} variant="success">Editar</Button>
         <Button className="btn-sm" variant="danger">Eliminar</Button>
       </div>
     )

@@ -19,7 +19,7 @@ interface theProps extends RouteComponentProps {
   id: string
 }
 
-const EditVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
+const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
 
   const mode = props.match.params.id ? MODE_CREATE : MODE_EDIT;
   const [loadVolunteer, loadResult] = useLazyQuery<FindVolunteerQuery, FindVolunteerQueryVariables>(FIND_VOLUNTEER);
@@ -239,4 +239,4 @@ const EditVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
 
 }
 
-export default EditVolunteerPage
+export default CreateVolunteerPage

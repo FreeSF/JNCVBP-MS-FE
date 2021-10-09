@@ -3,7 +3,7 @@
 import HomePage from "components/homePage";
 
 import VolunteersPage from "components/Volunteers/VolunteersPage";
-import EditVolunteerPage from "components/Volunteers/EditVolunteerPage";
+import CreateVolunteerPage from "components/Volunteers/CreateVolunteerPage";
 import ShowVolunteerPage from "components/Volunteers/ShowVolunteerPage";
 import ServicesPage from "./components/services/servicesPage";
 import ShowServicePage from "./components/services/showServicePage";
@@ -51,12 +51,12 @@ const routes = [
   {
     path: "/volunteers/:id/edit",
     name: "Editar Voluntario",
-    component: EditVolunteerPage
+    component: CreateVolunteerPage
   },
   {
     path: "/volunteers/create",
     name: "Crear Voluntario",
-    component: EditVolunteerPage
+    component: CreateVolunteerPage
   },
   {
     path: "/volunteers/:id",
