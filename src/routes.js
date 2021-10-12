@@ -9,8 +9,11 @@ import EditRankPage from "components/Ranks/EditRankPage";
 import RanksPage from "components/Ranks/RanksPage";
 
 import VolunteersPage from "components/Volunteers/VolunteersPage";
-import EditVolunteerPage from "components/Volunteers/EditVolunteerPage";
+import CreateVolunteerPage from "components/Volunteers/CreateVolunteerPage";
 import ShowVolunteerPage from "components/Volunteers/ShowVolunteerPage";
+import ServicesPage from "./components/services/servicesPage";
+import ShowServicePage from "./components/services/showServicePage";
+import CreateServicePage from "./components/services/createServicePage";
 
 
 
@@ -44,6 +47,25 @@ const ranksRoutes =
     component: EditRankPage
   }]
 
+const servicesRoutes =
+  [{
+    path: "/services",
+    name: "Servicios",
+    icon: "fas fa-ambulance",
+    component: ServicesPage,
+    showOnSidebar: true
+  },
+  {
+    path: "/services/create",
+    name: "Crear Servicio",
+    component: CreateServicePage
+  },
+  {
+    path: "/services/:id",
+    name: "Servicios",
+    component: ShowServicePage
+  }]
+
 const volunteerRoutes =
   [{
     path: "/volunteers",
@@ -55,12 +77,12 @@ const volunteerRoutes =
   {
     path: "/volunteers/:id/edit",
     name: "Editar Voluntario",
-    component: EditVolunteerPage
+    component: CreateVolunteerPage
   },
   {
     path: "/volunteers/create",
     name: "Crear Voluntario",
-    component: EditVolunteerPage
+    component: CreateVolunteerPage
   },
   {
     path: "/volunteers/:id",
@@ -86,6 +108,7 @@ const routes =
   },
   ...dutiesRoutes,
   ...ranksRoutes,
+  ...servicesRoutes,
   ...volunteerRoutes
   ];
 

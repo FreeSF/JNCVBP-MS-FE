@@ -1,6 +1,6 @@
 import {gql} from "apollo-boost";
 
-const allFieldsFragment = gql`
+export const volunteerAllFieldsFragment = gql`
     fragment volunteerAllFields on Volunteer {
         id, name
     }
@@ -12,7 +12,7 @@ export const GET_VOLUNTEERS = gql`
             ...volunteerAllFields
         }
     }
-    ${allFieldsFragment}
+    ${volunteerAllFieldsFragment}
 `;
 
 export const FIND_VOLUNTEER = gql`
@@ -21,7 +21,7 @@ export const FIND_VOLUNTEER = gql`
             ...volunteerAllFields
         }
     }
-    ${allFieldsFragment}
+    ${volunteerAllFieldsFragment}
 `;
 
 export const EDIT_VOLUNTEER = gql`
@@ -30,7 +30,7 @@ export const EDIT_VOLUNTEER = gql`
             ...volunteerAllFields
         }
     }
-    ${allFieldsFragment}
+    ${volunteerAllFieldsFragment}
 `;
 
 export const CREATE_VOLUNTEER = gql`
@@ -39,7 +39,7 @@ export const CREATE_VOLUNTEER = gql`
             ...volunteerAllFields
         }
     }
-    ${allFieldsFragment}
+    ${volunteerAllFieldsFragment}
 `;
 
 export const DELETE_VOLUNTEER = gql`
