@@ -23,15 +23,15 @@ export type CreateDutyInput = {
   description?: Maybe<Scalars['String']>;
 };
 
-export type CreateServiceInput = {
-  description: Scalars['String'];
-  volunteers?: Maybe<Array<ServiceVolunteersInput>>;
-};
-
 export type CreateRankInput = {
   name: Scalars['String'];
   isDeletable?: Maybe<Scalars['Boolean']>;
   description?: Maybe<Scalars['String']>;
+};
+
+export type CreateServiceInput = {
+  description: Scalars['String'];
+  volunteers?: Maybe<Array<ServiceVolunteersInput>>;
 };
 
 export type CreateUserInput = {
@@ -58,30 +58,15 @@ export type Mutation = {
   createDuty: Duty;
   updateDuty: Duty;
   removeDuty: Duty;
-  createService: Service;
-  updateService: Service;
-  removeService: Service;
   createRank: Rank;
   updateRank: Rank;
   removeRank: Rank;
+  createService: Service;
+  updateService: Service;
+  removeService: Service;
   createVolunteer: Volunteer;
   updateVolunteer: Volunteer;
   removeVolunteer: Volunteer;
-};
-
-
-export type MutationCreateVolunteerArgs = {
-  createVolunteerInput: CreateVolunteerInput;
-};
-
-
-export type MutationUpdateVolunteerArgs = {
-  updateVolunteerInput: UpdateVolunteerInput;
-};
-
-
-export type MutationRemoveVolunteerArgs = {
-  id: Scalars['String'];
 };
 
 
@@ -130,21 +115,6 @@ export type MutationRemoveRankArgs = {
 };
 
 
-export type MutationCreateVolunteerArgs = {
-  createVolunteerInput: CreateVolunteerInput;
-};
-
-
-export type MutationUpdateVolunteerArgs = {
-  updateVolunteerInput: UpdateVolunteerInput;
-};
-
-
-export type MutationRemoveVolunteerArgs = {
-  id: Scalars['String'];
-};
-
-
 export type MutationCreateServiceArgs = {
   createServiceInput: CreateServiceInput;
 };
@@ -159,23 +129,33 @@ export type MutationRemoveServiceArgs = {
   id: Scalars['String'];
 };
 
+
+export type MutationCreateVolunteerArgs = {
+  createVolunteerInput: CreateVolunteerInput;
+};
+
+
+export type MutationUpdateVolunteerArgs = {
+  updateVolunteerInput: UpdateVolunteerInput;
+};
+
+
+export type MutationRemoveVolunteerArgs = {
+  id: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   users: Array<User>;
   user: User;
   duties: Array<Duty>;
   duty: Duty;
-  services: Array<Service>;
-  service: Service;
   ranks: Array<Rank>;
   rank: Rank;
+  services: Array<Service>;
+  service: Service;
   volunteers: Array<Volunteer>;
   volunteer: Volunteer;
-};
-
-
-export type QueryVolunteerArgs = {
-  id: Scalars['String'];
 };
 
 
@@ -194,6 +174,11 @@ export type QueryRankArgs = {
 };
 
 
+export type QueryServiceArgs = {
+  id: Scalars['String'];
+};
+
+
 export type QueryVolunteerArgs = {
   id: Scalars['String'];
 };
@@ -204,11 +189,6 @@ export type Rank = {
   name: Scalars['String'];
   isDeletable?: Maybe<Scalars['Boolean']>;
   description?: Maybe<Scalars['String']>;
-};
-
-
-export type QueryServiceArgs = {
-  id: Scalars['String'];
 };
 
 export type Service = {
@@ -640,7 +620,7 @@ export type GetDutiesComponentProps = Omit<ApolloReactComponents.QueryComponentO
     export const GetDutiesComponent = (props: GetDutiesComponentProps) => (
       <ApolloReactComponents.Query<GetDutiesQuery, GetDutiesQueryVariables> query={GetDutiesDocument} {...props} />
     );
-
+    
 export type GetDutiesProps<TChildProps = {}, TDataName extends string = 'data'> = {
       [key in TDataName]: ApolloReactHoc.DataValue<GetDutiesQuery, GetDutiesQueryVariables>
     } & TChildProps;
@@ -667,7 +647,7 @@ export type FindDutyComponentProps = Omit<ApolloReactComponents.QueryComponentOp
     export const FindDutyComponent = (props: FindDutyComponentProps) => (
       <ApolloReactComponents.Query<FindDutyQuery, FindDutyQueryVariables> query={FindDutyDocument} {...props} />
     );
-
+    
 export type FindDutyProps<TChildProps = {}, TDataName extends string = 'data'> = {
       [key in TDataName]: ApolloReactHoc.DataValue<FindDutyQuery, FindDutyQueryVariables>
     } & TChildProps;
@@ -695,7 +675,7 @@ export type EditDutyComponentProps = Omit<ApolloReactComponents.MutationComponen
     export const EditDutyComponent = (props: EditDutyComponentProps) => (
       <ApolloReactComponents.Mutation<EditDutyMutation, EditDutyMutationVariables> mutation={EditDutyDocument} {...props} />
     );
-
+    
 export type EditDutyProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
       [key in TDataName]: ApolloReactCommon.MutationFunction<EditDutyMutation, EditDutyMutationVariables>
     } & TChildProps;
@@ -724,7 +704,7 @@ export type CreateDutyComponentProps = Omit<ApolloReactComponents.MutationCompon
     export const CreateDutyComponent = (props: CreateDutyComponentProps) => (
       <ApolloReactComponents.Mutation<CreateDutyMutation, CreateDutyMutationVariables> mutation={CreateDutyDocument} {...props} />
     );
-
+    
 export type CreateDutyProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
       [key in TDataName]: ApolloReactCommon.MutationFunction<CreateDutyMutation, CreateDutyMutationVariables>
     } & TChildProps;
@@ -753,7 +733,7 @@ export type DeleteDutyComponentProps = Omit<ApolloReactComponents.MutationCompon
     export const DeleteDutyComponent = (props: DeleteDutyComponentProps) => (
       <ApolloReactComponents.Mutation<DeleteDutyMutation, DeleteDutyMutationVariables> mutation={DeleteDutyDocument} {...props} />
     );
-
+    
 export type DeleteDutyProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
       [key in TDataName]: ApolloReactCommon.MutationFunction<DeleteDutyMutation, DeleteDutyMutationVariables>
     } & TChildProps;
@@ -781,7 +761,7 @@ export type GetRanksComponentProps = Omit<ApolloReactComponents.QueryComponentOp
     export const GetRanksComponent = (props: GetRanksComponentProps) => (
       <ApolloReactComponents.Query<GetRanksQuery, GetRanksQueryVariables> query={GetRanksDocument} {...props} />
     );
-
+    
 export type GetRanksProps<TChildProps = {}, TDataName extends string = 'data'> = {
       [key in TDataName]: ApolloReactHoc.DataValue<GetRanksQuery, GetRanksQueryVariables>
     } & TChildProps;
@@ -808,7 +788,7 @@ export type FindRankComponentProps = Omit<ApolloReactComponents.QueryComponentOp
     export const FindRankComponent = (props: FindRankComponentProps) => (
       <ApolloReactComponents.Query<FindRankQuery, FindRankQueryVariables> query={FindRankDocument} {...props} />
     );
-
+    
 export type FindRankProps<TChildProps = {}, TDataName extends string = 'data'> = {
       [key in TDataName]: ApolloReactHoc.DataValue<FindRankQuery, FindRankQueryVariables>
     } & TChildProps;
@@ -836,7 +816,7 @@ export type EditRankComponentProps = Omit<ApolloReactComponents.MutationComponen
     export const EditRankComponent = (props: EditRankComponentProps) => (
       <ApolloReactComponents.Mutation<EditRankMutation, EditRankMutationVariables> mutation={EditRankDocument} {...props} />
     );
-
+    
 export type EditRankProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
       [key in TDataName]: ApolloReactCommon.MutationFunction<EditRankMutation, EditRankMutationVariables>
     } & TChildProps;
@@ -865,7 +845,7 @@ export type CreateRankComponentProps = Omit<ApolloReactComponents.MutationCompon
     export const CreateRankComponent = (props: CreateRankComponentProps) => (
       <ApolloReactComponents.Mutation<CreateRankMutation, CreateRankMutationVariables> mutation={CreateRankDocument} {...props} />
     );
-
+    
 export type CreateRankProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
       [key in TDataName]: ApolloReactCommon.MutationFunction<CreateRankMutation, CreateRankMutationVariables>
     } & TChildProps;
@@ -894,7 +874,7 @@ export type DeleteRankComponentProps = Omit<ApolloReactComponents.MutationCompon
     export const DeleteRankComponent = (props: DeleteRankComponentProps) => (
       <ApolloReactComponents.Mutation<DeleteRankMutation, DeleteRankMutationVariables> mutation={DeleteRankDocument} {...props} />
     );
-
+    
 export type DeleteRankProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
       [key in TDataName]: ApolloReactCommon.MutationFunction<DeleteRankMutation, DeleteRankMutationVariables>
     } & TChildProps;
@@ -922,7 +902,7 @@ export type GetServicesComponentProps = Omit<ApolloReactComponents.QueryComponen
     export const GetServicesComponent = (props: GetServicesComponentProps) => (
       <ApolloReactComponents.Query<GetServicesQuery, GetServicesQueryVariables> query={GetServicesDocument} {...props} />
     );
-
+    
 export type GetServicesProps<TChildProps = {}, TDataName extends string = 'data'> = {
       [key in TDataName]: ApolloReactHoc.DataValue<GetServicesQuery, GetServicesQueryVariables>
     } & TChildProps;
@@ -949,7 +929,7 @@ export type FindServiceComponentProps = Omit<ApolloReactComponents.QueryComponen
     export const FindServiceComponent = (props: FindServiceComponentProps) => (
       <ApolloReactComponents.Query<FindServiceQuery, FindServiceQueryVariables> query={FindServiceDocument} {...props} />
     );
-
+    
 export type FindServiceProps<TChildProps = {}, TDataName extends string = 'data'> = {
       [key in TDataName]: ApolloReactHoc.DataValue<FindServiceQuery, FindServiceQueryVariables>
     } & TChildProps;
@@ -977,7 +957,7 @@ export type EditServiceComponentProps = Omit<ApolloReactComponents.MutationCompo
     export const EditServiceComponent = (props: EditServiceComponentProps) => (
       <ApolloReactComponents.Mutation<EditServiceMutation, EditServiceMutationVariables> mutation={EditServiceDocument} {...props} />
     );
-
+    
 export type EditServiceProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
       [key in TDataName]: ApolloReactCommon.MutationFunction<EditServiceMutation, EditServiceMutationVariables>
     } & TChildProps;
@@ -1006,7 +986,7 @@ export type CreateServiceComponentProps = Omit<ApolloReactComponents.MutationCom
     export const CreateServiceComponent = (props: CreateServiceComponentProps) => (
       <ApolloReactComponents.Mutation<CreateServiceMutation, CreateServiceMutationVariables> mutation={CreateServiceDocument} {...props} />
     );
-
+    
 export type CreateServiceProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
       [key in TDataName]: ApolloReactCommon.MutationFunction<CreateServiceMutation, CreateServiceMutationVariables>
     } & TChildProps;
@@ -1035,7 +1015,7 @@ export type RemoveServiceComponentProps = Omit<ApolloReactComponents.MutationCom
     export const RemoveServiceComponent = (props: RemoveServiceComponentProps) => (
       <ApolloReactComponents.Mutation<RemoveServiceMutation, RemoveServiceMutationVariables> mutation={RemoveServiceDocument} {...props} />
     );
-
+    
 export type RemoveServiceProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
       [key in TDataName]: ApolloReactCommon.MutationFunction<RemoveServiceMutation, RemoveServiceMutationVariables>
     } & TChildProps;
