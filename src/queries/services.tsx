@@ -3,7 +3,11 @@ import {volunteerAllFieldsFragment} from "./volunteers";
 
 const serviceAllFieldsFragment = gql`
     fragment servicesAllFields on Service {
-        id, description, volunteers {
+        id, description, call_time,
+        departure_time, arrival_time,
+        withdrawal_time, locality, neighborhood,
+        address, place, alerted_by, phone,
+        received_by, crew, volunteers {
             ...volunteerAllFields
         }
     }

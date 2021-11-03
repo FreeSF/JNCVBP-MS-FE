@@ -32,6 +32,18 @@ export type CreateRankInput = {
 export type CreateServiceInput = {
   description: Scalars['String'];
   volunteers?: Maybe<Array<ServiceVolunteersInput>>;
+  call_time: Scalars['String'];
+  departure_time: Scalars['String'];
+  arrival_time: Scalars['String'];
+  withdrawal_time: Scalars['String'];
+  locality: Scalars['String'];
+  neighborhood: Scalars['String'];
+  address: Scalars['String'];
+  place: Scalars['String'];
+  alerted_by: Scalars['String'];
+  phone: Scalars['String'];
+  received_by: Scalars['String'];
+  crew: Scalars['String'];
 };
 
 export type CreateUserInput = {
@@ -196,6 +208,18 @@ export type Service = {
   id: Scalars['String'];
   description: Scalars['String'];
   volunteers: Array<Volunteer>;
+  call_time: Scalars['String'];
+  departure_time: Scalars['String'];
+  arrival_time: Scalars['String'];
+  withdrawal_time: Scalars['String'];
+  locality: Scalars['String'];
+  neighborhood: Scalars['String'];
+  address: Scalars['String'];
+  place: Scalars['String'];
+  alerted_by: Scalars['String'];
+  phone: Scalars['String'];
+  received_by: Scalars['String'];
+  crew: Scalars['String'];
 };
 
 export type UpdateDutyInput = {
@@ -215,6 +239,18 @@ export type UpdateRankInput = {
 export type UpdateServiceInput = {
   description?: Maybe<Scalars['String']>;
   volunteers?: Maybe<Array<ServiceVolunteersInput>>;
+  call_time?: Maybe<Scalars['String']>;
+  departure_time?: Maybe<Scalars['String']>;
+  arrival_time?: Maybe<Scalars['String']>;
+  withdrawal_time?: Maybe<Scalars['String']>;
+  locality?: Maybe<Scalars['String']>;
+  neighborhood?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+  place?: Maybe<Scalars['String']>;
+  alerted_by?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  received_by?: Maybe<Scalars['String']>;
+  crew?: Maybe<Scalars['String']>;
   id: Scalars['String'];
 };
 
@@ -404,7 +440,7 @@ export type DeleteRankMutation = (
 
 export type ServicesAllFieldsFragment = (
   { __typename?: 'Service' }
-  & Pick<Service, 'id' | 'description'>
+  & Pick<Service, 'id' | 'description' | 'call_time' | 'departure_time' | 'arrival_time' | 'withdrawal_time' | 'locality' | 'neighborhood' | 'address' | 'place' | 'alerted_by' | 'phone' | 'received_by' | 'crew'>
   & { volunteers: Array<(
     { __typename?: 'Volunteer' }
     & VolunteerAllFieldsFragment
@@ -576,6 +612,18 @@ export const ServicesAllFieldsFragmentDoc = gql`
     fragment servicesAllFields on Service {
   id
   description
+  call_time
+  departure_time
+  arrival_time
+  withdrawal_time
+  locality
+  neighborhood
+  address
+  place
+  alerted_by
+  phone
+  received_by
+  crew
   volunteers {
     ...volunteerAllFields
   }
