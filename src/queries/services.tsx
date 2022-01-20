@@ -9,7 +9,8 @@ const serviceAllFieldsFragment = gql`
         address, place, alerted_by, phone,
         received_by, crew, volunteers {
             ...volunteerAllFields
-        }
+        }, officer_in_charge { ...volunteerAllFields },
+        
     }
     ${volunteerAllFieldsFragment}
 `;

@@ -92,7 +92,7 @@ const CreateServicePage:React.FC<TheProps> = props => {
             {
               _.times(volunteersQuantity, i => (
                 <React.Fragment>
-                  <Select field={`volunteers[${i}].id`} initialValue={undefined}>
+                  <Select field={`volunteers[${i}].id`} initialValue={_.get(getVolunteersQuery, 'data.volunteers[0].id', undefined)} >
                     {
                       getVolunteersQuery.data.volunteers.map(volunteer =>
                           <option value={volunteer.id} key={volunteer.id}>{volunteer.name}</option>

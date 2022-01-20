@@ -23,6 +23,14 @@ export type CreateDutyInput = {
   description?: Maybe<Scalars['String']>;
 };
 
+export type CreateFireCauseInput = {
+  name: Scalars['String'];
+};
+
+export type CreateFireTypeInput = {
+  name: Scalars['String'];
+};
+
 export type CreateRankInput = {
   name: Scalars['String'];
   isDeletable?: Maybe<Scalars['Boolean']>;
@@ -62,6 +70,18 @@ export type Duty = {
   description?: Maybe<Scalars['String']>;
 };
 
+export type FireCause = {
+  __typename?: 'FireCause';
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type FireType = {
+  __typename?: 'FireType';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createUser: User;
@@ -79,6 +99,12 @@ export type Mutation = {
   createVolunteer: Volunteer;
   updateVolunteer: Volunteer;
   removeVolunteer: Volunteer;
+  createFireType: FireType;
+  updateFireType: FireType;
+  removeFireType: FireType;
+  createFireCause: FireCause;
+  updateFireCause: FireCause;
+  removeFireCause: FireCause;
 };
 
 
@@ -156,6 +182,36 @@ export type MutationRemoveVolunteerArgs = {
   id: Scalars['String'];
 };
 
+
+export type MutationCreateFireTypeArgs = {
+  createFireTypeInput: CreateFireTypeInput;
+};
+
+
+export type MutationUpdateFireTypeArgs = {
+  updateFireTypeInput: UpdateFireTypeInput;
+};
+
+
+export type MutationRemoveFireTypeArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationCreateFireCauseArgs = {
+  createFireCauseInput: CreateFireCauseInput;
+};
+
+
+export type MutationUpdateFireCauseArgs = {
+  updateFireCauseInput: UpdateFireCauseInput;
+};
+
+
+export type MutationRemoveFireCauseArgs = {
+  id: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   users: Array<User>;
@@ -168,6 +224,8 @@ export type Query = {
   service: Service;
   volunteers: Array<Volunteer>;
   volunteer: Volunteer;
+  fireType: FireType;
+  fireCause: FireCause;
 };
 
 
@@ -195,6 +253,16 @@ export type QueryVolunteerArgs = {
   id: Scalars['String'];
 };
 
+
+export type QueryFireTypeArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryFireCauseArgs = {
+  id: Scalars['String'];
+};
+
 export type Rank = {
   __typename?: 'Rank';
   id: Scalars['String'];
@@ -205,27 +273,51 @@ export type Rank = {
 
 export type Service = {
   __typename?: 'Service';
-  id: Scalars['String'];
-  description: Scalars['String'];
-  volunteers: Array<Volunteer>;
-  call_time: Scalars['String'];
-  departure_time: Scalars['String'];
-  arrival_time: Scalars['String'];
-  withdrawal_time: Scalars['String'];
-  locality: Scalars['String'];
-  neighborhood: Scalars['String'];
-  address: Scalars['String'];
-  place: Scalars['String'];
-  alerted_by: Scalars['String'];
-  phone: Scalars['String'];
-  received_by: Scalars['String'];
-  crew: Scalars['String'];
+  _id?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  volunteers?: Maybe<Array<Volunteer>>;
+  call_time?: Maybe<Scalars['String']>;
+  departure_time?: Maybe<Scalars['String']>;
+  arrival_time?: Maybe<Scalars['String']>;
+  withdrawal_time?: Maybe<Scalars['String']>;
+  locality?: Maybe<Scalars['String']>;
+  neighborhood?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+  place?: Maybe<Scalars['String']>;
+  alerted_by?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  received_by?: Maybe<Scalars['String']>;
+  crew?: Maybe<Scalars['String']>;
+  officer_in_charge?: Maybe<Volunteer>;
+  fire_type?: Maybe<FireType>;
+  fire_type_total_surface?: Maybe<Scalars['Float']>;
+  fire_type_burned_surface?: Maybe<Scalars['Float']>;
+  fire_type_description?: Maybe<Scalars['String']>;
+  affected_owner?: Maybe<Scalars['String']>;
+  affected_owner_description?: Maybe<Scalars['String']>;
+  possible_cause?: Maybe<FireCause>;
+  possible_cause_other_description?: Maybe<Scalars['String']>;
+  proportion?: Maybe<Scalars['String']>;
+  fire_class?: Maybe<Array<Scalars['String']>>;
+  magnitude?: Maybe<Scalars['String']>;
+  damage?: Maybe<Scalars['String']>;
 };
 
 export type UpdateDutyInput = {
   name?: Maybe<Scalars['String']>;
   isDeletable?: Maybe<Scalars['Boolean']>;
   description?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+};
+
+export type UpdateFireCauseInput = {
+  name: Scalars['String'];
+  id: Scalars['String'];
+};
+
+export type UpdateFireTypeInput = {
+  name: Scalars['String'];
   id: Scalars['String'];
 };
 
@@ -272,7 +364,8 @@ export type User = {
 
 export type Volunteer = {
   __typename?: 'Volunteer';
-  id: Scalars['String'];
+  id?: Maybe<Scalars['String']>;
+  _id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
 };
 
@@ -367,6 +460,11 @@ export type DeleteDutyMutation = (
   ) }
 );
 
+export type FireTypeAllFieldsFragment = (
+  { __typename?: 'FireType' }
+  & Pick<FireType, 'id' | 'name'>
+);
+
 export type RankAllFieldsFragment = (
   { __typename?: 'Rank' }
   & Pick<Rank, 'id' | 'name' | 'isDeletable' | 'description'>
@@ -441,7 +539,10 @@ export type DeleteRankMutation = (
 export type ServicesAllFieldsFragment = (
   { __typename?: 'Service' }
   & Pick<Service, 'id' | 'description' | 'call_time' | 'departure_time' | 'arrival_time' | 'withdrawal_time' | 'locality' | 'neighborhood' | 'address' | 'place' | 'alerted_by' | 'phone' | 'received_by' | 'crew'>
-  & { volunteers: Array<(
+  & { volunteers?: Maybe<Array<(
+    { __typename?: 'Volunteer' }
+    & VolunteerAllFieldsFragment
+  )>>, officer_in_charge?: Maybe<(
     { __typename?: 'Volunteer' }
     & VolunteerAllFieldsFragment
   )> }
@@ -594,6 +695,12 @@ export const DutyAllFieldsFragmentDoc = gql`
   description
 }
     `;
+export const FireTypeAllFieldsFragmentDoc = gql`
+    fragment fireTypeAllFields on FireType {
+  id
+  name
+}
+    `;
 export const RankAllFieldsFragmentDoc = gql`
     fragment rankAllFields on Rank {
   id
@@ -625,6 +732,9 @@ export const ServicesAllFieldsFragmentDoc = gql`
   received_by
   crew
   volunteers {
+    ...volunteerAllFields
+  }
+  officer_in_charge {
     ...volunteerAllFields
   }
 }
