@@ -5,3 +5,12 @@ export const fireTypeAllFieldsFragment = gql`
         id, name
     }
 `;
+
+export const GET_FIRE_TYPES = gql`
+    query getFireTypes {
+        fireTypes {
+            ...fireTypeAllFields
+        }
+    }
+    ${fireTypeAllFieldsFragment}
+`;
