@@ -23,6 +23,18 @@ export type CreateDutyInput = {
   description?: Maybe<Scalars['String']>;
 };
 
+export type CreateFireCauseInput = {
+  name: Scalars['String'];
+};
+
+export type CreateFireClassInput = {
+  name: Scalars['String'];
+};
+
+export type CreateFireTypeInput = {
+  name: Scalars['String'];
+};
+
 export type CreateRankInput = {
   name: Scalars['String'];
   isDeletable?: Maybe<Scalars['Boolean']>;
@@ -32,6 +44,30 @@ export type CreateRankInput = {
 export type CreateServiceInput = {
   description: Scalars['String'];
   volunteers?: Maybe<Array<ServiceVolunteersInput>>;
+  call_time: Scalars['String'];
+  departure_time: Scalars['String'];
+  arrival_time: Scalars['String'];
+  withdrawal_time: Scalars['String'];
+  locality: Scalars['String'];
+  neighborhood: Scalars['String'];
+  address: Scalars['String'];
+  place: Scalars['String'];
+  alerted_by: Scalars['String'];
+  phone: Scalars['String'];
+  received_by: Scalars['String'];
+  crew: Scalars['String'];
+  officer_in_charge: OfficerInChargeInput;
+  fire_type: FireTypeInput;
+  fire_type_total_surface: Scalars['Float'];
+  fire_type_burned_surface: Scalars['Float'];
+  fire_type_description: Scalars['String'];
+  affected_owner: Scalars['String'];
+  affected_owner_description: Scalars['String'];
+  possible_cause: FireCauseInput;
+  possible_cause_other_description: Scalars['String'];
+  fire_class: Array<FireClassInput>;
+  magnitude: Scalars['String'];
+  damage: Scalars['String'];
 };
 
 export type CreateUserInput = {
@@ -48,6 +84,28 @@ export type Duty = {
   name: Scalars['String'];
   isDeletable?: Maybe<Scalars['Boolean']>;
   description?: Maybe<Scalars['String']>;
+};
+
+export type FireCause = {
+  __typename?: 'FireCause';
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type FireCauseInput = {
+  id: Scalars['String'];
+};
+
+export type FireClass = {
+  __typename?: 'FireClass';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type FireType = {
+  __typename?: 'FireType';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -67,6 +125,15 @@ export type Mutation = {
   createVolunteer: Volunteer;
   updateVolunteer: Volunteer;
   removeVolunteer: Volunteer;
+  createFireType: FireType;
+  updateFireType: FireType;
+  removeFireType: FireType;
+  createFireCause: FireCause;
+  updateFireCause: FireCause;
+  removeFireCause: FireCause;
+  createFireClass: FireClass;
+  updateFireClass: FireClass;
+  removeFireClass: FireClass;
 };
 
 
@@ -144,6 +211,51 @@ export type MutationRemoveVolunteerArgs = {
   id: Scalars['String'];
 };
 
+
+export type MutationCreateFireTypeArgs = {
+  createFireTypeInput: CreateFireTypeInput;
+};
+
+
+export type MutationUpdateFireTypeArgs = {
+  updateFireTypeInput: UpdateFireTypeInput;
+};
+
+
+export type MutationRemoveFireTypeArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationCreateFireCauseArgs = {
+  createFireCauseInput: CreateFireCauseInput;
+};
+
+
+export type MutationUpdateFireCauseArgs = {
+  updateFireCauseInput: UpdateFireCauseInput;
+};
+
+
+export type MutationRemoveFireCauseArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationCreateFireClassArgs = {
+  createFireClassInput: CreateFireClassInput;
+};
+
+
+export type MutationUpdateFireClassArgs = {
+  updateFireClassInput: UpdateFireClassInput;
+};
+
+
+export type MutationRemoveFireClassArgs = {
+  id: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   users: Array<User>;
@@ -156,6 +268,12 @@ export type Query = {
   service: Service;
   volunteers: Array<Volunteer>;
   volunteer: Volunteer;
+  fireTypes: Array<FireType>;
+  fireType: FireType;
+  fireCauses: Array<FireCause>;
+  fireCause: FireCause;
+  fireClasses: Array<FireClass>;
+  fireClass: FireClass;
 };
 
 
@@ -183,6 +301,21 @@ export type QueryVolunteerArgs = {
   id: Scalars['String'];
 };
 
+
+export type QueryFireTypeArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryFireCauseArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryFireClassArgs = {
+  id: Scalars['Int'];
+};
+
 export type Rank = {
   __typename?: 'Rank';
   id: Scalars['String'];
@@ -193,15 +326,55 @@ export type Rank = {
 
 export type Service = {
   __typename?: 'Service';
-  id: Scalars['String'];
-  description: Scalars['String'];
-  volunteers: Array<Volunteer>;
+  _id?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  volunteers?: Maybe<Array<Volunteer>>;
+  call_time?: Maybe<Scalars['String']>;
+  departure_time?: Maybe<Scalars['String']>;
+  arrival_time?: Maybe<Scalars['String']>;
+  withdrawal_time?: Maybe<Scalars['String']>;
+  locality?: Maybe<Scalars['String']>;
+  neighborhood?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+  place?: Maybe<Scalars['String']>;
+  alerted_by?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  received_by?: Maybe<Scalars['String']>;
+  crew?: Maybe<Scalars['String']>;
+  officer_in_charge?: Maybe<Volunteer>;
+  fire_type?: Maybe<FireType>;
+  fire_type_total_surface?: Maybe<Scalars['Float']>;
+  fire_type_burned_surface?: Maybe<Scalars['Float']>;
+  fire_type_description?: Maybe<Scalars['String']>;
+  affected_owner?: Maybe<Scalars['String']>;
+  affected_owner_description?: Maybe<Scalars['String']>;
+  possible_cause?: Maybe<FireCause>;
+  possible_cause_other_description?: Maybe<Scalars['String']>;
+  fire_class?: Maybe<Array<FireClass>>;
+  magnitude?: Maybe<Scalars['String']>;
+  damage?: Maybe<Scalars['String']>;
 };
 
 export type UpdateDutyInput = {
   name?: Maybe<Scalars['String']>;
   isDeletable?: Maybe<Scalars['Boolean']>;
   description?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+};
+
+export type UpdateFireCauseInput = {
+  name: Scalars['String'];
+  id: Scalars['String'];
+};
+
+export type UpdateFireClassInput = {
+  name: Scalars['String'];
+  id: Scalars['String'];
+};
+
+export type UpdateFireTypeInput = {
+  name: Scalars['String'];
   id: Scalars['String'];
 };
 
@@ -215,6 +388,30 @@ export type UpdateRankInput = {
 export type UpdateServiceInput = {
   description?: Maybe<Scalars['String']>;
   volunteers?: Maybe<Array<ServiceVolunteersInput>>;
+  call_time?: Maybe<Scalars['String']>;
+  departure_time?: Maybe<Scalars['String']>;
+  arrival_time?: Maybe<Scalars['String']>;
+  withdrawal_time?: Maybe<Scalars['String']>;
+  locality?: Maybe<Scalars['String']>;
+  neighborhood?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+  place?: Maybe<Scalars['String']>;
+  alerted_by?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  received_by?: Maybe<Scalars['String']>;
+  crew?: Maybe<Scalars['String']>;
+  officer_in_charge?: Maybe<OfficerInChargeInput>;
+  fire_type?: Maybe<FireTypeInput>;
+  fire_type_total_surface?: Maybe<Scalars['Float']>;
+  fire_type_burned_surface?: Maybe<Scalars['Float']>;
+  fire_type_description?: Maybe<Scalars['String']>;
+  affected_owner?: Maybe<Scalars['String']>;
+  affected_owner_description?: Maybe<Scalars['String']>;
+  possible_cause?: Maybe<FireCauseInput>;
+  possible_cause_other_description?: Maybe<Scalars['String']>;
+  fire_class?: Maybe<Array<FireClassInput>>;
+  magnitude?: Maybe<Scalars['String']>;
+  damage?: Maybe<Scalars['String']>;
   id: Scalars['String'];
 };
 
@@ -236,8 +433,21 @@ export type User = {
 
 export type Volunteer = {
   __typename?: 'Volunteer';
-  id: Scalars['String'];
+  id?: Maybe<Scalars['String']>;
+  _id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+};
+
+export type FireClassInput = {
+  id: Scalars['String'];
+};
+
+export type FireTypeInput = {
+  id: Scalars['String'];
+};
+
+export type OfficerInChargeInput = {
+  id: Scalars['String'];
 };
 
 export type ServiceVolunteersInput = {
@@ -331,6 +541,54 @@ export type DeleteDutyMutation = (
   ) }
 );
 
+export type FireCauseAllFieldsFragment = (
+  { __typename?: 'FireCause' }
+  & Pick<FireCause, 'id' | 'name'>
+);
+
+export type GetFireCausesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFireCausesQuery = (
+  { __typename?: 'Query' }
+  & { fireCauses: Array<(
+    { __typename?: 'FireCause' }
+    & FireCauseAllFieldsFragment
+  )> }
+);
+
+export type FireClassAllFieldsFragment = (
+  { __typename?: 'FireClass' }
+  & Pick<FireClass, 'id' | 'name'>
+);
+
+export type GetFireClassesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFireClassesQuery = (
+  { __typename?: 'Query' }
+  & { fireClasses: Array<(
+    { __typename?: 'FireClass' }
+    & FireClassAllFieldsFragment
+  )> }
+);
+
+export type FireTypeAllFieldsFragment = (
+  { __typename?: 'FireType' }
+  & Pick<FireType, 'id' | 'name'>
+);
+
+export type GetFireTypesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFireTypesQuery = (
+  { __typename?: 'Query' }
+  & { fireTypes: Array<(
+    { __typename?: 'FireType' }
+    & FireTypeAllFieldsFragment
+  )> }
+);
+
 export type RankAllFieldsFragment = (
   { __typename?: 'Rank' }
   & Pick<Rank, 'id' | 'name' | 'isDeletable' | 'description'>
@@ -404,11 +662,23 @@ export type DeleteRankMutation = (
 
 export type ServicesAllFieldsFragment = (
   { __typename?: 'Service' }
-  & Pick<Service, 'id' | 'description'>
-  & { volunteers: Array<(
+  & Pick<Service, 'id' | 'description' | 'call_time' | 'departure_time' | 'arrival_time' | 'withdrawal_time' | 'locality' | 'neighborhood' | 'address' | 'place' | 'alerted_by' | 'phone' | 'received_by' | 'crew' | 'fire_type_total_surface' | 'fire_type_burned_surface' | 'fire_type_description' | 'affected_owner' | 'affected_owner_description' | 'possible_cause_other_description' | 'magnitude' | 'damage'>
+  & { volunteers?: Maybe<Array<(
     { __typename?: 'Volunteer' }
     & VolunteerAllFieldsFragment
-  )> }
+  )>>, officer_in_charge?: Maybe<(
+    { __typename?: 'Volunteer' }
+    & VolunteerAllFieldsFragment
+  )>, fire_type?: Maybe<(
+    { __typename?: 'FireType' }
+    & FireTypeAllFieldsFragment
+  )>, possible_cause?: Maybe<(
+    { __typename?: 'FireCause' }
+    & FireCauseAllFieldsFragment
+  )>, fire_class?: Maybe<Array<(
+    { __typename?: 'FireClass' }
+    & FireClassAllFieldsFragment
+  )>> }
 );
 
 export type GetServicesQueryVariables = Exact<{ [key: string]: never; }>;
@@ -572,15 +842,68 @@ export const VolunteerAllFieldsFragmentDoc = gql`
   name
 }
     `;
+export const FireTypeAllFieldsFragmentDoc = gql`
+    fragment fireTypeAllFields on FireType {
+  id
+  name
+}
+    `;
+export const FireCauseAllFieldsFragmentDoc = gql`
+    fragment fireCauseAllFields on FireCause {
+  id
+  name
+}
+    `;
+export const FireClassAllFieldsFragmentDoc = gql`
+    fragment fireClassAllFields on FireClass {
+  id
+  name
+}
+    `;
 export const ServicesAllFieldsFragmentDoc = gql`
     fragment servicesAllFields on Service {
   id
   description
+  call_time
+  departure_time
+  arrival_time
+  withdrawal_time
+  locality
+  neighborhood
+  address
+  place
+  alerted_by
+  phone
+  received_by
+  crew
   volunteers {
     ...volunteerAllFields
   }
+  officer_in_charge {
+    ...volunteerAllFields
+  }
+  fire_type {
+    ...fireTypeAllFields
+  }
+  fire_type_total_surface
+  fire_type_burned_surface
+  fire_type_description
+  affected_owner
+  affected_owner_description
+  possible_cause {
+    ...fireCauseAllFields
+  }
+  possible_cause_other_description
+  fire_class {
+    ...fireClassAllFields
+  }
+  magnitude
+  damage
 }
-    ${VolunteerAllFieldsFragmentDoc}`;
+    ${VolunteerAllFieldsFragmentDoc}
+${FireTypeAllFieldsFragmentDoc}
+${FireCauseAllFieldsFragmentDoc}
+${FireClassAllFieldsFragmentDoc}`;
 export const GetVolunteeersDocument = gql`
     query getVolunteeers {
   volunteers {
@@ -749,6 +1072,87 @@ export function withDeleteDuty<TProps, TChildProps = {}, TDataName extends strin
 };
 export type DeleteDutyMutationResult = ApolloReactCommon.MutationResult<DeleteDutyMutation>;
 export type DeleteDutyMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteDutyMutation, DeleteDutyMutationVariables>;
+export const GetFireCausesDocument = gql`
+    query getFireCauses {
+  fireCauses {
+    ...fireCauseAllFields
+  }
+}
+    ${FireCauseAllFieldsFragmentDoc}`;
+export type GetFireCausesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetFireCausesQuery, GetFireCausesQueryVariables>, 'query'>;
+
+    export const GetFireCausesComponent = (props: GetFireCausesComponentProps) => (
+      <ApolloReactComponents.Query<GetFireCausesQuery, GetFireCausesQueryVariables> query={GetFireCausesDocument} {...props} />
+    );
+    
+export type GetFireCausesProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetFireCausesQuery, GetFireCausesQueryVariables>
+    } & TChildProps;
+export function withGetFireCauses<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetFireCausesQuery,
+  GetFireCausesQueryVariables,
+  GetFireCausesProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetFireCausesQuery, GetFireCausesQueryVariables, GetFireCausesProps<TChildProps, TDataName>>(GetFireCausesDocument, {
+      alias: 'getFireCauses',
+      ...operationOptions
+    });
+};
+export type GetFireCausesQueryResult = ApolloReactCommon.QueryResult<GetFireCausesQuery, GetFireCausesQueryVariables>;
+export const GetFireClassesDocument = gql`
+    query getFireClasses {
+  fireClasses {
+    ...fireClassAllFields
+  }
+}
+    ${FireClassAllFieldsFragmentDoc}`;
+export type GetFireClassesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetFireClassesQuery, GetFireClassesQueryVariables>, 'query'>;
+
+    export const GetFireClassesComponent = (props: GetFireClassesComponentProps) => (
+      <ApolloReactComponents.Query<GetFireClassesQuery, GetFireClassesQueryVariables> query={GetFireClassesDocument} {...props} />
+    );
+    
+export type GetFireClassesProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetFireClassesQuery, GetFireClassesQueryVariables>
+    } & TChildProps;
+export function withGetFireClasses<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetFireClassesQuery,
+  GetFireClassesQueryVariables,
+  GetFireClassesProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetFireClassesQuery, GetFireClassesQueryVariables, GetFireClassesProps<TChildProps, TDataName>>(GetFireClassesDocument, {
+      alias: 'getFireClasses',
+      ...operationOptions
+    });
+};
+export type GetFireClassesQueryResult = ApolloReactCommon.QueryResult<GetFireClassesQuery, GetFireClassesQueryVariables>;
+export const GetFireTypesDocument = gql`
+    query getFireTypes {
+  fireTypes {
+    ...fireTypeAllFields
+  }
+}
+    ${FireTypeAllFieldsFragmentDoc}`;
+export type GetFireTypesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetFireTypesQuery, GetFireTypesQueryVariables>, 'query'>;
+
+    export const GetFireTypesComponent = (props: GetFireTypesComponentProps) => (
+      <ApolloReactComponents.Query<GetFireTypesQuery, GetFireTypesQueryVariables> query={GetFireTypesDocument} {...props} />
+    );
+    
+export type GetFireTypesProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetFireTypesQuery, GetFireTypesQueryVariables>
+    } & TChildProps;
+export function withGetFireTypes<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetFireTypesQuery,
+  GetFireTypesQueryVariables,
+  GetFireTypesProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetFireTypesQuery, GetFireTypesQueryVariables, GetFireTypesProps<TChildProps, TDataName>>(GetFireTypesDocument, {
+      alias: 'getFireTypes',
+      ...operationOptions
+    });
+};
+export type GetFireTypesQueryResult = ApolloReactCommon.QueryResult<GetFireTypesQuery, GetFireTypesQueryVariables>;
 export const GetRanksDocument = gql`
     query getRanks {
   ranks {

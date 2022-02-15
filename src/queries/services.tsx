@@ -1,13 +1,36 @@
 import {gql} from "apollo-boost";
 import {volunteerAllFieldsFragment} from "./volunteers";
+import {fireTypeAllFieldsFragment} from "./fireType";
+import {fireCauseAllFieldsFragment} from "./fireCause";
+import {fireClassAllFieldsFragment} from "./fireClass";
 
 const serviceAllFieldsFragment = gql`
     fragment servicesAllFields on Service {
-        id, description, volunteers {
+        id description call_time
+        departure_time arrival_time
+        withdrawal_time locality neighborhood
+        address place alerted_by phone
+        received_by crew volunteers {
             ...volunteerAllFields
+        }, officer_in_charge { ...volunteerAllFields }
+        fire_type {
+            ...fireTypeAllFields
         }
+        fire_type_total_surface
+        fire_type_burned_surface
+        fire_type_description
+        affected_owner
+        affected_owner_description
+        possible_cause {...fireCauseAllFields}
+        possible_cause_other_description
+        fire_class {...fireClassAllFields}
+        magnitude
+        damage
     }
     ${volunteerAllFieldsFragment}
+    ${fireTypeAllFieldsFragment}
+    ${fireCauseAllFieldsFragment}
+    ${fireClassAllFieldsFragment}
 `;
 
 export const GET_SERVICES = gql`
