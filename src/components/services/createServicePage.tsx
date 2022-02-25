@@ -36,34 +36,35 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
   const getFireClassesQuery = useQuery<GetFireClassesQuery>(GET_FIRE_CLASSES);
 
   // Example of how to do it without informed
-  const [input, setInput] = useState<CreateServiceInput>({
-    address: "",
+  const defaultValues: CreateServiceInput = {
+    address: "Calle 123",
     affected_owner: "0",
     affected_owner_description: "0",
-    alerted_by: "",
-    arrival_time: "",
-    call_time: "",
-    crew: "",
-    damage: "",
-    departure_time: "",
-    description: "",
-    fire_class: [{ id: "an object id" }],
-    fire_type: { id: "an object id" },
+    alerted_by: "Alguien",
+    call_time: "00:00",
+    departure_time: "01:00",
+    arrival_time: "02:00",
+    withdrawal_time: "02:01",
+    crew: "The Crew",
+    damage: "There was some damage",
+    description: "---",
+    fire_class: undefined,
+    fire_type: undefined,
     fire_type_burned_surface: 0,
     fire_type_description: "0",
     fire_type_total_surface: 0,
-    locality: "",
-    magnitude: "",
-    neighborhood: "",
-    officer_in_charge: { id: "an object id" },
-    phone: "",
-    place: "",
-    possible_cause: { id: "x" },
-    possible_cause_other_description: "0",
-    received_by: "",
+    locality: "Cap. Miranda",
+    magnitude: "Great",
+    neighborhood: "Centro",
+    officer_in_charge: undefined,
+    phone: "+595",
+    place: "Cerca",
+    possible_cause: undefined,
+    possible_cause_other_description: "----",
+    received_by: "Someone",
     volunteers: [],
-    withdrawal_time: "",
-  });
+  };
+  const [input, setInput] = useState<CreateServiceInput>(defaultValues);
 
   const [volunteersQuantity, setVolunteersQuantity] = useState(0);
   const [fireClassQuantity, setFireClassQuantity] = useState(0);
@@ -84,7 +85,7 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
       },
       refetchQueries: [{ query: GET_SERVICES }],
     }).then((value) => {
-      props.history.push("/services");
+      //props.history.push("/services");
     });
   };
 
@@ -104,7 +105,11 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
           }}
         />
       </div>
-      <Form getApi={(formRef: FormApi<CreateServiceInput>) => setFormRefCreate(formRef)} onSubmit={handleSubmit}>
+      <Form
+        getApi={(formRef: FormApi<CreateServiceInput>) => setFormRefCreate(formRef)}
+        onSubmit={handleSubmit}
+        initialValues={defaultValues}
+      >
         {({ formApi, formState }) => (
           <div>
             <label>Descripción:</label>
@@ -151,7 +156,7 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
             {_.times(volunteersQuantity, (i) => (
               <React.Fragment>
                 <Select
-                  field={`volunteers[${i}].id`}
+                  field={`volunteers[${i}]._id`}
                   initialValue={_.get(getVolunteersQuery, "data.volunteers[0].id", undefined)}
                 >
                   {getVolunteersQuery.data.volunteers.map((volunteer) => (
@@ -182,7 +187,7 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
             <br />
 
             <label>Oficial a cargo:</label>
-            <Select field={`officer_in_charge.id`} initialValue={undefined}>
+            <Select field={`officer_in_charge._id`} initialValue={undefined}>
               {getVolunteersQuery.data.volunteers.map((volunteer) => (
                 <option value={volunteer.id} key={volunteer.id}>
                   {volunteer.name}
@@ -191,7 +196,7 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
             </Select>
 
             <label>Tipo de Fuego:</label>
-            <Select field={`fire_type.id`} initialValue={undefined}>
+            <Select field={`fire_type._id`} initialValue={undefined}>
               {getFireTypesQuery.data.fireTypes.map((fireType) => (
                 <option value={fireType.id} key={fireType.id}>
                   {fireType.name}
@@ -209,7 +214,7 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
             <label>Afectado (descripción):</label>
             <Text field="affected_owner_description" />
             <label>Causa Posible: </label>
-            <Select field={`possible_cause.id`} initialValue={undefined}>
+            <Select field={`possible_cause._id`} initialValue={undefined}>
               {getFireCausesQuery.data.fireCauses.map((fireCause) => (
                 <option value={fireCause.id} key={fireCause.id}>
                   {fireCause.name}
@@ -223,7 +228,7 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
             <label>Fuego Clase:</label>
             {_.times(fireClassQuantity, (i) => (
               <React.Fragment>
-                <Select field={`fire_class[${i}].id`} /*initialValue={getFireClassesQuery.data.fireClasses}*/>
+                <Select field={`fire_class[${i}]._id`} /*initialValue={getFireClassesQuery.data.fireClasses}*/>
                   {getFireClassesQuery.data.fireClasses.map((fireClass) => (
                     <option value={fireClass.id} key={fireClass.id}>
                       {fireClass.name}
