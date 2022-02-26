@@ -45,10 +45,10 @@ const GuardsPage = (props) => {
       text: "Acciones",
       formatter: (cell, row: ServicesAllFieldsFragment) => (
         <div>
-          <Button className="btn-fill btn-sm" href={`/guards/${row.id}`} variant="info">
+          <Button className="btn-fill btn-sm" onClick={() => history.push(`/guards/${row.id}`)} variant="info">
             Ver
           </Button>
-          <Button className="btn-fill btn-sm" href={`/guards/${row.id}/edit`} variant="success">
+          <Button className="btn-fill btn-sm" onClick={() => history.push(`/guards/${row.id}/edit`)} variant="success">
             Editar
           </Button>
           <Button

@@ -8,12 +8,14 @@ import { GET_VOLUNTEERS } from "../../queries/volunteers";
 import { CREATE_GUARD, GET_GUARDS } from "../../queries/Guards";
 import { Button } from "react-bootstrap";
 import Spinner from "../spinner";
+import { useHistory } from "react-router-dom";
 
 const CreateGuardPage = (props) => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateGuardInput>>(null);
   const [volunteersQuantity, setVolunteersQuantity] = useState<number>(0);
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
   const [createGuard, createdGuard] = useMutation<CreateGuardMutation, CreateGuardMutationVariables>(CREATE_GUARD);
+  const history = useHistory();
 
   const defaultValues: CreateGuardInput = {
     start_time: new Date().getTime(),
@@ -36,7 +38,7 @@ const CreateGuardPage = (props) => {
 
   return (
     <div>
-      <h1>Create Guard</h1>
+      <h1>Crear Guardia</h1>
 
       <Form
         getApi={(formRef: FormApi<CreateGuardInput>) => setFormRefCreate(formRef)}
@@ -105,7 +107,7 @@ const CreateGuardPage = (props) => {
             </button>
             <br />
             <Button type="submit">Crear Guardia</Button>
-            <Button href="/guards">Volver</Button>
+            <Button onClick={() => history.push("/guards")}>Volver</Button>
           </div>
         )}
       </Form>

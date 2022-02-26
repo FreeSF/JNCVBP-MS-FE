@@ -14,6 +14,7 @@ import ShowServicePage from "./components/services/showServicePage";
 import CreateServicePage from "./components/services/createServicePage";
 import GuardsPage from "./components/Guards/GuardsPage";
 import CreateGuardPage from "./components/Guards/CreateGuardPage";
+import ShowGuardPage from "./components/Guards/ShowGuardPage";
 
 const dutiesRoutes = [
   {
@@ -102,6 +103,11 @@ const guardRoutes = [
     path: "/guards/create",
     name: "Crear Guardia",
     component: CreateGuardPage,
+  },
+  {
+    path: "/guards/:id",
+    name: "Guardia",
+    component: ShowGuardPage,
   },
 ];
 
