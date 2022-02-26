@@ -1,8 +1,8 @@
-import gql from 'graphql-tag';
-import * as React from 'react';
-import * as ApolloReactCommon from '@apollo/react-common';
-import * as ApolloReactComponents from '@apollo/react-components';
-import * as ApolloReactHoc from '@apollo/react-hoc';
+import gql from "graphql-tag";
+import * as React from "react";
+import * as ApolloReactCommon from "@apollo/react-common";
+import * as ApolloReactComponents from "@apollo/react-components";
+import * as ApolloReactHoc from "@apollo/react-hoc";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -15,101 +15,113 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** `Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
+  Timestamp: any;
 };
 
 export type CreateDutyInput = {
-  name: Scalars['String'];
-  isDeletable?: Maybe<Scalars['Boolean']>;
-  description?: Maybe<Scalars['String']>;
+  name: Scalars["String"];
+  isDeletable?: Maybe<Scalars["Boolean"]>;
+  description?: Maybe<Scalars["String"]>;
 };
 
 export type CreateFireCauseInput = {
-  name: Scalars['String'];
+  name: Scalars["String"];
 };
 
 export type CreateFireClassInput = {
-  name: Scalars['String'];
+  name: Scalars["String"];
 };
 
 export type CreateFireTypeInput = {
-  name: Scalars['String'];
+  name: Scalars["String"];
+};
+
+export type CreateGuardInput = {
+  start_time: Scalars["Timestamp"];
+  end_time: Scalars["Timestamp"];
+  volunteers: Array<OnlyIdVolunteerInput>;
 };
 
 export type CreateRankInput = {
-  name: Scalars['String'];
-  isDeletable?: Maybe<Scalars['Boolean']>;
-  description?: Maybe<Scalars['String']>;
+  name: Scalars["String"];
+  isDeletable?: Maybe<Scalars["Boolean"]>;
+  description?: Maybe<Scalars["String"]>;
 };
 
 export type CreateServiceInput = {
-  description: Scalars['String'];
-  volunteers?: Maybe<Array<ServiceVolunteersInput>>;
-  call_time: Scalars['String'];
-  departure_time: Scalars['String'];
-  arrival_time: Scalars['String'];
-  withdrawal_time: Scalars['String'];
-  locality: Scalars['String'];
-  neighborhood: Scalars['String'];
-  address: Scalars['String'];
-  place: Scalars['String'];
-  alerted_by: Scalars['String'];
-  phone: Scalars['String'];
-  received_by: Scalars['String'];
-  crew: Scalars['String'];
-  officer_in_charge: OfficerInChargeInput;
-  fire_type: FireTypeInput;
-  fire_type_total_surface: Scalars['Float'];
-  fire_type_burned_surface: Scalars['Float'];
-  fire_type_description: Scalars['String'];
-  affected_owner: Scalars['String'];
-  affected_owner_description: Scalars['String'];
-  possible_cause: FireCauseInput;
-  possible_cause_other_description: Scalars['String'];
-  fire_class: Array<FireClassInput>;
-  magnitude: Scalars['String'];
-  damage: Scalars['String'];
+  description: Scalars["String"];
+  volunteers?: Maybe<Array<OnlyIdVolunteerInput>>;
+  call_time: Scalars["String"];
+  departure_time: Scalars["String"];
+  arrival_time: Scalars["String"];
+  withdrawal_time: Scalars["String"];
+  locality: Scalars["String"];
+  neighborhood: Scalars["String"];
+  address: Scalars["String"];
+  place: Scalars["String"];
+  alerted_by: Scalars["String"];
+  phone: Scalars["String"];
+  received_by: Scalars["String"];
+  crew: Scalars["String"];
+  officer_in_charge: OnlyIdVolunteerInput;
+  fire_type: OnlyIdFireTypeInput;
+  fire_type_total_surface: Scalars["Float"];
+  fire_type_burned_surface: Scalars["Float"];
+  fire_type_description: Scalars["String"];
+  affected_owner: Scalars["String"];
+  affected_owner_description: Scalars["String"];
+  possible_cause: OnlyIdFireClassInput;
+  possible_cause_other_description: Scalars["String"];
+  fire_class: Array<OnlyIdFireClassInput>;
+  magnitude: Scalars["String"];
+  damage: Scalars["String"];
 };
 
 export type CreateUserInput = {
-  name: Scalars['String'];
+  name: Scalars["String"];
 };
 
 export type CreateVolunteerInput = {
-  name: Scalars['String'];
+  name: Scalars["String"];
 };
 
 export type Duty = {
-  __typename?: 'Duty';
-  id: Scalars['String'];
-  name: Scalars['String'];
-  isDeletable?: Maybe<Scalars['Boolean']>;
-  description?: Maybe<Scalars['String']>;
+  __typename?: "Duty";
+  id: Scalars["String"];
+  name: Scalars["String"];
+  isDeletable?: Maybe<Scalars["Boolean"]>;
+  description?: Maybe<Scalars["String"]>;
 };
 
 export type FireCause = {
-  __typename?: 'FireCause';
-  id: Scalars['String'];
-  name: Scalars['String'];
-};
-
-export type FireCauseInput = {
-  id: Scalars['String'];
+  __typename?: "FireCause";
+  id: Scalars["String"];
+  name: Scalars["String"];
 };
 
 export type FireClass = {
-  __typename?: 'FireClass';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  __typename?: "FireClass";
+  id?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
 };
 
 export type FireType = {
-  __typename?: 'FireType';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  __typename?: "FireType";
+  id?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
+};
+
+export type Guard = {
+  __typename?: "Guard";
+  id: Scalars["String"];
+  start_time: Scalars["Timestamp"];
+  end_time: Scalars["Timestamp"];
+  volunteers?: Maybe<Array<Volunteer>>;
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
   createUser: User;
   updateUser: User;
   removeUser: User;
@@ -134,130 +146,133 @@ export type Mutation = {
   createFireClass: FireClass;
   updateFireClass: FireClass;
   removeFireClass: FireClass;
+  createGuard: Guard;
+  updateGuard: Guard;
+  removeGuard: Guard;
 };
-
 
 export type MutationCreateUserArgs = {
   createUserInput: CreateUserInput;
 };
 
-
 export type MutationUpdateUserArgs = {
   updateUserInput: UpdateUserInput;
 };
 
-
 export type MutationRemoveUserArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type MutationCreateDutyArgs = {
   createDutyInput: CreateDutyInput;
 };
 
-
 export type MutationUpdateDutyArgs = {
   updateDutyInput: UpdateDutyInput;
 };
 
-
 export type MutationRemoveDutyArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type MutationCreateRankArgs = {
   createRankInput: CreateRankInput;
 };
 
-
 export type MutationUpdateRankArgs = {
   updateRankInput: UpdateRankInput;
 };
 
-
 export type MutationRemoveRankArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type MutationCreateServiceArgs = {
   createServiceInput: CreateServiceInput;
 };
 
-
 export type MutationUpdateServiceArgs = {
   updateServiceInput: UpdateServiceInput;
 };
 
-
 export type MutationRemoveServiceArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type MutationCreateVolunteerArgs = {
   createVolunteerInput: CreateVolunteerInput;
 };
 
-
 export type MutationUpdateVolunteerArgs = {
   updateVolunteerInput: UpdateVolunteerInput;
 };
 
-
 export type MutationRemoveVolunteerArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type MutationCreateFireTypeArgs = {
   createFireTypeInput: CreateFireTypeInput;
 };
 
-
 export type MutationUpdateFireTypeArgs = {
   updateFireTypeInput: UpdateFireTypeInput;
 };
 
-
 export type MutationRemoveFireTypeArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type MutationCreateFireCauseArgs = {
   createFireCauseInput: CreateFireCauseInput;
 };
 
-
 export type MutationUpdateFireCauseArgs = {
   updateFireCauseInput: UpdateFireCauseInput;
 };
 
-
 export type MutationRemoveFireCauseArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type MutationCreateFireClassArgs = {
   createFireClassInput: CreateFireClassInput;
 };
 
-
 export type MutationUpdateFireClassArgs = {
   updateFireClassInput: UpdateFireClassInput;
 };
 
-
 export type MutationRemoveFireClassArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
+};
+
+export type MutationCreateGuardArgs = {
+  createGuardInput: CreateGuardInput;
+};
+
+export type MutationUpdateGuardArgs = {
+  updateGuardInput: UpdateGuardInput;
+};
+
+export type MutationRemoveGuardArgs = {
+  id: Scalars["String"];
+};
+
+export type OnlyIdFireClassInput = {
+  _id: Scalars["String"];
+};
+
+export type OnlyIdFireTypeInput = {
+  _id: Scalars["String"];
+};
+
+export type OnlyIdVolunteerInput = {
+  _id: Scalars["String"];
 };
 
 export type Query = {
-  __typename?: 'Query';
+  __typename?: "Query";
   users: Array<User>;
   user: User;
   duties: Array<Duty>;
@@ -274,1305 +289,1826 @@ export type Query = {
   fireCause: FireCause;
   fireClasses: Array<FireClass>;
   fireClass: FireClass;
+  guards: Array<Guard>;
+  guard: Guard;
 };
-
 
 export type QueryUserArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryDutyArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryRankArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryServiceArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryVolunteerArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryFireTypeArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
-
 
 export type QueryFireCauseArgs = {
-  id: Scalars['String'];
+  id: Scalars["String"];
 };
 
-
 export type QueryFireClassArgs = {
-  id: Scalars['Int'];
+  id: Scalars["Int"];
+};
+
+export type QueryGuardArgs = {
+  id: Scalars["String"];
 };
 
 export type Rank = {
-  __typename?: 'Rank';
-  id: Scalars['String'];
-  name: Scalars['String'];
-  isDeletable?: Maybe<Scalars['Boolean']>;
-  description?: Maybe<Scalars['String']>;
+  __typename?: "Rank";
+  id: Scalars["String"];
+  name: Scalars["String"];
+  isDeletable?: Maybe<Scalars["Boolean"]>;
+  description?: Maybe<Scalars["String"]>;
 };
 
 export type Service = {
-  __typename?: 'Service';
-  _id?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
+  __typename?: "Service";
+  _id?: Maybe<Scalars["String"]>;
+  id?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars["String"]>;
   volunteers?: Maybe<Array<Volunteer>>;
-  call_time?: Maybe<Scalars['String']>;
-  departure_time?: Maybe<Scalars['String']>;
-  arrival_time?: Maybe<Scalars['String']>;
-  withdrawal_time?: Maybe<Scalars['String']>;
-  locality?: Maybe<Scalars['String']>;
-  neighborhood?: Maybe<Scalars['String']>;
-  address?: Maybe<Scalars['String']>;
-  place?: Maybe<Scalars['String']>;
-  alerted_by?: Maybe<Scalars['String']>;
-  phone?: Maybe<Scalars['String']>;
-  received_by?: Maybe<Scalars['String']>;
-  crew?: Maybe<Scalars['String']>;
+  call_time?: Maybe<Scalars["String"]>;
+  departure_time?: Maybe<Scalars["String"]>;
+  arrival_time?: Maybe<Scalars["String"]>;
+  withdrawal_time?: Maybe<Scalars["String"]>;
+  locality?: Maybe<Scalars["String"]>;
+  neighborhood?: Maybe<Scalars["String"]>;
+  address?: Maybe<Scalars["String"]>;
+  place?: Maybe<Scalars["String"]>;
+  alerted_by?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
+  received_by?: Maybe<Scalars["String"]>;
+  crew?: Maybe<Scalars["String"]>;
   officer_in_charge?: Maybe<Volunteer>;
   fire_type?: Maybe<FireType>;
-  fire_type_total_surface?: Maybe<Scalars['Float']>;
-  fire_type_burned_surface?: Maybe<Scalars['Float']>;
-  fire_type_description?: Maybe<Scalars['String']>;
-  affected_owner?: Maybe<Scalars['String']>;
-  affected_owner_description?: Maybe<Scalars['String']>;
+  fire_type_total_surface?: Maybe<Scalars["Float"]>;
+  fire_type_burned_surface?: Maybe<Scalars["Float"]>;
+  fire_type_description?: Maybe<Scalars["String"]>;
+  affected_owner?: Maybe<Scalars["String"]>;
+  affected_owner_description?: Maybe<Scalars["String"]>;
   possible_cause?: Maybe<FireCause>;
-  possible_cause_other_description?: Maybe<Scalars['String']>;
+  possible_cause_other_description?: Maybe<Scalars["String"]>;
   fire_class?: Maybe<Array<FireClass>>;
-  magnitude?: Maybe<Scalars['String']>;
-  damage?: Maybe<Scalars['String']>;
+  magnitude?: Maybe<Scalars["String"]>;
+  damage?: Maybe<Scalars["String"]>;
 };
 
 export type UpdateDutyInput = {
-  name?: Maybe<Scalars['String']>;
-  isDeletable?: Maybe<Scalars['Boolean']>;
-  description?: Maybe<Scalars['String']>;
-  id: Scalars['String'];
+  name?: Maybe<Scalars["String"]>;
+  isDeletable?: Maybe<Scalars["Boolean"]>;
+  description?: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
 };
 
 export type UpdateFireCauseInput = {
-  name: Scalars['String'];
-  id: Scalars['String'];
+  name: Scalars["String"];
+  id: Scalars["String"];
 };
 
 export type UpdateFireClassInput = {
-  name: Scalars['String'];
-  id: Scalars['String'];
+  name: Scalars["String"];
+  id: Scalars["String"];
 };
 
 export type UpdateFireTypeInput = {
-  name: Scalars['String'];
-  id: Scalars['String'];
+  name: Scalars["String"];
+  id: Scalars["String"];
+};
+
+export type UpdateGuardInput = {
+  start_time?: Maybe<Scalars["Timestamp"]>;
+  end_time?: Maybe<Scalars["Timestamp"]>;
+  volunteers?: Maybe<Array<OnlyIdVolunteerInput>>;
+  id: Scalars["String"];
 };
 
 export type UpdateRankInput = {
-  name?: Maybe<Scalars['String']>;
-  isDeletable?: Maybe<Scalars['Boolean']>;
-  description?: Maybe<Scalars['String']>;
-  id: Scalars['String'];
+  name?: Maybe<Scalars["String"]>;
+  isDeletable?: Maybe<Scalars["Boolean"]>;
+  description?: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
 };
 
 export type UpdateServiceInput = {
-  description?: Maybe<Scalars['String']>;
-  volunteers?: Maybe<Array<ServiceVolunteersInput>>;
-  call_time?: Maybe<Scalars['String']>;
-  departure_time?: Maybe<Scalars['String']>;
-  arrival_time?: Maybe<Scalars['String']>;
-  withdrawal_time?: Maybe<Scalars['String']>;
-  locality?: Maybe<Scalars['String']>;
-  neighborhood?: Maybe<Scalars['String']>;
-  address?: Maybe<Scalars['String']>;
-  place?: Maybe<Scalars['String']>;
-  alerted_by?: Maybe<Scalars['String']>;
-  phone?: Maybe<Scalars['String']>;
-  received_by?: Maybe<Scalars['String']>;
-  crew?: Maybe<Scalars['String']>;
-  officer_in_charge?: Maybe<OfficerInChargeInput>;
-  fire_type?: Maybe<FireTypeInput>;
-  fire_type_total_surface?: Maybe<Scalars['Float']>;
-  fire_type_burned_surface?: Maybe<Scalars['Float']>;
-  fire_type_description?: Maybe<Scalars['String']>;
-  affected_owner?: Maybe<Scalars['String']>;
-  affected_owner_description?: Maybe<Scalars['String']>;
-  possible_cause?: Maybe<FireCauseInput>;
-  possible_cause_other_description?: Maybe<Scalars['String']>;
-  fire_class?: Maybe<Array<FireClassInput>>;
-  magnitude?: Maybe<Scalars['String']>;
-  damage?: Maybe<Scalars['String']>;
-  id: Scalars['String'];
+  description?: Maybe<Scalars["String"]>;
+  volunteers?: Maybe<Array<OnlyIdVolunteerInput>>;
+  call_time?: Maybe<Scalars["String"]>;
+  departure_time?: Maybe<Scalars["String"]>;
+  arrival_time?: Maybe<Scalars["String"]>;
+  withdrawal_time?: Maybe<Scalars["String"]>;
+  locality?: Maybe<Scalars["String"]>;
+  neighborhood?: Maybe<Scalars["String"]>;
+  address?: Maybe<Scalars["String"]>;
+  place?: Maybe<Scalars["String"]>;
+  alerted_by?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
+  received_by?: Maybe<Scalars["String"]>;
+  crew?: Maybe<Scalars["String"]>;
+  officer_in_charge?: Maybe<OnlyIdVolunteerInput>;
+  fire_type?: Maybe<OnlyIdFireTypeInput>;
+  fire_type_total_surface?: Maybe<Scalars["Float"]>;
+  fire_type_burned_surface?: Maybe<Scalars["Float"]>;
+  fire_type_description?: Maybe<Scalars["String"]>;
+  affected_owner?: Maybe<Scalars["String"]>;
+  affected_owner_description?: Maybe<Scalars["String"]>;
+  possible_cause?: Maybe<OnlyIdFireClassInput>;
+  possible_cause_other_description?: Maybe<Scalars["String"]>;
+  fire_class?: Maybe<Array<OnlyIdFireClassInput>>;
+  magnitude?: Maybe<Scalars["String"]>;
+  damage?: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
 };
 
 export type UpdateUserInput = {
-  name?: Maybe<Scalars['String']>;
-  id: Scalars['Int'];
+  name?: Maybe<Scalars["String"]>;
+  id: Scalars["Int"];
 };
 
 export type UpdateVolunteerInput = {
-  name?: Maybe<Scalars['String']>;
-  id: Scalars['String'];
+  name?: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
 };
 
 export type User = {
-  __typename?: 'User';
-  id: Scalars['String'];
-  name: Scalars['String'];
+  __typename?: "User";
+  id: Scalars["String"];
+  name: Scalars["String"];
 };
 
 export type Volunteer = {
-  __typename?: 'Volunteer';
-  id?: Maybe<Scalars['String']>;
-  _id?: Maybe<Scalars['String']>;
-  name: Scalars['String'];
+  __typename?: "Volunteer";
+  id?: Maybe<Scalars["String"]>;
+  _id?: Maybe<Scalars["String"]>;
+  name: Scalars["String"];
 };
 
-export type FireClassInput = {
-  id: Scalars['String'];
+export type VolunteerfieldsFragment = { __typename: "Volunteer" } & Pick<Volunteer, "id" | "name">;
+
+export type GetVolunteeersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetVolunteeersQuery = { __typename?: "Query" } & {
+  volunteers: Array<{ __typename?: "Volunteer" } & VolunteerfieldsFragment>;
 };
 
-export type FireTypeInput = {
-  id: Scalars['String'];
+export type DutyAllFieldsFragment = { __typename?: "Duty" } & Pick<Duty, "id" | "name" | "isDeletable" | "description">;
+
+export type GetDutiesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetDutiesQuery = { __typename?: "Query" } & {
+  duties: Array<{ __typename?: "Duty" } & DutyAllFieldsFragment>;
 };
-
-export type OfficerInChargeInput = {
-  id: Scalars['String'];
-};
-
-export type ServiceVolunteersInput = {
-  id: Scalars['String'];
-};
-
-export type VolunteerfieldsFragment = (
-  { __typename: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'name'>
-);
-
-export type GetVolunteeersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetVolunteeersQuery = (
-  { __typename?: 'Query' }
-  & { volunteers: Array<(
-    { __typename?: 'Volunteer' }
-    & VolunteerfieldsFragment
-  )> }
-);
-
-export type DutyAllFieldsFragment = (
-  { __typename?: 'Duty' }
-  & Pick<Duty, 'id' | 'name' | 'isDeletable' | 'description'>
-);
-
-export type GetDutiesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetDutiesQuery = (
-  { __typename?: 'Query' }
-  & { duties: Array<(
-    { __typename?: 'Duty' }
-    & DutyAllFieldsFragment
-  )> }
-);
 
 export type FindDutyQueryVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars["String"];
 }>;
 
-
-export type FindDutyQuery = (
-  { __typename?: 'Query' }
-  & { duty: (
-    { __typename?: 'Duty' }
-    & DutyAllFieldsFragment
-  ) }
-);
+export type FindDutyQuery = { __typename?: "Query" } & { duty: { __typename?: "Duty" } & DutyAllFieldsFragment };
 
 export type EditDutyMutationVariables = Exact<{
-  id: Scalars['String'];
-  name: Scalars['String'];
-  isDeletable?: Maybe<Scalars['Boolean']>;
-  description?: Maybe<Scalars['String']>;
+  id: Scalars["String"];
+  name: Scalars["String"];
+  isDeletable?: Maybe<Scalars["Boolean"]>;
+  description?: Maybe<Scalars["String"]>;
 }>;
 
-
-export type EditDutyMutation = (
-  { __typename?: 'Mutation' }
-  & { updateDuty: (
-    { __typename?: 'Duty' }
-    & DutyAllFieldsFragment
-  ) }
-);
+export type EditDutyMutation = { __typename?: "Mutation" } & {
+  updateDuty: { __typename?: "Duty" } & DutyAllFieldsFragment;
+};
 
 export type CreateDutyMutationVariables = Exact<{
   input: CreateDutyInput;
 }>;
 
-
-export type CreateDutyMutation = (
-  { __typename?: 'Mutation' }
-  & { createDuty: (
-    { __typename?: 'Duty' }
-    & DutyAllFieldsFragment
-  ) }
-);
+export type CreateDutyMutation = { __typename?: "Mutation" } & {
+  createDuty: { __typename?: "Duty" } & DutyAllFieldsFragment;
+};
 
 export type DeleteDutyMutationVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars["String"];
 }>;
 
+export type DeleteDutyMutation = { __typename?: "Mutation" } & {
+  removeDuty: { __typename?: "Duty" } & Pick<Duty, "id">;
+};
 
-export type DeleteDutyMutation = (
-  { __typename?: 'Mutation' }
-  & { removeDuty: (
-    { __typename?: 'Duty' }
-    & Pick<Duty, 'id'>
-  ) }
-);
+export type FireCauseAllFieldsFragment = { __typename?: "FireCause" } & Pick<FireCause, "id" | "name">;
 
-export type FireCauseAllFieldsFragment = (
-  { __typename?: 'FireCause' }
-  & Pick<FireCause, 'id' | 'name'>
-);
+export type GetFireCausesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetFireCausesQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetFireCausesQuery = { __typename?: "Query" } & {
+  fireCauses: Array<{ __typename?: "FireCause" } & FireCauseAllFieldsFragment>;
+};
 
+export type FireClassAllFieldsFragment = { __typename?: "FireClass" } & Pick<FireClass, "id" | "name">;
 
-export type GetFireCausesQuery = (
-  { __typename?: 'Query' }
-  & { fireCauses: Array<(
-    { __typename?: 'FireCause' }
-    & FireCauseAllFieldsFragment
-  )> }
-);
+export type GetFireClassesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type FireClassAllFieldsFragment = (
-  { __typename?: 'FireClass' }
-  & Pick<FireClass, 'id' | 'name'>
-);
+export type GetFireClassesQuery = { __typename?: "Query" } & {
+  fireClasses: Array<{ __typename?: "FireClass" } & FireClassAllFieldsFragment>;
+};
 
-export type GetFireClassesQueryVariables = Exact<{ [key: string]: never; }>;
+export type FireTypeAllFieldsFragment = { __typename?: "FireType" } & Pick<FireType, "id" | "name">;
 
+export type GetFireTypesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetFireClassesQuery = (
-  { __typename?: 'Query' }
-  & { fireClasses: Array<(
-    { __typename?: 'FireClass' }
-    & FireClassAllFieldsFragment
-  )> }
-);
+export type GetFireTypesQuery = { __typename?: "Query" } & {
+  fireTypes: Array<{ __typename?: "FireType" } & FireTypeAllFieldsFragment>;
+};
 
-export type FireTypeAllFieldsFragment = (
-  { __typename?: 'FireType' }
-  & Pick<FireType, 'id' | 'name'>
-);
+export type GuardAllFieldsFragment = { __typename?: "Guard" } & Pick<Guard, "id" | "start_time" | "end_time"> & {
+    volunteers?: Maybe<Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>>;
+  };
 
-export type GetFireTypesQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetGuardsQueryVariables = Exact<{ [key: string]: never }>;
 
+export type GetGuardsQuery = { __typename?: "Query" } & {
+  guards: Array<{ __typename?: "Guard" } & GuardAllFieldsFragment>;
+};
 
-export type GetFireTypesQuery = (
-  { __typename?: 'Query' }
-  & { fireTypes: Array<(
-    { __typename?: 'FireType' }
-    & FireTypeAllFieldsFragment
-  )> }
-);
+export type FindGuardQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
 
-export type RankAllFieldsFragment = (
-  { __typename?: 'Rank' }
-  & Pick<Rank, 'id' | 'name' | 'isDeletable' | 'description'>
-);
+export type FindGuardQuery = { __typename?: "Query" } & { guard: { __typename?: "Guard" } & GuardAllFieldsFragment };
 
-export type GetRanksQueryVariables = Exact<{ [key: string]: never; }>;
+export type EditGuardMutationVariables = Exact<{
+  input: UpdateGuardInput;
+}>;
 
+export type EditGuardMutation = { __typename?: "Mutation" } & {
+  updateGuard: { __typename?: "Guard" } & GuardAllFieldsFragment;
+};
 
-export type GetRanksQuery = (
-  { __typename?: 'Query' }
-  & { ranks: Array<(
-    { __typename?: 'Rank' }
-    & RankAllFieldsFragment
-  )> }
-);
+export type CreateGuardMutationVariables = Exact<{
+  input: CreateGuardInput;
+}>;
+
+export type CreateGuardMutation = { __typename?: "Mutation" } & {
+  createGuard: { __typename?: "Guard" } & GuardAllFieldsFragment;
+};
+
+export type RemoveGuardMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RemoveGuardMutation = { __typename?: "Mutation" } & {
+  removeGuard: { __typename?: "Guard" } & GuardAllFieldsFragment;
+};
+
+export type RankAllFieldsFragment = { __typename?: "Rank" } & Pick<Rank, "id" | "name" | "isDeletable" | "description">;
+
+export type GetRanksQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetRanksQuery = { __typename?: "Query" } & {
+  ranks: Array<{ __typename?: "Rank" } & RankAllFieldsFragment>;
+};
 
 export type FindRankQueryVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars["String"];
 }>;
 
-
-export type FindRankQuery = (
-  { __typename?: 'Query' }
-  & { rank: (
-    { __typename?: 'Rank' }
-    & RankAllFieldsFragment
-  ) }
-);
+export type FindRankQuery = { __typename?: "Query" } & { rank: { __typename?: "Rank" } & RankAllFieldsFragment };
 
 export type EditRankMutationVariables = Exact<{
-  id: Scalars['String'];
-  name: Scalars['String'];
-  isDeletable?: Maybe<Scalars['Boolean']>;
-  description?: Maybe<Scalars['String']>;
+  id: Scalars["String"];
+  name: Scalars["String"];
+  isDeletable?: Maybe<Scalars["Boolean"]>;
+  description?: Maybe<Scalars["String"]>;
 }>;
 
-
-export type EditRankMutation = (
-  { __typename?: 'Mutation' }
-  & { updateRank: (
-    { __typename?: 'Rank' }
-    & RankAllFieldsFragment
-  ) }
-);
+export type EditRankMutation = { __typename?: "Mutation" } & {
+  updateRank: { __typename?: "Rank" } & RankAllFieldsFragment;
+};
 
 export type CreateRankMutationVariables = Exact<{
   input: CreateRankInput;
 }>;
 
-
-export type CreateRankMutation = (
-  { __typename?: 'Mutation' }
-  & { createRank: (
-    { __typename?: 'Rank' }
-    & RankAllFieldsFragment
-  ) }
-);
+export type CreateRankMutation = { __typename?: "Mutation" } & {
+  createRank: { __typename?: "Rank" } & RankAllFieldsFragment;
+};
 
 export type DeleteRankMutationVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars["String"];
 }>;
 
+export type DeleteRankMutation = { __typename?: "Mutation" } & {
+  removeRank: { __typename?: "Rank" } & Pick<Rank, "id">;
+};
 
-export type DeleteRankMutation = (
-  { __typename?: 'Mutation' }
-  & { removeRank: (
-    { __typename?: 'Rank' }
-    & Pick<Rank, 'id'>
-  ) }
-);
+export type ServicesAllFieldsFragment = { __typename?: "Service" } & Pick<
+  Service,
+  | "id"
+  | "description"
+  | "call_time"
+  | "departure_time"
+  | "arrival_time"
+  | "withdrawal_time"
+  | "locality"
+  | "neighborhood"
+  | "address"
+  | "place"
+  | "alerted_by"
+  | "phone"
+  | "received_by"
+  | "crew"
+  | "fire_type_total_surface"
+  | "fire_type_burned_surface"
+  | "fire_type_description"
+  | "affected_owner"
+  | "affected_owner_description"
+  | "possible_cause_other_description"
+  | "magnitude"
+  | "damage"
+> & {
+    volunteers?: Maybe<Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>>;
+    officer_in_charge?: Maybe<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>;
+    fire_type?: Maybe<{ __typename?: "FireType" } & FireTypeAllFieldsFragment>;
+    possible_cause?: Maybe<{ __typename?: "FireCause" } & FireCauseAllFieldsFragment>;
+    fire_class?: Maybe<Array<{ __typename?: "FireClass" } & FireClassAllFieldsFragment>>;
+  };
 
-export type ServicesAllFieldsFragment = (
-  { __typename?: 'Service' }
-  & Pick<Service, 'id' | 'description' | 'call_time' | 'departure_time' | 'arrival_time' | 'withdrawal_time' | 'locality' | 'neighborhood' | 'address' | 'place' | 'alerted_by' | 'phone' | 'received_by' | 'crew' | 'fire_type_total_surface' | 'fire_type_burned_surface' | 'fire_type_description' | 'affected_owner' | 'affected_owner_description' | 'possible_cause_other_description' | 'magnitude' | 'damage'>
-  & { volunteers?: Maybe<Array<(
-    { __typename?: 'Volunteer' }
-    & VolunteerAllFieldsFragment
-  )>>, officer_in_charge?: Maybe<(
-    { __typename?: 'Volunteer' }
-    & VolunteerAllFieldsFragment
-  )>, fire_type?: Maybe<(
-    { __typename?: 'FireType' }
-    & FireTypeAllFieldsFragment
-  )>, possible_cause?: Maybe<(
-    { __typename?: 'FireCause' }
-    & FireCauseAllFieldsFragment
-  )>, fire_class?: Maybe<Array<(
-    { __typename?: 'FireClass' }
-    & FireClassAllFieldsFragment
-  )>> }
-);
+export type GetServicesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetServicesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetServicesQuery = (
-  { __typename?: 'Query' }
-  & { services: Array<(
-    { __typename?: 'Service' }
-    & ServicesAllFieldsFragment
-  )> }
-);
+export type GetServicesQuery = { __typename?: "Query" } & {
+  services: Array<{ __typename?: "Service" } & ServicesAllFieldsFragment>;
+};
 
 export type FindServiceQueryVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars["String"];
 }>;
 
-
-export type FindServiceQuery = (
-  { __typename?: 'Query' }
-  & { service: (
-    { __typename?: 'Service' }
-    & ServicesAllFieldsFragment
-  ) }
-);
+export type FindServiceQuery = { __typename?: "Query" } & {
+  service: { __typename?: "Service" } & ServicesAllFieldsFragment;
+};
 
 export type EditServiceMutationVariables = Exact<{
   input: UpdateServiceInput;
 }>;
 
-
-export type EditServiceMutation = (
-  { __typename?: 'Mutation' }
-  & { updateService: (
-    { __typename?: 'Service' }
-    & ServicesAllFieldsFragment
-  ) }
-);
+export type EditServiceMutation = { __typename?: "Mutation" } & {
+  updateService: { __typename?: "Service" } & ServicesAllFieldsFragment;
+};
 
 export type CreateServiceMutationVariables = Exact<{
   input: CreateServiceInput;
 }>;
 
-
-export type CreateServiceMutation = (
-  { __typename?: 'Mutation' }
-  & { createService: (
-    { __typename?: 'Service' }
-    & ServicesAllFieldsFragment
-  ) }
-);
+export type CreateServiceMutation = { __typename?: "Mutation" } & {
+  createService: { __typename?: "Service" } & ServicesAllFieldsFragment;
+};
 
 export type RemoveServiceMutationVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars["String"];
 }>;
 
+export type RemoveServiceMutation = { __typename?: "Mutation" } & {
+  removeService: { __typename?: "Service" } & ServicesAllFieldsFragment;
+};
 
-export type RemoveServiceMutation = (
-  { __typename?: 'Mutation' }
-  & { removeService: (
-    { __typename?: 'Service' }
-    & ServicesAllFieldsFragment
-  ) }
-);
+export type VolunteerAllFieldsFragment = { __typename?: "Volunteer" } & Pick<Volunteer, "id" | "name">;
 
-export type VolunteerAllFieldsFragment = (
-  { __typename?: 'Volunteer' }
-  & Pick<Volunteer, 'id' | 'name'>
-);
+export type GetVolunteersQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetVolunteersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetVolunteersQuery = (
-  { __typename?: 'Query' }
-  & { volunteers: Array<(
-    { __typename?: 'Volunteer' }
-    & VolunteerAllFieldsFragment
-  )> }
-);
+export type GetVolunteersQuery = { __typename?: "Query" } & {
+  volunteers: Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>;
+};
 
 export type FindVolunteerQueryVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars["String"];
 }>;
 
-
-export type FindVolunteerQuery = (
-  { __typename?: 'Query' }
-  & { volunteer: (
-    { __typename?: 'Volunteer' }
-    & VolunteerAllFieldsFragment
-  ) }
-);
+export type FindVolunteerQuery = { __typename?: "Query" } & {
+  volunteer: { __typename?: "Volunteer" } & VolunteerAllFieldsFragment;
+};
 
 export type EditVolunteerMutationVariables = Exact<{
-  id: Scalars['String'];
-  name?: Maybe<Scalars['String']>;
+  id: Scalars["String"];
+  name?: Maybe<Scalars["String"]>;
 }>;
 
-
-export type EditVolunteerMutation = (
-  { __typename?: 'Mutation' }
-  & { updateVolunteer: (
-    { __typename?: 'Volunteer' }
-    & VolunteerAllFieldsFragment
-  ) }
-);
+export type EditVolunteerMutation = { __typename?: "Mutation" } & {
+  updateVolunteer: { __typename?: "Volunteer" } & VolunteerAllFieldsFragment;
+};
 
 export type CreateVolunteerMutationVariables = Exact<{
   input: CreateVolunteerInput;
 }>;
 
-
-export type CreateVolunteerMutation = (
-  { __typename?: 'Mutation' }
-  & { createVolunteer: (
-    { __typename?: 'Volunteer' }
-    & VolunteerAllFieldsFragment
-  ) }
-);
+export type CreateVolunteerMutation = { __typename?: "Mutation" } & {
+  createVolunteer: { __typename?: "Volunteer" } & VolunteerAllFieldsFragment;
+};
 
 export type DeleteVolunteerMutationVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars["String"];
 }>;
 
-
-export type DeleteVolunteerMutation = (
-  { __typename?: 'Mutation' }
-  & { removeVolunteer: (
-    { __typename?: 'Volunteer' }
-    & Pick<Volunteer, 'id'>
-  ) }
-);
+export type DeleteVolunteerMutation = { __typename?: "Mutation" } & {
+  removeVolunteer: { __typename?: "Volunteer" } & Pick<Volunteer, "id">;
+};
 
 export const VolunteerfieldsFragmentDoc = gql`
-    fragment volunteerfields on Volunteer {
-  id
-  name
-  __typename
-}
-    `;
+  fragment volunteerfields on Volunteer {
+    id
+    name
+    __typename
+  }
+`;
 export const DutyAllFieldsFragmentDoc = gql`
-    fragment dutyAllFields on Duty {
-  id
-  name
-  isDeletable
-  description
-}
-    `;
-export const RankAllFieldsFragmentDoc = gql`
-    fragment rankAllFields on Rank {
-  id
-  name
-  isDeletable
-  description
-}
-    `;
+  fragment dutyAllFields on Duty {
+    id
+    name
+    isDeletable
+    description
+  }
+`;
 export const VolunteerAllFieldsFragmentDoc = gql`
-    fragment volunteerAllFields on Volunteer {
-  id
-  name
-}
-    `;
+  fragment volunteerAllFields on Volunteer {
+    id
+    name
+  }
+`;
+export const GuardAllFieldsFragmentDoc = gql`
+  fragment guardAllFields on Guard {
+    id
+    start_time
+    end_time
+    volunteers {
+      ...volunteerAllFields
+    }
+  }
+  ${VolunteerAllFieldsFragmentDoc}
+`;
+export const RankAllFieldsFragmentDoc = gql`
+  fragment rankAllFields on Rank {
+    id
+    name
+    isDeletable
+    description
+  }
+`;
 export const FireTypeAllFieldsFragmentDoc = gql`
-    fragment fireTypeAllFields on FireType {
-  id
-  name
-}
-    `;
+  fragment fireTypeAllFields on FireType {
+    id
+    name
+  }
+`;
 export const FireCauseAllFieldsFragmentDoc = gql`
-    fragment fireCauseAllFields on FireCause {
-  id
-  name
-}
-    `;
+  fragment fireCauseAllFields on FireCause {
+    id
+    name
+  }
+`;
 export const FireClassAllFieldsFragmentDoc = gql`
-    fragment fireClassAllFields on FireClass {
-  id
-  name
-}
-    `;
+  fragment fireClassAllFields on FireClass {
+    id
+    name
+  }
+`;
 export const ServicesAllFieldsFragmentDoc = gql`
-    fragment servicesAllFields on Service {
-  id
-  description
-  call_time
-  departure_time
-  arrival_time
-  withdrawal_time
-  locality
-  neighborhood
-  address
-  place
-  alerted_by
-  phone
-  received_by
-  crew
-  volunteers {
-    ...volunteerAllFields
+  fragment servicesAllFields on Service {
+    id
+    description
+    call_time
+    departure_time
+    arrival_time
+    withdrawal_time
+    locality
+    neighborhood
+    address
+    place
+    alerted_by
+    phone
+    received_by
+    crew
+    volunteers {
+      ...volunteerAllFields
+    }
+    officer_in_charge {
+      ...volunteerAllFields
+    }
+    fire_type {
+      ...fireTypeAllFields
+    }
+    fire_type_total_surface
+    fire_type_burned_surface
+    fire_type_description
+    affected_owner
+    affected_owner_description
+    possible_cause {
+      ...fireCauseAllFields
+    }
+    possible_cause_other_description
+    fire_class {
+      ...fireClassAllFields
+    }
+    magnitude
+    damage
   }
-  officer_in_charge {
-    ...volunteerAllFields
-  }
-  fire_type {
-    ...fireTypeAllFields
-  }
-  fire_type_total_surface
-  fire_type_burned_surface
-  fire_type_description
-  affected_owner
-  affected_owner_description
-  possible_cause {
-    ...fireCauseAllFields
-  }
-  possible_cause_other_description
-  fire_class {
-    ...fireClassAllFields
-  }
-  magnitude
-  damage
-}
-    ${VolunteerAllFieldsFragmentDoc}
-${FireTypeAllFieldsFragmentDoc}
-${FireCauseAllFieldsFragmentDoc}
-${FireClassAllFieldsFragmentDoc}`;
+  ${VolunteerAllFieldsFragmentDoc}
+  ${FireTypeAllFieldsFragmentDoc}
+  ${FireCauseAllFieldsFragmentDoc}
+  ${FireClassAllFieldsFragmentDoc}
+`;
 export const GetVolunteeersDocument = gql`
-    query getVolunteeers {
-  volunteers {
-    ...volunteerfields
+  query getVolunteeers {
+    volunteers {
+      ...volunteerfields
+    }
   }
-}
-    ${VolunteerfieldsFragmentDoc}`;
-export type GetVolunteeersComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetVolunteeersQuery, GetVolunteeersQueryVariables>, 'query'>;
+  ${VolunteerfieldsFragmentDoc}
+`;
+export type GetVolunteeersComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetVolunteeersQuery, GetVolunteeersQueryVariables>,
+  "query"
+>;
 
-    export const GetVolunteeersComponent = (props: GetVolunteeersComponentProps) => (
-      <ApolloReactComponents.Query<GetVolunteeersQuery, GetVolunteeersQueryVariables> query={GetVolunteeersDocument} {...props} />
-    );
-    
-export type GetVolunteeersProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetVolunteeersQuery, GetVolunteeersQueryVariables>
-    } & TChildProps;
-export function withGetVolunteeers<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
+export const GetVolunteeersComponent = (props: GetVolunteeersComponentProps) => (
+  <ApolloReactComponents.Query<GetVolunteeersQuery, GetVolunteeersQueryVariables>
+    query={GetVolunteeersDocument}
+    {...props}
+  />
+);
+
+export type GetVolunteeersProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetVolunteeersQuery, GetVolunteeersQueryVariables>;
+} & TChildProps;
+export function withGetVolunteeers<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetVolunteeersQuery,
+    GetVolunteeersQueryVariables,
+    GetVolunteeersProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetVolunteeersQuery,
+    GetVolunteeersQueryVariables,
+    GetVolunteeersProps<TChildProps, TDataName>
+  >(GetVolunteeersDocument, {
+    alias: "getVolunteeers",
+    ...operationOptions,
+  });
+}
+export type GetVolunteeersQueryResult = ApolloReactCommon.QueryResult<
   GetVolunteeersQuery,
-  GetVolunteeersQueryVariables,
-  GetVolunteeersProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetVolunteeersQuery, GetVolunteeersQueryVariables, GetVolunteeersProps<TChildProps, TDataName>>(GetVolunteeersDocument, {
-      alias: 'getVolunteeers',
-      ...operationOptions
-    });
-};
-export type GetVolunteeersQueryResult = ApolloReactCommon.QueryResult<GetVolunteeersQuery, GetVolunteeersQueryVariables>;
+  GetVolunteeersQueryVariables
+>;
 export const GetDutiesDocument = gql`
-    query getDuties {
-  duties {
-    ...dutyAllFields
+  query getDuties {
+    duties {
+      ...dutyAllFields
+    }
   }
-}
-    ${DutyAllFieldsFragmentDoc}`;
-export type GetDutiesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetDutiesQuery, GetDutiesQueryVariables>, 'query'>;
+  ${DutyAllFieldsFragmentDoc}
+`;
+export type GetDutiesComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetDutiesQuery, GetDutiesQueryVariables>,
+  "query"
+>;
 
-    export const GetDutiesComponent = (props: GetDutiesComponentProps) => (
-      <ApolloReactComponents.Query<GetDutiesQuery, GetDutiesQueryVariables> query={GetDutiesDocument} {...props} />
-    );
-    
-export type GetDutiesProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetDutiesQuery, GetDutiesQueryVariables>
-    } & TChildProps;
-export function withGetDuties<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  GetDutiesQuery,
-  GetDutiesQueryVariables,
-  GetDutiesProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetDutiesQuery, GetDutiesQueryVariables, GetDutiesProps<TChildProps, TDataName>>(GetDutiesDocument, {
-      alias: 'getDuties',
-      ...operationOptions
-    });
-};
+export const GetDutiesComponent = (props: GetDutiesComponentProps) => (
+  <ApolloReactComponents.Query<GetDutiesQuery, GetDutiesQueryVariables> query={GetDutiesDocument} {...props} />
+);
+
+export type GetDutiesProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetDutiesQuery, GetDutiesQueryVariables>;
+} & TChildProps;
+export function withGetDuties<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetDutiesQuery,
+    GetDutiesQueryVariables,
+    GetDutiesProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetDutiesQuery,
+    GetDutiesQueryVariables,
+    GetDutiesProps<TChildProps, TDataName>
+  >(GetDutiesDocument, {
+    alias: "getDuties",
+    ...operationOptions,
+  });
+}
 export type GetDutiesQueryResult = ApolloReactCommon.QueryResult<GetDutiesQuery, GetDutiesQueryVariables>;
 export const FindDutyDocument = gql`
-    query findDuty($id: String!) {
-  duty(id: $id) {
-    ...dutyAllFields
+  query findDuty($id: String!) {
+    duty(id: $id) {
+      ...dutyAllFields
+    }
   }
-}
-    ${DutyAllFieldsFragmentDoc}`;
-export type FindDutyComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<FindDutyQuery, FindDutyQueryVariables>, 'query'> & ({ variables: FindDutyQueryVariables; skip?: boolean; } | { skip: boolean; });
+  ${DutyAllFieldsFragmentDoc}
+`;
+export type FindDutyComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<FindDutyQuery, FindDutyQueryVariables>,
+  "query"
+> &
+  ({ variables: FindDutyQueryVariables; skip?: boolean } | { skip: boolean });
 
-    export const FindDutyComponent = (props: FindDutyComponentProps) => (
-      <ApolloReactComponents.Query<FindDutyQuery, FindDutyQueryVariables> query={FindDutyDocument} {...props} />
-    );
-    
-export type FindDutyProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<FindDutyQuery, FindDutyQueryVariables>
-    } & TChildProps;
-export function withFindDuty<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  FindDutyQuery,
-  FindDutyQueryVariables,
-  FindDutyProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, FindDutyQuery, FindDutyQueryVariables, FindDutyProps<TChildProps, TDataName>>(FindDutyDocument, {
-      alias: 'findDuty',
-      ...operationOptions
-    });
-};
+export const FindDutyComponent = (props: FindDutyComponentProps) => (
+  <ApolloReactComponents.Query<FindDutyQuery, FindDutyQueryVariables> query={FindDutyDocument} {...props} />
+);
+
+export type FindDutyProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<FindDutyQuery, FindDutyQueryVariables>;
+} & TChildProps;
+export function withFindDuty<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    FindDutyQuery,
+    FindDutyQueryVariables,
+    FindDutyProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<TProps, FindDutyQuery, FindDutyQueryVariables, FindDutyProps<TChildProps, TDataName>>(
+    FindDutyDocument,
+    {
+      alias: "findDuty",
+      ...operationOptions,
+    }
+  );
+}
 export type FindDutyQueryResult = ApolloReactCommon.QueryResult<FindDutyQuery, FindDutyQueryVariables>;
 export const EditDutyDocument = gql`
-    mutation editDuty($id: String!, $name: String!, $isDeletable: Boolean, $description: String) {
-  updateDuty(updateDutyInput: {id: $id, name: $name, description: $description}) {
-    ...dutyAllFields
+  mutation editDuty($id: String!, $name: String!, $isDeletable: Boolean, $description: String) {
+    updateDuty(updateDutyInput: { id: $id, name: $name, description: $description }) {
+      ...dutyAllFields
+    }
   }
-}
-    ${DutyAllFieldsFragmentDoc}`;
+  ${DutyAllFieldsFragmentDoc}
+`;
 export type EditDutyMutationFn = ApolloReactCommon.MutationFunction<EditDutyMutation, EditDutyMutationVariables>;
-export type EditDutyComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<EditDutyMutation, EditDutyMutationVariables>, 'mutation'>;
+export type EditDutyComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<EditDutyMutation, EditDutyMutationVariables>,
+  "mutation"
+>;
 
-    export const EditDutyComponent = (props: EditDutyComponentProps) => (
-      <ApolloReactComponents.Mutation<EditDutyMutation, EditDutyMutationVariables> mutation={EditDutyDocument} {...props} />
-    );
-    
-export type EditDutyProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<EditDutyMutation, EditDutyMutationVariables>
-    } & TChildProps;
-export function withEditDuty<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  EditDutyMutation,
-  EditDutyMutationVariables,
-  EditDutyProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, EditDutyMutation, EditDutyMutationVariables, EditDutyProps<TChildProps, TDataName>>(EditDutyDocument, {
-      alias: 'editDuty',
-      ...operationOptions
-    });
-};
+export const EditDutyComponent = (props: EditDutyComponentProps) => (
+  <ApolloReactComponents.Mutation<EditDutyMutation, EditDutyMutationVariables> mutation={EditDutyDocument} {...props} />
+);
+
+export type EditDutyProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<EditDutyMutation, EditDutyMutationVariables>;
+} & TChildProps;
+export function withEditDuty<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    EditDutyMutation,
+    EditDutyMutationVariables,
+    EditDutyProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    EditDutyMutation,
+    EditDutyMutationVariables,
+    EditDutyProps<TChildProps, TDataName>
+  >(EditDutyDocument, {
+    alias: "editDuty",
+    ...operationOptions,
+  });
+}
 export type EditDutyMutationResult = ApolloReactCommon.MutationResult<EditDutyMutation>;
-export type EditDutyMutationOptions = ApolloReactCommon.BaseMutationOptions<EditDutyMutation, EditDutyMutationVariables>;
+export type EditDutyMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  EditDutyMutation,
+  EditDutyMutationVariables
+>;
 export const CreateDutyDocument = gql`
-    mutation createDuty($input: CreateDutyInput!) {
-  createDuty(createDutyInput: $input) {
-    ...dutyAllFields
+  mutation createDuty($input: CreateDutyInput!) {
+    createDuty(createDutyInput: $input) {
+      ...dutyAllFields
+    }
   }
-}
-    ${DutyAllFieldsFragmentDoc}`;
+  ${DutyAllFieldsFragmentDoc}
+`;
 export type CreateDutyMutationFn = ApolloReactCommon.MutationFunction<CreateDutyMutation, CreateDutyMutationVariables>;
-export type CreateDutyComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreateDutyMutation, CreateDutyMutationVariables>, 'mutation'>;
+export type CreateDutyComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<CreateDutyMutation, CreateDutyMutationVariables>,
+  "mutation"
+>;
 
-    export const CreateDutyComponent = (props: CreateDutyComponentProps) => (
-      <ApolloReactComponents.Mutation<CreateDutyMutation, CreateDutyMutationVariables> mutation={CreateDutyDocument} {...props} />
-    );
-    
-export type CreateDutyProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<CreateDutyMutation, CreateDutyMutationVariables>
-    } & TChildProps;
-export function withCreateDuty<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  CreateDutyMutation,
-  CreateDutyMutationVariables,
-  CreateDutyProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, CreateDutyMutation, CreateDutyMutationVariables, CreateDutyProps<TChildProps, TDataName>>(CreateDutyDocument, {
-      alias: 'createDuty',
-      ...operationOptions
-    });
-};
+export const CreateDutyComponent = (props: CreateDutyComponentProps) => (
+  <ApolloReactComponents.Mutation<CreateDutyMutation, CreateDutyMutationVariables>
+    mutation={CreateDutyDocument}
+    {...props}
+  />
+);
+
+export type CreateDutyProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<CreateDutyMutation, CreateDutyMutationVariables>;
+} & TChildProps;
+export function withCreateDuty<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateDutyMutation,
+    CreateDutyMutationVariables,
+    CreateDutyProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateDutyMutation,
+    CreateDutyMutationVariables,
+    CreateDutyProps<TChildProps, TDataName>
+  >(CreateDutyDocument, {
+    alias: "createDuty",
+    ...operationOptions,
+  });
+}
 export type CreateDutyMutationResult = ApolloReactCommon.MutationResult<CreateDutyMutation>;
-export type CreateDutyMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateDutyMutation, CreateDutyMutationVariables>;
+export type CreateDutyMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateDutyMutation,
+  CreateDutyMutationVariables
+>;
 export const DeleteDutyDocument = gql`
-    mutation deleteDuty($id: String!) {
-  removeDuty(id: $id) {
-    id
+  mutation deleteDuty($id: String!) {
+    removeDuty(id: $id) {
+      id
+    }
   }
-}
-    `;
+`;
 export type DeleteDutyMutationFn = ApolloReactCommon.MutationFunction<DeleteDutyMutation, DeleteDutyMutationVariables>;
-export type DeleteDutyComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<DeleteDutyMutation, DeleteDutyMutationVariables>, 'mutation'>;
+export type DeleteDutyComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<DeleteDutyMutation, DeleteDutyMutationVariables>,
+  "mutation"
+>;
 
-    export const DeleteDutyComponent = (props: DeleteDutyComponentProps) => (
-      <ApolloReactComponents.Mutation<DeleteDutyMutation, DeleteDutyMutationVariables> mutation={DeleteDutyDocument} {...props} />
-    );
-    
-export type DeleteDutyProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<DeleteDutyMutation, DeleteDutyMutationVariables>
-    } & TChildProps;
-export function withDeleteDuty<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  DeleteDutyMutation,
-  DeleteDutyMutationVariables,
-  DeleteDutyProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, DeleteDutyMutation, DeleteDutyMutationVariables, DeleteDutyProps<TChildProps, TDataName>>(DeleteDutyDocument, {
-      alias: 'deleteDuty',
-      ...operationOptions
-    });
-};
-export type DeleteDutyMutationResult = ApolloReactCommon.MutationResult<DeleteDutyMutation>;
-export type DeleteDutyMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteDutyMutation, DeleteDutyMutationVariables>;
-export const GetFireCausesDocument = gql`
-    query getFireCauses {
-  fireCauses {
-    ...fireCauseAllFields
-  }
+export const DeleteDutyComponent = (props: DeleteDutyComponentProps) => (
+  <ApolloReactComponents.Mutation<DeleteDutyMutation, DeleteDutyMutationVariables>
+    mutation={DeleteDutyDocument}
+    {...props}
+  />
+);
+
+export type DeleteDutyProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<DeleteDutyMutation, DeleteDutyMutationVariables>;
+} & TChildProps;
+export function withDeleteDuty<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    DeleteDutyMutation,
+    DeleteDutyMutationVariables,
+    DeleteDutyProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    DeleteDutyMutation,
+    DeleteDutyMutationVariables,
+    DeleteDutyProps<TChildProps, TDataName>
+  >(DeleteDutyDocument, {
+    alias: "deleteDuty",
+    ...operationOptions,
+  });
 }
-    ${FireCauseAllFieldsFragmentDoc}`;
-export type GetFireCausesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetFireCausesQuery, GetFireCausesQueryVariables>, 'query'>;
+export type DeleteDutyMutationResult = ApolloReactCommon.MutationResult<DeleteDutyMutation>;
+export type DeleteDutyMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  DeleteDutyMutation,
+  DeleteDutyMutationVariables
+>;
+export const GetFireCausesDocument = gql`
+  query getFireCauses {
+    fireCauses {
+      ...fireCauseAllFields
+    }
+  }
+  ${FireCauseAllFieldsFragmentDoc}
+`;
+export type GetFireCausesComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetFireCausesQuery, GetFireCausesQueryVariables>,
+  "query"
+>;
 
-    export const GetFireCausesComponent = (props: GetFireCausesComponentProps) => (
-      <ApolloReactComponents.Query<GetFireCausesQuery, GetFireCausesQueryVariables> query={GetFireCausesDocument} {...props} />
-    );
-    
-export type GetFireCausesProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetFireCausesQuery, GetFireCausesQueryVariables>
-    } & TChildProps;
-export function withGetFireCauses<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  GetFireCausesQuery,
-  GetFireCausesQueryVariables,
-  GetFireCausesProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetFireCausesQuery, GetFireCausesQueryVariables, GetFireCausesProps<TChildProps, TDataName>>(GetFireCausesDocument, {
-      alias: 'getFireCauses',
-      ...operationOptions
-    });
-};
+export const GetFireCausesComponent = (props: GetFireCausesComponentProps) => (
+  <ApolloReactComponents.Query<GetFireCausesQuery, GetFireCausesQueryVariables>
+    query={GetFireCausesDocument}
+    {...props}
+  />
+);
+
+export type GetFireCausesProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetFireCausesQuery, GetFireCausesQueryVariables>;
+} & TChildProps;
+export function withGetFireCauses<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetFireCausesQuery,
+    GetFireCausesQueryVariables,
+    GetFireCausesProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetFireCausesQuery,
+    GetFireCausesQueryVariables,
+    GetFireCausesProps<TChildProps, TDataName>
+  >(GetFireCausesDocument, {
+    alias: "getFireCauses",
+    ...operationOptions,
+  });
+}
 export type GetFireCausesQueryResult = ApolloReactCommon.QueryResult<GetFireCausesQuery, GetFireCausesQueryVariables>;
 export const GetFireClassesDocument = gql`
-    query getFireClasses {
-  fireClasses {
-    ...fireClassAllFields
+  query getFireClasses {
+    fireClasses {
+      ...fireClassAllFields
+    }
   }
-}
-    ${FireClassAllFieldsFragmentDoc}`;
-export type GetFireClassesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetFireClassesQuery, GetFireClassesQueryVariables>, 'query'>;
+  ${FireClassAllFieldsFragmentDoc}
+`;
+export type GetFireClassesComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetFireClassesQuery, GetFireClassesQueryVariables>,
+  "query"
+>;
 
-    export const GetFireClassesComponent = (props: GetFireClassesComponentProps) => (
-      <ApolloReactComponents.Query<GetFireClassesQuery, GetFireClassesQueryVariables> query={GetFireClassesDocument} {...props} />
-    );
-    
-export type GetFireClassesProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetFireClassesQuery, GetFireClassesQueryVariables>
-    } & TChildProps;
-export function withGetFireClasses<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
+export const GetFireClassesComponent = (props: GetFireClassesComponentProps) => (
+  <ApolloReactComponents.Query<GetFireClassesQuery, GetFireClassesQueryVariables>
+    query={GetFireClassesDocument}
+    {...props}
+  />
+);
+
+export type GetFireClassesProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetFireClassesQuery, GetFireClassesQueryVariables>;
+} & TChildProps;
+export function withGetFireClasses<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetFireClassesQuery,
+    GetFireClassesQueryVariables,
+    GetFireClassesProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetFireClassesQuery,
+    GetFireClassesQueryVariables,
+    GetFireClassesProps<TChildProps, TDataName>
+  >(GetFireClassesDocument, {
+    alias: "getFireClasses",
+    ...operationOptions,
+  });
+}
+export type GetFireClassesQueryResult = ApolloReactCommon.QueryResult<
   GetFireClassesQuery,
-  GetFireClassesQueryVariables,
-  GetFireClassesProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetFireClassesQuery, GetFireClassesQueryVariables, GetFireClassesProps<TChildProps, TDataName>>(GetFireClassesDocument, {
-      alias: 'getFireClasses',
-      ...operationOptions
-    });
-};
-export type GetFireClassesQueryResult = ApolloReactCommon.QueryResult<GetFireClassesQuery, GetFireClassesQueryVariables>;
+  GetFireClassesQueryVariables
+>;
 export const GetFireTypesDocument = gql`
-    query getFireTypes {
-  fireTypes {
-    ...fireTypeAllFields
+  query getFireTypes {
+    fireTypes {
+      ...fireTypeAllFields
+    }
   }
-}
-    ${FireTypeAllFieldsFragmentDoc}`;
-export type GetFireTypesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetFireTypesQuery, GetFireTypesQueryVariables>, 'query'>;
+  ${FireTypeAllFieldsFragmentDoc}
+`;
+export type GetFireTypesComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetFireTypesQuery, GetFireTypesQueryVariables>,
+  "query"
+>;
 
-    export const GetFireTypesComponent = (props: GetFireTypesComponentProps) => (
-      <ApolloReactComponents.Query<GetFireTypesQuery, GetFireTypesQueryVariables> query={GetFireTypesDocument} {...props} />
-    );
-    
-export type GetFireTypesProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetFireTypesQuery, GetFireTypesQueryVariables>
-    } & TChildProps;
-export function withGetFireTypes<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  GetFireTypesQuery,
-  GetFireTypesQueryVariables,
-  GetFireTypesProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetFireTypesQuery, GetFireTypesQueryVariables, GetFireTypesProps<TChildProps, TDataName>>(GetFireTypesDocument, {
-      alias: 'getFireTypes',
-      ...operationOptions
-    });
-};
+export const GetFireTypesComponent = (props: GetFireTypesComponentProps) => (
+  <ApolloReactComponents.Query<GetFireTypesQuery, GetFireTypesQueryVariables> query={GetFireTypesDocument} {...props} />
+);
+
+export type GetFireTypesProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetFireTypesQuery, GetFireTypesQueryVariables>;
+} & TChildProps;
+export function withGetFireTypes<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetFireTypesQuery,
+    GetFireTypesQueryVariables,
+    GetFireTypesProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetFireTypesQuery,
+    GetFireTypesQueryVariables,
+    GetFireTypesProps<TChildProps, TDataName>
+  >(GetFireTypesDocument, {
+    alias: "getFireTypes",
+    ...operationOptions,
+  });
+}
 export type GetFireTypesQueryResult = ApolloReactCommon.QueryResult<GetFireTypesQuery, GetFireTypesQueryVariables>;
-export const GetRanksDocument = gql`
-    query getRanks {
-  ranks {
-    ...rankAllFields
+export const GetGuardsDocument = gql`
+  query getGuards {
+    guards {
+      ...guardAllFields
+    }
   }
-}
-    ${RankAllFieldsFragmentDoc}`;
-export type GetRanksComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetRanksQuery, GetRanksQueryVariables>, 'query'>;
+  ${GuardAllFieldsFragmentDoc}
+`;
+export type GetGuardsComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetGuardsQuery, GetGuardsQueryVariables>,
+  "query"
+>;
 
-    export const GetRanksComponent = (props: GetRanksComponentProps) => (
-      <ApolloReactComponents.Query<GetRanksQuery, GetRanksQueryVariables> query={GetRanksDocument} {...props} />
-    );
-    
-export type GetRanksProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetRanksQuery, GetRanksQueryVariables>
-    } & TChildProps;
-export function withGetRanks<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  GetRanksQuery,
-  GetRanksQueryVariables,
-  GetRanksProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetRanksQuery, GetRanksQueryVariables, GetRanksProps<TChildProps, TDataName>>(GetRanksDocument, {
-      alias: 'getRanks',
-      ...operationOptions
-    });
-};
+export const GetGuardsComponent = (props: GetGuardsComponentProps) => (
+  <ApolloReactComponents.Query<GetGuardsQuery, GetGuardsQueryVariables> query={GetGuardsDocument} {...props} />
+);
+
+export type GetGuardsProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetGuardsQuery, GetGuardsQueryVariables>;
+} & TChildProps;
+export function withGetGuards<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetGuardsQuery,
+    GetGuardsQueryVariables,
+    GetGuardsProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetGuardsQuery,
+    GetGuardsQueryVariables,
+    GetGuardsProps<TChildProps, TDataName>
+  >(GetGuardsDocument, {
+    alias: "getGuards",
+    ...operationOptions,
+  });
+}
+export type GetGuardsQueryResult = ApolloReactCommon.QueryResult<GetGuardsQuery, GetGuardsQueryVariables>;
+export const FindGuardDocument = gql`
+  query findGuard($id: String!) {
+    guard(id: $id) {
+      ...guardAllFields
+    }
+  }
+  ${GuardAllFieldsFragmentDoc}
+`;
+export type FindGuardComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<FindGuardQuery, FindGuardQueryVariables>,
+  "query"
+> &
+  ({ variables: FindGuardQueryVariables; skip?: boolean } | { skip: boolean });
+
+export const FindGuardComponent = (props: FindGuardComponentProps) => (
+  <ApolloReactComponents.Query<FindGuardQuery, FindGuardQueryVariables> query={FindGuardDocument} {...props} />
+);
+
+export type FindGuardProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<FindGuardQuery, FindGuardQueryVariables>;
+} & TChildProps;
+export function withFindGuard<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    FindGuardQuery,
+    FindGuardQueryVariables,
+    FindGuardProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    FindGuardQuery,
+    FindGuardQueryVariables,
+    FindGuardProps<TChildProps, TDataName>
+  >(FindGuardDocument, {
+    alias: "findGuard",
+    ...operationOptions,
+  });
+}
+export type FindGuardQueryResult = ApolloReactCommon.QueryResult<FindGuardQuery, FindGuardQueryVariables>;
+export const EditGuardDocument = gql`
+  mutation editGuard($input: UpdateGuardInput!) {
+    updateGuard(updateGuardInput: $input) {
+      ...guardAllFields
+    }
+  }
+  ${GuardAllFieldsFragmentDoc}
+`;
+export type EditGuardMutationFn = ApolloReactCommon.MutationFunction<EditGuardMutation, EditGuardMutationVariables>;
+export type EditGuardComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<EditGuardMutation, EditGuardMutationVariables>,
+  "mutation"
+>;
+
+export const EditGuardComponent = (props: EditGuardComponentProps) => (
+  <ApolloReactComponents.Mutation<EditGuardMutation, EditGuardMutationVariables>
+    mutation={EditGuardDocument}
+    {...props}
+  />
+);
+
+export type EditGuardProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<EditGuardMutation, EditGuardMutationVariables>;
+} & TChildProps;
+export function withEditGuard<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    EditGuardMutation,
+    EditGuardMutationVariables,
+    EditGuardProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    EditGuardMutation,
+    EditGuardMutationVariables,
+    EditGuardProps<TChildProps, TDataName>
+  >(EditGuardDocument, {
+    alias: "editGuard",
+    ...operationOptions,
+  });
+}
+export type EditGuardMutationResult = ApolloReactCommon.MutationResult<EditGuardMutation>;
+export type EditGuardMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  EditGuardMutation,
+  EditGuardMutationVariables
+>;
+export const CreateGuardDocument = gql`
+  mutation createGuard($input: CreateGuardInput!) {
+    createGuard(createGuardInput: $input) {
+      ...guardAllFields
+    }
+  }
+  ${GuardAllFieldsFragmentDoc}
+`;
+export type CreateGuardMutationFn = ApolloReactCommon.MutationFunction<
+  CreateGuardMutation,
+  CreateGuardMutationVariables
+>;
+export type CreateGuardComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<CreateGuardMutation, CreateGuardMutationVariables>,
+  "mutation"
+>;
+
+export const CreateGuardComponent = (props: CreateGuardComponentProps) => (
+  <ApolloReactComponents.Mutation<CreateGuardMutation, CreateGuardMutationVariables>
+    mutation={CreateGuardDocument}
+    {...props}
+  />
+);
+
+export type CreateGuardProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<CreateGuardMutation, CreateGuardMutationVariables>;
+} & TChildProps;
+export function withCreateGuard<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateGuardMutation,
+    CreateGuardMutationVariables,
+    CreateGuardProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateGuardMutation,
+    CreateGuardMutationVariables,
+    CreateGuardProps<TChildProps, TDataName>
+  >(CreateGuardDocument, {
+    alias: "createGuard",
+    ...operationOptions,
+  });
+}
+export type CreateGuardMutationResult = ApolloReactCommon.MutationResult<CreateGuardMutation>;
+export type CreateGuardMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateGuardMutation,
+  CreateGuardMutationVariables
+>;
+export const RemoveGuardDocument = gql`
+  mutation removeGuard($id: String!) {
+    removeGuard(id: $id) {
+      ...guardAllFields
+    }
+  }
+  ${GuardAllFieldsFragmentDoc}
+`;
+export type RemoveGuardMutationFn = ApolloReactCommon.MutationFunction<
+  RemoveGuardMutation,
+  RemoveGuardMutationVariables
+>;
+export type RemoveGuardComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RemoveGuardMutation, RemoveGuardMutationVariables>,
+  "mutation"
+>;
+
+export const RemoveGuardComponent = (props: RemoveGuardComponentProps) => (
+  <ApolloReactComponents.Mutation<RemoveGuardMutation, RemoveGuardMutationVariables>
+    mutation={RemoveGuardDocument}
+    {...props}
+  />
+);
+
+export type RemoveGuardProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RemoveGuardMutation, RemoveGuardMutationVariables>;
+} & TChildProps;
+export function withRemoveGuard<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RemoveGuardMutation,
+    RemoveGuardMutationVariables,
+    RemoveGuardProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RemoveGuardMutation,
+    RemoveGuardMutationVariables,
+    RemoveGuardProps<TChildProps, TDataName>
+  >(RemoveGuardDocument, {
+    alias: "removeGuard",
+    ...operationOptions,
+  });
+}
+export type RemoveGuardMutationResult = ApolloReactCommon.MutationResult<RemoveGuardMutation>;
+export type RemoveGuardMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RemoveGuardMutation,
+  RemoveGuardMutationVariables
+>;
+export const GetRanksDocument = gql`
+  query getRanks {
+    ranks {
+      ...rankAllFields
+    }
+  }
+  ${RankAllFieldsFragmentDoc}
+`;
+export type GetRanksComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetRanksQuery, GetRanksQueryVariables>,
+  "query"
+>;
+
+export const GetRanksComponent = (props: GetRanksComponentProps) => (
+  <ApolloReactComponents.Query<GetRanksQuery, GetRanksQueryVariables> query={GetRanksDocument} {...props} />
+);
+
+export type GetRanksProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetRanksQuery, GetRanksQueryVariables>;
+} & TChildProps;
+export function withGetRanks<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetRanksQuery,
+    GetRanksQueryVariables,
+    GetRanksProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<TProps, GetRanksQuery, GetRanksQueryVariables, GetRanksProps<TChildProps, TDataName>>(
+    GetRanksDocument,
+    {
+      alias: "getRanks",
+      ...operationOptions,
+    }
+  );
+}
 export type GetRanksQueryResult = ApolloReactCommon.QueryResult<GetRanksQuery, GetRanksQueryVariables>;
 export const FindRankDocument = gql`
-    query findRank($id: String!) {
-  rank(id: $id) {
-    ...rankAllFields
+  query findRank($id: String!) {
+    rank(id: $id) {
+      ...rankAllFields
+    }
   }
-}
-    ${RankAllFieldsFragmentDoc}`;
-export type FindRankComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<FindRankQuery, FindRankQueryVariables>, 'query'> & ({ variables: FindRankQueryVariables; skip?: boolean; } | { skip: boolean; });
+  ${RankAllFieldsFragmentDoc}
+`;
+export type FindRankComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<FindRankQuery, FindRankQueryVariables>,
+  "query"
+> &
+  ({ variables: FindRankQueryVariables; skip?: boolean } | { skip: boolean });
 
-    export const FindRankComponent = (props: FindRankComponentProps) => (
-      <ApolloReactComponents.Query<FindRankQuery, FindRankQueryVariables> query={FindRankDocument} {...props} />
-    );
-    
-export type FindRankProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<FindRankQuery, FindRankQueryVariables>
-    } & TChildProps;
-export function withFindRank<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  FindRankQuery,
-  FindRankQueryVariables,
-  FindRankProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, FindRankQuery, FindRankQueryVariables, FindRankProps<TChildProps, TDataName>>(FindRankDocument, {
-      alias: 'findRank',
-      ...operationOptions
-    });
-};
+export const FindRankComponent = (props: FindRankComponentProps) => (
+  <ApolloReactComponents.Query<FindRankQuery, FindRankQueryVariables> query={FindRankDocument} {...props} />
+);
+
+export type FindRankProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<FindRankQuery, FindRankQueryVariables>;
+} & TChildProps;
+export function withFindRank<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    FindRankQuery,
+    FindRankQueryVariables,
+    FindRankProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<TProps, FindRankQuery, FindRankQueryVariables, FindRankProps<TChildProps, TDataName>>(
+    FindRankDocument,
+    {
+      alias: "findRank",
+      ...operationOptions,
+    }
+  );
+}
 export type FindRankQueryResult = ApolloReactCommon.QueryResult<FindRankQuery, FindRankQueryVariables>;
 export const EditRankDocument = gql`
-    mutation editRank($id: String!, $name: String!, $isDeletable: Boolean, $description: String) {
-  updateRank(updateRankInput: {id: $id, name: $name, description: $description}) {
-    ...rankAllFields
+  mutation editRank($id: String!, $name: String!, $isDeletable: Boolean, $description: String) {
+    updateRank(updateRankInput: { id: $id, name: $name, description: $description }) {
+      ...rankAllFields
+    }
   }
-}
-    ${RankAllFieldsFragmentDoc}`;
+  ${RankAllFieldsFragmentDoc}
+`;
 export type EditRankMutationFn = ApolloReactCommon.MutationFunction<EditRankMutation, EditRankMutationVariables>;
-export type EditRankComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<EditRankMutation, EditRankMutationVariables>, 'mutation'>;
+export type EditRankComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<EditRankMutation, EditRankMutationVariables>,
+  "mutation"
+>;
 
-    export const EditRankComponent = (props: EditRankComponentProps) => (
-      <ApolloReactComponents.Mutation<EditRankMutation, EditRankMutationVariables> mutation={EditRankDocument} {...props} />
-    );
-    
-export type EditRankProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<EditRankMutation, EditRankMutationVariables>
-    } & TChildProps;
-export function withEditRank<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  EditRankMutation,
-  EditRankMutationVariables,
-  EditRankProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, EditRankMutation, EditRankMutationVariables, EditRankProps<TChildProps, TDataName>>(EditRankDocument, {
-      alias: 'editRank',
-      ...operationOptions
-    });
-};
+export const EditRankComponent = (props: EditRankComponentProps) => (
+  <ApolloReactComponents.Mutation<EditRankMutation, EditRankMutationVariables> mutation={EditRankDocument} {...props} />
+);
+
+export type EditRankProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<EditRankMutation, EditRankMutationVariables>;
+} & TChildProps;
+export function withEditRank<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    EditRankMutation,
+    EditRankMutationVariables,
+    EditRankProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    EditRankMutation,
+    EditRankMutationVariables,
+    EditRankProps<TChildProps, TDataName>
+  >(EditRankDocument, {
+    alias: "editRank",
+    ...operationOptions,
+  });
+}
 export type EditRankMutationResult = ApolloReactCommon.MutationResult<EditRankMutation>;
-export type EditRankMutationOptions = ApolloReactCommon.BaseMutationOptions<EditRankMutation, EditRankMutationVariables>;
+export type EditRankMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  EditRankMutation,
+  EditRankMutationVariables
+>;
 export const CreateRankDocument = gql`
-    mutation createRank($input: CreateRankInput!) {
-  createRank(createRankInput: $input) {
-    ...rankAllFields
+  mutation createRank($input: CreateRankInput!) {
+    createRank(createRankInput: $input) {
+      ...rankAllFields
+    }
   }
-}
-    ${RankAllFieldsFragmentDoc}`;
+  ${RankAllFieldsFragmentDoc}
+`;
 export type CreateRankMutationFn = ApolloReactCommon.MutationFunction<CreateRankMutation, CreateRankMutationVariables>;
-export type CreateRankComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreateRankMutation, CreateRankMutationVariables>, 'mutation'>;
+export type CreateRankComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<CreateRankMutation, CreateRankMutationVariables>,
+  "mutation"
+>;
 
-    export const CreateRankComponent = (props: CreateRankComponentProps) => (
-      <ApolloReactComponents.Mutation<CreateRankMutation, CreateRankMutationVariables> mutation={CreateRankDocument} {...props} />
-    );
-    
-export type CreateRankProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<CreateRankMutation, CreateRankMutationVariables>
-    } & TChildProps;
-export function withCreateRank<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  CreateRankMutation,
-  CreateRankMutationVariables,
-  CreateRankProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, CreateRankMutation, CreateRankMutationVariables, CreateRankProps<TChildProps, TDataName>>(CreateRankDocument, {
-      alias: 'createRank',
-      ...operationOptions
-    });
-};
+export const CreateRankComponent = (props: CreateRankComponentProps) => (
+  <ApolloReactComponents.Mutation<CreateRankMutation, CreateRankMutationVariables>
+    mutation={CreateRankDocument}
+    {...props}
+  />
+);
+
+export type CreateRankProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<CreateRankMutation, CreateRankMutationVariables>;
+} & TChildProps;
+export function withCreateRank<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateRankMutation,
+    CreateRankMutationVariables,
+    CreateRankProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateRankMutation,
+    CreateRankMutationVariables,
+    CreateRankProps<TChildProps, TDataName>
+  >(CreateRankDocument, {
+    alias: "createRank",
+    ...operationOptions,
+  });
+}
 export type CreateRankMutationResult = ApolloReactCommon.MutationResult<CreateRankMutation>;
-export type CreateRankMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateRankMutation, CreateRankMutationVariables>;
+export type CreateRankMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateRankMutation,
+  CreateRankMutationVariables
+>;
 export const DeleteRankDocument = gql`
-    mutation deleteRank($id: String!) {
-  removeRank(id: $id) {
-    id
+  mutation deleteRank($id: String!) {
+    removeRank(id: $id) {
+      id
+    }
   }
-}
-    `;
+`;
 export type DeleteRankMutationFn = ApolloReactCommon.MutationFunction<DeleteRankMutation, DeleteRankMutationVariables>;
-export type DeleteRankComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<DeleteRankMutation, DeleteRankMutationVariables>, 'mutation'>;
+export type DeleteRankComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<DeleteRankMutation, DeleteRankMutationVariables>,
+  "mutation"
+>;
 
-    export const DeleteRankComponent = (props: DeleteRankComponentProps) => (
-      <ApolloReactComponents.Mutation<DeleteRankMutation, DeleteRankMutationVariables> mutation={DeleteRankDocument} {...props} />
-    );
-    
-export type DeleteRankProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<DeleteRankMutation, DeleteRankMutationVariables>
-    } & TChildProps;
-export function withDeleteRank<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  DeleteRankMutation,
-  DeleteRankMutationVariables,
-  DeleteRankProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, DeleteRankMutation, DeleteRankMutationVariables, DeleteRankProps<TChildProps, TDataName>>(DeleteRankDocument, {
-      alias: 'deleteRank',
-      ...operationOptions
-    });
-};
-export type DeleteRankMutationResult = ApolloReactCommon.MutationResult<DeleteRankMutation>;
-export type DeleteRankMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteRankMutation, DeleteRankMutationVariables>;
-export const GetServicesDocument = gql`
-    query getServices {
-  services {
-    ...servicesAllFields
-  }
+export const DeleteRankComponent = (props: DeleteRankComponentProps) => (
+  <ApolloReactComponents.Mutation<DeleteRankMutation, DeleteRankMutationVariables>
+    mutation={DeleteRankDocument}
+    {...props}
+  />
+);
+
+export type DeleteRankProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<DeleteRankMutation, DeleteRankMutationVariables>;
+} & TChildProps;
+export function withDeleteRank<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    DeleteRankMutation,
+    DeleteRankMutationVariables,
+    DeleteRankProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    DeleteRankMutation,
+    DeleteRankMutationVariables,
+    DeleteRankProps<TChildProps, TDataName>
+  >(DeleteRankDocument, {
+    alias: "deleteRank",
+    ...operationOptions,
+  });
 }
-    ${ServicesAllFieldsFragmentDoc}`;
-export type GetServicesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetServicesQuery, GetServicesQueryVariables>, 'query'>;
+export type DeleteRankMutationResult = ApolloReactCommon.MutationResult<DeleteRankMutation>;
+export type DeleteRankMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  DeleteRankMutation,
+  DeleteRankMutationVariables
+>;
+export const GetServicesDocument = gql`
+  query getServices {
+    services {
+      ...servicesAllFields
+    }
+  }
+  ${ServicesAllFieldsFragmentDoc}
+`;
+export type GetServicesComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetServicesQuery, GetServicesQueryVariables>,
+  "query"
+>;
 
-    export const GetServicesComponent = (props: GetServicesComponentProps) => (
-      <ApolloReactComponents.Query<GetServicesQuery, GetServicesQueryVariables> query={GetServicesDocument} {...props} />
-    );
-    
-export type GetServicesProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetServicesQuery, GetServicesQueryVariables>
-    } & TChildProps;
-export function withGetServices<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  GetServicesQuery,
-  GetServicesQueryVariables,
-  GetServicesProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetServicesQuery, GetServicesQueryVariables, GetServicesProps<TChildProps, TDataName>>(GetServicesDocument, {
-      alias: 'getServices',
-      ...operationOptions
-    });
-};
+export const GetServicesComponent = (props: GetServicesComponentProps) => (
+  <ApolloReactComponents.Query<GetServicesQuery, GetServicesQueryVariables> query={GetServicesDocument} {...props} />
+);
+
+export type GetServicesProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetServicesQuery, GetServicesQueryVariables>;
+} & TChildProps;
+export function withGetServices<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetServicesQuery,
+    GetServicesQueryVariables,
+    GetServicesProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetServicesQuery,
+    GetServicesQueryVariables,
+    GetServicesProps<TChildProps, TDataName>
+  >(GetServicesDocument, {
+    alias: "getServices",
+    ...operationOptions,
+  });
+}
 export type GetServicesQueryResult = ApolloReactCommon.QueryResult<GetServicesQuery, GetServicesQueryVariables>;
 export const FindServiceDocument = gql`
-    query findService($id: String!) {
-  service(id: $id) {
-    ...servicesAllFields
+  query findService($id: String!) {
+    service(id: $id) {
+      ...servicesAllFields
+    }
   }
-}
-    ${ServicesAllFieldsFragmentDoc}`;
-export type FindServiceComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<FindServiceQuery, FindServiceQueryVariables>, 'query'> & ({ variables: FindServiceQueryVariables; skip?: boolean; } | { skip: boolean; });
+  ${ServicesAllFieldsFragmentDoc}
+`;
+export type FindServiceComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<FindServiceQuery, FindServiceQueryVariables>,
+  "query"
+> &
+  ({ variables: FindServiceQueryVariables; skip?: boolean } | { skip: boolean });
 
-    export const FindServiceComponent = (props: FindServiceComponentProps) => (
-      <ApolloReactComponents.Query<FindServiceQuery, FindServiceQueryVariables> query={FindServiceDocument} {...props} />
-    );
-    
-export type FindServiceProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<FindServiceQuery, FindServiceQueryVariables>
-    } & TChildProps;
-export function withFindService<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  FindServiceQuery,
-  FindServiceQueryVariables,
-  FindServiceProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, FindServiceQuery, FindServiceQueryVariables, FindServiceProps<TChildProps, TDataName>>(FindServiceDocument, {
-      alias: 'findService',
-      ...operationOptions
-    });
-};
+export const FindServiceComponent = (props: FindServiceComponentProps) => (
+  <ApolloReactComponents.Query<FindServiceQuery, FindServiceQueryVariables> query={FindServiceDocument} {...props} />
+);
+
+export type FindServiceProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<FindServiceQuery, FindServiceQueryVariables>;
+} & TChildProps;
+export function withFindService<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    FindServiceQuery,
+    FindServiceQueryVariables,
+    FindServiceProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    FindServiceQuery,
+    FindServiceQueryVariables,
+    FindServiceProps<TChildProps, TDataName>
+  >(FindServiceDocument, {
+    alias: "findService",
+    ...operationOptions,
+  });
+}
 export type FindServiceQueryResult = ApolloReactCommon.QueryResult<FindServiceQuery, FindServiceQueryVariables>;
 export const EditServiceDocument = gql`
-    mutation editService($input: UpdateServiceInput!) {
-  updateService(updateServiceInput: $input) {
-    ...servicesAllFields
+  mutation editService($input: UpdateServiceInput!) {
+    updateService(updateServiceInput: $input) {
+      ...servicesAllFields
+    }
   }
-}
-    ${ServicesAllFieldsFragmentDoc}`;
-export type EditServiceMutationFn = ApolloReactCommon.MutationFunction<EditServiceMutation, EditServiceMutationVariables>;
-export type EditServiceComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<EditServiceMutation, EditServiceMutationVariables>, 'mutation'>;
-
-    export const EditServiceComponent = (props: EditServiceComponentProps) => (
-      <ApolloReactComponents.Mutation<EditServiceMutation, EditServiceMutationVariables> mutation={EditServiceDocument} {...props} />
-    );
-    
-export type EditServiceProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<EditServiceMutation, EditServiceMutationVariables>
-    } & TChildProps;
-export function withEditService<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
+  ${ServicesAllFieldsFragmentDoc}
+`;
+export type EditServiceMutationFn = ApolloReactCommon.MutationFunction<
   EditServiceMutation,
-  EditServiceMutationVariables,
-  EditServiceProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, EditServiceMutation, EditServiceMutationVariables, EditServiceProps<TChildProps, TDataName>>(EditServiceDocument, {
-      alias: 'editService',
-      ...operationOptions
-    });
-};
+  EditServiceMutationVariables
+>;
+export type EditServiceComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<EditServiceMutation, EditServiceMutationVariables>,
+  "mutation"
+>;
+
+export const EditServiceComponent = (props: EditServiceComponentProps) => (
+  <ApolloReactComponents.Mutation<EditServiceMutation, EditServiceMutationVariables>
+    mutation={EditServiceDocument}
+    {...props}
+  />
+);
+
+export type EditServiceProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<EditServiceMutation, EditServiceMutationVariables>;
+} & TChildProps;
+export function withEditService<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    EditServiceMutation,
+    EditServiceMutationVariables,
+    EditServiceProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    EditServiceMutation,
+    EditServiceMutationVariables,
+    EditServiceProps<TChildProps, TDataName>
+  >(EditServiceDocument, {
+    alias: "editService",
+    ...operationOptions,
+  });
+}
 export type EditServiceMutationResult = ApolloReactCommon.MutationResult<EditServiceMutation>;
-export type EditServiceMutationOptions = ApolloReactCommon.BaseMutationOptions<EditServiceMutation, EditServiceMutationVariables>;
+export type EditServiceMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  EditServiceMutation,
+  EditServiceMutationVariables
+>;
 export const CreateServiceDocument = gql`
-    mutation createService($input: CreateServiceInput!) {
-  createService(createServiceInput: $input) {
-    ...servicesAllFields
+  mutation createService($input: CreateServiceInput!) {
+    createService(createServiceInput: $input) {
+      ...servicesAllFields
+    }
   }
-}
-    ${ServicesAllFieldsFragmentDoc}`;
-export type CreateServiceMutationFn = ApolloReactCommon.MutationFunction<CreateServiceMutation, CreateServiceMutationVariables>;
-export type CreateServiceComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreateServiceMutation, CreateServiceMutationVariables>, 'mutation'>;
-
-    export const CreateServiceComponent = (props: CreateServiceComponentProps) => (
-      <ApolloReactComponents.Mutation<CreateServiceMutation, CreateServiceMutationVariables> mutation={CreateServiceDocument} {...props} />
-    );
-    
-export type CreateServiceProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<CreateServiceMutation, CreateServiceMutationVariables>
-    } & TChildProps;
-export function withCreateService<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
+  ${ServicesAllFieldsFragmentDoc}
+`;
+export type CreateServiceMutationFn = ApolloReactCommon.MutationFunction<
   CreateServiceMutation,
-  CreateServiceMutationVariables,
-  CreateServiceProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, CreateServiceMutation, CreateServiceMutationVariables, CreateServiceProps<TChildProps, TDataName>>(CreateServiceDocument, {
-      alias: 'createService',
-      ...operationOptions
-    });
-};
+  CreateServiceMutationVariables
+>;
+export type CreateServiceComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<CreateServiceMutation, CreateServiceMutationVariables>,
+  "mutation"
+>;
+
+export const CreateServiceComponent = (props: CreateServiceComponentProps) => (
+  <ApolloReactComponents.Mutation<CreateServiceMutation, CreateServiceMutationVariables>
+    mutation={CreateServiceDocument}
+    {...props}
+  />
+);
+
+export type CreateServiceProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<CreateServiceMutation, CreateServiceMutationVariables>;
+} & TChildProps;
+export function withCreateService<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateServiceMutation,
+    CreateServiceMutationVariables,
+    CreateServiceProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateServiceMutation,
+    CreateServiceMutationVariables,
+    CreateServiceProps<TChildProps, TDataName>
+  >(CreateServiceDocument, {
+    alias: "createService",
+    ...operationOptions,
+  });
+}
 export type CreateServiceMutationResult = ApolloReactCommon.MutationResult<CreateServiceMutation>;
-export type CreateServiceMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateServiceMutation, CreateServiceMutationVariables>;
+export type CreateServiceMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateServiceMutation,
+  CreateServiceMutationVariables
+>;
 export const RemoveServiceDocument = gql`
-    mutation removeService($id: String!) {
-  removeService(id: $id) {
-    ...servicesAllFields
+  mutation removeService($id: String!) {
+    removeService(id: $id) {
+      ...servicesAllFields
+    }
   }
-}
-    ${ServicesAllFieldsFragmentDoc}`;
-export type RemoveServiceMutationFn = ApolloReactCommon.MutationFunction<RemoveServiceMutation, RemoveServiceMutationVariables>;
-export type RemoveServiceComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<RemoveServiceMutation, RemoveServiceMutationVariables>, 'mutation'>;
-
-    export const RemoveServiceComponent = (props: RemoveServiceComponentProps) => (
-      <ApolloReactComponents.Mutation<RemoveServiceMutation, RemoveServiceMutationVariables> mutation={RemoveServiceDocument} {...props} />
-    );
-    
-export type RemoveServiceProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<RemoveServiceMutation, RemoveServiceMutationVariables>
-    } & TChildProps;
-export function withRemoveService<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
+  ${ServicesAllFieldsFragmentDoc}
+`;
+export type RemoveServiceMutationFn = ApolloReactCommon.MutationFunction<
   RemoveServiceMutation,
-  RemoveServiceMutationVariables,
-  RemoveServiceProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, RemoveServiceMutation, RemoveServiceMutationVariables, RemoveServiceProps<TChildProps, TDataName>>(RemoveServiceDocument, {
-      alias: 'removeService',
-      ...operationOptions
-    });
-};
-export type RemoveServiceMutationResult = ApolloReactCommon.MutationResult<RemoveServiceMutation>;
-export type RemoveServiceMutationOptions = ApolloReactCommon.BaseMutationOptions<RemoveServiceMutation, RemoveServiceMutationVariables>;
-export const GetVolunteersDocument = gql`
-    query getVolunteers {
-  volunteers {
-    ...volunteerAllFields
-  }
-}
-    ${VolunteerAllFieldsFragmentDoc}`;
-export type GetVolunteersComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetVolunteersQuery, GetVolunteersQueryVariables>, 'query'>;
+  RemoveServiceMutationVariables
+>;
+export type RemoveServiceComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RemoveServiceMutation, RemoveServiceMutationVariables>,
+  "mutation"
+>;
 
-    export const GetVolunteersComponent = (props: GetVolunteersComponentProps) => (
-      <ApolloReactComponents.Query<GetVolunteersQuery, GetVolunteersQueryVariables> query={GetVolunteersDocument} {...props} />
-    );
-    
-export type GetVolunteersProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetVolunteersQuery, GetVolunteersQueryVariables>
-    } & TChildProps;
-export function withGetVolunteers<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  GetVolunteersQuery,
-  GetVolunteersQueryVariables,
-  GetVolunteersProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetVolunteersQuery, GetVolunteersQueryVariables, GetVolunteersProps<TChildProps, TDataName>>(GetVolunteersDocument, {
-      alias: 'getVolunteers',
-      ...operationOptions
-    });
-};
+export const RemoveServiceComponent = (props: RemoveServiceComponentProps) => (
+  <ApolloReactComponents.Mutation<RemoveServiceMutation, RemoveServiceMutationVariables>
+    mutation={RemoveServiceDocument}
+    {...props}
+  />
+);
+
+export type RemoveServiceProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RemoveServiceMutation, RemoveServiceMutationVariables>;
+} & TChildProps;
+export function withRemoveService<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RemoveServiceMutation,
+    RemoveServiceMutationVariables,
+    RemoveServiceProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RemoveServiceMutation,
+    RemoveServiceMutationVariables,
+    RemoveServiceProps<TChildProps, TDataName>
+  >(RemoveServiceDocument, {
+    alias: "removeService",
+    ...operationOptions,
+  });
+}
+export type RemoveServiceMutationResult = ApolloReactCommon.MutationResult<RemoveServiceMutation>;
+export type RemoveServiceMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RemoveServiceMutation,
+  RemoveServiceMutationVariables
+>;
+export const GetVolunteersDocument = gql`
+  query getVolunteers {
+    volunteers {
+      ...volunteerAllFields
+    }
+  }
+  ${VolunteerAllFieldsFragmentDoc}
+`;
+export type GetVolunteersComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetVolunteersQuery, GetVolunteersQueryVariables>,
+  "query"
+>;
+
+export const GetVolunteersComponent = (props: GetVolunteersComponentProps) => (
+  <ApolloReactComponents.Query<GetVolunteersQuery, GetVolunteersQueryVariables>
+    query={GetVolunteersDocument}
+    {...props}
+  />
+);
+
+export type GetVolunteersProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetVolunteersQuery, GetVolunteersQueryVariables>;
+} & TChildProps;
+export function withGetVolunteers<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetVolunteersQuery,
+    GetVolunteersQueryVariables,
+    GetVolunteersProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetVolunteersQuery,
+    GetVolunteersQueryVariables,
+    GetVolunteersProps<TChildProps, TDataName>
+  >(GetVolunteersDocument, {
+    alias: "getVolunteers",
+    ...operationOptions,
+  });
+}
 export type GetVolunteersQueryResult = ApolloReactCommon.QueryResult<GetVolunteersQuery, GetVolunteersQueryVariables>;
 export const FindVolunteerDocument = gql`
-    query findVolunteer($id: String!) {
-  volunteer(id: $id) {
-    ...volunteerAllFields
+  query findVolunteer($id: String!) {
+    volunteer(id: $id) {
+      ...volunteerAllFields
+    }
   }
-}
-    ${VolunteerAllFieldsFragmentDoc}`;
-export type FindVolunteerComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<FindVolunteerQuery, FindVolunteerQueryVariables>, 'query'> & ({ variables: FindVolunteerQueryVariables; skip?: boolean; } | { skip: boolean; });
+  ${VolunteerAllFieldsFragmentDoc}
+`;
+export type FindVolunteerComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<FindVolunteerQuery, FindVolunteerQueryVariables>,
+  "query"
+> &
+  ({ variables: FindVolunteerQueryVariables; skip?: boolean } | { skip: boolean });
 
-    export const FindVolunteerComponent = (props: FindVolunteerComponentProps) => (
-      <ApolloReactComponents.Query<FindVolunteerQuery, FindVolunteerQueryVariables> query={FindVolunteerDocument} {...props} />
-    );
-    
-export type FindVolunteerProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<FindVolunteerQuery, FindVolunteerQueryVariables>
-    } & TChildProps;
-export function withFindVolunteer<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  FindVolunteerQuery,
-  FindVolunteerQueryVariables,
-  FindVolunteerProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, FindVolunteerQuery, FindVolunteerQueryVariables, FindVolunteerProps<TChildProps, TDataName>>(FindVolunteerDocument, {
-      alias: 'findVolunteer',
-      ...operationOptions
-    });
-};
+export const FindVolunteerComponent = (props: FindVolunteerComponentProps) => (
+  <ApolloReactComponents.Query<FindVolunteerQuery, FindVolunteerQueryVariables>
+    query={FindVolunteerDocument}
+    {...props}
+  />
+);
+
+export type FindVolunteerProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<FindVolunteerQuery, FindVolunteerQueryVariables>;
+} & TChildProps;
+export function withFindVolunteer<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    FindVolunteerQuery,
+    FindVolunteerQueryVariables,
+    FindVolunteerProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    FindVolunteerQuery,
+    FindVolunteerQueryVariables,
+    FindVolunteerProps<TChildProps, TDataName>
+  >(FindVolunteerDocument, {
+    alias: "findVolunteer",
+    ...operationOptions,
+  });
+}
 export type FindVolunteerQueryResult = ApolloReactCommon.QueryResult<FindVolunteerQuery, FindVolunteerQueryVariables>;
 export const EditVolunteerDocument = gql`
-    mutation editVolunteer($id: String!, $name: String) {
-  updateVolunteer(updateVolunteerInput: {id: $id, name: $name}) {
-    ...volunteerAllFields
+  mutation editVolunteer($id: String!, $name: String) {
+    updateVolunteer(updateVolunteerInput: { id: $id, name: $name }) {
+      ...volunteerAllFields
+    }
   }
-}
-    ${VolunteerAllFieldsFragmentDoc}`;
-export type EditVolunteerMutationFn = ApolloReactCommon.MutationFunction<EditVolunteerMutation, EditVolunteerMutationVariables>;
-export type EditVolunteerComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<EditVolunteerMutation, EditVolunteerMutationVariables>, 'mutation'>;
-
-    export const EditVolunteerComponent = (props: EditVolunteerComponentProps) => (
-      <ApolloReactComponents.Mutation<EditVolunteerMutation, EditVolunteerMutationVariables> mutation={EditVolunteerDocument} {...props} />
-    );
-    
-export type EditVolunteerProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<EditVolunteerMutation, EditVolunteerMutationVariables>
-    } & TChildProps;
-export function withEditVolunteer<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
+  ${VolunteerAllFieldsFragmentDoc}
+`;
+export type EditVolunteerMutationFn = ApolloReactCommon.MutationFunction<
   EditVolunteerMutation,
-  EditVolunteerMutationVariables,
-  EditVolunteerProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, EditVolunteerMutation, EditVolunteerMutationVariables, EditVolunteerProps<TChildProps, TDataName>>(EditVolunteerDocument, {
-      alias: 'editVolunteer',
-      ...operationOptions
-    });
-};
+  EditVolunteerMutationVariables
+>;
+export type EditVolunteerComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<EditVolunteerMutation, EditVolunteerMutationVariables>,
+  "mutation"
+>;
+
+export const EditVolunteerComponent = (props: EditVolunteerComponentProps) => (
+  <ApolloReactComponents.Mutation<EditVolunteerMutation, EditVolunteerMutationVariables>
+    mutation={EditVolunteerDocument}
+    {...props}
+  />
+);
+
+export type EditVolunteerProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<EditVolunteerMutation, EditVolunteerMutationVariables>;
+} & TChildProps;
+export function withEditVolunteer<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    EditVolunteerMutation,
+    EditVolunteerMutationVariables,
+    EditVolunteerProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    EditVolunteerMutation,
+    EditVolunteerMutationVariables,
+    EditVolunteerProps<TChildProps, TDataName>
+  >(EditVolunteerDocument, {
+    alias: "editVolunteer",
+    ...operationOptions,
+  });
+}
 export type EditVolunteerMutationResult = ApolloReactCommon.MutationResult<EditVolunteerMutation>;
-export type EditVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<EditVolunteerMutation, EditVolunteerMutationVariables>;
+export type EditVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  EditVolunteerMutation,
+  EditVolunteerMutationVariables
+>;
 export const CreateVolunteerDocument = gql`
-    mutation createVolunteer($input: CreateVolunteerInput!) {
-  createVolunteer(createVolunteerInput: $input) {
-    ...volunteerAllFields
+  mutation createVolunteer($input: CreateVolunteerInput!) {
+    createVolunteer(createVolunteerInput: $input) {
+      ...volunteerAllFields
+    }
   }
-}
-    ${VolunteerAllFieldsFragmentDoc}`;
-export type CreateVolunteerMutationFn = ApolloReactCommon.MutationFunction<CreateVolunteerMutation, CreateVolunteerMutationVariables>;
-export type CreateVolunteerComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreateVolunteerMutation, CreateVolunteerMutationVariables>, 'mutation'>;
-
-    export const CreateVolunteerComponent = (props: CreateVolunteerComponentProps) => (
-      <ApolloReactComponents.Mutation<CreateVolunteerMutation, CreateVolunteerMutationVariables> mutation={CreateVolunteerDocument} {...props} />
-    );
-    
-export type CreateVolunteerProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<CreateVolunteerMutation, CreateVolunteerMutationVariables>
-    } & TChildProps;
-export function withCreateVolunteer<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
+  ${VolunteerAllFieldsFragmentDoc}
+`;
+export type CreateVolunteerMutationFn = ApolloReactCommon.MutationFunction<
   CreateVolunteerMutation,
-  CreateVolunteerMutationVariables,
-  CreateVolunteerProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, CreateVolunteerMutation, CreateVolunteerMutationVariables, CreateVolunteerProps<TChildProps, TDataName>>(CreateVolunteerDocument, {
-      alias: 'createVolunteer',
-      ...operationOptions
-    });
-};
-export type CreateVolunteerMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerMutation>;
-export type CreateVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateVolunteerMutation, CreateVolunteerMutationVariables>;
-export const DeleteVolunteerDocument = gql`
-    mutation deleteVolunteer($id: String!) {
-  removeVolunteer(id: $id) {
-    id
-  }
-}
-    `;
-export type DeleteVolunteerMutationFn = ApolloReactCommon.MutationFunction<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>;
-export type DeleteVolunteerComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>, 'mutation'>;
+  CreateVolunteerMutationVariables
+>;
+export type CreateVolunteerComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<CreateVolunteerMutation, CreateVolunteerMutationVariables>,
+  "mutation"
+>;
 
-    export const DeleteVolunteerComponent = (props: DeleteVolunteerComponentProps) => (
-      <ApolloReactComponents.Mutation<DeleteVolunteerMutation, DeleteVolunteerMutationVariables> mutation={DeleteVolunteerDocument} {...props} />
-    );
-    
-export type DeleteVolunteerProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>
-    } & TChildProps;
-export function withDeleteVolunteer<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
+export const CreateVolunteerComponent = (props: CreateVolunteerComponentProps) => (
+  <ApolloReactComponents.Mutation<CreateVolunteerMutation, CreateVolunteerMutationVariables>
+    mutation={CreateVolunteerDocument}
+    {...props}
+  />
+);
+
+export type CreateVolunteerProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<CreateVolunteerMutation, CreateVolunteerMutationVariables>;
+} & TChildProps;
+export function withCreateVolunteer<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateVolunteerMutation,
+    CreateVolunteerMutationVariables,
+    CreateVolunteerProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateVolunteerMutation,
+    CreateVolunteerMutationVariables,
+    CreateVolunteerProps<TChildProps, TDataName>
+  >(CreateVolunteerDocument, {
+    alias: "createVolunteer",
+    ...operationOptions,
+  });
+}
+export type CreateVolunteerMutationResult = ApolloReactCommon.MutationResult<CreateVolunteerMutation>;
+export type CreateVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateVolunteerMutation,
+  CreateVolunteerMutationVariables
+>;
+export const DeleteVolunteerDocument = gql`
+  mutation deleteVolunteer($id: String!) {
+    removeVolunteer(id: $id) {
+      id
+    }
+  }
+`;
+export type DeleteVolunteerMutationFn = ApolloReactCommon.MutationFunction<
   DeleteVolunteerMutation,
-  DeleteVolunteerMutationVariables,
-  DeleteVolunteerProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, DeleteVolunteerMutation, DeleteVolunteerMutationVariables, DeleteVolunteerProps<TChildProps, TDataName>>(DeleteVolunteerDocument, {
-      alias: 'deleteVolunteer',
-      ...operationOptions
-    });
-};
+  DeleteVolunteerMutationVariables
+>;
+export type DeleteVolunteerComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>,
+  "mutation"
+>;
+
+export const DeleteVolunteerComponent = (props: DeleteVolunteerComponentProps) => (
+  <ApolloReactComponents.Mutation<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>
+    mutation={DeleteVolunteerDocument}
+    {...props}
+  />
+);
+
+export type DeleteVolunteerProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>;
+} & TChildProps;
+export function withDeleteVolunteer<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    DeleteVolunteerMutation,
+    DeleteVolunteerMutationVariables,
+    DeleteVolunteerProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    DeleteVolunteerMutation,
+    DeleteVolunteerMutationVariables,
+    DeleteVolunteerProps<TChildProps, TDataName>
+  >(DeleteVolunteerDocument, {
+    alias: "deleteVolunteer",
+    ...operationOptions,
+  });
+}
 export type DeleteVolunteerMutationResult = ApolloReactCommon.MutationResult<DeleteVolunteerMutation>;
-export type DeleteVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>;
+export type DeleteVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  DeleteVolunteerMutation,
+  DeleteVolunteerMutationVariables
+>;
