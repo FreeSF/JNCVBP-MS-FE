@@ -1,4 +1,9 @@
 // develop site 'https://jncvbp-ms.herokuapp.com/graphql';
+
+// For Development
+//export const API_URL = "http://localhost:3000/graphql";
+
+// For Deploy
 export const API_URL = "https://jncvbp-ms.herokuapp.com/graphql";
 
 // Can be moved up to make the constants

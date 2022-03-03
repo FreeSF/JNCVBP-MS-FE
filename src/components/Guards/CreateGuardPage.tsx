@@ -47,7 +47,7 @@ const CreateGuardPage = (props) => {
       >
         {({ formApi, formState }) => (
           <div>
-            <label>Descripción:</label>
+            <label>Inicio:</label>
             <Text field="start_time" />
             <DateTimePicker
               locale="es"
@@ -59,7 +59,7 @@ const CreateGuardPage = (props) => {
               minDetail="month"
             />
             <br />
-            <label>Descripción:</label>
+            <label>Fin:</label>
             <Text field="end_time" />
             <DateTimePicker
               locale="es"
