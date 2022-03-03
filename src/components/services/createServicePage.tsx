@@ -78,7 +78,6 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
     return <Spinner />;
 
   const handleSubmit = () => {
-    console.log({ service: formRefCreate.getState().values });
     createService({
       variables: {
         input: formRefCreate.getState().values,

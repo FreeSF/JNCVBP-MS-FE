@@ -15,6 +15,8 @@ import CreateServicePage from "./components/services/createServicePage";
 import GuardsPage from "./components/Guards/GuardsPage";
 import CreateGuardPage from "./components/Guards/CreateGuardPage";
 import ShowGuardPage from "./components/Guards/ShowGuardPage";
+import EventsPage from "./components/Events/EventsPage";
+import CreateEventPage from "./components/Events/CreateEventPage";
 
 const dutiesRoutes = [
   {
@@ -111,6 +113,21 @@ const guardRoutes = [
   },
 ];
 
+const eventRoutes = [
+  {
+    path: "/events",
+    name: "Libro de Novedades",
+    icon: "fas fa-users",
+    component: EventsPage,
+    showOnSidebar: true,
+  },
+  {
+    path: "/events/create",
+    name: "Registrar Evento",
+    component: CreateEventPage,
+  },
+];
+
 const routes = [
   {
     path: "/",
@@ -132,6 +149,7 @@ const routes = [
   ...servicesRoutes,
   ...volunteerRoutes,
   ...guardRoutes,
+  ...eventRoutes,
 ];
 
 export default routes;
