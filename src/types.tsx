@@ -15,6 +15,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
+  DateTime: any;
   /** `Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
   Timestamp: any;
 };
@@ -81,6 +83,12 @@ export type CreateServiceInput = {
   fire_class: Array<OnlyIdFireClassInput>;
   magnitude: Scalars["String"];
   damage: Scalars["String"];
+};
+
+export type CreateTrainingInput = {
+  description: Scalars["String"];
+  date: Scalars["DateTime"];
+  volunteers: Array<OnlyIdVolunteerInput>;
 };
 
 export type CreateUserInput = {
@@ -168,6 +176,9 @@ export type Mutation = {
   createEvent: Event;
   updateEvent: Event;
   removeEvent: Event;
+  createTraining: Training;
+  updateTraining: Training;
+  removeTraining: Training;
 };
 
 export type MutationCreateUserArgs = {
@@ -290,6 +301,18 @@ export type MutationRemoveEventArgs = {
   id: Scalars["String"];
 };
 
+export type MutationCreateTrainingArgs = {
+  createTrainingInput: CreateTrainingInput;
+};
+
+export type MutationUpdateTrainingArgs = {
+  updateTrainingInput: UpdateTrainingInput;
+};
+
+export type MutationRemoveTrainingArgs = {
+  id: Scalars["String"];
+};
+
 export type OnlyIdFireClassInput = {
   _id: Scalars["String"];
 };
@@ -324,6 +347,8 @@ export type Query = {
   guard: Guard;
   events: Array<Event>;
   event: Event;
+  trainings: Array<Training>;
+  training: Training;
 };
 
 export type QueryUserArgs = {
@@ -366,6 +391,10 @@ export type QueryEventArgs = {
   id: Scalars["String"];
 };
 
+export type QueryTrainingArgs = {
+  id: Scalars["String"];
+};
+
 export type Rank = {
   __typename?: "Rank";
   id: Scalars["String"];
@@ -404,6 +433,14 @@ export type Service = {
   fire_class?: Maybe<Array<FireClass>>;
   magnitude?: Maybe<Scalars["String"]>;
   damage?: Maybe<Scalars["String"]>;
+};
+
+export type Training = {
+  __typename?: "Training";
+  id: Scalars["String"];
+  description: Scalars["String"];
+  date: Scalars["DateTime"];
+  volunteers?: Maybe<Array<Volunteer>>;
 };
 
 export type UpdateDutyInput = {
@@ -475,6 +512,13 @@ export type UpdateServiceInput = {
   fire_class?: Maybe<Array<OnlyIdFireClassInput>>;
   magnitude?: Maybe<Scalars["String"]>;
   damage?: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
+};
+
+export type UpdateTrainingInput = {
+  description?: Maybe<Scalars["String"]>;
+  date?: Maybe<Scalars["DateTime"]>;
+  volunteers?: Maybe<Array<OnlyIdVolunteerInput>>;
   id: Scalars["String"];
 };
 
@@ -587,6 +631,48 @@ export type RemoveGuardMutationVariables = Exact<{
 
 export type RemoveGuardMutation = { __typename?: "Mutation" } & {
   removeGuard: { __typename?: "Guard" } & GuardAllFieldsFragment;
+};
+
+export type TrainingAllFieldsFragment = { __typename?: "Training" } & Pick<Training, "id" | "description" | "date"> & {
+    volunteers?: Maybe<Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>>;
+  };
+
+export type GetTrainingsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetTrainingsQuery = { __typename?: "Query" } & {
+  trainings: Array<{ __typename?: "Training" } & TrainingAllFieldsFragment>;
+};
+
+export type FindTrainingQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type FindTrainingQuery = { __typename?: "Query" } & {
+  training: { __typename?: "Training" } & TrainingAllFieldsFragment;
+};
+
+export type EditTrainingMutationVariables = Exact<{
+  input: UpdateTrainingInput;
+}>;
+
+export type EditTrainingMutation = { __typename?: "Mutation" } & {
+  updateTraining: { __typename?: "Training" } & TrainingAllFieldsFragment;
+};
+
+export type CreateTrainingMutationVariables = Exact<{
+  input: CreateTrainingInput;
+}>;
+
+export type CreateTrainingMutation = { __typename?: "Mutation" } & {
+  createTraining: { __typename?: "Training" } & TrainingAllFieldsFragment;
+};
+
+export type RemoveTrainingMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RemoveTrainingMutation = { __typename?: "Mutation" } & {
+  removeTraining: { __typename?: "Training" } & TrainingAllFieldsFragment;
 };
 
 export type DutyAllFieldsFragment = { __typename?: "Duty" } & Pick<Duty, "id" | "name" | "isDeletable" | "description">;
@@ -834,6 +920,17 @@ export const GuardAllFieldsFragmentDoc = gql`
     id
     start_time
     end_time
+    volunteers {
+      ...volunteerAllFields
+    }
+  }
+  ${VolunteerAllFieldsFragmentDoc}
+`;
+export const TrainingAllFieldsFragmentDoc = gql`
+  fragment trainingAllFields on Training {
+    id
+    description
+    date
     volunteers {
       ...volunteerAllFields
     }
@@ -1415,6 +1512,235 @@ export type RemoveGuardMutationResult = ApolloReactCommon.MutationResult<RemoveG
 export type RemoveGuardMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RemoveGuardMutation,
   RemoveGuardMutationVariables
+>;
+export const GetTrainingsDocument = gql`
+  query getTrainings {
+    trainings {
+      ...trainingAllFields
+    }
+  }
+  ${TrainingAllFieldsFragmentDoc}
+`;
+export type GetTrainingsComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetTrainingsQuery, GetTrainingsQueryVariables>,
+  "query"
+>;
+
+export const GetTrainingsComponent = (props: GetTrainingsComponentProps) => (
+  <ApolloReactComponents.Query<GetTrainingsQuery, GetTrainingsQueryVariables> query={GetTrainingsDocument} {...props} />
+);
+
+export type GetTrainingsProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetTrainingsQuery, GetTrainingsQueryVariables>;
+} & TChildProps;
+export function withGetTrainings<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetTrainingsQuery,
+    GetTrainingsQueryVariables,
+    GetTrainingsProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetTrainingsQuery,
+    GetTrainingsQueryVariables,
+    GetTrainingsProps<TChildProps, TDataName>
+  >(GetTrainingsDocument, {
+    alias: "getTrainings",
+    ...operationOptions,
+  });
+}
+export type GetTrainingsQueryResult = ApolloReactCommon.QueryResult<GetTrainingsQuery, GetTrainingsQueryVariables>;
+export const FindTrainingDocument = gql`
+  query findTraining($id: String!) {
+    training(id: $id) {
+      ...trainingAllFields
+    }
+  }
+  ${TrainingAllFieldsFragmentDoc}
+`;
+export type FindTrainingComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<FindTrainingQuery, FindTrainingQueryVariables>,
+  "query"
+> &
+  ({ variables: FindTrainingQueryVariables; skip?: boolean } | { skip: boolean });
+
+export const FindTrainingComponent = (props: FindTrainingComponentProps) => (
+  <ApolloReactComponents.Query<FindTrainingQuery, FindTrainingQueryVariables> query={FindTrainingDocument} {...props} />
+);
+
+export type FindTrainingProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<FindTrainingQuery, FindTrainingQueryVariables>;
+} & TChildProps;
+export function withFindTraining<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    FindTrainingQuery,
+    FindTrainingQueryVariables,
+    FindTrainingProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    FindTrainingQuery,
+    FindTrainingQueryVariables,
+    FindTrainingProps<TChildProps, TDataName>
+  >(FindTrainingDocument, {
+    alias: "findTraining",
+    ...operationOptions,
+  });
+}
+export type FindTrainingQueryResult = ApolloReactCommon.QueryResult<FindTrainingQuery, FindTrainingQueryVariables>;
+export const EditTrainingDocument = gql`
+  mutation editTraining($input: UpdateTrainingInput!) {
+    updateTraining(updateTrainingInput: $input) {
+      ...trainingAllFields
+    }
+  }
+  ${TrainingAllFieldsFragmentDoc}
+`;
+export type EditTrainingMutationFn = ApolloReactCommon.MutationFunction<
+  EditTrainingMutation,
+  EditTrainingMutationVariables
+>;
+export type EditTrainingComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<EditTrainingMutation, EditTrainingMutationVariables>,
+  "mutation"
+>;
+
+export const EditTrainingComponent = (props: EditTrainingComponentProps) => (
+  <ApolloReactComponents.Mutation<EditTrainingMutation, EditTrainingMutationVariables>
+    mutation={EditTrainingDocument}
+    {...props}
+  />
+);
+
+export type EditTrainingProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<EditTrainingMutation, EditTrainingMutationVariables>;
+} & TChildProps;
+export function withEditTraining<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    EditTrainingMutation,
+    EditTrainingMutationVariables,
+    EditTrainingProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    EditTrainingMutation,
+    EditTrainingMutationVariables,
+    EditTrainingProps<TChildProps, TDataName>
+  >(EditTrainingDocument, {
+    alias: "editTraining",
+    ...operationOptions,
+  });
+}
+export type EditTrainingMutationResult = ApolloReactCommon.MutationResult<EditTrainingMutation>;
+export type EditTrainingMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  EditTrainingMutation,
+  EditTrainingMutationVariables
+>;
+export const CreateTrainingDocument = gql`
+  mutation createTraining($input: CreateTrainingInput!) {
+    createTraining(createTrainingInput: $input) {
+      ...trainingAllFields
+    }
+  }
+  ${TrainingAllFieldsFragmentDoc}
+`;
+export type CreateTrainingMutationFn = ApolloReactCommon.MutationFunction<
+  CreateTrainingMutation,
+  CreateTrainingMutationVariables
+>;
+export type CreateTrainingComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<CreateTrainingMutation, CreateTrainingMutationVariables>,
+  "mutation"
+>;
+
+export const CreateTrainingComponent = (props: CreateTrainingComponentProps) => (
+  <ApolloReactComponents.Mutation<CreateTrainingMutation, CreateTrainingMutationVariables>
+    mutation={CreateTrainingDocument}
+    {...props}
+  />
+);
+
+export type CreateTrainingProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<CreateTrainingMutation, CreateTrainingMutationVariables>;
+} & TChildProps;
+export function withCreateTraining<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateTrainingMutation,
+    CreateTrainingMutationVariables,
+    CreateTrainingProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateTrainingMutation,
+    CreateTrainingMutationVariables,
+    CreateTrainingProps<TChildProps, TDataName>
+  >(CreateTrainingDocument, {
+    alias: "createTraining",
+    ...operationOptions,
+  });
+}
+export type CreateTrainingMutationResult = ApolloReactCommon.MutationResult<CreateTrainingMutation>;
+export type CreateTrainingMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateTrainingMutation,
+  CreateTrainingMutationVariables
+>;
+export const RemoveTrainingDocument = gql`
+  mutation removeTraining($id: String!) {
+    removeTraining(id: $id) {
+      ...trainingAllFields
+    }
+  }
+  ${TrainingAllFieldsFragmentDoc}
+`;
+export type RemoveTrainingMutationFn = ApolloReactCommon.MutationFunction<
+  RemoveTrainingMutation,
+  RemoveTrainingMutationVariables
+>;
+export type RemoveTrainingComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RemoveTrainingMutation, RemoveTrainingMutationVariables>,
+  "mutation"
+>;
+
+export const RemoveTrainingComponent = (props: RemoveTrainingComponentProps) => (
+  <ApolloReactComponents.Mutation<RemoveTrainingMutation, RemoveTrainingMutationVariables>
+    mutation={RemoveTrainingDocument}
+    {...props}
+  />
+);
+
+export type RemoveTrainingProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RemoveTrainingMutation, RemoveTrainingMutationVariables>;
+} & TChildProps;
+export function withRemoveTraining<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RemoveTrainingMutation,
+    RemoveTrainingMutationVariables,
+    RemoveTrainingProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RemoveTrainingMutation,
+    RemoveTrainingMutationVariables,
+    RemoveTrainingProps<TChildProps, TDataName>
+  >(RemoveTrainingDocument, {
+    alias: "removeTraining",
+    ...operationOptions,
+  });
+}
+export type RemoveTrainingMutationResult = ApolloReactCommon.MutationResult<RemoveTrainingMutation>;
+export type RemoveTrainingMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RemoveTrainingMutation,
+  RemoveTrainingMutationVariables
 >;
 export const GetDutiesDocument = gql`
   query getDuties {
