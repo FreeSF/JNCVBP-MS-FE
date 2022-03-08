@@ -17,6 +17,8 @@ import CreateGuardPage from "./components/Guards/CreateGuardPage";
 import ShowGuardPage from "./components/Guards/ShowGuardPage";
 import EventsPage from "./components/Events/EventsPage";
 import CreateEventPage from "./components/Events/CreateEventPage";
+import TrainingsPage from "./components/Trainings/TrainingsPage";
+import CreateTrainingPage from "./components/Trainings/CreateTrainingPage";
 
 const dutiesRoutes = [
   {
@@ -128,6 +130,21 @@ const eventRoutes = [
   },
 ];
 
+const practicesRoutes = [
+  {
+    path: "/trainings",
+    name: "Prácticas",
+    icon: "fas fa-users",
+    component: TrainingsPage,
+    showOnSidebar: true,
+  },
+  {
+    path: "/trainings/create",
+    name: "Crear Práctica",
+    component: CreateTrainingPage,
+  },
+];
+
 const routes = [
   {
     path: "/",
@@ -150,6 +167,7 @@ const routes = [
   ...volunteerRoutes,
   ...guardRoutes,
   ...eventRoutes,
+  ...practicesRoutes,
 ];
 
 export default routes;
