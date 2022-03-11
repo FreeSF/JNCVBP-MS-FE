@@ -329,7 +329,7 @@ export type OnlyIdFireTypeInput = {
 };
 
 export type OnlyIdTypeInput = {
-  _id: Scalars["String"];
+  id: Scalars["String"];
 };
 
 export type OnlyIdVolunteerInput = {
@@ -408,7 +408,6 @@ export type QueryTrainingArgs = {
 
 export type Rank = {
   __typename?: "Rank";
-  _id: Scalars["String"];
   id: Scalars["String"];
   name: Scalars["String"];
   isDeletable?: Maybe<Scalars["Boolean"]>;
