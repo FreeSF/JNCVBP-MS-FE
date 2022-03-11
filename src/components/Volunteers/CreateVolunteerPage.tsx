@@ -77,7 +77,7 @@ const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
         },
         refetchQueries: [{ query: GET_VOLUNTEERS }],
       }).then((value) => {
-        // props.history.push('/volunteers');
+        props.history.push("/volunteers");
       });
     }
   };
