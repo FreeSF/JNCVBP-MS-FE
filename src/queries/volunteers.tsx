@@ -1,49 +1,63 @@
-import {gql} from "apollo-boost";
+import { gql } from "apollo-boost";
+import { rankAllFieldsFragment } from "./ranks";
 
 export const volunteerAllFieldsFragment = gql`
-    fragment volunteerAllFields on Volunteer {
-        id, name
+  fragment volunteerAllFields on Volunteer {
+    id
+    name
+    code
+    address
+    blood_type
+    status
+    incorporation_date
+    birth_date
+    rank {
+      ...rankAllFields
     }
+  }
+  ${rankAllFieldsFragment}
 `;
 
 export const GET_VOLUNTEERS = gql`
-    query getVolunteers {
-        volunteers {
-            ...volunteerAllFields
-        }
+  query getVolunteers {
+    volunteers {
+      ...volunteerAllFields
     }
-    ${volunteerAllFieldsFragment}
+  }
+  ${volunteerAllFieldsFragment}
 `;
 
 export const FIND_VOLUNTEER = gql`
-    query findVolunteer($id: String!) {
-        volunteer(id: $id) {
-            ...volunteerAllFields
-        }
+  query findVolunteer($id: String!) {
+    volunteer(id: $id) {
+      ...volunteerAllFields
     }
-    ${volunteerAllFieldsFragment}
+  }
+  ${volunteerAllFieldsFragment}
 `;
 
 export const EDIT_VOLUNTEER = gql`
-    mutation editVolunteer($id: String!, $name: String){
-        updateVolunteer(updateVolunteerInput: {id: $id, name: $name}) {
-            ...volunteerAllFields
-        }
+  mutation editVolunteer($input: UpdateVolunteerInput!) {
+    updateVolunteer(updateVolunteerInput: $input) {
+      ...volunteerAllFields
     }
-    ${volunteerAllFieldsFragment}
+  }
+  ${volunteerAllFieldsFragment}
 `;
 
 export const CREATE_VOLUNTEER = gql`
-    mutation createVolunteer($input: CreateVolunteerInput!) {
-        createVolunteer(createVolunteerInput: $input) {
-            ...volunteerAllFields
-        }
+  mutation createVolunteer($input: CreateVolunteerInput!) {
+    createVolunteer(createVolunteerInput: $input) {
+      ...volunteerAllFields
     }
-    ${volunteerAllFieldsFragment}
+  }
+  ${volunteerAllFieldsFragment}
 `;
 
 export const DELETE_VOLUNTEER = gql`
-    mutation deleteVolunteer($id: String!) {
-        removeVolunteer(id: $id) {id}
+  mutation deleteVolunteer($id: String!) {
+    removeVolunteer(id: $id) {
+      id
     }
+  }
 `;

@@ -1,71 +1,94 @@
-import React, {useEffect, useState} from "react"
-import {RouteComponentProps} from "react-router-dom"
-import {useLazyQuery, useMutation} from 'react-apollo';
+import React, { useEffect, useState } from "react";
+import { RouteComponentProps } from "react-router-dom";
+import { useLazyQuery, useMutation } from "react-apollo";
 import Spinner from "../spinner";
 import {
   CreateVolunteerInput,
   EditVolunteerMutation,
+  CreateVolunteerMutation,
+  CreateVolunteerMutationVariables,
   EditVolunteerMutationVariables,
   FindVolunteerQuery,
   FindVolunteerQueryVariables,
-  Volunteer
+  Volunteer,
 } from "../../types";
-import {CREATE_VOLUNTEER, EDIT_VOLUNTEER, FIND_VOLUNTEER, GET_VOLUNTEERS} from "../../queries/volunteers";
-import {Form as IForm, FormApi, Text} from 'informed'; //Form
-import {Button, Card, Col, Container, Form, Row} from "react-bootstrap";
-import {MODE_CREATE, MODE_EDIT} from "../../utils/constants";
+import { CREATE_VOLUNTEER, EDIT_VOLUNTEER, FIND_VOLUNTEER, GET_VOLUNTEERS } from "../../queries/volunteers";
+import { Form as IForm, FormApi, Select, Text } from "informed"; //Form
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import {
+  BLOOD_TYPES,
+  get_blood_type,
+  get_volunteer_status,
+  MODE_CREATE,
+  MODE_EDIT,
+  VOLUNTEER_STATUS,
+} from "../../utils/constants";
 
 interface theProps extends RouteComponentProps {
-  id: string
+  id: string;
 }
 
 const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
+  const mode = props.match.params.id ? MODE_EDIT : MODE_CREATE;
 
-  const mode = props.match.params.id ? MODE_CREATE : MODE_EDIT;
   const [loadVolunteer, loadResult] = useLazyQuery<FindVolunteerQuery, FindVolunteerQueryVariables>(FIND_VOLUNTEER);
-  const [editVolunteer, editedVolunteer] = useMutation<
-    EditVolunteerMutation,
-    EditVolunteerMutationVariables>(EDIT_VOLUNTEER, {
-      refetchQueries: [{ query: GET_VOLUNTEERS }]
-    });
-  const [createVolunteer, createdVolunteer] = useMutation<{ createClient: Volunteer }, { input: CreateVolunteerInput }>(CREATE_VOLUNTEER);
+  // const [editVolunteer, editedVolunteer] = useMutation<
+  //   EditVolunteerMutation,
+  //   EditVolunteerMutationVariables>(EDIT_VOLUNTEER, {
+  //     refetchQueries: [{ query: GET_VOLUNTEERS }]
+  //   });
+  const [createVolunteer, createdVolunteer] = useMutation<CreateVolunteerMutation, CreateVolunteerMutationVariables>(
+    CREATE_VOLUNTEER
+  );
 
-  const [formRef, setFormRef] = useState<FormApi<Volunteer>>(null);
+  const [formRef, setFormRef] = useState<FormApi<CreateVolunteerInput>>(null);
 
   useEffect(() => {
-    if (mode === MODE_EDIT)
-      loadVolunteer({ variables: { id: props.match.params.id } })
+    if (mode === MODE_EDIT) loadVolunteer({ variables: { id: props.match.params.id } });
   }, []);
 
-  if (loadResult.loading)
-    return <Spinner />;
+  if (loadResult.loading) return <Spinner />;
 
   const handleSubmit = () => {
+    console.log("asdasdasdsa");
     const values = formRef.getState().values;
 
-    if (mode === MODE_EDIT) {
-      editVolunteer({
-        variables: {
-          ...values,
-          id: volunteer.id
-        }
-      }).then(() => {
-        props.history.push('/volunteers');
-      });
+    if (mode == MODE_EDIT) {
+      // console.log('create')
+      // console.log(values)
+      // console.log(volunteer.id)
+      // editVolunteer({
+      //   variables: {
+      //     ...values,
+      //     id: volunteer.id
+      //   }
+      // }).then(() => {
+      //   props.history.push('/volunteers');
+      // });
     }
 
-    if (mode === MODE_CREATE) {
+    if (mode == MODE_CREATE) {
+      console.log("create");
+      console.log(values);
       createVolunteer({
         variables: {
-          input: { ...values }
-        }, refetchQueries: [{ query: GET_VOLUNTEERS }]
-      }).then(value => {
-        props.history.push('/volunteers');
+          input: { ...values },
+        },
+        refetchQueries: [{ query: GET_VOLUNTEERS }],
+      }).then((value) => {
+        // props.history.push('/volunteers');
       });
     }
   };
 
-  const volunteer = loadResult?.data?.volunteer;
+  const defaultValue: CreateVolunteerInput = {
+    name: undefined,
+    code: undefined,
+    status: "Active",
+    blood_type: "Not Set",
+  };
+  const volunteer = loadResult?.data?.volunteer || defaultValue;
 
   return (
     <Container fluid>
@@ -82,103 +105,105 @@ const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
                   <Card.Title as="h4">Voluntario</Card.Title>
                 </Card.Header>
                 <Card.Body>
-                  <Form>
-                    <Row>
+                  <Row>
+                    <Col md="6">
+                      <Form.Group>
+                        <label>Nombre</label>
+                        <Text className="form-control" field="name" placeholder="Nombre y Apellido" type="text" />
+                      </Form.Group>
+                    </Col>
+                    <Col md="6">
+                      <Form.Group>
+                        <label> Código </label>
+                        <Text className="form-control" field="code" placeholder="Código" type="text" />
+                      </Form.Group>
+                    </Col>
+                  </Row>
 
-                      <Col className="pr-1" md="5">
-                        <Form.Group>
-                          <label>ID (disabled)</label>
-                          <Form.Control defaultValue="Identificador" value={volunteer?.id} disabled type="text" ></Form.Control>
-                        </Form.Group>
-                      </Col>
+                  <Row>
+                    <Col md="6">
+                      <Form.Group>
+                        <label> Estado </label>
+                        <Select
+                          className="form-control"
+                          field="status"
+                          initialValue={volunteer?.status || VOLUNTEER_STATUS[0].id}
+                        >
+                          {VOLUNTEER_STATUS.map((status) => (
+                            <option value={status.id} key={status.id}>
+                              {status.description}
+                            </option>
+                          ))}
+                        </Select>
+                      </Form.Group>
+                    </Col>
 
-                      <Col className="px-1" md="3">
-                        <Form.Group>
-                          <label>Nombre</label>
-                          <Text className="form-control" field="name" type="text" />
-                        </Form.Group>
-                      </Col>
+                    <Col md="6">
+                      <Form.Group>
+                        <label>Grupo Sanguíneo </label>
+                        <Select
+                          className="form-control"
+                          field="blood_type"
+                          initialValue={volunteer?.blood_type || BLOOD_TYPES[0].id}
+                        >
+                          {BLOOD_TYPES.map((status) => (
+                            <option value={status.id} key={status.id}>
+                              {status.description}
+                            </option>
+                          ))}
+                        </Select>
+                      </Form.Group>
+                    </Col>
+                  </Row>
 
-                      <Col className="pl-1" md="4">
-                        <Form.Group>
-                          <label htmlFor="exampleInputEmail1"> Correo </label>
-                          <Form.Control placeholder="Email" disabled type="email" ></Form.Control>
-                        </Form.Group>
-                      </Col>
-                    </Row>
+                  <Row>
+                    <Col md="6">
+                      <Form.Group>
+                        <label>Fecha de Incorporación</label>
+                        <DatePicker
+                          className="form-control"
+                          locale="es"
+                          onChange={(value) => {
+                            formApi.setValues({ ...formState.values, incorporation_date: value });
+                          }}
+                          selected={formState?.values?.incorporation_date}
+                        />
 
-                    <Row>
-                      <Col md="12">
-                        <Form.Group>
-                          <label>Dirección</label>
-                          <Form.Control
-                            defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                            placeholder="Home Address" disabled
-                            type="text"
-                          ></Form.Control>
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col className="pr-1" md="4">
-                        <Form.Group>
-                          <label>City</label>
-                          <Form.Control
-                            defaultValue="Mike"
-                            placeholder="City"
-                            type="text" disabled
-                          ></Form.Control>
-                        </Form.Group>
-                      </Col>
-                      <Col className="px-1" md="4">
-                        <Form.Group>
-                          <label>Country</label>
-                          <Form.Control
-                            defaultValue="Andrew" disabled
-                            placeholder="Country"
-                            type="text"
-                          ></Form.Control>
-                        </Form.Group>
-                      </Col>
-                      <Col className="pl-1" md="4">
-                        <Form.Group>
-                          <label>Postal Code</label>
-                          <Form.Control
-                            placeholder="ZIP Code" disabled
-                            type="number"
-                          ></Form.Control>
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md="12">
-                        <Form.Group>
-                          <label>Observaciones</label>
-                          <Form.Control cols={80}
-                            defaultValue="Lamborghini Mercy, Your chick she so thirsty, I'm in
-                            that two seat Lambo."
-                            placeholder="Here can be your description"
-                            rows={4}
-                            as="textarea" disabled
-                          ></Form.Control>
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                    <Button className="btn-fill btn-pull-right" variant="info" type="submit"> Guardar Voluntario</Button>
-                    <div className="clearfix"></div>
-                  </Form>
+                        <Text className="form-control" field="incorporation_date" placeholder="" type="hidden" />
+                      </Form.Group>
+                    </Col>
+
+                    <Col md="6">
+                      <Form.Group>
+                        <label>Fecha de Nacimiento</label>
+                        <Text className="form-control" field="birth_date" placeholder="" type="text" />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col md="12">
+                      <Form.Group>
+                        <label> Dirección </label>
+                        <Text className="form-control" field="address" placeholder="Calle 1 - Calle 2" type="text" />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
+                  <Button className="btn-fill btn-pull-right" variant="info" type="submit">
+                    {" "}
+                    Guardar Voluntario
+                  </Button>
+                  <div className="clearfix"></div>
                 </Card.Body>
               </Card>
             </Col>
 
-            {/* Right card section */}
+            {/* Right card section  */}
             <Col md="4">
               <Card className="card-user">
                 <div className="card-image">
-                  <img
-                    alt="..."
-                    src={require("../../assets/img/photo-1431578500526-4d9613015464.jpeg")}
-                  ></img>
+                  <img alt="..." src={require("../../assets/img/photo-1431578500526-4d9613015464.jpeg")}></img>
                 </div>
                 <Card.Body>
                   <div className="author">
@@ -188,40 +213,28 @@ const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
                         className="avatar border-gray"
                         src={require("../../assets/img/faces/face-3.jpg")}
                       ></img>
-                      <h5 className="title">Mike Andrew</h5>
+                      {/* <h5 className="title">{`${formState.values?.name || ''} (${get_volunteer_status(formState.values?.status)})`}</h5> */}
+                      <h5 className="title">{`${formState.values?.name || "Nombre"} (${
+                        formState.values?.code || "Código"
+                      })`}</h5>
                     </a>
-                    <p className="description">michael24</p>
+                    {/* <p className="description">{formState.values?.code || 'Código'}</p> */}
                   </div>
                   <p className="description text-center">
-                    "Lamborghini Mercy <br></br>
+                    {/* Tipo de Sangre: {get_blood_type(formState.values.blood_type)} <br></br> */}
                     Your chick she so thirsty <br></br>
                     I'm in that two seat Lambo"
                   </p>
                 </Card.Body>
                 <hr></hr>
                 <div className="button-container mr-auto ml-auto">
-                  <Button
-                    className="btn-simple btn-icon"
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
-                    variant="link"
-                  >
+                  <Button className="btn-simple btn-icon" href="#" onClick={(e) => e.preventDefault()} variant="link">
                     <i className="fab fa-facebook-square"></i>
                   </Button>
-                  <Button
-                    className="btn-simple btn-icon"
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
-                    variant="link"
-                  >
+                  <Button className="btn-simple btn-icon" href="#" onClick={(e) => e.preventDefault()} variant="link">
                     <i className="fab fa-twitter"></i>
                   </Button>
-                  <Button
-                    className="btn-simple btn-icon"
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
-                    variant="link"
-                  >
+                  <Button className="btn-simple btn-icon" href="#" onClick={(e) => e.preventDefault()} variant="link">
                     <i className="fab fa-google-plus-square"></i>
                   </Button>
                 </div>
@@ -230,13 +243,8 @@ const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
           </Row>
         )}
       </IForm>
-
-
     </Container>
+  );
+};
 
-
-  )
-
-}
-
-export default CreateVolunteerPage
+export default CreateVolunteerPage;
