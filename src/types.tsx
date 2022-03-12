@@ -97,6 +97,13 @@ export type CreateUserInput = {
 
 export type CreateVolunteerInput = {
   name: Scalars["String"];
+  code: Scalars["String"];
+  address?: Maybe<Scalars["String"]>;
+  blood_type?: Maybe<Scalars["String"]>;
+  status?: Maybe<Scalars["String"]>;
+  incorporation_date?: Maybe<Scalars["DateTime"]>;
+  birth_date?: Maybe<Scalars["DateTime"]>;
+  rank?: Maybe<OnlyIdTypeInput>;
 };
 
 export type Duty = {
@@ -321,6 +328,10 @@ export type OnlyIdFireTypeInput = {
   _id: Scalars["String"];
 };
 
+export type OnlyIdTypeInput = {
+  id: Scalars["String"];
+};
+
 export type OnlyIdVolunteerInput = {
   _id: Scalars["String"];
 };
@@ -529,6 +540,13 @@ export type UpdateUserInput = {
 
 export type UpdateVolunteerInput = {
   name?: Maybe<Scalars["String"]>;
+  code?: Maybe<Scalars["String"]>;
+  address?: Maybe<Scalars["String"]>;
+  blood_type?: Maybe<Scalars["String"]>;
+  status?: Maybe<Scalars["String"]>;
+  incorporation_date?: Maybe<Scalars["DateTime"]>;
+  birth_date?: Maybe<Scalars["DateTime"]>;
+  rank?: Maybe<OnlyIdTypeInput>;
   id: Scalars["String"];
 };
 
@@ -543,6 +561,13 @@ export type Volunteer = {
   id?: Maybe<Scalars["String"]>;
   _id?: Maybe<Scalars["String"]>;
   name: Scalars["String"];
+  code: Scalars["String"];
+  blood_type?: Maybe<Scalars["String"]>;
+  status?: Maybe<Scalars["String"]>;
+  address?: Maybe<Scalars["String"]>;
+  incorporation_date?: Maybe<Scalars["DateTime"]>;
+  birth_date?: Maybe<Scalars["DateTime"]>;
+  rank?: Maybe<Rank>;
 };
 
 export type VolunteerfieldsFragment = { __typename: "Volunteer" } & Pick<Volunteer, "id" | "name">;
@@ -851,7 +876,10 @@ export type RemoveServiceMutation = { __typename?: "Mutation" } & {
   removeService: { __typename?: "Service" } & ServicesAllFieldsFragment;
 };
 
-export type VolunteerAllFieldsFragment = { __typename?: "Volunteer" } & Pick<Volunteer, "id" | "name">;
+export type VolunteerAllFieldsFragment = { __typename?: "Volunteer" } & Pick<
+  Volunteer,
+  "id" | "name" | "code" | "address" | "blood_type" | "status" | "incorporation_date" | "birth_date"
+> & { rank?: Maybe<{ __typename?: "Rank" } & RankAllFieldsFragment> };
 
 export type GetVolunteersQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -868,8 +896,7 @@ export type FindVolunteerQuery = { __typename?: "Query" } & {
 };
 
 export type EditVolunteerMutationVariables = Exact<{
-  id: Scalars["String"];
-  name?: Maybe<Scalars["String"]>;
+  input: UpdateVolunteerInput;
 }>;
 
 export type EditVolunteerMutation = { __typename?: "Mutation" } & {
@@ -899,11 +926,29 @@ export const VolunteerfieldsFragmentDoc = gql`
     __typename
   }
 `;
+export const RankAllFieldsFragmentDoc = gql`
+  fragment rankAllFields on Rank {
+    id
+    name
+    isDeletable
+    description
+  }
+`;
 export const VolunteerAllFieldsFragmentDoc = gql`
   fragment volunteerAllFields on Volunteer {
     id
     name
+    code
+    address
+    blood_type
+    status
+    incorporation_date
+    birth_date
+    rank {
+      ...rankAllFields
+    }
   }
+  ${RankAllFieldsFragmentDoc}
 `;
 export const EventAllFieldsFragmentDoc = gql`
   fragment eventAllFields on Event {
@@ -939,14 +984,6 @@ export const TrainingAllFieldsFragmentDoc = gql`
 `;
 export const DutyAllFieldsFragmentDoc = gql`
   fragment dutyAllFields on Duty {
-    id
-    name
-    isDeletable
-    description
-  }
-`;
-export const RankAllFieldsFragmentDoc = gql`
-  fragment rankAllFields on Rank {
     id
     name
     isDeletable
@@ -2609,8 +2646,8 @@ export function withFindVolunteer<TProps, TChildProps = {}, TDataName extends st
 }
 export type FindVolunteerQueryResult = ApolloReactCommon.QueryResult<FindVolunteerQuery, FindVolunteerQueryVariables>;
 export const EditVolunteerDocument = gql`
-  mutation editVolunteer($id: String!, $name: String) {
-    updateVolunteer(updateVolunteerInput: { id: $id, name: $name }) {
+  mutation editVolunteer($input: UpdateVolunteerInput!) {
+    updateVolunteer(updateVolunteerInput: $input) {
       ...volunteerAllFields
     }
   }

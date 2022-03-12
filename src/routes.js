@@ -49,6 +49,12 @@ const ranksRoutes = [
     name: "Crear Rango",
     component: EditRankPage,
   },
+
+  {
+    path: "/ranks/:id/edit",
+    name: "Editar Rango",
+    component: EditRankPage,
+  },
 ];
 
 const servicesRoutes = [
