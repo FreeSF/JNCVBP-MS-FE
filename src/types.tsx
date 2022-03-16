@@ -103,7 +103,7 @@ export type CreateVolunteerInput = {
   status?: Maybe<Scalars["String"]>;
   incorporation_date?: Maybe<Scalars["DateTime"]>;
   birth_date?: Maybe<Scalars["DateTime"]>;
-  rank?: Maybe<OnlyIdTypeInput>;
+  rank: OnlyIdTypeInput;
 };
 
 export type Duty = {
@@ -567,7 +567,7 @@ export type Volunteer = {
   address?: Maybe<Scalars["String"]>;
   incorporation_date?: Maybe<Scalars["DateTime"]>;
   birth_date?: Maybe<Scalars["DateTime"]>;
-  rank?: Maybe<Rank>;
+  rank: Rank;
 };
 
 export type VolunteerfieldsFragment = { __typename: "Volunteer" } & Pick<Volunteer, "id" | "name">;
@@ -879,7 +879,7 @@ export type RemoveServiceMutation = { __typename?: "Mutation" } & {
 export type VolunteerAllFieldsFragment = { __typename?: "Volunteer" } & Pick<
   Volunteer,
   "id" | "name" | "code" | "address" | "blood_type" | "status" | "incorporation_date" | "birth_date"
-> & { rank?: Maybe<{ __typename?: "Rank" } & RankAllFieldsFragment> };
+> & { rank: { __typename?: "Rank" } & RankAllFieldsFragment };
 
 export type GetVolunteersQueryVariables = Exact<{ [key: string]: never }>;
 

@@ -33,11 +33,11 @@ export const VOLUNTEER_STATUS = [
   { id: "Deceased", description: "Muerto en combate" },
 ];
 export const get_volunteer_status = (status_id) => {
-  return VOLUNTEER_STATUS.find((status) => (status.id = status_id))?.description || "";
+  return VOLUNTEER_STATUS.find((status) => status.id == status_id)?.description || "";
 };
 
 export const get_blood_type = (blood_type_id) => {
-  return BLOOD_TYPES.find((blood_type) => (blood_type.id = blood_type_id))?.description || "";
+  return BLOOD_TYPES.find((blood_type) => blood_type.id == blood_type_id)?.description || "";
 };
 
 export const get_formatted_date = (date) => {
