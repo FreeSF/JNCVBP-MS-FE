@@ -9,38 +9,19 @@ import { gql } from "apollo-boost";
 import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
 import { get_formatted_date } from "utils/constants";
 
-const fieldsFragmeent = gql`
-  fragment volunteerfields on Volunteer {
-    id
-    name
-    __typename
-  }
-`;
-
-const getVolunteeers = gql`
-  query getVolunteeers {
-    volunteers {
-      ...volunteerfields
-    }
-  }
-  ${fieldsFragmeent}
-`;
-
 const VolunteersPage = (props: RouteComponentProps) => {
   const { loading, data } = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
 
   const [deleteClient, deletedClient] = useMutation<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>(
     DELETE_VOLUNTEER,
-    {
-      refetchQueries: [{ query: GET_VOLUNTEERS }],
-    }
+    { refetchQueries: [{ query: GET_VOLUNTEERS }] }
   );
 
   const handleCreate = () => props.history.push("/volunteers/create");
   const handleEdit = (id: string) => props.history.push("/volunteers/" + id + "/edit");
   // const handleShow = (id: string) => props.history.push('/volunteers/' + id)
   const handleDelete = (id: string) => deleteClient({ variables: { id: id } });
-  console.log(data && data.volunteers);
+
   return (
     <Container fluid>
       <Row>
