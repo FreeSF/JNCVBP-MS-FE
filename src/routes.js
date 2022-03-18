@@ -19,6 +19,9 @@ import EventsPage from "./components/Events/EventsPage";
 import CreateEventPage from "./components/Events/CreateEventPage";
 import TrainingsPage from "./components/Trainings/TrainingsPage";
 import CreateTrainingPage from "./components/Trainings/CreateTrainingPage";
+import CoursesPage from "./components/Courses/CoursesPage";
+import CreateCoursePage from "./components/Courses/CreateCoursePage";
+import ShowCoursePage from "./components/Courses/ShowCoursePage";
 
 const dutiesRoutes = [
   {
@@ -145,19 +148,31 @@ const practicesRoutes = [
   },
 ];
 
+const coursesRoutes = [
+  {
+    path: "/courses",
+    name: "Cursos",
+    icon: "fas fa-users",
+    component: CoursesPage,
+    showOnSidebar: true,
+  },
+  {
+    path: "/courses/create",
+    name: "Crear Curso",
+    component: CreateCoursePage,
+  },
+  {
+    path: "/courses/:id",
+    name: "Curso",
+    component: ShowCoursePage,
+  },
+];
+
 const routes = [
   {
     path: "/",
     name: "Inicio",
     icon: "nc-icon nc-chart-pie-35",
-    component: HomePage,
-    showOnSidebar: true,
-  },
-
-  {
-    path: "/courses",
-    name: "Cursos",
-    icon: "fas fa-book-medical",
     component: HomePage,
     showOnSidebar: true,
   },
@@ -168,6 +183,7 @@ const routes = [
   ...guardRoutes,
   ...eventRoutes,
   ...practicesRoutes,
+  ...coursesRoutes,
 ];
 
 export default routes;

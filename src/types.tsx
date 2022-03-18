@@ -21,6 +21,26 @@ export type Scalars = {
   Timestamp: any;
 };
 
+export type Course = {
+  __typename?: "Course";
+  id: Scalars["String"];
+  description: Scalars["String"];
+  date: Scalars["DateTime"];
+  details?: Maybe<Array<CourseDetail>>;
+};
+
+export type CourseDetail = {
+  __typename?: "CourseDetail";
+  score: Scalars["String"];
+  volunteer?: Maybe<Volunteer>;
+};
+
+export type CreateCourseInput = {
+  description: Scalars["String"];
+  date: Scalars["DateTime"];
+  details: Array<CourseDetailInput>;
+};
+
 export type CreateDutyInput = {
   name: Scalars["String"];
   isDeletable?: Maybe<Scalars["Boolean"]>;
@@ -179,6 +199,9 @@ export type Mutation = {
   createTraining: Training;
   updateTraining: Training;
   removeTraining: Training;
+  createCourse: Course;
+  updateCourse: Course;
+  removeCourse: Course;
 };
 
 export type MutationCreateUserArgs = {
@@ -313,6 +336,18 @@ export type MutationRemoveTrainingArgs = {
   id: Scalars["String"];
 };
 
+export type MutationCreateCourseArgs = {
+  createCourseInput: CreateCourseInput;
+};
+
+export type MutationUpdateCourseArgs = {
+  updateCourseInput: UpdateCourseInput;
+};
+
+export type MutationRemoveCourseArgs = {
+  id: Scalars["String"];
+};
+
 export type OnlyIdFireClassInput = {
   _id: Scalars["String"];
 };
@@ -349,6 +384,8 @@ export type Query = {
   event: Event;
   trainings: Array<Training>;
   training: Training;
+  courses: Array<Course>;
+  course: Course;
 };
 
 export type QueryUserArgs = {
@@ -392,6 +429,10 @@ export type QueryEventArgs = {
 };
 
 export type QueryTrainingArgs = {
+  id: Scalars["String"];
+};
+
+export type QueryCourseArgs = {
   id: Scalars["String"];
 };
 
@@ -441,6 +482,13 @@ export type Training = {
   description: Scalars["String"];
   date: Scalars["DateTime"];
   volunteers?: Maybe<Array<Volunteer>>;
+};
+
+export type UpdateCourseInput = {
+  description?: Maybe<Scalars["String"]>;
+  date?: Maybe<Scalars["DateTime"]>;
+  details?: Maybe<Array<CourseDetailInput>>;
+  id: Scalars["String"];
 };
 
 export type UpdateDutyInput = {
@@ -545,12 +593,65 @@ export type Volunteer = {
   name: Scalars["String"];
 };
 
+export type CourseDetailInput = {
+  score: Scalars["String"];
+  volunteer: OnlyIdVolunteerInput;
+};
+
 export type VolunteerfieldsFragment = { __typename: "Volunteer" } & Pick<Volunteer, "id" | "name">;
 
 export type GetVolunteeersQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetVolunteeersQuery = { __typename?: "Query" } & {
   volunteers: Array<{ __typename?: "Volunteer" } & VolunteerfieldsFragment>;
+};
+
+export type CoursesAllFieldsFragment = { __typename?: "Course" } & Pick<Course, "id" | "description" | "date"> & {
+    details?: Maybe<
+      Array<
+        { __typename?: "CourseDetail" } & Pick<CourseDetail, "score"> & {
+            volunteer?: Maybe<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>;
+          }
+      >
+    >;
+  };
+
+export type GetCoursesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCoursesQuery = { __typename?: "Query" } & {
+  courses: Array<{ __typename?: "Course" } & CoursesAllFieldsFragment>;
+};
+
+export type FindCourseQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type FindCourseQuery = { __typename?: "Query" } & {
+  course: { __typename?: "Course" } & CoursesAllFieldsFragment;
+};
+
+export type EditCourseMutationVariables = Exact<{
+  input: UpdateCourseInput;
+}>;
+
+export type EditCourseMutation = { __typename?: "Mutation" } & {
+  updateCourse: { __typename?: "Course" } & CoursesAllFieldsFragment;
+};
+
+export type CreateCourseMutationVariables = Exact<{
+  input: CreateCourseInput;
+}>;
+
+export type CreateCourseMutation = { __typename?: "Mutation" } & {
+  createCourse: { __typename?: "Course" } & CoursesAllFieldsFragment;
+};
+
+export type RemoveCourseMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RemoveCourseMutation = { __typename?: "Mutation" } & {
+  removeCourse: { __typename?: "Course" } & CoursesAllFieldsFragment;
 };
 
 export type EventAllFieldsFragment = { __typename?: "Event" } & Pick<Event, "id" | "description"> & {
@@ -905,6 +1006,20 @@ export const VolunteerAllFieldsFragmentDoc = gql`
     name
   }
 `;
+export const CoursesAllFieldsFragmentDoc = gql`
+  fragment coursesAllFields on Course {
+    id
+    description
+    date
+    details {
+      score
+      volunteer {
+        ...volunteerAllFields
+      }
+    }
+  }
+  ${VolunteerAllFieldsFragmentDoc}
+`;
 export const EventAllFieldsFragmentDoc = gql`
   fragment eventAllFields on Event {
     id
@@ -1060,6 +1175,232 @@ export function withGetVolunteeers<TProps, TChildProps = {}, TDataName extends s
 export type GetVolunteeersQueryResult = ApolloReactCommon.QueryResult<
   GetVolunteeersQuery,
   GetVolunteeersQueryVariables
+>;
+export const GetCoursesDocument = gql`
+  query getCourses {
+    courses {
+      ...coursesAllFields
+    }
+  }
+  ${CoursesAllFieldsFragmentDoc}
+`;
+export type GetCoursesComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetCoursesQuery, GetCoursesQueryVariables>,
+  "query"
+>;
+
+export const GetCoursesComponent = (props: GetCoursesComponentProps) => (
+  <ApolloReactComponents.Query<GetCoursesQuery, GetCoursesQueryVariables> query={GetCoursesDocument} {...props} />
+);
+
+export type GetCoursesProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetCoursesQuery, GetCoursesQueryVariables>;
+} & TChildProps;
+export function withGetCourses<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetCoursesQuery,
+    GetCoursesQueryVariables,
+    GetCoursesProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetCoursesQuery,
+    GetCoursesQueryVariables,
+    GetCoursesProps<TChildProps, TDataName>
+  >(GetCoursesDocument, {
+    alias: "getCourses",
+    ...operationOptions,
+  });
+}
+export type GetCoursesQueryResult = ApolloReactCommon.QueryResult<GetCoursesQuery, GetCoursesQueryVariables>;
+export const FindCourseDocument = gql`
+  query findCourse($id: String!) {
+    course(id: $id) {
+      ...coursesAllFields
+    }
+  }
+  ${CoursesAllFieldsFragmentDoc}
+`;
+export type FindCourseComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<FindCourseQuery, FindCourseQueryVariables>,
+  "query"
+> &
+  ({ variables: FindCourseQueryVariables; skip?: boolean } | { skip: boolean });
+
+export const FindCourseComponent = (props: FindCourseComponentProps) => (
+  <ApolloReactComponents.Query<FindCourseQuery, FindCourseQueryVariables> query={FindCourseDocument} {...props} />
+);
+
+export type FindCourseProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<FindCourseQuery, FindCourseQueryVariables>;
+} & TChildProps;
+export function withFindCourse<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    FindCourseQuery,
+    FindCourseQueryVariables,
+    FindCourseProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    FindCourseQuery,
+    FindCourseQueryVariables,
+    FindCourseProps<TChildProps, TDataName>
+  >(FindCourseDocument, {
+    alias: "findCourse",
+    ...operationOptions,
+  });
+}
+export type FindCourseQueryResult = ApolloReactCommon.QueryResult<FindCourseQuery, FindCourseQueryVariables>;
+export const EditCourseDocument = gql`
+  mutation editCourse($input: UpdateCourseInput!) {
+    updateCourse(updateCourseInput: $input) {
+      ...coursesAllFields
+    }
+  }
+  ${CoursesAllFieldsFragmentDoc}
+`;
+export type EditCourseMutationFn = ApolloReactCommon.MutationFunction<EditCourseMutation, EditCourseMutationVariables>;
+export type EditCourseComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<EditCourseMutation, EditCourseMutationVariables>,
+  "mutation"
+>;
+
+export const EditCourseComponent = (props: EditCourseComponentProps) => (
+  <ApolloReactComponents.Mutation<EditCourseMutation, EditCourseMutationVariables>
+    mutation={EditCourseDocument}
+    {...props}
+  />
+);
+
+export type EditCourseProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<EditCourseMutation, EditCourseMutationVariables>;
+} & TChildProps;
+export function withEditCourse<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    EditCourseMutation,
+    EditCourseMutationVariables,
+    EditCourseProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    EditCourseMutation,
+    EditCourseMutationVariables,
+    EditCourseProps<TChildProps, TDataName>
+  >(EditCourseDocument, {
+    alias: "editCourse",
+    ...operationOptions,
+  });
+}
+export type EditCourseMutationResult = ApolloReactCommon.MutationResult<EditCourseMutation>;
+export type EditCourseMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  EditCourseMutation,
+  EditCourseMutationVariables
+>;
+export const CreateCourseDocument = gql`
+  mutation createCourse($input: CreateCourseInput!) {
+    createCourse(createCourseInput: $input) {
+      ...coursesAllFields
+    }
+  }
+  ${CoursesAllFieldsFragmentDoc}
+`;
+export type CreateCourseMutationFn = ApolloReactCommon.MutationFunction<
+  CreateCourseMutation,
+  CreateCourseMutationVariables
+>;
+export type CreateCourseComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<CreateCourseMutation, CreateCourseMutationVariables>,
+  "mutation"
+>;
+
+export const CreateCourseComponent = (props: CreateCourseComponentProps) => (
+  <ApolloReactComponents.Mutation<CreateCourseMutation, CreateCourseMutationVariables>
+    mutation={CreateCourseDocument}
+    {...props}
+  />
+);
+
+export type CreateCourseProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<CreateCourseMutation, CreateCourseMutationVariables>;
+} & TChildProps;
+export function withCreateCourse<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateCourseMutation,
+    CreateCourseMutationVariables,
+    CreateCourseProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateCourseMutation,
+    CreateCourseMutationVariables,
+    CreateCourseProps<TChildProps, TDataName>
+  >(CreateCourseDocument, {
+    alias: "createCourse",
+    ...operationOptions,
+  });
+}
+export type CreateCourseMutationResult = ApolloReactCommon.MutationResult<CreateCourseMutation>;
+export type CreateCourseMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateCourseMutation,
+  CreateCourseMutationVariables
+>;
+export const RemoveCourseDocument = gql`
+  mutation removeCourse($id: String!) {
+    removeCourse(id: $id) {
+      ...coursesAllFields
+    }
+  }
+  ${CoursesAllFieldsFragmentDoc}
+`;
+export type RemoveCourseMutationFn = ApolloReactCommon.MutationFunction<
+  RemoveCourseMutation,
+  RemoveCourseMutationVariables
+>;
+export type RemoveCourseComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RemoveCourseMutation, RemoveCourseMutationVariables>,
+  "mutation"
+>;
+
+export const RemoveCourseComponent = (props: RemoveCourseComponentProps) => (
+  <ApolloReactComponents.Mutation<RemoveCourseMutation, RemoveCourseMutationVariables>
+    mutation={RemoveCourseDocument}
+    {...props}
+  />
+);
+
+export type RemoveCourseProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RemoveCourseMutation, RemoveCourseMutationVariables>;
+} & TChildProps;
+export function withRemoveCourse<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RemoveCourseMutation,
+    RemoveCourseMutationVariables,
+    RemoveCourseProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RemoveCourseMutation,
+    RemoveCourseMutationVariables,
+    RemoveCourseProps<TChildProps, TDataName>
+  >(RemoveCourseDocument, {
+    alias: "removeCourse",
+    ...operationOptions,
+  });
+}
+export type RemoveCourseMutationResult = ApolloReactCommon.MutationResult<RemoveCourseMutation>;
+export type RemoveCourseMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RemoveCourseMutation,
+  RemoveCourseMutationVariables
 >;
 export const GetEventsDocument = gql`
   query getEvents {
