@@ -7,6 +7,7 @@ import {
   RemoveTrainingMutation,
   RemoveTrainingMutationVariables,
   ServicesAllFieldsFragment,
+  TrainingAllFieldsFragment,
   VolunteerAllFieldsFragment,
 } from "../../types";
 import { useMutation, useQuery } from "react-apollo";
@@ -48,7 +49,7 @@ const TrainingsPage = (props) => {
     {
       dataField: undefined,
       text: "Acciones",
-      formatter: (cell, row: ServicesAllFieldsFragment) => (
+      formatter: (cell, row: TrainingAllFieldsFragment) => (
         <div>
           <Button className="btn-fill btn-sm" onClick={() => history.push(`/trainings/${row.id}`)} variant="info">
             Ver
