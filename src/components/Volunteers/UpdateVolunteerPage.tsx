@@ -15,6 +15,7 @@ import {
 import { EDIT_VOLUNTEER, FIND_VOLUNTEER, GET_VOLUNTEERS } from "../../queries/volunteers";
 
 import VolunteerForm from "./VolunteerForm";
+import { volunteerDefaultValues } from "utils/constants";
 
 const UpdateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
   const getVolunteer = useQuery<FindVolunteerQuery>(FIND_VOLUNTEER, { variables: { id: props.match.params.id } });
@@ -42,14 +43,10 @@ const UpdateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
 
   const defaultValue: UpdateVolunteerInput = {
     id: undefined,
-    name: undefined,
-    code: undefined,
-    status: "Active",
-    blood_type: "Not Set",
-    rank: { id: null },
+    ...volunteerDefaultValues,
   };
-  const volunteer = getVolunteer?.data?.volunteer || defaultValue;
 
+  const volunteer = getVolunteer?.data?.volunteer || defaultValue;
   return (
     <Container fluid>
       <IForm

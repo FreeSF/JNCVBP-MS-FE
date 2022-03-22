@@ -5,15 +5,10 @@ import { useMutation } from "react-apollo";
 import { Form as IForm, FormApi } from "informed"; //Form
 import { Container } from "react-bootstrap";
 
-import {
-  CreateVolunteerInput,
-  CreateVolunteerMutation,
-  CreateVolunteerMutationVariables,
-  GetRanksQuery,
-} from "../../types";
+import { CreateVolunteerInput, CreateVolunteerMutation, CreateVolunteerMutationVariables } from "../../types";
 import { CREATE_VOLUNTEER, GET_VOLUNTEERS } from "../../queries/volunteers";
-import { GET_RANKS } from "../../queries/ranks";
 import VolunteerForm from "./VolunteerForm";
+import { volunteerDefaultValues } from "utils/constants";
 
 const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateVolunteerInput>>(null);
@@ -33,22 +28,17 @@ const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
   };
 
   const defaultValue: CreateVolunteerInput = {
-    name: undefined,
-    code: undefined,
-    status: "Active",
-    blood_type: "Not Set",
-    rank: { id: null },
+    ...volunteerDefaultValues,
   };
-  const volunteer = defaultValue;
 
   return (
     <Container fluid>
       <IForm
-        initialValues={volunteer}
+        initialValues={defaultValue}
         getApi={(formRef: FormApi<CreateVolunteerInput>) => setFormRefCreate(formRef)}
         onSubmit={handleSubmit}
       >
-        {({ formApi, formState }) => <VolunteerForm volunteer={volunteer} formApi={formApi} formState={formState} />}
+        {({ formApi, formState }) => <VolunteerForm volunteer={defaultValue} formApi={formApi} formState={formState} />}
       </IForm>
     </Container>
   );
