@@ -4,31 +4,27 @@ import { useMutation, useQuery } from "react-apollo";
 
 import { Form as IForm, FormApi } from "informed"; //Form
 import { Container } from "react-bootstrap";
-import DatePicker from "react-datepicker";
 import Spinner from "../spinner";
 
 import {
   EditVolunteerMutation,
   EditVolunteerMutationVariables,
   FindVolunteerQuery,
-  GetRanksQuery,
   UpdateVolunteerInput,
 } from "../../types";
 import { EDIT_VOLUNTEER, FIND_VOLUNTEER, GET_VOLUNTEERS } from "../../queries/volunteers";
 
-import { GET_RANKS } from "../../queries/ranks";
 import VolunteerForm from "./VolunteerForm";
 
 const UpdateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
   const getVolunteer = useQuery<FindVolunteerQuery>(FIND_VOLUNTEER, { variables: { id: props.match.params.id } });
-  const getRanksQuery = useQuery<GetRanksQuery>(GET_RANKS);
 
   const [formRef, setFormRef] = useState<FormApi<UpdateVolunteerInput>>(null);
   const [editVolunteer, editedVolunteer] = useMutation<EditVolunteerMutation, EditVolunteerMutationVariables>(
     EDIT_VOLUNTEER
   );
 
-  if (getVolunteer.loading || getRanksQuery.loading) return <Spinner />;
+  if (getVolunteer.loading) return <Spinner />;
 
   const handleSubmit = () => {
     editVolunteer({
@@ -53,7 +49,6 @@ const UpdateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
     rank: { id: null },
   };
   const volunteer = getVolunteer?.data?.volunteer || defaultValue;
-  const rank_options = getRanksQuery.data.ranks;
 
   return (
     <Container fluid>
@@ -62,9 +57,7 @@ const UpdateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
         getApi={(formRef: FormApi<UpdateVolunteerInput>) => setFormRef(formRef)}
         onSubmit={handleSubmit}
       >
-        {({ formApi, formState }) => (
-          <VolunteerForm volunteer={volunteer} rankOptions={rank_options} formApi={formApi} formState={formState} />
-        )}
+        {({ formApi, formState }) => <VolunteerForm volunteer={volunteer} formApi={formApi} formState={formState} />}
       </IForm>
     </Container>
   );

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation } from "react-apollo";
 
 import { Form as IForm, FormApi } from "informed"; //Form
 import { Container } from "react-bootstrap";
-import Spinner from "../spinner";
 
 import {
   CreateVolunteerInput,
@@ -21,9 +20,6 @@ const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
   const [createVolunteer, createdVolunteer] = useMutation<CreateVolunteerMutation, CreateVolunteerMutationVariables>(
     CREATE_VOLUNTEER
   );
-  const getRanksQuery = useQuery<GetRanksQuery>(GET_RANKS);
-
-  if (getRanksQuery.loading) return <Spinner />;
 
   const handleSubmit = () => {
     createVolunteer({
@@ -44,7 +40,6 @@ const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
     rank: { id: null },
   };
   const volunteer = defaultValue;
-  const rank_options = getRanksQuery.data.ranks;
 
   return (
     <Container fluid>
@@ -53,14 +48,7 @@ const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
         getApi={(formRef: FormApi<CreateVolunteerInput>) => setFormRefCreate(formRef)}
         onSubmit={handleSubmit}
       >
-        {({ formApi, formState }) => (
-          <VolunteerForm
-            volunteer={volunteer}
-            rankOptions={rank_options || []}
-            formApi={formApi}
-            formState={formState}
-          />
-        )}
+        {({ formApi, formState }) => <VolunteerForm volunteer={volunteer} formApi={formApi} formState={formState} />}
       </IForm>
     </Container>
   );

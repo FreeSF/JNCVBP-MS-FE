@@ -1,8 +1,10 @@
 import React from "react";
 import { FormApi, Select, Text } from "informed";
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import { useQuery } from "react-apollo";
 
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
+import Spinner from "../spinner";
 
 import {
   BLOOD_TYPES,
@@ -11,16 +13,21 @@ import {
   get_volunteer_status,
   VOLUNTEER_STATUS,
 } from "../../utils/constants";
-import { CreateVolunteerInput, Rank, UpdateVolunteerInput } from "types";
+import { GET_RANKS } from "queries/ranks";
+import { CreateVolunteerInput, GetRanksQuery, UpdateVolunteerInput } from "types";
 
 type VolunteerProps = {
   volunteer: CreateVolunteerInput | UpdateVolunteerInput;
-  rankOptions: Array<Rank>;
   formApi: FormApi<CreateVolunteerInput | UpdateVolunteerInput>;
   formState: { values };
 };
 
-const VolunteerForm = ({ volunteer, rankOptions, formApi, formState }: VolunteerProps) => {
+const VolunteerForm = ({ volunteer, formApi, formState }: VolunteerProps) => {
+  const getRanksQuery = useQuery<GetRanksQuery>(GET_RANKS);
+
+  if (getRanksQuery.loading) return <Spinner />;
+  const rankOptions = getRanksQuery.data.ranks;
+
   return (
     <Row>
       <Col md="8">
