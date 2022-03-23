@@ -43,3 +43,12 @@ export const get_blood_type = (blood_type_id) => {
 export const get_formatted_date = (date) => {
   return date ? moment(date).format(DEFAULT_DATE_FORMAT) : "";
 };
+
+// default data
+export const volunteerDefaultValues = {
+  name: undefined,
+  code: undefined,
+  status: "Active",
+  blood_type: "Not Set",
+  rank: { id: null },
+};

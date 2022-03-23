@@ -1,24 +1,32 @@
 import HomePage from "components/homePage";
 
+import CreateDutyPage from "components/Duties/CreateDutyPage";
 import DutiesPage from "components/Duties/DutiesPage";
-import EditDutyPage from "components/Duties/EditDutyPage";
+import UpdateDutyPage from "components/Duties/UpdateDutyPage";
 
-import EditRankPage from "components/Ranks/EditRankPage";
+import CreateRankPage from "components/Ranks/CreateRankPage";
+import UpdateRankPage from "components/Ranks/UpdateRankPage";
 import RanksPage from "components/Ranks/RanksPage";
 
 import VolunteersPage from "components/Volunteers/VolunteersPage";
 import CreateVolunteerPage from "components/Volunteers/CreateVolunteerPage";
+import UpdateVolunteerPage from "components/Volunteers/UpdateVolunteerPage";
 import ShowVolunteerPage from "components/Volunteers/ShowVolunteerPage";
+
 import ServicesPage from "./components/services/servicesPage";
 import ShowServicePage from "./components/services/showServicePage";
 import CreateServicePage from "./components/services/createServicePage";
+
 import GuardsPage from "./components/Guards/GuardsPage";
 import CreateGuardPage from "./components/Guards/CreateGuardPage";
 import ShowGuardPage from "./components/Guards/ShowGuardPage";
+
 import EventsPage from "./components/Events/EventsPage";
 import CreateEventPage from "./components/Events/CreateEventPage";
+
 import TrainingsPage from "./components/Trainings/TrainingsPage";
 import CreateTrainingPage from "./components/Trainings/CreateTrainingPage";
+
 import CoursesPage from "./components/Courses/CoursesPage";
 import CreateCoursePage from "./components/Courses/CreateCoursePage";
 import ShowCoursePage from "./components/Courses/ShowCoursePage";
@@ -34,8 +42,13 @@ const dutiesRoutes = [
   },
   {
     path: "/duties/create",
-    name: "Crear Servicio",
-    component: EditDutyPage,
+    name: "Crear Tipo de Servicio",
+    component: CreateDutyPage,
+  },
+  {
+    path: "/duties/:id/edit",
+    name: "Editar Tipo de Servicio",
+    component: UpdateDutyPage,
   },
 ];
 
@@ -50,13 +63,12 @@ const ranksRoutes = [
   {
     path: "/ranks/create",
     name: "Crear Rango",
-    component: EditRankPage,
+    component: CreateRankPage,
   },
-
   {
     path: "/ranks/:id/edit",
     name: "Editar Rango",
-    component: EditRankPage,
+    component: UpdateRankPage,
   },
 ];
 
@@ -91,7 +103,7 @@ const volunteerRoutes = [
   {
     path: "/volunteers/:id/edit",
     name: "Editar Voluntario",
-    component: CreateVolunteerPage,
+    component: UpdateVolunteerPage,
   },
   {
     path: "/volunteers/create",
@@ -182,10 +194,10 @@ const routes = [
     component: HomePage,
     showOnSidebar: true,
   },
+  ...volunteerRoutes,
   ...dutiesRoutes,
   ...ranksRoutes,
   ...servicesRoutes,
-  ...volunteerRoutes,
   ...guardRoutes,
   ...eventRoutes,
   ...practicesRoutes,
