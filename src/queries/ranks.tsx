@@ -28,8 +28,8 @@ export const FIND_RANK = gql`
 `;
 
 export const EDIT_RANK = gql`
-  mutation editRank($id: String!, $name: String!, $isDeletable: Boolean, $description: String) {
-    updateRank(updateRankInput: { id: $id, name: $name, description: $description }) {
+  mutation editRank($input: UpdateRankInput!) {
+    updateRank(updateRankInput: $input) {
       ...rankAllFields
     }
   }

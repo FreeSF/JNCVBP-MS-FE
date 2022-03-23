@@ -19,7 +19,6 @@ import { volunteerDefaultValues } from "utils/constants";
 
 const UpdateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
   const getVolunteer = useQuery<FindVolunteerQuery>(FIND_VOLUNTEER, { variables: { id: props.match.params.id } });
-
   const [formRef, setFormRef] = useState<FormApi<UpdateVolunteerInput>>(null);
   const [editVolunteer, editedVolunteer] = useMutation<EditVolunteerMutation, EditVolunteerMutationVariables>(
     EDIT_VOLUNTEER
@@ -45,7 +44,6 @@ const UpdateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
     id: undefined,
     ...volunteerDefaultValues,
   };
-
   const volunteer = getVolunteer?.data?.volunteer || defaultValue;
   return (
     <Container fluid>

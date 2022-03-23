@@ -623,14 +623,6 @@ export type CourseDetailInput = {
   volunteer: OnlyIdVolunteerInput;
 };
 
-export type VolunteerfieldsFragment = { __typename: "Volunteer" } & Pick<Volunteer, "id" | "name">;
-
-export type GetVolunteeersQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetVolunteeersQuery = { __typename?: "Query" } & {
-  volunteers: Array<{ __typename?: "Volunteer" } & VolunteerfieldsFragment>;
-};
-
 export type CoursesAllFieldsFragment = { __typename?: "Course" } & Pick<Course, "id" | "description" | "date"> & {
     details?: Maybe<
       Array<
@@ -816,10 +808,7 @@ export type FindDutyQueryVariables = Exact<{
 export type FindDutyQuery = { __typename?: "Query" } & { duty: { __typename?: "Duty" } & DutyAllFieldsFragment };
 
 export type EditDutyMutationVariables = Exact<{
-  id: Scalars["String"];
-  name: Scalars["String"];
-  isDeletable?: Maybe<Scalars["Boolean"]>;
-  description?: Maybe<Scalars["String"]>;
+  input: UpdateDutyInput;
 }>;
 
 export type EditDutyMutation = { __typename?: "Mutation" } & {
@@ -881,10 +870,7 @@ export type FindRankQueryVariables = Exact<{
 export type FindRankQuery = { __typename?: "Query" } & { rank: { __typename?: "Rank" } & RankAllFieldsFragment };
 
 export type EditRankMutationVariables = Exact<{
-  id: Scalars["String"];
-  name: Scalars["String"];
-  isDeletable?: Maybe<Scalars["Boolean"]>;
-  description?: Maybe<Scalars["String"]>;
+  input: UpdateRankInput;
 }>;
 
 export type EditRankMutation = { __typename?: "Mutation" } & {
@@ -1020,13 +1006,6 @@ export type DeleteVolunteerMutation = { __typename?: "Mutation" } & {
   removeVolunteer: { __typename?: "Volunteer" } & Pick<Volunteer, "id">;
 };
 
-export const VolunteerfieldsFragmentDoc = gql`
-  fragment volunteerfields on Volunteer {
-    id
-    name
-    __typename
-  }
-`;
 export const RankAllFieldsFragmentDoc = gql`
   fragment rankAllFields on Rank {
     id
@@ -1168,51 +1147,6 @@ export const ServicesAllFieldsFragmentDoc = gql`
   ${FireCauseAllFieldsFragmentDoc}
   ${FireClassAllFieldsFragmentDoc}
 `;
-export const GetVolunteeersDocument = gql`
-  query getVolunteeers {
-    volunteers {
-      ...volunteerfields
-    }
-  }
-  ${VolunteerfieldsFragmentDoc}
-`;
-export type GetVolunteeersComponentProps = Omit<
-  ApolloReactComponents.QueryComponentOptions<GetVolunteeersQuery, GetVolunteeersQueryVariables>,
-  "query"
->;
-
-export const GetVolunteeersComponent = (props: GetVolunteeersComponentProps) => (
-  <ApolloReactComponents.Query<GetVolunteeersQuery, GetVolunteeersQueryVariables>
-    query={GetVolunteeersDocument}
-    {...props}
-  />
-);
-
-export type GetVolunteeersProps<TChildProps = {}, TDataName extends string = "data"> = {
-  [key in TDataName]: ApolloReactHoc.DataValue<GetVolunteeersQuery, GetVolunteeersQueryVariables>;
-} & TChildProps;
-export function withGetVolunteeers<TProps, TChildProps = {}, TDataName extends string = "data">(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    GetVolunteeersQuery,
-    GetVolunteeersQueryVariables,
-    GetVolunteeersProps<TChildProps, TDataName>
-  >
-) {
-  return ApolloReactHoc.withQuery<
-    TProps,
-    GetVolunteeersQuery,
-    GetVolunteeersQueryVariables,
-    GetVolunteeersProps<TChildProps, TDataName>
-  >(GetVolunteeersDocument, {
-    alias: "getVolunteeers",
-    ...operationOptions,
-  });
-}
-export type GetVolunteeersQueryResult = ApolloReactCommon.QueryResult<
-  GetVolunteeersQuery,
-  GetVolunteeersQueryVariables
->;
 export const GetCoursesDocument = gql`
   query getCourses {
     courses {
@@ -2198,8 +2132,8 @@ export function withFindDuty<TProps, TChildProps = {}, TDataName extends string 
 }
 export type FindDutyQueryResult = ApolloReactCommon.QueryResult<FindDutyQuery, FindDutyQueryVariables>;
 export const EditDutyDocument = gql`
-  mutation editDuty($id: String!, $name: String!, $isDeletable: Boolean, $description: String) {
-    updateDuty(updateDutyInput: { id: $id, name: $name, description: $description }) {
+  mutation editDuty($input: UpdateDutyInput!) {
+    updateDuty(updateDutyInput: $input) {
       ...dutyAllFields
     }
   }
@@ -2536,8 +2470,8 @@ export function withFindRank<TProps, TChildProps = {}, TDataName extends string 
 }
 export type FindRankQueryResult = ApolloReactCommon.QueryResult<FindRankQuery, FindRankQueryVariables>;
 export const EditRankDocument = gql`
-  mutation editRank($id: String!, $name: String!, $isDeletable: Boolean, $description: String) {
-    updateRank(updateRankInput: { id: $id, name: $name, description: $description }) {
+  mutation editRank($input: UpdateRankInput!) {
+    updateRank(updateRankInput: $input) {
       ...rankAllFields
     }
   }

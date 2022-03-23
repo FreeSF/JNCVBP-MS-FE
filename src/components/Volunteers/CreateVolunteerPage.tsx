@@ -30,7 +30,6 @@ const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
   const defaultValue: CreateVolunteerInput = {
     ...volunteerDefaultValues,
   };
-
   return (
     <Container fluid>
       <IForm
