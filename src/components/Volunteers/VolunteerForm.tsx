@@ -171,10 +171,11 @@ const VolunteerForm = ({ volunteer, formApi, formState }: VolunteerProps) => {
             <div className="author">
               <a href="#" onClick={(e) => e.preventDefault()}>
                 <img alt="..." className="avatar border-gray" src={require("../../assets/img/faces/face-3.jpg")}></img>
-                <h5 className="title">{`${formState.values?.name || "Nombre"} (${
-                  get_volunteer_status(formState.values?.status) || "Código"
-                })`}</h5>
+                <h5 className="title">{`${formState.values?.name || "Nombre"} (${get_volunteer_status(
+                  formState.values?.status
+                )})`}</h5>
               </a>
+              <p className="description">[{`${formState.values?.code || "Código"}`}]</p>
             </div>
             <p className="description text-center">
               Tipo de Sangre: {get_blood_type(formState?.values?.blood_type)} <br></br>
