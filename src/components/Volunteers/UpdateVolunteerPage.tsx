@@ -23,7 +23,6 @@ const UpdateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
   const [editVolunteer, editedVolunteer] = useMutation<EditVolunteerMutation, EditVolunteerMutationVariables>(
     EDIT_VOLUNTEER
   );
-
   if (getVolunteer.loading) return <Spinner />;
 
   const handleSubmit = () => {

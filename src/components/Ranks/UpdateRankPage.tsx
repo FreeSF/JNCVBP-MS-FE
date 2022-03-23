@@ -14,19 +14,18 @@ import RankForm from "./RankForm";
 const UpdateRankPage = (props: RouteComponentProps<{ id: string }>) => {
   const getRank = useQuery<FindRankQuery>(FIND_RANK, { variables: { id: props.match.params.id } });
   const [formRef, setFormRef] = useState<FormApi<UpdateRankInput>>(null);
-  const [updateRank, editedRank] = useMutation<EditRankMutation, EditRankMutationVariables>(EDIT_RANK, {
-    refetchQueries: [{ query: GET_RANKS }],
-  });
+  const [editRank, editedRank] = useMutation<EditRankMutation, EditRankMutationVariables>(EDIT_RANK);
   if (getRank.loading) return <Spinner />;
 
   const handleSubmit = () => {
-    updateRank({
+    editRank({
       variables: {
         input: {
           ...formRef.getState().values,
-          id: rank.id,
+          id: props.match.params.id,
         },
       },
+      refetchQueries: [{ query: GET_RANKS }],
     }).then(() => {
       props.history.push("/ranks");
     });
