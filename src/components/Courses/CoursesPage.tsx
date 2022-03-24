@@ -1,22 +1,20 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "react-apollo";
+
+import moment from "moment";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
+
 import {
   CoursesAllFieldsFragment,
   GetCoursesQuery,
-  GetTrainingsQuery,
   RemoveCourseMutation,
   RemoveCourseMutationVariables,
-  ServicesAllFieldsFragment,
-  VolunteerAllFieldsFragment,
 } from "../../types";
-import { useHistory } from "react-router-dom";
 import { GET_COURSES, REMOVE_COURSE } from "../../queries/Courses";
-import { GET_TRAININGS, REMOVE_TRAINING } from "../../queries/Trainings";
+
 import Spinner from "../spinner";
-import { Button } from "react-bootstrap";
-import StandardTable from "../utils/standardTable";
-import { ColumnDescription } from "react-bootstrap-table-next";
-import moment from "moment";
 import { DEFAULT_DATE_FORMAT } from "../../utils/constants";
 
 const CoursesPage = (props) => {
@@ -28,27 +26,17 @@ const CoursesPage = (props) => {
   if (getCoursesQuery.loading) return <Spinner />;
 
   const columns: ColumnDescription[] = [
-    {
-      dataField: "id",
-      text: "ID",
-    },
-    {
-      dataField: "description",
-      text: "Descripción",
-    },
+    { dataField: "description", text: "Descripción" },
     {
       dataField: "date",
       text: "Fecha",
       formatter: (cell, row) => (cell ? moment(cell).format(DEFAULT_DATE_FORMAT) : ""),
     },
     {
-      dataField: undefined,
+      dataField: "actions",
       text: "Acciones",
       formatter: (cell, row: CoursesAllFieldsFragment) => (
         <div>
-          <Button className="btn-fill btn-sm" onClick={() => history.push(`/courses/${row.id}`)} variant="info">
-            Ver
-          </Button>
           <Button className="btn-fill btn-sm" onClick={() => history.push(`/courses/${row.id}/edit`)} variant="success">
             Editar
           </Button>
@@ -65,11 +53,31 @@ const CoursesPage = (props) => {
   ];
 
   return (
-    <div>
-      <h1>Cursos</h1>
-      <Button onClick={() => history.push(`/courses/create`)}>Crear</Button>
-      <StandardTable columns={columns} data={getCoursesQuery.data.courses} />
-    </div>
+    <Container fluid>
+      <Row>
+        <Col md="12">
+          <Card className="strpied-tabled-with-hover">
+            <Card.Header>
+              <Card.Title as="h4">
+                Lista de Cursos
+                <Button className="pull-right ml-2" variant="primary" onClick={() => history.push(`/courses/create`)}>
+                  {" "}
+                  Agregar
+                </Button>
+              </Card.Title>
+              <p className="cardu-category">({getCoursesQuery.data?.courses?.length || 0}) Rangos en el sistema </p>
+            </Card.Header>
+            <Card.Body className="table-full-width table-responsive">
+              {getCoursesQuery.loading ? (
+                <Spinner />
+              ) : (
+                <BootstrapTable keyField={"id"} data={getCoursesQuery.data?.courses} columns={columns} />
+              )}
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
