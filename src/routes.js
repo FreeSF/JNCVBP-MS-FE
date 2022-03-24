@@ -19,6 +19,7 @@ import CreateServicePage from "./components/services/createServicePage";
 
 import GuardsPage from "./components/Guards/GuardsPage";
 import CreateGuardPage from "./components/Guards/CreateGuardPage";
+import UpdateGuardPage from "./components/Guards/UpdateGuardPage";
 import ShowGuardPage from "./components/Guards/ShowGuardPage";
 
 import EventsPage from "./components/Events/EventsPage";
@@ -26,9 +27,11 @@ import CreateEventPage from "./components/Events/CreateEventPage";
 
 import TrainingsPage from "./components/Trainings/TrainingsPage";
 import CreateTrainingPage from "./components/Trainings/CreateTrainingPage";
+import UpdateTrainingPage from "./components/Trainings/UpdateTrainingPage";
 
 import CoursesPage from "./components/Courses/CoursesPage";
 import CreateCoursePage from "./components/Courses/CreateCoursePage";
+import UpdateCoursePage from "./components/Courses/UpdateCoursePage";
 import ShowCoursePage from "./components/Courses/ShowCoursePage";
 
 const dutiesRoutes = [
@@ -125,6 +128,11 @@ const guardRoutes = [
     showOnSidebar: true,
   },
   {
+    path: "/guards/:id/edit",
+    name: "Editar Guardia",
+    component: UpdateGuardPage,
+  },
+  {
     path: "/guards/create",
     name: "Crear Guardia",
     component: CreateGuardPage,
@@ -151,7 +159,7 @@ const eventRoutes = [
   },
 ];
 
-const practicesRoutes = [
+const trainingRoutes = [
   {
     path: "/trainings",
     name: "Prácticas",
@@ -163,6 +171,11 @@ const practicesRoutes = [
     path: "/trainings/create",
     name: "Crear Práctica",
     component: CreateTrainingPage,
+  },
+  {
+    path: "/trainings/:id/edit",
+    name: "Editar Práctivas",
+    component: UpdateTrainingPage,
   },
 ];
 
@@ -178,6 +191,11 @@ const coursesRoutes = [
     path: "/courses/create",
     name: "Crear Curso",
     component: CreateCoursePage,
+  },
+  {
+    path: "/courses/:id/edit",
+    name: "Editar Curso",
+    component: UpdateCoursePage,
   },
   {
     path: "/courses/:id",
@@ -197,11 +215,11 @@ const routes = [
   ...volunteerRoutes,
   ...dutiesRoutes,
   ...ranksRoutes,
-  ...servicesRoutes,
   ...guardRoutes,
-  ...eventRoutes,
-  ...practicesRoutes,
   ...coursesRoutes,
+  ...trainingRoutes,
+  ...servicesRoutes,
+  ...eventRoutes,
 ];
 
 export default routes;
