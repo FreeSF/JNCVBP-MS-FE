@@ -1,45 +1,36 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { useMutation, useQuery } from "react-apollo";
+
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
+
 import { GET_TRAININGS, REMOVE_TRAINING } from "../../queries/Trainings";
 import {
   GetTrainingsQuery,
-  RemoveGuardMutation,
-  RemoveGuardMutationVariables,
   RemoveTrainingMutation,
   RemoveTrainingMutationVariables,
-  ServicesAllFieldsFragment,
   TrainingAllFieldsFragment,
   VolunteerAllFieldsFragment,
 } from "../../types";
-import { useMutation, useQuery } from "react-apollo";
 import Spinner from "../spinner";
-import { ColumnDescription } from "react-bootstrap-table-next";
-import { Button } from "react-bootstrap";
-import { GET_GUARDS, REMOVE_GUARD } from "../../queries/Guards";
-import { useHistory } from "react-router-dom";
-import StandardTable from "../utils/standardTable";
+import { get_formatted_date } from "utils/constants";
 
 const TrainingsPage = (props) => {
   const getTrainingsQuery = useQuery<GetTrainingsQuery>(GET_TRAININGS);
-  const history = useHistory();
-
   const [removeTraining, removedTraining] = useMutation<RemoveTrainingMutation, RemoveTrainingMutationVariables>(
     REMOVE_TRAINING
   );
+  const history = useHistory();
 
   if (getTrainingsQuery.loading) return <Spinner />;
 
   const columns: ColumnDescription[] = [
-    {
-      dataField: "id",
-      text: "ID",
-    },
-    {
-      dataField: "description",
-      text: "Descripción",
-    },
+    { dataField: "description", text: "Descripción" },
     {
       dataField: "date",
       text: "Fecha",
+      formatter: (cell, row: TrainingAllFieldsFragment) => get_formatted_date(row.date),
     },
     {
       dataField: "volunteers",
@@ -47,19 +38,16 @@ const TrainingsPage = (props) => {
       formatter: (cell: VolunteerAllFieldsFragment[]) => cell.map((volunteer) => volunteer.name).join(","),
     },
     {
-      dataField: undefined,
+      dataField: "actions",
       text: "Acciones",
       formatter: (cell, row: TrainingAllFieldsFragment) => (
         <div>
-          <Button className="btn-fill btn-sm" onClick={() => history.push(`/trainings/${row.id}`)} variant="info">
-            Ver
-          </Button>
           <Button
             className="btn-fill btn-sm"
             onClick={() => history.push(`/trainings/${row.id}/edit`)}
             variant="success"
           >
-            Editar
+            Editar{" "}
           </Button>
           <Button
             className="btn-sm"
@@ -74,11 +62,33 @@ const TrainingsPage = (props) => {
   ];
 
   return (
-    <div>
-      <h1>Prácticas</h1>
-      <Button onClick={() => history.push(`/trainings/create`)}>Crear</Button>
-      <StandardTable columns={columns} data={getTrainingsQuery.data.trainings} />
-    </div>
+    <Container fluid>
+      <Row>
+        <Col md="12">
+          <Card className="strpied-tabled-with-hover">
+            <Card.Header>
+              <Card.Title as="h4">
+                Lista de Prácticas
+                <Button className="pull-right ml-2" variant="primary" onClick={() => history.push(`/trainings/create`)}>
+                  {" "}
+                  Agregar
+                </Button>
+              </Card.Title>
+              <p className="cardu-category">
+                ({getTrainingsQuery.data?.trainings?.length || 0}) Prácticas en el sistema{" "}
+              </p>
+            </Card.Header>
+            <Card.Body className="table-full-width table-responsive">
+              {getTrainingsQuery.loading ? (
+                <Spinner />
+              ) : (
+                <BootstrapTable keyField={"id"} data={getTrainingsQuery.data?.trainings} columns={columns} />
+              )}
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

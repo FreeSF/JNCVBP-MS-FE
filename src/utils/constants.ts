@@ -6,14 +6,15 @@ import moment from "moment";
 //export const API_URL = "http://localhost:3000/graphql";
 
 // For Deploy
-// export const API_URL = "https://jncvbp-ms.herokuapp.com/graphql";
+export const API_URL = "https://jncvbp-ms.herokuapp.com/graphql";
 
 // Can be moved up to make the constants
 export const MODE_CREATE = "CREATE";
 export const MODE_EDIT = "EDIT";
 
 export const DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
-export const API_URL = process.env.JNCVBP_URL || "http://localhost:3000/graphql";
+export const DEFAULT_DATETIME_FORMAT = "MM/DD/YYYY HH:mm";
+// export const API_URL = process.env.JNCVBP_URL || "http://localhost:3000/graphql";
 
 export const BLOOD_TYPES = [
   { id: "Not Set", description: "No definido" },
@@ -42,6 +43,10 @@ export const get_blood_type = (blood_type_id) => {
 
 export const get_formatted_date = (date) => {
   return date ? moment(date).format(DEFAULT_DATE_FORMAT) : "";
+};
+
+export const get_formatted_datetime = (date) => {
+  return date ? moment(date).format(DEFAULT_DATETIME_FORMAT) : "";
 };
 
 // default data

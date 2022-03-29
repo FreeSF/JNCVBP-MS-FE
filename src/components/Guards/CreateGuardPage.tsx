@@ -1,19 +1,17 @@
 import React, { useState } from "react";
-import { Form, FormApi, Select, Text } from "informed";
-import { CreateGuardInput, CreateGuardMutation, CreateGuardMutationVariables, GetVolunteersQuery } from "../../types";
-import DateTimePicker from "react-datetime-picker";
-import _ from "lodash";
-import { useMutation, useQuery } from "react-apollo";
-import { GET_VOLUNTEERS } from "../../queries/volunteers";
-import { CREATE_GUARD, GET_GUARDS } from "../../queries/Guards";
-import { Button } from "react-bootstrap";
-import Spinner from "../spinner";
 import { useHistory } from "react-router-dom";
+import { Form as Form, FormApi } from "informed";
+import { Container } from "react-bootstrap";
+
+import { CreateGuardInput, CreateGuardMutation, CreateGuardMutationVariables } from "../../types";
+import { useMutation } from "react-apollo";
+import { CREATE_GUARD, GET_GUARDS } from "../../queries/Guards";
+import GuardForm from "./GuardForm";
 
 const CreateGuardPage = (props) => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateGuardInput>>(null);
   const [volunteersQuantity, setVolunteersQuantity] = useState<number>(0);
-  const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
+
   const [createGuard, createdGuard] = useMutation<CreateGuardMutation, CreateGuardMutationVariables>(CREATE_GUARD);
   const history = useHistory();
 
@@ -34,84 +32,23 @@ const CreateGuardPage = (props) => {
     });
   };
 
-  if (getVolunteersQuery.loading) return <Spinner />;
-
   return (
-    <div>
-      <h1>Crear Guardia</h1>
-
+    <Container fluid>
       <Form
         getApi={(formRef: FormApi<CreateGuardInput>) => setFormRefCreate(formRef)}
         onSubmit={handleSubmit}
         initialValues={defaultValues}
       >
         {({ formApi, formState }) => (
-          <div>
-            <label>Inicio:</label>
-            <Text field="start_time" />
-            <DateTimePicker
-              locale="es"
-              onChange={(value: Date) => {
-                formApi.setValues({ ...formState.values, start_time: value.getTime() });
-              }}
-              value={formState.values.start_time && new Date(formState.values.start_time)}
-              maxDetail="minute"
-              minDetail="month"
-            />
-            <br />
-            <label>Fin:</label>
-            <Text field="end_time" />
-            <DateTimePicker
-              locale="es"
-              onChange={(value: Date) => {
-                formApi.setValues({ ...formState.values, end_time: value.getTime() });
-              }}
-              value={formState.values.end_time && new Date(formState.values.end_time)}
-              maxDetail="minute"
-              minDetail="month"
-            />
-            <br />
-            <br />
-            <label>Asistencia de Voluntarios</label>
-            <br />
-            {_.times(volunteersQuantity, (i) => (
-              <React.Fragment>
-                <Select
-                  field={`volunteers[${i}]._id`}
-                  initialValue={_.get(getVolunteersQuery, "data.volunteers[0].id", undefined)}
-                >
-                  {getVolunteersQuery.data.volunteers.map((volunteer) => (
-                    <option value={volunteer.id} key={volunteer.id}>
-                      {volunteer.name}
-                    </option>
-                  ))}
-                </Select>
-                <br />
-              </React.Fragment>
-            ))}
-            <button
-              onClick={(event) => {
-                event.preventDefault();
-                setVolunteersQuantity(volunteersQuantity + 1);
-              }}
-            >
-              Agregar
-            </button>
-            <button
-              onClick={(event) => {
-                event.preventDefault();
-                setVolunteersQuantity(volunteersQuantity > 0 ? volunteersQuantity - 1 : 0);
-              }}
-            >
-              Quitar
-            </button>
-            <br />
-            <Button type="submit">Crear Guardia</Button>
-            <Button onClick={() => history.push("/guards")}>Volver</Button>
-          </div>
+          <GuardForm
+            formApi={formApi}
+            formState={formState}
+            volunteersQuantity={volunteersQuantity}
+            setVolunteersQuantity={setVolunteersQuantity}
+          />
         )}
       </Form>
-    </div>
+    </Container>
   );
 };
 
