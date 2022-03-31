@@ -11,16 +11,19 @@ import { GET_VOLUNTEERS } from "queries/volunteers";
 import Spinner from "components/spinner";
 
 type TrainingFormProps = {
-  formApi: any; //FormApi<CreateTrainingInput | UpdateTrainingInput>;
+  formApi: any; // FormApi<CreateTrainingInput | UpdateTrainingInput>;
   formState: { values };
-  setVolunteersQuantity: any;
-  volunteersQuantity: number;
+  volunteers: any;
+  setVolunteers: any;
 };
 
-const TrainingForm = ({ formApi, formState, volunteersQuantity, setVolunteersQuantity }: TrainingFormProps) => {
+const TrainingForm = ({ formApi, formState, volunteers, setVolunteers }: TrainingFormProps) => {
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
   if (getVolunteersQuery.loading) return <Spinner />;
 
+  const volunteerList = getVolunteersQuery.data.volunteers;
+
+  console.log(volunteers);
   return (
     <Row>
       <Col md="2"></Col>
@@ -67,52 +70,73 @@ const TrainingForm = ({ formApi, formState, volunteersQuantity, setVolunteersQua
                   <Button
                     className="pull-right ml-2"
                     variant="success"
+                    disabled={volunteers.length == volunteerList.length}
                     onClick={(event) => {
-                      event.preventDefault();
-                      setVolunteersQuantity(volunteersQuantity + 1);
+                      const selectedVolunteers = volunteers.map((volunteer) => volunteer._id);
+                      const newVolunteer = volunteerList.find(
+                        (volunteer) => !selectedVolunteers.includes(volunteer.id)
+                      );
+
+                      const newVolunteers = _.cloneDeep(volunteers);
+                      newVolunteers.push({ _id: newVolunteer.id });
+                      setVolunteers(newVolunteers);
                     }}
                   >
-                    {" "}
                     Agregar
-                  </Button>
-                  <Button
-                    className="pull-right ml-2"
-                    variant="danger"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      setVolunteersQuantity(volunteersQuantity > 0 ? volunteersQuantity - 1 : 0);
-                    }}
-                  >
-                    Quitar
                   </Button>
                 </Form.Group>
               </Col>
             </Row>
 
-            {_.times(volunteersQuantity, (i) => (
-              <React.Fragment>
-                <Row>
-                  <Col md="2"></Col>
-                  <Col md="8">
-                    <Form.Group>
-                      <Select
-                        className="form-control"
-                        field={`volunteers[${i}]._id`}
-                        initialValue={_.get(getVolunteersQuery, "data.volunteers[0].id", undefined)}
-                      >
-                        {getVolunteersQuery.data.volunteers.map((volunteer) => (
-                          <option value={volunteer.id} key={volunteer.id}>
-                            {volunteer.name}
-                          </option>
-                        ))}
-                      </Select>
-                    </Form.Group>
-                  </Col>
-                  <Col md="2"></Col>
-                </Row>
-              </React.Fragment>
-            ))}
+            {volunteers?.map((currentVolunteer, index) => {
+              const selectedVolunteers = volunteers.map((volunteer) => volunteer._id);
+              const nonSelectedVolunteers = volunteerList.filter(
+                (volunteer) => !selectedVolunteers.includes(volunteer.id) || volunteer.id == currentVolunteer._id
+              );
 
+              return (
+                <React.Fragment key={index}>
+                  <Row>
+                    <Col md="2"></Col>
+                    <Col md="6">
+                      <Form.Group>
+                        <Select
+                          className="form-control"
+                          field={`volunteers[${index}]._id`}
+                          initialValue={currentVolunteer._id}
+                          onChange={(value) => {
+                            const newVolunteers = _.cloneDeep(volunteers);
+                            newVolunteers[index]._id = formState?.values?.volunteers[index]._id;
+                            setVolunteers(newVolunteers);
+                          }}
+                        >
+                          {nonSelectedVolunteers.map((volunteer) => (
+                            <option value={volunteer.id} key={volunteer.id}>
+                              {volunteer.name}
+                            </option>
+                          ))}
+                        </Select>
+                      </Form.Group>
+                    </Col>
+                    <Col md="2">
+                      <Button
+                        style={{ height: "40px" }}
+                        className="btn-md"
+                        variant="danger"
+                        onClick={(event) => {
+                          const newVolunteers = _.cloneDeep(volunteers);
+                          newVolunteers.splice(index, 1);
+                          formApi.setValues({ ...formState.values, volunteers: newVolunteers || [] });
+                          setVolunteers(newVolunteers);
+                        }}
+                      >
+                        Eliminar
+                      </Button>
+                    </Col>
+                  </Row>
+                </React.Fragment>
+              );
+            })}
             <Button className="btn-fill btn-pull-right" variant="info" type="submit">
               Guardar Práctica
             </Button>

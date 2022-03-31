@@ -35,7 +35,11 @@ const TrainingsPage = (props) => {
     {
       dataField: "volunteers",
       text: "Voluntarios",
-      formatter: (cell: VolunteerAllFieldsFragment[]) => cell.map((volunteer) => volunteer.name).join(","),
+      formatter: (cell: VolunteerAllFieldsFragment[]) =>
+        cell
+          .map((volunteer) => volunteer.name)
+          .sort((v1, v2) => v1.localeCompare(v2))
+          .join(", "),
     },
     {
       dataField: "actions",

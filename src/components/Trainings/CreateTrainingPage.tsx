@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Form, FormApi } from "informed";
-import { useHistory } from "react-router-dom";
-import _ from "lodash";
 
 import { useMutation, useQuery } from "react-apollo";
 import Spinner from "../spinner";
@@ -19,7 +17,7 @@ import TrainingForm from "./TrainingForm";
 
 const CreateTrainingPage = (props) => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateTrainingInput>>(null);
-  const [volunteersQuantity, setVolunteersQuantity] = useState<number>(0);
+  const [volunteers, setVolunteers] = useState<[]>(() => []);
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
   const [createTraining, createdTraining] = useMutation<CreateTrainingMutation, CreateTrainingMutationVariables>(
     CREATE_TRAINING
@@ -32,9 +30,13 @@ const CreateTrainingPage = (props) => {
   };
 
   const handleSubmit = () => {
+    const volunteers = formRefCreate.getState().values.volunteers.filter((x) => x);
     createTraining({
       variables: {
-        input: formRefCreate.getState().values,
+        input: {
+          ...formRefCreate.getState().values,
+          volunteers: volunteers,
+        },
       },
       refetchQueries: [{ query: GET_TRAININGS }],
     }).then((value) => {
@@ -51,12 +53,7 @@ const CreateTrainingPage = (props) => {
       initialValues={defaultValues}
     >
       {({ formApi, formState }) => (
-        <TrainingForm
-          formApi={formApi}
-          formState={formState}
-          setVolunteersQuantity={setVolunteersQuantity}
-          volunteersQuantity={volunteersQuantity}
-        />
+        <TrainingForm formApi={formApi} formState={formState} volunteers={volunteers} setVolunteers={setVolunteers} />
       )}
     </Form>
   );
