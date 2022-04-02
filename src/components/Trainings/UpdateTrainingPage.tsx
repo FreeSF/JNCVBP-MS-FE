@@ -1,34 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Form, FormApi } from "informed";
-import { useHistory } from "react-router-dom";
 import _ from "lodash";
 
 import { useMutation, useLazyQuery } from "react-apollo";
-import Spinner from "../spinner";
-
 import {
   EditTrainingMutation,
   EditTrainingMutationVariables,
   FindTrainingQuery,
   FindTrainingQueryVariables,
   UpdateTrainingInput,
-  OnlyIdTypeInput,
 } from "../../types";
-
 import { EDIT_TRAINING, FIND_TRAINING, GET_TRAININGS } from "../../queries/Trainings";
+
 import TrainingForm from "./TrainingForm";
+import Spinner from "../spinner";
 
 const CreateTrainingPage = (props) => {
   const [loadTraining, loadResult] = useLazyQuery<FindTrainingQuery, FindTrainingQueryVariables>(FIND_TRAINING, {
     fetchPolicy: "no-cache",
     onCompleted: (data) => {
-      // alert(data);
       const volunteers = data.training?.volunteers.map((volunteer) => ({ _id: volunteer.id }));
       setVolunteers(volunteers);
     },
   });
-  const [formRef, setFormRef] = useState<FormApi<UpdateTrainingInput>>(null);
 
+  const [formRef, setFormRef] = useState<FormApi<UpdateTrainingInput>>(null);
   const [volunteers, setVolunteers] = useState<any>([]);
   const [updateTraining, editedTraining] = useMutation<EditTrainingMutation, EditTrainingMutationVariables>(
     EDIT_TRAINING,

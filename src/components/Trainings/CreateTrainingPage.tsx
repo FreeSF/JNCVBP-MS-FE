@@ -30,7 +30,7 @@ const CreateTrainingPage = (props) => {
   };
 
   const handleSubmit = () => {
-    const volunteers = formRefCreate.getState().values.volunteers.filter((x) => x);
+    const volunteers = formRefCreate.getState().values.volunteers?.filter((x) => x) || [];
     createTraining({
       variables: {
         input: {
