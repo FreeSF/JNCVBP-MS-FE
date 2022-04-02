@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Form, FormApi, Select, Text } from "informed";
-import _ from "lodash";
+import { Form, FormApi } from "informed";
+import { Container } from "react-bootstrap";
+// import _ from "lodash";
 
 import { useMutation, useQuery } from "react-apollo";
 import { useHistory } from "react-router-dom";
@@ -9,19 +10,17 @@ import {
   CreateCourseInput,
   CreateCourseMutation,
   CreateCourseMutationVariables,
-  CreateGuardInput,
   GetVolunteersQuery,
 } from "../../types";
 import { GET_VOLUNTEERS } from "../../queries/volunteers";
 import { CREATE_COURSE, GET_COURSES } from "../../queries/Courses";
-import Spinner from "../spinner";
-
 import CourseForm from "./CourseForm";
+import Spinner from "../spinner";
 
 const CreateCoursePage = (props) => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateCourseInput>>(null);
-  const [volunteersQuantity, setVolunteersQuantity] = useState<number>(0);
-  const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
+  const [details, setDetails] = useState<[]>([]);
+
   const [createCourse, createdCourse] = useMutation<CreateCourseMutation, CreateCourseMutationVariables>(CREATE_COURSE);
   const history = useHistory();
 
@@ -31,13 +30,14 @@ const CreateCoursePage = (props) => {
     details: [],
   };
 
-  if (getVolunteersQuery.loading) return <Spinner />;
-
   const handleSubmit = () => {
-    console.log({ values: formRefCreate.getState().values });
+    const details = formRefCreate.getState().values?.details || [];
     createCourse({
       variables: {
-        input: formRefCreate.getState().values,
+        input: {
+          ...formRefCreate.getState().values,
+          details: details,
+        },
       },
       refetchQueries: [{ query: GET_COURSES }],
     }).then((value) => {
@@ -46,22 +46,17 @@ const CreateCoursePage = (props) => {
   };
 
   return (
-    <Form
-      getApi={(formRef: FormApi<CreateCourseInput>) => setFormRefCreate(formRef)}
-      onSubmit={handleSubmit}
-      initialValues={defaultValues}
-    >
-      {({ formApi, formState }) => (
-        <div>
-          <CourseForm
-            formApi={formApi}
-            formState={formState}
-            setVolunteersQuantity={setVolunteersQuantity}
-            volunteersQuantity={volunteersQuantity}
-          />
-        </div>
-      )}
-    </Form>
+    <Container fluid>
+      <Form
+        getApi={(formRef: FormApi<CreateCourseInput>) => setFormRefCreate(formRef)}
+        onSubmit={handleSubmit}
+        initialValues={defaultValues}
+      >
+        {({ formApi, formState }) => (
+          <CourseForm formApi={formApi} formState={formState} details={details} setDetails={setDetails} />
+        )}
+      </Form>
+    </Container>
   );
 };
 
