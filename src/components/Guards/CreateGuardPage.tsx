@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Form as Form, FormApi } from "informed";
 import { Container } from "react-bootstrap";
 
-import { CreateGuardInput, CreateGuardMutation, CreateGuardMutationVariables } from "../../types";
 import { useMutation } from "react-apollo";
+import { useHistory } from "react-router-dom";
+import { CreateGuardInput, CreateGuardMutation, CreateGuardMutationVariables } from "../../types";
+
 import { CREATE_GUARD, GET_GUARDS } from "../../queries/Guards";
 import GuardForm from "./GuardForm";
 
 const CreateGuardPage = (props) => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateGuardInput>>(null);
-  const [volunteersQuantity, setVolunteersQuantity] = useState<number>(0);
+  const [volunteers, setVolunteers] = useState<[]>([]);
 
   const [createGuard, createdGuard] = useMutation<CreateGuardMutation, CreateGuardMutationVariables>(CREATE_GUARD);
   const history = useHistory();
@@ -22,9 +23,13 @@ const CreateGuardPage = (props) => {
   };
 
   const handleSubmit = () => {
+    const volunteers = formRefCreate.getState().values?.volunteers?.filter((x) => x) || [];
     createGuard({
       variables: {
-        input: formRefCreate.getState().values,
+        input: {
+          ...formRefCreate.getState().values,
+          volunteers: volunteers,
+        },
       },
       refetchQueries: [{ query: GET_GUARDS }],
     }).then((value) => {
@@ -40,12 +45,7 @@ const CreateGuardPage = (props) => {
         initialValues={defaultValues}
       >
         {({ formApi, formState }) => (
-          <GuardForm
-            formApi={formApi}
-            formState={formState}
-            volunteersQuantity={volunteersQuantity}
-            setVolunteersQuantity={setVolunteersQuantity}
-          />
+          <GuardForm formApi={formApi} formState={formState} volunteers={volunteers} setVolunteers={setVolunteers} />
         )}
       </Form>
     </Container>

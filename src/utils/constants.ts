@@ -3,7 +3,7 @@
 import moment from "moment";
 
 // For Development
-//export const API_URL = "http://localhost:3000/graphql";
+// export const API_URL = "http://localhost:3000/graphql";
 
 // For Deploy
 export const API_URL = "https://jncvbp-ms.herokuapp.com/graphql";
@@ -33,6 +33,13 @@ export const VOLUNTEER_STATUS = [
   { id: "Inactive", description: "Inactivo" },
   { id: "Deceased", description: "Muerto en combate" },
 ];
+
+export const get_formatted_volunteers = (volunteers) =>
+  volunteers
+    .map((volunteer) => volunteer.name)
+    .sort((v1, v2) => v1.localeCompare(v2))
+    .join(", ");
+
 export const get_volunteer_status = (status_id) => {
   return VOLUNTEER_STATUS.find((status) => status.id == status_id)?.description || "";
 };

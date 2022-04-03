@@ -15,7 +15,7 @@ import {
 } from "../../types";
 import { GET_GUARDS, REMOVE_GUARD } from "../../queries/Guards";
 import Spinner from "../spinner";
-import { get_formatted_datetime } from "utils/constants";
+import { get_formatted_datetime, get_formatted_volunteers } from "utils/constants";
 
 const GuardsPage = (props) => {
   const getGuardsQuery = useQuery<GetGuardsQuery>(GET_GUARDS);
@@ -40,7 +40,7 @@ const GuardsPage = (props) => {
     {
       dataField: "volunteers",
       text: "Voluntarios",
-      formatter: (cell: VolunteerAllFieldsFragment[]) => cell.map((volunteer) => volunteer.name).join(", "),
+      formatter: (cell: VolunteerAllFieldsFragment[]) => get_formatted_volunteers(cell),
     },
 
     {

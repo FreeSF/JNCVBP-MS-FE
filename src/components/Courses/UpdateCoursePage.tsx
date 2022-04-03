@@ -1,40 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, FormApi } from "informed";
 import _ from "lodash";
 
-import { useMutation, useQuery } from "react-apollo";
-import { useHistory } from "react-router-dom";
+import { useMutation, useLazyQuery } from "react-apollo";
 
 import {
-  CreateCourseInput,
   EditCourseMutation,
   FindCourseQuery,
-  GetVolunteersQuery,
   UpdateCourseInput,
   EditCourseMutationVariables,
+  FindCourseQueryVariables,
 } from "../../types";
-import { GET_VOLUNTEERS } from "../../queries/volunteers";
-import { CREATE_COURSE, FIND_COURSE, GET_COURSES } from "../../queries/Courses";
+import { EDIT_COURSE, FIND_COURSE, GET_COURSES } from "../../queries/Courses";
 import Spinner from "../spinner";
 
 import CourseForm from "./CourseForm";
 
-const CreateCoursePage = (props) => {
-  const getCourse = useQuery<FindCourseQuery>(FIND_COURSE, { variables: { id: props.match.params.id } });
-  const [formRef, setFormRef] = useState<FormApi<UpdateCourseInput>>(null);
-  const [volunteersQuantity, setVolunteersQuantity] = useState<number>(0);
-  const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
-  const [editCourse, editedCourse] = useMutation<EditCourseMutation, EditCourseMutationVariables>(CREATE_COURSE);
-  const history = useHistory();
+const UpdateCoursePage = (props) => {
+  const [loadCourse, loadResult] = useLazyQuery<FindCourseQuery, FindCourseQueryVariables>(FIND_COURSE, {
+    fetchPolicy: "no-cache",
+    onCompleted: (data) => {
+      const details = data.course?.details.map((detail) => ({
+        volunteer: { _id: detail.volunteer.id },
+        score: detail.score,
+      }));
+      setDetails(details);
+    },
+  });
 
-  if (getVolunteersQuery.loading) return <Spinner />;
+  const [formRef, setFormRef] = useState<FormApi<UpdateCourseInput>>(null);
+  const [details, setDetails] = useState<any>();
+  const [updateCourse, updatedCourse] = useMutation<EditCourseMutation, EditCourseMutationVariables>(EDIT_COURSE);
+
+  useEffect(() => {
+    loadCourse({ variables: { id: props.match.params.id } });
+  }, []);
+
+  if (loadResult.loading) return <Spinner />;
 
   const handleSubmit = () => {
-    console.log({ values: formRef.getState().values });
-    editCourse({
+    const details = formRef.getState().values.details?.filter((x) => x) || [];
+    updateCourse({
       variables: {
         input: {
           ...formRef.getState().values,
+          details: details,
           id: props.match.params.id,
         },
       },
@@ -51,7 +61,7 @@ const CreateCoursePage = (props) => {
     details: [],
   };
 
-  const course = getCourse?.data?.course || defaultValues;
+  const course = loadResult?.data?.course || defaultValues;
 
   return (
     <Form
@@ -60,17 +70,10 @@ const CreateCoursePage = (props) => {
       initialValues={course}
     >
       {({ formApi, formState }) => (
-        <div>
-          <CourseForm
-            formApi={formApi}
-            formState={formState}
-            setVolunteersQuantity={setVolunteersQuantity}
-            volunteersQuantity={volunteersQuantity}
-          />
-        </div>
+        <CourseForm formApi={formApi} formState={formState} details={details} setDetails={setDetails} />
       )}
     </Form>
   );
 };
 
-export default CreateCoursePage;
+export default UpdateCoursePage;

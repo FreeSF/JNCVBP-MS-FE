@@ -1,28 +1,46 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { Form as Form, FormApi } from "informed";
 import { Container } from "react-bootstrap";
 
-import { EditGuardMutation, EditGuardMutationVariables, FindGuardQuery, UpdateGuardInput } from "../../types";
-import { useMutation, useQuery } from "react-apollo";
+import {
+  EditGuardMutation,
+  EditGuardMutationVariables,
+  FindGuardQuery,
+  FindGuardQueryVariables,
+  UpdateGuardInput,
+} from "../../types";
+import { useMutation, useLazyQuery } from "react-apollo";
 import { EDIT_GUARD, FIND_GUARD, GET_GUARDS } from "../../queries/Guards";
 
 import GuardForm from "./GuardForm";
 import Spinner from "components/spinner";
 
 const CreateGuardPage = (props) => {
-  const getGuard = useQuery<FindGuardQuery>(FIND_GUARD, { variables: { id: props.match.params.id } });
-  const [formRef, setFormRef] = useState<FormApi<UpdateGuardInput>>(null);
-  const [volunteersQuantity, setVolunteersQuantity] = useState<number>(0);
-  const [editGuard, editedGuard] = useMutation<EditGuardMutation, EditGuardMutationVariables>(EDIT_GUARD);
+  const [loadGuard, loadResult] = useLazyQuery<FindGuardQuery, FindGuardQueryVariables>(FIND_GUARD, {
+    fetchPolicy: "no-cache",
+    onCompleted: (data) => {
+      const volunteers = data.guard?.volunteers.map((volunteer) => ({ _id: volunteer.id }));
+      setVolunteers(volunteers);
+    },
+  });
 
-  if (getGuard.loading) return <Spinner />;
+  const [formRef, setFormRef] = useState<FormApi<UpdateGuardInput>>(null);
+  const [volunteers, setVolunteers] = useState<any>([]);
+  const [updateGuard, editedGuard] = useMutation<EditGuardMutation, EditGuardMutationVariables>(EDIT_GUARD);
+
+  useEffect(() => {
+    loadGuard({ variables: { id: props.match.params.id } });
+  }, []);
+
+  if (loadResult.loading) return <Spinner />;
 
   const handleSubmit = () => {
-    editGuard({
+    const volunteers = formRef.getState().values.volunteers?.filter((x) => x) || [];
+    updateGuard({
       variables: {
         input: {
           ...formRef.getState().values,
+          volunteers: volunteers,
           id: props.match.params.id,
         },
       },
@@ -39,7 +57,7 @@ const CreateGuardPage = (props) => {
     volunteers: [],
   };
 
-  const guard = getGuard?.data?.guard || defaultValues;
+  const guard = loadResult?.data?.guard || defaultValues;
   return (
     <Container fluid>
       <Form
@@ -48,12 +66,7 @@ const CreateGuardPage = (props) => {
         onSubmit={handleSubmit}
       >
         {({ formApi, formState }) => (
-          <GuardForm
-            formApi={formApi}
-            formState={formState}
-            volunteersQuantity={volunteersQuantity}
-            setVolunteersQuantity={setVolunteersQuantity}
-          />
+          <GuardForm formApi={formApi} formState={formState} volunteers={volunteers} setVolunteers={setVolunteers} />
         )}
       </Form>
     </Container>

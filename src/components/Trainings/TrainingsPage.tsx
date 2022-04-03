@@ -14,7 +14,7 @@ import {
   VolunteerAllFieldsFragment,
 } from "../../types";
 import Spinner from "../spinner";
-import { get_formatted_date } from "utils/constants";
+import { get_formatted_date, get_formatted_volunteers } from "utils/constants";
 
 const TrainingsPage = (props) => {
   const getTrainingsQuery = useQuery<GetTrainingsQuery>(GET_TRAININGS);
@@ -35,7 +35,7 @@ const TrainingsPage = (props) => {
     {
       dataField: "volunteers",
       text: "Voluntarios",
-      formatter: (cell: VolunteerAllFieldsFragment[]) => cell.map((volunteer) => volunteer.name).join(","),
+      formatter: (cell: VolunteerAllFieldsFragment[]) => get_formatted_volunteers(cell),
     },
     {
       dataField: "actions",
