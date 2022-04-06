@@ -1,5 +1,5 @@
 import React from "react";
-import { Select, Text } from "informed"; //Form
+import { FormApi, FormState, Select, Text } from "informed"; //Form
 import _ from "lodash";
 
 import DateTimePicker from "react-datetime-picker";
@@ -11,13 +11,20 @@ import { GET_VOLUNTEERS } from "queries/volunteers";
 import { useQuery } from "react-apollo";
 
 type GuardFormProps = {
-  formApi: any; //FormApi<CreateGuardInput | UpdateGuardInput>;
-  formState: { values };
+  formApi: FormApi<CreateGuardInput | UpdateGuardInput>;
+  formState: FormState<CreateGuardInput | UpdateGuardInput>;
   volunteers: any;
   setVolunteers: any;
+  initialVolunteersQuantity?: number; // Todo improve with initial quantity
 };
 
-const GuardForm = ({ formApi, formState, volunteers, setVolunteers }: GuardFormProps) => {
+const GuardForm = ({
+  formApi,
+  formState,
+  volunteers,
+  setVolunteers,
+  initialVolunteersQuantity = 0,
+}: GuardFormProps) => {
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
   if (getVolunteersQuery.loading) return <Spinner />;
 

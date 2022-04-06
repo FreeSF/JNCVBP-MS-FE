@@ -32,7 +32,7 @@ const CreateGuardPage = (props) => {
     loadGuard({ variables: { id: props.match.params.id } });
   }, []);
 
-  if (loadResult.loading) return <Spinner />;
+  if (loadResult.loading || !loadResult.called) return <Spinner />;
 
   const handleSubmit = () => {
     const volunteers = formRef.getState().values.volunteers?.filter((x) => x) || [];
@@ -51,22 +51,27 @@ const CreateGuardPage = (props) => {
   };
 
   const defaultValues: UpdateGuardInput = {
-    id: undefined,
-    start_time: new Date().getTime(),
-    end_time: new Date().getTime(),
-    volunteers: [],
+    id: loadResult.data.guard.id,
+    start_time: loadResult.data.guard.start_time,
+    end_time: loadResult.data.guard.end_time,
+    volunteers: loadResult.data.guard.volunteers.map((volunteer) => ({ _id: volunteer.id })),
   };
 
-  const guard = loadResult?.data?.guard || defaultValues;
   return (
     <Container fluid>
       <Form
-        initialValues={guard}
+        initialValues={defaultValues}
         getApi={(formRef: FormApi<UpdateGuardInput>) => setFormRef(formRef)}
         onSubmit={handleSubmit}
       >
         {({ formApi, formState }) => (
-          <GuardForm formApi={formApi} formState={formState} volunteers={volunteers} setVolunteers={setVolunteers} />
+          <GuardForm
+            formApi={formApi}
+            formState={formState}
+            volunteers={volunteers}
+            setVolunteers={setVolunteers}
+            initialVolunteersQuantity={loadResult.data.guard.volunteers.length}
+          />
         )}
       </Form>
     </Container>
