@@ -1,10 +1,21 @@
 import React from "react";
 import ChartistGraph from "react-chartist";
 import { Button, Card, Table, Container, Row, Col, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
+import Select from "react-select";
 const HomePage = () => {
   return (
     <>
       <Container fluid>
+        <div className="d-flex">
+          <label>Año</label>
+          <Select
+            options={[
+              { value: "2022", label: "2022" },
+              { value: "2021", label: "2021" },
+            ]}
+            value={{ value: "2022", label: "2022" }}
+          />
+        </div>
         <Row>
           <Col lg="3" sm="6">
             <Card className="card-stats">
@@ -17,8 +28,8 @@ const HomePage = () => {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Number</p>
-                      <Card.Title as="h4">150GB</Card.Title>
+                      <p className="card-category">Voluntarios Activos</p>
+                      <Card.Title as="h4">150</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -43,8 +54,8 @@ const HomePage = () => {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Revenue</p>
-                      <Card.Title as="h4">$ 1,345</Card.Title>
+                      <p className="card-category">Servicios Realizados</p>
+                      <Card.Title as="h4">1,345</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -69,7 +80,7 @@ const HomePage = () => {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Errors</p>
+                      <p className="card-category">Cursos Realizados</p>
                       <Card.Title as="h4">23</Card.Title>
                     </div>
                   </Col>
@@ -95,8 +106,8 @@ const HomePage = () => {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Followers</p>
-                      <Card.Title as="h4">+45K</Card.Title>
+                      <p className="card-category">Prácticas Realizadas</p>
+                      <Card.Title as="h4">45</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -122,16 +133,7 @@ const HomePage = () => {
                 <div className="ct-chart" id="chartHours">
                   <ChartistGraph
                     data={{
-                      labels: [
-                        "9:00AM",
-                        "12:00AM",
-                        "3:00PM",
-                        "6:00PM",
-                        "9:00PM",
-                        "12:00PM",
-                        "3:00AM",
-                        "6:00AM",
-                      ],
+                      labels: ["9:00AM", "12:00AM", "3:00PM", "6:00PM", "9:00PM", "12:00PM", "3:00AM", "6:00AM"],
                       series: [
                         [287, 385, 490, 492, 554, 586, 698, 695],
                         [67, 152, 143, 240, 287, 335, 435, 437],
@@ -188,14 +190,11 @@ const HomePage = () => {
           <Col md="4">
             <Card>
               <Card.Header>
-                <Card.Title as="h4">Email Statistics</Card.Title>
+                <Card.Title as="h4">Tipo de Fuego (Buscar mejor título)</Card.Title>
                 <p className="card-category">Last Campaign Performance</p>
               </Card.Header>
               <Card.Body>
-                <div
-                  className="ct-chart ct-perfect-fourth"
-                  id="chartPreferences"
-                >
+                <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
                   <ChartistGraph
                     data={{
                       labels: ["40%", "20%", "40%"],
@@ -206,9 +205,69 @@ const HomePage = () => {
                 </div>
                 <div className="legend">
                   <i className="fas fa-circle text-info"></i>
-                  Open <i className="fas fa-circle text-danger"></i>
-                  Bounce <i className="fas fa-circle text-warning"></i>
-                  Unsubscribe
+                  Basura <i className="fas fa-circle text-danger"></i>
+                  Madera <i className="fas fa-circle text-warning"></i>
+                  Papel
+                </div>
+                <hr></hr>
+                <div className="stats">
+                  <i className="far fa-clock"></i>
+                  Campaign sent 2 days ago
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md="4">
+            <Card>
+              <Card.Header>
+                <Card.Title as="h4">Causas Posibles (Buscar mejor título)</Card.Title>
+                <p className="card-category">Last Campaign Performance</p>
+              </Card.Header>
+              <Card.Body>
+                <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
+                  <ChartistGraph
+                    data={{
+                      labels: ["40%", "20%", "40%"],
+                      series: [40, 20, 40],
+                    }}
+                    type="Pie"
+                  />
+                </div>
+                <div className="legend">
+                  <i className="fas fa-circle text-info"></i>
+                  Cortocircuito <i className="fas fa-circle text-danger"></i>
+                  Escape de gas <i className="fas fa-circle text-warning"></i>
+                  Fines de limpieza
+                </div>
+                <hr></hr>
+                <div className="stats">
+                  <i className="far fa-clock"></i>
+                  Campaign sent 2 days ago
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md="4">
+            <Card>
+              <Card.Header>
+                <Card.Title as="h4">Clases de fuego (Buscar mejor título)</Card.Title>
+                <p className="card-category">Last Campaign Performance</p>
+              </Card.Header>
+              <Card.Body>
+                <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
+                  <ChartistGraph
+                    data={{
+                      labels: ["40%", "20%", "40%"],
+                      series: [40, 20, 40],
+                    }}
+                    type="Pie"
+                  />
+                </div>
+                <div className="legend">
+                  <i className="fas fa-circle text-info"></i>
+                  Sólidos Fibrosos <i className="fas fa-circle text-danger"></i>
+                  Líquidos Inflamables <i className="fas fa-circle text-warning"></i>
+                  Eléctricos
                 </div>
                 <hr></hr>
                 <div className="stats">
@@ -230,49 +289,10 @@ const HomePage = () => {
                 <div className="ct-chart" id="chartActivity">
                   <ChartistGraph
                     data={{
-                      labels: [
-                        "Jan",
-                        "Feb",
-                        "Mar",
-                        "Apr",
-                        "Mai",
-                        "Jun",
-                        "Jul",
-                        "Aug",
-                        "Sep",
-                        "Oct",
-                        "Nov",
-                        "Dec",
-                      ],
+                      labels: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                       series: [
-                        [
-                          542,
-                          443,
-                          320,
-                          780,
-                          553,
-                          453,
-                          326,
-                          434,
-                          568,
-                          610,
-                          756,
-                          895,
-                        ],
-                        [
-                          412,
-                          243,
-                          280,
-                          580,
-                          453,
-                          353,
-                          300,
-                          364,
-                          368,
-                          410,
-                          636,
-                          695,
-                        ],
+                        [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
+                        [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695],
                       ],
                     }}
                     type="Bar"
@@ -327,44 +347,20 @@ const HomePage = () => {
                         <td>
                           <Form.Check className="mb-1 pl-0">
                             <Form.Check.Label>
-                              <Form.Check.Input
-                                defaultValue=""
-                                type="checkbox"
-                              ></Form.Check.Input>
+                              <Form.Check.Input defaultValue="" type="checkbox"></Form.Check.Input>
                               <span className="form-check-sign"></span>
                             </Form.Check.Label>
                           </Form.Check>
                         </td>
-                        <td>
-                          Sign contract for "What are conference organizers
-                          afraid of?"
-                        </td>
+                        <td>Sign contract for "What are conference organizers afraid of?"</td>
                         <td className="td-actions text-right">
-                          <OverlayTrigger
-                            overlay={
-                              <Tooltip id="tooltip-488980961">
-                                Edit Task..
-                              </Tooltip>
-                            }
-                          >
-                            <Button
-                              className="btn-simple btn-link p-1"
-                              type="button"
-                              variant="info"
-                            >
+                          <OverlayTrigger overlay={<Tooltip id="tooltip-488980961">Edit Task..</Tooltip>}>
+                            <Button className="btn-simple btn-link p-1" type="button" variant="info">
                               <i className="fas fa-edit"></i>
                             </Button>
                           </OverlayTrigger>
-                          <OverlayTrigger
-                            overlay={
-                              <Tooltip id="tooltip-506045838">Remove..</Tooltip>
-                            }
-                          >
-                            <Button
-                              className="btn-simple btn-link p-1"
-                              type="button"
-                              variant="danger"
-                            >
+                          <OverlayTrigger overlay={<Tooltip id="tooltip-506045838">Remove..</Tooltip>}>
+                            <Button className="btn-simple btn-link p-1" type="button" variant="danger">
                               <i className="fas fa-times"></i>
                             </Button>
                           </OverlayTrigger>
@@ -374,45 +370,20 @@ const HomePage = () => {
                         <td>
                           <Form.Check className="mb-1 pl-0">
                             <Form.Check.Label>
-                              <Form.Check.Input
-                                defaultChecked
-                                defaultValue=""
-                                type="checkbox"
-                              ></Form.Check.Input>
+                              <Form.Check.Input defaultChecked defaultValue="" type="checkbox"></Form.Check.Input>
                               <span className="form-check-sign"></span>
                             </Form.Check.Label>
                           </Form.Check>
                         </td>
-                        <td>
-                          Lines From Great Russian Literature? Or E-mails From
-                          My Boss?
-                        </td>
+                        <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
                         <td className="td-actions text-right">
-                          <OverlayTrigger
-                            overlay={
-                              <Tooltip id="tooltip-537440761">
-                                Edit Task..
-                              </Tooltip>
-                            }
-                          >
-                            <Button
-                              className="btn-simple btn-link p-1"
-                              type="button"
-                              variant="info"
-                            >
+                          <OverlayTrigger overlay={<Tooltip id="tooltip-537440761">Edit Task..</Tooltip>}>
+                            <Button className="btn-simple btn-link p-1" type="button" variant="info">
                               <i className="fas fa-edit"></i>
                             </Button>
                           </OverlayTrigger>
-                          <OverlayTrigger
-                            overlay={
-                              <Tooltip id="tooltip-21130535">Remove..</Tooltip>
-                            }
-                          >
-                            <Button
-                              className="btn-simple btn-link p-1"
-                              type="button"
-                              variant="danger"
-                            >
+                          <OverlayTrigger overlay={<Tooltip id="tooltip-21130535">Remove..</Tooltip>}>
+                            <Button className="btn-simple btn-link p-1" type="button" variant="danger">
                               <i className="fas fa-times"></i>
                             </Button>
                           </OverlayTrigger>
@@ -422,46 +393,23 @@ const HomePage = () => {
                         <td>
                           <Form.Check className="mb-1 pl-0">
                             <Form.Check.Label>
-                              <Form.Check.Input
-                                defaultChecked
-                                defaultValue=""
-                                type="checkbox"
-                              ></Form.Check.Input>
+                              <Form.Check.Input defaultChecked defaultValue="" type="checkbox"></Form.Check.Input>
                               <span className="form-check-sign"></span>
                             </Form.Check.Label>
                           </Form.Check>
                         </td>
                         <td>
-                          Flooded: One year later, assessing what was lost and
-                          what was found when a ravaging rain swept through
-                          metro Detroit
+                          Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept
+                          through metro Detroit
                         </td>
                         <td className="td-actions text-right">
-                          <OverlayTrigger
-                            overlay={
-                              <Tooltip id="tooltip-577232198">
-                                Edit Task..
-                              </Tooltip>
-                            }
-                          >
-                            <Button
-                              className="btn-simple btn-link p-1"
-                              type="button"
-                              variant="info"
-                            >
+                          <OverlayTrigger overlay={<Tooltip id="tooltip-577232198">Edit Task..</Tooltip>}>
+                            <Button className="btn-simple btn-link p-1" type="button" variant="info">
                               <i className="fas fa-edit"></i>
                             </Button>
                           </OverlayTrigger>
-                          <OverlayTrigger
-                            overlay={
-                              <Tooltip id="tooltip-773861645">Remove..</Tooltip>
-                            }
-                          >
-                            <Button
-                              className="btn-simple btn-link p-1"
-                              type="button"
-                              variant="danger"
-                            >
+                          <OverlayTrigger overlay={<Tooltip id="tooltip-773861645">Remove..</Tooltip>}>
+                            <Button className="btn-simple btn-link p-1" type="button" variant="danger">
                               <i className="fas fa-times"></i>
                             </Button>
                           </OverlayTrigger>
@@ -471,44 +419,20 @@ const HomePage = () => {
                         <td>
                           <Form.Check className="mb-1 pl-0">
                             <Form.Check.Label>
-                              <Form.Check.Input
-                                defaultChecked
-                                type="checkbox"
-                              ></Form.Check.Input>
+                              <Form.Check.Input defaultChecked type="checkbox"></Form.Check.Input>
                               <span className="form-check-sign"></span>
                             </Form.Check.Label>
                           </Form.Check>
                         </td>
-                        <td>
-                          Create 4 Invisible User Experiences you Never Knew
-                          About
-                        </td>
+                        <td>Create 4 Invisible User Experiences you Never Knew About</td>
                         <td className="td-actions text-right">
-                          <OverlayTrigger
-                            overlay={
-                              <Tooltip id="tooltip-422471719">
-                                Edit Task..
-                              </Tooltip>
-                            }
-                          >
-                            <Button
-                              className="btn-simple btn-link p-1"
-                              type="button"
-                              variant="info"
-                            >
+                          <OverlayTrigger overlay={<Tooltip id="tooltip-422471719">Edit Task..</Tooltip>}>
+                            <Button className="btn-simple btn-link p-1" type="button" variant="info">
                               <i className="fas fa-edit"></i>
                             </Button>
                           </OverlayTrigger>
-                          <OverlayTrigger
-                            overlay={
-                              <Tooltip id="tooltip-829164576">Remove..</Tooltip>
-                            }
-                          >
-                            <Button
-                              className="btn-simple btn-link p-1"
-                              type="button"
-                              variant="danger"
-                            >
+                          <OverlayTrigger overlay={<Tooltip id="tooltip-829164576">Remove..</Tooltip>}>
+                            <Button className="btn-simple btn-link p-1" type="button" variant="danger">
                               <i className="fas fa-times"></i>
                             </Button>
                           </OverlayTrigger>
@@ -518,41 +442,20 @@ const HomePage = () => {
                         <td>
                           <Form.Check className="mb-1 pl-0">
                             <Form.Check.Label>
-                              <Form.Check.Input
-                                defaultValue=""
-                                type="checkbox"
-                              ></Form.Check.Input>
+                              <Form.Check.Input defaultValue="" type="checkbox"></Form.Check.Input>
                               <span className="form-check-sign"></span>
                             </Form.Check.Label>
                           </Form.Check>
                         </td>
                         <td>Read "Following makes Medium better"</td>
                         <td className="td-actions text-right">
-                          <OverlayTrigger
-                            overlay={
-                              <Tooltip id="tooltip-160575228">
-                                Edit Task..
-                              </Tooltip>
-                            }
-                          >
-                            <Button
-                              className="btn-simple btn-link p-1"
-                              type="button"
-                              variant="info"
-                            >
+                          <OverlayTrigger overlay={<Tooltip id="tooltip-160575228">Edit Task..</Tooltip>}>
+                            <Button className="btn-simple btn-link p-1" type="button" variant="info">
                               <i className="fas fa-edit"></i>
                             </Button>
                           </OverlayTrigger>
-                          <OverlayTrigger
-                            overlay={
-                              <Tooltip id="tooltip-922981635">Remove..</Tooltip>
-                            }
-                          >
-                            <Button
-                              className="btn-simple btn-link p-1"
-                              type="button"
-                              variant="danger"
-                            >
+                          <OverlayTrigger overlay={<Tooltip id="tooltip-922981635">Remove..</Tooltip>}>
+                            <Button className="btn-simple btn-link p-1" type="button" variant="danger">
                               <i className="fas fa-times"></i>
                             </Button>
                           </OverlayTrigger>
@@ -562,42 +465,20 @@ const HomePage = () => {
                         <td>
                           <Form.Check className="mb-1 pl-0">
                             <Form.Check.Label>
-                              <Form.Check.Input
-                                defaultValue=""
-                                disabled
-                                type="checkbox"
-                              ></Form.Check.Input>
+                              <Form.Check.Input defaultValue="" disabled type="checkbox"></Form.Check.Input>
                               <span className="form-check-sign"></span>
                             </Form.Check.Label>
                           </Form.Check>
                         </td>
                         <td>Unfollow 5 enemies from twitter</td>
                         <td className="td-actions text-right">
-                          <OverlayTrigger
-                            overlay={
-                              <Tooltip id="tooltip-938342127">
-                                Edit Task..
-                              </Tooltip>
-                            }
-                          >
-                            <Button
-                              className="btn-simple btn-link p-1"
-                              type="button"
-                              variant="info"
-                            >
+                          <OverlayTrigger overlay={<Tooltip id="tooltip-938342127">Edit Task..</Tooltip>}>
+                            <Button className="btn-simple btn-link p-1" type="button" variant="info">
                               <i className="fas fa-edit"></i>
                             </Button>
                           </OverlayTrigger>
-                          <OverlayTrigger
-                            overlay={
-                              <Tooltip id="tooltip-119603706">Remove..</Tooltip>
-                            }
-                          >
-                            <Button
-                              className="btn-simple btn-link p-1"
-                              type="button"
-                              variant="danger"
-                            >
+                          <OverlayTrigger overlay={<Tooltip id="tooltip-119603706">Remove..</Tooltip>}>
+                            <Button className="btn-simple btn-link p-1" type="button" variant="danger">
                               <i className="fas fa-times"></i>
                             </Button>
                           </OverlayTrigger>
@@ -620,5 +501,5 @@ const HomePage = () => {
       </Container>
     </>
   );
-}
+};
 export default HomePage;
