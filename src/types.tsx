@@ -77,6 +77,7 @@ export type CreateRankInput = {
 };
 
 export type CreateServiceInput = {
+  type: Scalars["String"];
   description: Scalars["String"];
   volunteers?: Maybe<Array<OnlyIdVolunteerInput>>;
   call_time: Scalars["String"];
@@ -459,6 +460,7 @@ export type Service = {
   __typename?: "Service";
   _id?: Maybe<Scalars["String"]>;
   id?: Maybe<Scalars["String"]>;
+  type?: Maybe<Scalars["String"]>;
   description?: Maybe<Scalars["String"]>;
   volunteers?: Maybe<Array<Volunteer>>;
   call_time?: Maybe<Scalars["String"]>;
@@ -545,6 +547,7 @@ export type UpdateRankInput = {
 };
 
 export type UpdateServiceInput = {
+  type?: Maybe<Scalars["String"]>;
   description?: Maybe<Scalars["String"]>;
   volunteers?: Maybe<Array<OnlyIdVolunteerInput>>;
   call_time?: Maybe<Scalars["String"]>;
@@ -896,6 +899,7 @@ export type DeleteRankMutation = { __typename?: "Mutation" } & {
 export type ServicesAllFieldsFragment = { __typename?: "Service" } & Pick<
   Service,
   | "id"
+  | "type"
   | "description"
   | "call_time"
   | "departure_time"
@@ -1105,6 +1109,7 @@ export const FireClassAllFieldsFragmentDoc = gql`
 export const ServicesAllFieldsFragmentDoc = gql`
   fragment servicesAllFields on Service {
     id
+    type
     description
     call_time
     departure_time

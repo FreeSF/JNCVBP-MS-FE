@@ -38,6 +38,7 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
   // Example of how to do it without informed
   const defaultValues: CreateServiceInput = {
     address: "Calle 123",
+    type: "10.41",
     affected_owner: "0",
     affected_owner_description: "0",
     alerted_by: "Alguien",
@@ -84,26 +85,14 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
       },
       refetchQueries: [{ query: GET_SERVICES }],
     }).then((value) => {
-      //props.history.push("/services");
+      props.history.push("/services");
     });
   };
 
-  //const {address} = CreateServiceInput;
-
   return (
     <div>
-      <h2>Create Service</h2>
-      <div>
-        <h3>Without Form</h3>
-        <label>Descripción:</label>
-        <input
-          value={input.description}
-          onChange={(event) => {
-            input.description = event.target.value;
-            setInput(_.cloneDeep(input)); // Ugly clonedeep
-          }}
-        />
-      </div>
+      <h2>Crear Service</h2>
+
       <Form
         getApi={(formRef: FormApi<CreateServiceInput>) => setFormRefCreate(formRef)}
         onSubmit={handleSubmit}
@@ -111,6 +100,13 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
       >
         {({ formApi, formState }) => (
           <div>
+            <label>Tipo</label>
+            <Select field={`type`}>
+              <option value="10.40">10.40</option>
+              <option value="10.41">10.41</option>
+              <option value="10.43">10.43</option>
+            </Select>
+            <br />
             <label>Descripción:</label>
             <Text field="description" />
             <br />
@@ -193,6 +189,7 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
                 </option>
               ))}
             </Select>
+            <br />
 
             <label>Tipo de Fuego:</label>
             <Select field={`fire_type._id`} initialValue={undefined}>
@@ -202,16 +199,22 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
                 </option>
               ))}
             </Select>
+            <br />
             <label>Superficie Total:</label>
             <Text field="fire_type_total_surface" type="number" />
+            <br />
             <label>Superficie Quemada:</label>
             <Text field="fire_type_burned_surface" type="number" />
+            <br />
             <label>Tipo de fuego (otro):</label>
             <Text field="fire_type_description" />
+            <br />
             <label>Afectado:</label>
             <Text field="affected_owner" />
+            <br />
             <label>Afectado (descripción):</label>
             <Text field="affected_owner_description" />
+            <br />
             <label>Causa Posible: </label>
             <Select field={`possible_cause._id`} initialValue={undefined}>
               {getFireCausesQuery.data.fireCauses.map((fireCause) => (
@@ -220,10 +223,13 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
                 </option>
               ))}
             </Select>
+            <br />
             <label>Causa Posible (otro):</label>
             <Text field="possible_cause_other_description" />
+            <br />
             <label>Proporción:</label>
             <Text field="magnitude" />
+            <br />
             <label>Fuego Clase:</label>
             {_.times(fireClassQuantity, (i) => (
               <React.Fragment>
@@ -253,10 +259,13 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
             >
               Quitar
             </button>
+            <br />
             <label>Proporción/Magnitud:</label>
             <Text field="magnitude" />
+            <br />
             <label>Destrucción:</label>
             <Text field="damage" />
+            <br />
             <Button type="submit">Crear Servicio</Button>
             <Button href="/services">Volver</Button>
           </div>
