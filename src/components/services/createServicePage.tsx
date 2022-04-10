@@ -61,7 +61,7 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
     volunteers: [],
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (formStateValues) => {
     createService({
       variables: {
         input: formRefCreate.getState().values,

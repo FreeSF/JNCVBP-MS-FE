@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormApi, FormState, Select, Text } from "informed";
+import { FormApi, FormState, Select as InformedSelect, Text } from "informed";
 import _ from "lodash";
 import { Button } from "react-bootstrap";
 import { useQuery } from "react-apollo";
@@ -9,6 +9,7 @@ import {
   GetFireClassesQuery,
   GetFireTypesQuery,
   GetVolunteersQuery,
+  OnlyIdVolunteerInput,
   UpdateServiceInput,
 } from "../../types";
 import { GET_VOLUNTEERS } from "../../queries/volunteers";
@@ -18,14 +19,20 @@ import { GET_FIRE_CLASSES } from "../../queries/fireClass";
 import Spinner from "../spinner";
 
 type theProps = {
-  formApi: FormApi<CreateServiceInput> | FormApi<UpdateServiceInput>;
+  formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
+  formState: FormState<CreateServiceInput | UpdateServiceInput>;
+  initialVolunteers?: OnlyIdVolunteerInput[];
 };
 
-const ServiceForm = (props) => {
+function arrayRemove(arr, index) {
+  const result = [...arr];
+  result[index] = "deleteThis";
+  return result.filter((item) => item !== "deleteThis");
+}
+
+const ServiceForm = (props: theProps) => {
   const { formApi, formState } = props;
 
-  const [volunteersQuantity, setVolunteersQuantity] = useState(0);
-  const [fireClassQuantity, setFireClassQuantity] = useState(0);
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
 
   const getFireTypesQuery = useQuery<GetFireTypesQuery>(GET_FIRE_TYPES);
@@ -43,11 +50,11 @@ const ServiceForm = (props) => {
   return (
     <div>
       <label>Tipo</label>
-      <Select field={`type`}>
+      <InformedSelect field={`type`}>
         <option value="10.40">10.40</option>
         <option value="10.41">10.41</option>
         <option value="10.43">10.43</option>
-      </Select>
+      </InformedSelect>
       <br />
       <label>Descripción:</label>
       <Text field="description" />
@@ -90,57 +97,96 @@ const ServiceForm = (props) => {
       <br />
       <label>Asistencia de Voluntarios</label>
       <br />
-      {_.times(volunteersQuantity, (i) => (
-        <React.Fragment>
+      {/*volunteers.map((volunteer, i) => (
+        <React.Fragment key={volunteer._id}>
           <Select
-            field={`volunteers[${i}]._id`}
-            initialValue={_.get(getVolunteersQuery, "data.volunteers[0].id", undefined)}
+            value={{
+              value: volunteer._id,
+              label: _.get(getVolunteersQuery.data.volunteers.find(theVolunteer => theVolunteer.id === volunteer._id), 'name', 'No Seleccionado')
+            }}
+            options={getVolunteersQuery.data.volunteers.map(theVolunteer=> ({value: theVolunteer.id, label: theVolunteer.name}))}
+            onChange={value => {
+              const newVolunteers = [...volunteers];
+              newVolunteers[i] = {_id: value.value};
+              setVolunteers(newVolunteers);
+            }}
+            />
+          <button
+            onClick={() => {
+              const newVolunteers = arrayRemove(volunteers, i);
+              setVolunteers(newVolunteers);
+            }}
           >
-            {getVolunteersQuery.data.volunteers.map((volunteer) => (
-              <option value={volunteer.id} key={volunteer.id}>
-                {volunteer.name}
-              </option>
-            ))}
-          </Select>
+            Remove
+          </button>
           <br />
         </React.Fragment>
-      ))}
+      ))*/}
+      {/*<button
+        onClick={(event) => {
+          event.preventDefault();
+          setVolunteers([...volunteers, {_id: undefined}]);
+        }}
+      >
+        Agregar
+      </button>*/}
+      <br />
+      <Text field="volunteers" /> {/*Need to be here to work*/}
+      {(formState.values.volunteers || []).map((volunteer, i) => {
+        return (
+          <React.Fragment>
+            {" "}
+            {/*don't add key for now*/}
+            <InformedSelect field={`volunteers[${i}]._id`} initialValue={getVolunteersQuery.data.volunteers[0]?.id}>
+              {getVolunteersQuery.data.volunteers.map((volunteer) => (
+                <option value={volunteer.id} key={volunteer.id}>
+                  {volunteer.name}
+                </option>
+              ))}
+            </InformedSelect>
+            <button
+              onClick={(event) => {
+                event.preventDefault();
+
+                const newVolunteers = arrayRemove(formState.values.volunteers, i);
+                formApi.setValues({ ...formState.values, volunteers: newVolunteers });
+              }}
+            >
+              Quitar
+            </button>
+            <br />
+          </React.Fragment>
+        );
+      })}
+      <br />
       <button
         onClick={(event) => {
           event.preventDefault();
-          setVolunteersQuantity(volunteersQuantity + 1);
+          const newVolunteers = formState.values.volunteers || [];
+          newVolunteers.push({ _id: undefined });
+          formApi.setValues({ ...formState.values, volunteers: newVolunteers });
         }}
       >
         Agregar
       </button>
-      <button
-        onClick={(event) => {
-          event.preventDefault();
-          setVolunteersQuantity(volunteersQuantity > 0 ? volunteersQuantity - 1 : 0);
-        }}
-      >
-        Quitar
-      </button>
       <br />
-
       <label>Oficial a cargo:</label>
-      <Select field={`officer_in_charge._id`} initialValue={undefined}>
+      <InformedSelect field={`officer_in_charge._id`} initialValue={getVolunteersQuery.data.volunteers[0]?.id}>
         {getVolunteersQuery.data.volunteers.map((volunteer) => (
           <option value={volunteer.id} key={volunteer.id}>
             {volunteer.name}
           </option>
         ))}
-      </Select>
+      </InformedSelect>
       <br />
-
       <label>Tipo de Fuego:</label>
-      <Select field={`fire_type._id`} initialValue={undefined}>
+      <InformedSelect field={`fire_type._id`} initialValue={getFireTypesQuery.data.fireTypes[0]?.id}>
         {getFireTypesQuery.data.fireTypes.map((fireType) => (
           <option value={fireType.id} key={fireType.id}>
             {fireType.name}
           </option>
         ))}
-      </Select>
+      </InformedSelect>
       <br />
       <label>Superficie Total:</label>
       <Text field="fire_type_total_surface" type="number" />
@@ -158,13 +204,13 @@ const ServiceForm = (props) => {
       <Text field="affected_owner_description" />
       <br />
       <label>Causa Posible: </label>
-      <Select field={`possible_cause._id`} initialValue={undefined}>
+      <InformedSelect field={`possible_cause._id`} initialValue={getFireCausesQuery.data.fireCauses[0]?.id}>
         {getFireCausesQuery.data.fireCauses.map((fireCause) => (
           <option value={fireCause.id} key={fireCause.id}>
             {fireCause.name}
           </option>
         ))}
-      </Select>
+      </InformedSelect>
       <br />
       <label>Causa Posible (otro):</label>
       <Text field="possible_cause_other_description" />
@@ -173,33 +219,37 @@ const ServiceForm = (props) => {
       <Text field="magnitude" />
       <br />
       <label>Fuego Clase:</label>
-      {_.times(fireClassQuantity, (i) => (
+      <Text field="fire_class" />
+      <br />
+      {(formState.values.fire_class || []).map((fireClass, i) => (
         <React.Fragment>
-          <Select field={`fire_class[${i}]._id`} /*initialValue={getFireClassesQuery.data.fireClasses}*/>
+          <InformedSelect field={`fire_class[${i}]._id`} initialValue={getFireClassesQuery.data.fireClasses[0]?.id}>
             {getFireClassesQuery.data.fireClasses.map((fireClass) => (
               <option value={fireClass.id} key={fireClass.id}>
                 {fireClass.name}
               </option>
             ))}
-          </Select>
+          </InformedSelect>
+          <button
+            onClick={(event) => {
+              const newFireClasses = arrayRemove(formState.values.fire_class, i);
+              formApi.setValues({ ...formState.values, fire_class: newFireClasses });
+            }}
+          >
+            Quitar
+          </button>
           <br />
         </React.Fragment>
       ))}
       <button
         onClick={(event) => {
           event.preventDefault();
-          setFireClassQuantity(fireClassQuantity + 1);
+          const newFireClasses = formState.values.fire_class || [];
+          newFireClasses.push({ _id: undefined });
+          formApi.setValues({ ...formState.values, fire_class: newFireClasses });
         }}
       >
         Agregar
-      </button>
-      <button
-        onClick={(event) => {
-          event.preventDefault();
-          setFireClassQuantity(fireClassQuantity > 0 ? fireClassQuantity - 1 : 0);
-        }}
-      >
-        Quitar
       </button>
       <br />
       <label>Proporción/Magnitud:</label>
