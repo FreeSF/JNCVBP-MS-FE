@@ -7,9 +7,10 @@ import Footer from "components/layouts/footer";
 import Sidebar from "components/layouts/sidebar";
 import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
-
+import "react-notifications/lib/notifications.css";
 import routes from "routes.js";
 import { setDefaultLocale, registerLocale } from "react-datepicker";
+import { NotificationContainer } from "react-notifications";
 
 registerLocale("es", es);
 setDefaultLocale("es");
@@ -23,6 +24,7 @@ const getRoutes = (routes) => {
 const App = () => {
   return (
     <div className="wrapper">
+      <NotificationContainer />
       <Sidebar color={"black"} image={""} routes={routes} />
       <div className="main-panel">
         <Header />
