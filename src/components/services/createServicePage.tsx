@@ -32,6 +32,17 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
 
   // Example of how to do it without informed
   const defaultValues: CreateServiceInput = {
+    damage1041: undefined,
+    involved_elements: undefined,
+    judge_in_charge: "",
+    magnitude1041: undefined,
+    other_occurrences: "",
+    other_units: "",
+    police_force_in_charge: "",
+    quantities1044: undefined,
+    rescue_type: undefined,
+    resources_used: undefined,
+    vehicles_used: "",
     address: "Calle 123",
     type: "10.41",
     affected_owner: "0",

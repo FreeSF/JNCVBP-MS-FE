@@ -44,6 +44,25 @@ const serviceAllFieldsFragment = gql`
     }
     magnitude
     damage
+    vehicles_used
+    other_units
+    other_occurrences
+    police_force_in_charge
+    judge_in_charge
+
+    damage1041
+    quantities1044 {
+      type
+      quantity
+    }
+    involved_elements
+    magnitude1041
+    resources_used {
+      resource
+      quantity
+    }
+
+    rescue_type
   }
   ${volunteerAllFieldsFragment}
   ${fireTypeAllFieldsFragment}
