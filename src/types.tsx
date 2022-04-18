@@ -77,6 +77,7 @@ export type CreateRankInput = {
 };
 
 export type CreateServiceInput = {
+  type: Scalars["String"];
   description: Scalars["String"];
   volunteers?: Maybe<Array<OnlyIdVolunteerInput>>;
   call_time: Scalars["String"];
@@ -103,6 +104,17 @@ export type CreateServiceInput = {
   fire_class: Array<OnlyIdFireClassInput>;
   magnitude: Scalars["String"];
   damage: Scalars["String"];
+  vehicles_used: Scalars["String"];
+  other_units: Scalars["String"];
+  other_occurrences: Scalars["String"];
+  police_force_in_charge: Scalars["String"];
+  judge_in_charge: Scalars["String"];
+  damage1041: Array<Scalars["String"]>;
+  quantities1044: Array<Quantity1044Input>;
+  involved_elements: Array<Scalars["String"]>;
+  magnitude1041: Array<Scalars["String"]>;
+  resources_used?: Maybe<Array<ResourceUsedInput>>;
+  rescue_type?: Maybe<Scalars["String"]>;
 };
 
 export type CreateTrainingInput = {
@@ -371,6 +383,17 @@ export type OnlyIdVolunteerInput = {
   _id: Scalars["String"];
 };
 
+export type Quantity1044 = {
+  __typename?: "Quantity1044";
+  type?: Maybe<Scalars["String"]>;
+  quantity?: Maybe<Scalars["Float"]>;
+};
+
+export type Quantity1044Input = {
+  type?: Maybe<Scalars["String"]>;
+  quantity?: Maybe<Scalars["Float"]>;
+};
+
 export type Query = {
   __typename?: "Query";
   users: Array<User>;
@@ -455,10 +478,22 @@ export type Rank = {
   description?: Maybe<Scalars["String"]>;
 };
 
+export type ResourceUsed = {
+  __typename?: "ResourceUsed";
+  resource?: Maybe<Scalars["String"]>;
+  quantity?: Maybe<Scalars["Float"]>;
+};
+
+export type ResourceUsedInput = {
+  resource?: Maybe<Scalars["String"]>;
+  quantity?: Maybe<Scalars["Float"]>;
+};
+
 export type Service = {
   __typename?: "Service";
   _id?: Maybe<Scalars["String"]>;
   id?: Maybe<Scalars["String"]>;
+  type?: Maybe<Scalars["String"]>;
   description?: Maybe<Scalars["String"]>;
   volunteers?: Maybe<Array<Volunteer>>;
   call_time?: Maybe<Scalars["String"]>;
@@ -485,6 +520,18 @@ export type Service = {
   fire_class?: Maybe<Array<FireClass>>;
   magnitude?: Maybe<Scalars["String"]>;
   damage?: Maybe<Scalars["String"]>;
+  vehicles_used?: Maybe<Scalars["String"]>;
+  other_units?: Maybe<Scalars["String"]>;
+  other_occurrences?: Maybe<Scalars["String"]>;
+  police_force_in_charge?: Maybe<Scalars["String"]>;
+  judge_in_charge?: Maybe<Scalars["String"]>;
+  damage1041?: Maybe<Array<Scalars["String"]>>;
+  quantities1044?: Maybe<Array<Quantity1044>>;
+  involved_elements?: Maybe<Array<Scalars["String"]>>;
+  magnitude1041?: Maybe<Array<Scalars["String"]>>;
+  resources_used?: Maybe<Array<ResourceUsed>>;
+  rescue_type?: Maybe<Scalars["String"]>;
+  extraData1043?: Maybe<Scalars["String"]>;
 };
 
 export type Training = {
@@ -545,6 +592,7 @@ export type UpdateRankInput = {
 };
 
 export type UpdateServiceInput = {
+  type?: Maybe<Scalars["String"]>;
   description?: Maybe<Scalars["String"]>;
   volunteers?: Maybe<Array<OnlyIdVolunteerInput>>;
   call_time?: Maybe<Scalars["String"]>;
@@ -571,6 +619,17 @@ export type UpdateServiceInput = {
   fire_class?: Maybe<Array<OnlyIdFireClassInput>>;
   magnitude?: Maybe<Scalars["String"]>;
   damage?: Maybe<Scalars["String"]>;
+  vehicles_used?: Maybe<Scalars["String"]>;
+  other_units?: Maybe<Scalars["String"]>;
+  other_occurrences?: Maybe<Scalars["String"]>;
+  police_force_in_charge?: Maybe<Scalars["String"]>;
+  judge_in_charge?: Maybe<Scalars["String"]>;
+  damage1041?: Maybe<Array<Scalars["String"]>>;
+  quantities1044?: Maybe<Array<Quantity1044Input>>;
+  involved_elements?: Maybe<Array<Scalars["String"]>>;
+  magnitude1041?: Maybe<Array<Scalars["String"]>>;
+  resources_used?: Maybe<Array<ResourceUsedInput>>;
+  rescue_type?: Maybe<Scalars["String"]>;
   id: Scalars["String"];
 };
 
@@ -896,6 +955,7 @@ export type DeleteRankMutation = { __typename?: "Mutation" } & {
 export type ServicesAllFieldsFragment = { __typename?: "Service" } & Pick<
   Service,
   | "id"
+  | "type"
   | "description"
   | "call_time"
   | "departure_time"
@@ -917,12 +977,23 @@ export type ServicesAllFieldsFragment = { __typename?: "Service" } & Pick<
   | "possible_cause_other_description"
   | "magnitude"
   | "damage"
+  | "vehicles_used"
+  | "other_units"
+  | "other_occurrences"
+  | "police_force_in_charge"
+  | "judge_in_charge"
+  | "damage1041"
+  | "involved_elements"
+  | "magnitude1041"
+  | "rescue_type"
 > & {
     volunteers?: Maybe<Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>>;
     officer_in_charge?: Maybe<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>;
     fire_type?: Maybe<{ __typename?: "FireType" } & FireTypeAllFieldsFragment>;
     possible_cause?: Maybe<{ __typename?: "FireCause" } & FireCauseAllFieldsFragment>;
     fire_class?: Maybe<Array<{ __typename?: "FireClass" } & FireClassAllFieldsFragment>>;
+    quantities1044?: Maybe<Array<{ __typename?: "Quantity1044" } & Pick<Quantity1044, "type" | "quantity">>>;
+    resources_used?: Maybe<Array<{ __typename?: "ResourceUsed" } & Pick<ResourceUsed, "resource" | "quantity">>>;
   };
 
 export type GetServicesQueryVariables = Exact<{ [key: string]: never }>;
@@ -1105,6 +1176,7 @@ export const FireClassAllFieldsFragmentDoc = gql`
 export const ServicesAllFieldsFragmentDoc = gql`
   fragment servicesAllFields on Service {
     id
+    type
     description
     call_time
     departure_time
@@ -1141,6 +1213,23 @@ export const ServicesAllFieldsFragmentDoc = gql`
     }
     magnitude
     damage
+    vehicles_used
+    other_units
+    other_occurrences
+    police_force_in_charge
+    judge_in_charge
+    damage1041
+    quantities1044 {
+      type
+      quantity
+    }
+    involved_elements
+    magnitude1041
+    resources_used {
+      resource
+      quantity
+    }
+    rescue_type
   }
   ${VolunteerAllFieldsFragmentDoc}
   ${FireTypeAllFieldsFragmentDoc}
