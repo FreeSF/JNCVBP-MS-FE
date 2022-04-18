@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import { Container, Dropdown, Navbar, Nav } from "react-bootstrap";
 import routes from "routes.js";
+import EventForm from "components/Events/EventForm";
 
 const Header = () => {
   const location = useLocation();
@@ -22,10 +23,9 @@ const Header = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
-        <div className="d-flex justify-content-center align-items-center ml-2 ml-lg-0">
+        <div className="d-flex justify-content-center ml-2 ml-lg-0" style={{ minWidth: "100px" }}>
           <Navbar.Brand href="/" className="mr-2">
-            {" "}
-            {getBrandText()}{" "}
+            {getBrandText()}
           </Navbar.Brand>
         </div>
 
@@ -37,18 +37,9 @@ const Header = () => {
 
         <Navbar.Collapse id="basic-navbar-nav">
           {/* left side */}
-          <Nav className="nav mr-auto" navbar>
+          <Nav className="nav mr-auto" style={{ paddingLeft: "10%" }} navbar>
             <Nav.Item>
-              <Nav.Link data-toggle="dropdown" href="/volunteers" className="m-0">
-                <i className="nc-icon nc-palette"></i>
-                <span className="d-lg-block ml-1">Voluntarios</span>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link className="m-0" href="#url" onClick={(e) => e.preventDefault()}>
-                <i className="nc-icon nc-palette"></i>
-                <span className="d-lg-block ml-1">Opción 2</span>
-              </Nav.Link>
+              <EventForm />
             </Nav.Item>
           </Nav>
 
