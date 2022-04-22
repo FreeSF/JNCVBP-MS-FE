@@ -33,6 +33,7 @@ import CoursesPage from "./components/Courses/CoursesPage";
 import CreateCoursePage from "./components/Courses/CreateCoursePage";
 import UpdateCoursePage from "./components/Courses/UpdateCoursePage";
 import ShowCoursePage from "./components/Courses/ShowCoursePage";
+import RecycleBinPage from "./components/RecycleBin/RecycleBinPage";
 
 const dutiesRoutes = [
   {
@@ -220,6 +221,13 @@ const routes = [
   ...trainingRoutes,
   ...servicesRoutes,
   ...eventRoutes,
+  {
+    path: "/recycleBin",
+    name: "Papelera de Reciclaje",
+    icon: "nc-icon nc-chart-pie-35",
+    component: RecycleBinPage,
+    showOnSidebar: true,
+  },
 ];
 
 export default routes;

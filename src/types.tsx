@@ -78,41 +78,41 @@ export type CreateRankInput = {
 
 export type CreateServiceInput = {
   type: Scalars["String"];
-  description: Scalars["String"];
+  description?: Maybe<Scalars["String"]>;
   volunteers?: Maybe<Array<OnlyIdVolunteerInput>>;
-  call_time: Scalars["String"];
-  departure_time: Scalars["String"];
-  arrival_time: Scalars["String"];
-  withdrawal_time: Scalars["String"];
-  locality: Scalars["String"];
-  neighborhood: Scalars["String"];
-  address: Scalars["String"];
-  place: Scalars["String"];
-  alerted_by: Scalars["String"];
-  phone: Scalars["String"];
-  received_by: Scalars["String"];
-  crew: Scalars["String"];
-  officer_in_charge: OnlyIdVolunteerInput;
-  fire_type: OnlyIdFireTypeInput;
-  fire_type_total_surface: Scalars["Float"];
-  fire_type_burned_surface: Scalars["Float"];
-  fire_type_description: Scalars["String"];
-  affected_owner: Scalars["String"];
-  affected_owner_description: Scalars["String"];
-  possible_cause: OnlyIdFireClassInput;
-  possible_cause_other_description: Scalars["String"];
-  fire_class: Array<OnlyIdFireClassInput>;
-  magnitude: Scalars["String"];
-  damage: Scalars["String"];
-  vehicles_used: Scalars["String"];
-  other_units: Scalars["String"];
-  other_occurrences: Scalars["String"];
-  police_force_in_charge: Scalars["String"];
-  judge_in_charge: Scalars["String"];
-  damage1041: Array<Scalars["String"]>;
-  quantities1044: Array<Quantity1044Input>;
-  involved_elements: Array<Scalars["String"]>;
-  magnitude1041: Array<Scalars["String"]>;
+  call_time?: Maybe<Scalars["String"]>;
+  departure_time?: Maybe<Scalars["String"]>;
+  arrival_time?: Maybe<Scalars["String"]>;
+  withdrawal_time?: Maybe<Scalars["String"]>;
+  locality?: Maybe<Scalars["String"]>;
+  neighborhood?: Maybe<Scalars["String"]>;
+  address?: Maybe<Scalars["String"]>;
+  place?: Maybe<Scalars["String"]>;
+  alerted_by?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
+  received_by?: Maybe<Scalars["String"]>;
+  crew?: Maybe<Scalars["String"]>;
+  officer_in_charge?: Maybe<OnlyIdVolunteerInput>;
+  fire_type?: Maybe<OnlyIdFireTypeInput>;
+  fire_type_total_surface?: Maybe<Scalars["Float"]>;
+  fire_type_burned_surface?: Maybe<Scalars["Float"]>;
+  fire_type_description?: Maybe<Scalars["String"]>;
+  affected_owner?: Maybe<Scalars["String"]>;
+  affected_owner_description?: Maybe<Scalars["String"]>;
+  possible_cause?: Maybe<OnlyIdFireClassInput>;
+  possible_cause_other_description?: Maybe<Scalars["String"]>;
+  fire_class?: Maybe<Array<OnlyIdFireClassInput>>;
+  magnitude?: Maybe<Scalars["String"]>;
+  damage?: Maybe<Scalars["String"]>;
+  vehicles_used?: Maybe<Scalars["String"]>;
+  other_units?: Maybe<Scalars["String"]>;
+  other_occurrences?: Maybe<Scalars["String"]>;
+  police_force_in_charge?: Maybe<Scalars["String"]>;
+  judge_in_charge?: Maybe<Scalars["String"]>;
+  damage1041?: Maybe<Array<Scalars["String"]>>;
+  quantities1044?: Maybe<Array<Quantity1044Input>>;
+  involved_elements?: Maybe<Array<Scalars["String"]>>;
+  magnitude1041?: Maybe<Array<Scalars["String"]>>;
   resources_used?: Maybe<Array<ResourceUsedInput>>;
   rescue_type?: Maybe<Scalars["String"]>;
 };
@@ -397,28 +397,40 @@ export type Quantity1044Input = {
 export type Query = {
   __typename?: "Query";
   users: Array<User>;
+  usersDisabled: Array<User>;
   user: User;
   duties: Array<Duty>;
+  dutiesDisabled: Array<Duty>;
   duty: Duty;
   ranks: Array<Rank>;
+  ranksDisabled: Array<Rank>;
   rank: Rank;
   services: Array<Service>;
+  servicesDisabled: Array<Service>;
   service: Service;
   volunteers: Array<Volunteer>;
+  volunteersDisabled: Array<Volunteer>;
   volunteer: Volunteer;
   fireTypes: Array<FireType>;
+  fireTypesDisabled: Array<FireType>;
   fireType: FireType;
   fireCauses: Array<FireCause>;
+  fireCausesDisabled: Array<FireCause>;
   fireCause: FireCause;
   fireClasses: Array<FireClass>;
+  fireClassesDisabled: Array<FireClass>;
   fireClass: FireClass;
   guards: Array<Guard>;
+  guardsDisabled: Array<Guard>;
   guard: Guard;
   events: Array<Event>;
+  eventsDisabled: Array<Event>;
   event: Event;
   trainings: Array<Training>;
+  trainingsDisabled: Array<Training>;
   training: Training;
   courses: Array<Course>;
+  coursesDisabled: Array<Course>;
   course: Course;
 };
 
@@ -531,7 +543,6 @@ export type Service = {
   magnitude1041?: Maybe<Array<Scalars["String"]>>;
   resources_used?: Maybe<Array<ResourceUsed>>;
   rescue_type?: Maybe<Scalars["String"]>;
-  extraData1043?: Maybe<Scalars["String"]>;
 };
 
 export type Training = {
@@ -698,6 +709,12 @@ export type GetCoursesQuery = { __typename?: "Query" } & {
   courses: Array<{ __typename?: "Course" } & CoursesAllFieldsFragment>;
 };
 
+export type GetCoursesDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCoursesDisabledQuery = { __typename?: "Query" } & {
+  coursesDisabled: Array<{ __typename?: "Course" } & CoursesAllFieldsFragment>;
+};
+
 export type FindCourseQueryVariables = Exact<{
   id: Scalars["String"];
 }>;
@@ -740,6 +757,12 @@ export type GetEventsQuery = { __typename?: "Query" } & {
   events: Array<{ __typename?: "Event" } & EventAllFieldsFragment>;
 };
 
+export type GetEventsDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetEventsDisabledQuery = { __typename?: "Query" } & {
+  eventsDisabled: Array<{ __typename?: "Event" } & EventAllFieldsFragment>;
+};
+
 export type FindEventQueryVariables = Exact<{
   id: Scalars["String"];
 }>;
@@ -778,6 +801,12 @@ export type GetGuardsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetGuardsQuery = { __typename?: "Query" } & {
   guards: Array<{ __typename?: "Guard" } & GuardAllFieldsFragment>;
+};
+
+export type GetGuardsDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetGuardsDisabledQuery = { __typename?: "Query" } & {
+  guardsDisabled: Array<{ __typename?: "Guard" } & GuardAllFieldsFragment>;
 };
 
 export type FindGuardQueryVariables = Exact<{
@@ -820,6 +849,12 @@ export type GetTrainingsQuery = { __typename?: "Query" } & {
   trainings: Array<{ __typename?: "Training" } & TrainingAllFieldsFragment>;
 };
 
+export type GetTrainingsDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetTrainingsDisabledQuery = { __typename?: "Query" } & {
+  trainingsDisabled: Array<{ __typename?: "Training" } & TrainingAllFieldsFragment>;
+};
+
 export type FindTrainingQueryVariables = Exact<{
   id: Scalars["String"];
 }>;
@@ -860,6 +895,12 @@ export type GetDutiesQuery = { __typename?: "Query" } & {
   duties: Array<{ __typename?: "Duty" } & DutyAllFieldsFragment>;
 };
 
+export type GetDutiesDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetDutiesDisabledQuery = { __typename?: "Query" } & {
+  dutiesDisabled: Array<{ __typename?: "Duty" } & DutyAllFieldsFragment>;
+};
+
 export type FindDutyQueryVariables = Exact<{
   id: Scalars["String"];
 }>;
@@ -898,12 +939,24 @@ export type GetFireCausesQuery = { __typename?: "Query" } & {
   fireCauses: Array<{ __typename?: "FireCause" } & FireCauseAllFieldsFragment>;
 };
 
+export type GetFireCausesDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetFireCausesDisabledQuery = { __typename?: "Query" } & {
+  fireCausesDisabled: Array<{ __typename?: "FireCause" } & FireCauseAllFieldsFragment>;
+};
+
 export type FireClassAllFieldsFragment = { __typename?: "FireClass" } & Pick<FireClass, "id" | "name">;
 
 export type GetFireClassesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetFireClassesQuery = { __typename?: "Query" } & {
   fireClasses: Array<{ __typename?: "FireClass" } & FireClassAllFieldsFragment>;
+};
+
+export type GetFireClassesDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetFireClassesDisabledQuery = { __typename?: "Query" } & {
+  fireClassesDisabled: Array<{ __typename?: "FireClass" } & FireClassAllFieldsFragment>;
 };
 
 export type FireTypeAllFieldsFragment = { __typename?: "FireType" } & Pick<FireType, "id" | "name">;
@@ -914,12 +967,24 @@ export type GetFireTypesQuery = { __typename?: "Query" } & {
   fireTypes: Array<{ __typename?: "FireType" } & FireTypeAllFieldsFragment>;
 };
 
+export type GetFireTypesDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetFireTypesDisabledQuery = { __typename?: "Query" } & {
+  fireTypesDisabled: Array<{ __typename?: "FireType" } & FireTypeAllFieldsFragment>;
+};
+
 export type RankAllFieldsFragment = { __typename?: "Rank" } & Pick<Rank, "id" | "name" | "isDeletable" | "description">;
 
 export type GetRanksQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetRanksQuery = { __typename?: "Query" } & {
   ranks: Array<{ __typename?: "Rank" } & RankAllFieldsFragment>;
+};
+
+export type GetRanksDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetRanksDisabledQuery = { __typename?: "Query" } & {
+  ranksDisabled: Array<{ __typename?: "Rank" } & RankAllFieldsFragment>;
 };
 
 export type FindRankQueryVariables = Exact<{
@@ -1002,6 +1067,12 @@ export type GetServicesQuery = { __typename?: "Query" } & {
   services: Array<{ __typename?: "Service" } & ServicesAllFieldsFragment>;
 };
 
+export type GetServicesDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetServicesDisabledQuery = { __typename?: "Query" } & {
+  servicesDisabled: Array<{ __typename?: "Service" } & ServicesAllFieldsFragment>;
+};
+
 export type FindServiceQueryVariables = Exact<{
   id: Scalars["String"];
 }>;
@@ -1043,6 +1114,12 @@ export type GetVolunteersQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetVolunteersQuery = { __typename?: "Query" } & {
   volunteers: Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>;
+};
+
+export type GetVolunteersDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetVolunteersDisabledQuery = { __typename?: "Query" } & {
+  volunteersDisabled: Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>;
 };
 
 export type FindVolunteerQueryVariables = Exact<{
@@ -1275,6 +1352,51 @@ export function withGetCourses<TProps, TChildProps = {}, TDataName extends strin
   });
 }
 export type GetCoursesQueryResult = ApolloReactCommon.QueryResult<GetCoursesQuery, GetCoursesQueryVariables>;
+export const GetCoursesDisabledDocument = gql`
+  query getCoursesDisabled {
+    coursesDisabled {
+      ...coursesAllFields
+    }
+  }
+  ${CoursesAllFieldsFragmentDoc}
+`;
+export type GetCoursesDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetCoursesDisabledQuery, GetCoursesDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetCoursesDisabledComponent = (props: GetCoursesDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetCoursesDisabledQuery, GetCoursesDisabledQueryVariables>
+    query={GetCoursesDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetCoursesDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetCoursesDisabledQuery, GetCoursesDisabledQueryVariables>;
+} & TChildProps;
+export function withGetCoursesDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetCoursesDisabledQuery,
+    GetCoursesDisabledQueryVariables,
+    GetCoursesDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetCoursesDisabledQuery,
+    GetCoursesDisabledQueryVariables,
+    GetCoursesDisabledProps<TChildProps, TDataName>
+  >(GetCoursesDisabledDocument, {
+    alias: "getCoursesDisabled",
+    ...operationOptions,
+  });
+}
+export type GetCoursesDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetCoursesDisabledQuery,
+  GetCoursesDisabledQueryVariables
+>;
 export const FindCourseDocument = gql`
   query findCourse($id: String!) {
     course(id: $id) {
@@ -1501,6 +1623,51 @@ export function withGetEvents<TProps, TChildProps = {}, TDataName extends string
   });
 }
 export type GetEventsQueryResult = ApolloReactCommon.QueryResult<GetEventsQuery, GetEventsQueryVariables>;
+export const GetEventsDisabledDocument = gql`
+  query getEventsDisabled {
+    eventsDisabled {
+      ...eventAllFields
+    }
+  }
+  ${EventAllFieldsFragmentDoc}
+`;
+export type GetEventsDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetEventsDisabledQuery, GetEventsDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetEventsDisabledComponent = (props: GetEventsDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetEventsDisabledQuery, GetEventsDisabledQueryVariables>
+    query={GetEventsDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetEventsDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetEventsDisabledQuery, GetEventsDisabledQueryVariables>;
+} & TChildProps;
+export function withGetEventsDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetEventsDisabledQuery,
+    GetEventsDisabledQueryVariables,
+    GetEventsDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetEventsDisabledQuery,
+    GetEventsDisabledQueryVariables,
+    GetEventsDisabledProps<TChildProps, TDataName>
+  >(GetEventsDisabledDocument, {
+    alias: "getEventsDisabled",
+    ...operationOptions,
+  });
+}
+export type GetEventsDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetEventsDisabledQuery,
+  GetEventsDisabledQueryVariables
+>;
 export const FindEventDocument = gql`
   query findEvent($id: String!) {
     event(id: $id) {
@@ -1727,6 +1894,51 @@ export function withGetGuards<TProps, TChildProps = {}, TDataName extends string
   });
 }
 export type GetGuardsQueryResult = ApolloReactCommon.QueryResult<GetGuardsQuery, GetGuardsQueryVariables>;
+export const GetGuardsDisabledDocument = gql`
+  query getGuardsDisabled {
+    guardsDisabled {
+      ...guardAllFields
+    }
+  }
+  ${GuardAllFieldsFragmentDoc}
+`;
+export type GetGuardsDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetGuardsDisabledQuery, GetGuardsDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetGuardsDisabledComponent = (props: GetGuardsDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetGuardsDisabledQuery, GetGuardsDisabledQueryVariables>
+    query={GetGuardsDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetGuardsDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetGuardsDisabledQuery, GetGuardsDisabledQueryVariables>;
+} & TChildProps;
+export function withGetGuardsDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetGuardsDisabledQuery,
+    GetGuardsDisabledQueryVariables,
+    GetGuardsDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetGuardsDisabledQuery,
+    GetGuardsDisabledQueryVariables,
+    GetGuardsDisabledProps<TChildProps, TDataName>
+  >(GetGuardsDisabledDocument, {
+    alias: "getGuardsDisabled",
+    ...operationOptions,
+  });
+}
+export type GetGuardsDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetGuardsDisabledQuery,
+  GetGuardsDisabledQueryVariables
+>;
 export const FindGuardDocument = gql`
   query findGuard($id: String!) {
     guard(id: $id) {
@@ -1953,6 +2165,51 @@ export function withGetTrainings<TProps, TChildProps = {}, TDataName extends str
   });
 }
 export type GetTrainingsQueryResult = ApolloReactCommon.QueryResult<GetTrainingsQuery, GetTrainingsQueryVariables>;
+export const GetTrainingsDisabledDocument = gql`
+  query getTrainingsDisabled {
+    trainingsDisabled {
+      ...trainingAllFields
+    }
+  }
+  ${TrainingAllFieldsFragmentDoc}
+`;
+export type GetTrainingsDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetTrainingsDisabledQuery, GetTrainingsDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetTrainingsDisabledComponent = (props: GetTrainingsDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetTrainingsDisabledQuery, GetTrainingsDisabledQueryVariables>
+    query={GetTrainingsDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetTrainingsDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetTrainingsDisabledQuery, GetTrainingsDisabledQueryVariables>;
+} & TChildProps;
+export function withGetTrainingsDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetTrainingsDisabledQuery,
+    GetTrainingsDisabledQueryVariables,
+    GetTrainingsDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetTrainingsDisabledQuery,
+    GetTrainingsDisabledQueryVariables,
+    GetTrainingsDisabledProps<TChildProps, TDataName>
+  >(GetTrainingsDisabledDocument, {
+    alias: "getTrainingsDisabled",
+    ...operationOptions,
+  });
+}
+export type GetTrainingsDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetTrainingsDisabledQuery,
+  GetTrainingsDisabledQueryVariables
+>;
 export const FindTrainingDocument = gql`
   query findTraining($id: String!) {
     training(id: $id) {
@@ -2182,6 +2439,51 @@ export function withGetDuties<TProps, TChildProps = {}, TDataName extends string
   });
 }
 export type GetDutiesQueryResult = ApolloReactCommon.QueryResult<GetDutiesQuery, GetDutiesQueryVariables>;
+export const GetDutiesDisabledDocument = gql`
+  query getDutiesDisabled {
+    dutiesDisabled {
+      ...dutyAllFields
+    }
+  }
+  ${DutyAllFieldsFragmentDoc}
+`;
+export type GetDutiesDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetDutiesDisabledQuery, GetDutiesDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetDutiesDisabledComponent = (props: GetDutiesDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetDutiesDisabledQuery, GetDutiesDisabledQueryVariables>
+    query={GetDutiesDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetDutiesDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetDutiesDisabledQuery, GetDutiesDisabledQueryVariables>;
+} & TChildProps;
+export function withGetDutiesDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetDutiesDisabledQuery,
+    GetDutiesDisabledQueryVariables,
+    GetDutiesDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetDutiesDisabledQuery,
+    GetDutiesDisabledQueryVariables,
+    GetDutiesDisabledProps<TChildProps, TDataName>
+  >(GetDutiesDisabledDocument, {
+    alias: "getDutiesDisabled",
+    ...operationOptions,
+  });
+}
+export type GetDutiesDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetDutiesDisabledQuery,
+  GetDutiesDisabledQueryVariables
+>;
 export const FindDutyDocument = gql`
   query findDuty($id: String!) {
     duty(id: $id) {
@@ -2399,6 +2701,51 @@ export function withGetFireCauses<TProps, TChildProps = {}, TDataName extends st
   });
 }
 export type GetFireCausesQueryResult = ApolloReactCommon.QueryResult<GetFireCausesQuery, GetFireCausesQueryVariables>;
+export const GetFireCausesDisabledDocument = gql`
+  query getFireCausesDisabled {
+    fireCausesDisabled {
+      ...fireCauseAllFields
+    }
+  }
+  ${FireCauseAllFieldsFragmentDoc}
+`;
+export type GetFireCausesDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetFireCausesDisabledQuery, GetFireCausesDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetFireCausesDisabledComponent = (props: GetFireCausesDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetFireCausesDisabledQuery, GetFireCausesDisabledQueryVariables>
+    query={GetFireCausesDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetFireCausesDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetFireCausesDisabledQuery, GetFireCausesDisabledQueryVariables>;
+} & TChildProps;
+export function withGetFireCausesDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetFireCausesDisabledQuery,
+    GetFireCausesDisabledQueryVariables,
+    GetFireCausesDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetFireCausesDisabledQuery,
+    GetFireCausesDisabledQueryVariables,
+    GetFireCausesDisabledProps<TChildProps, TDataName>
+  >(GetFireCausesDisabledDocument, {
+    alias: "getFireCausesDisabled",
+    ...operationOptions,
+  });
+}
+export type GetFireCausesDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetFireCausesDisabledQuery,
+  GetFireCausesDisabledQueryVariables
+>;
 export const GetFireClassesDocument = gql`
   query getFireClasses {
     fireClasses {
@@ -2444,6 +2791,51 @@ export type GetFireClassesQueryResult = ApolloReactCommon.QueryResult<
   GetFireClassesQuery,
   GetFireClassesQueryVariables
 >;
+export const GetFireClassesDisabledDocument = gql`
+  query getFireClassesDisabled {
+    fireClassesDisabled {
+      ...fireClassAllFields
+    }
+  }
+  ${FireClassAllFieldsFragmentDoc}
+`;
+export type GetFireClassesDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetFireClassesDisabledQuery, GetFireClassesDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetFireClassesDisabledComponent = (props: GetFireClassesDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetFireClassesDisabledQuery, GetFireClassesDisabledQueryVariables>
+    query={GetFireClassesDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetFireClassesDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetFireClassesDisabledQuery, GetFireClassesDisabledQueryVariables>;
+} & TChildProps;
+export function withGetFireClassesDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetFireClassesDisabledQuery,
+    GetFireClassesDisabledQueryVariables,
+    GetFireClassesDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetFireClassesDisabledQuery,
+    GetFireClassesDisabledQueryVariables,
+    GetFireClassesDisabledProps<TChildProps, TDataName>
+  >(GetFireClassesDisabledDocument, {
+    alias: "getFireClassesDisabled",
+    ...operationOptions,
+  });
+}
+export type GetFireClassesDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetFireClassesDisabledQuery,
+  GetFireClassesDisabledQueryVariables
+>;
 export const GetFireTypesDocument = gql`
   query getFireTypes {
     fireTypes {
@@ -2483,6 +2875,51 @@ export function withGetFireTypes<TProps, TChildProps = {}, TDataName extends str
   });
 }
 export type GetFireTypesQueryResult = ApolloReactCommon.QueryResult<GetFireTypesQuery, GetFireTypesQueryVariables>;
+export const GetFireTypesDisabledDocument = gql`
+  query getFireTypesDisabled {
+    fireTypesDisabled {
+      ...fireTypeAllFields
+    }
+  }
+  ${FireTypeAllFieldsFragmentDoc}
+`;
+export type GetFireTypesDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetFireTypesDisabledQuery, GetFireTypesDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetFireTypesDisabledComponent = (props: GetFireTypesDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetFireTypesDisabledQuery, GetFireTypesDisabledQueryVariables>
+    query={GetFireTypesDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetFireTypesDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetFireTypesDisabledQuery, GetFireTypesDisabledQueryVariables>;
+} & TChildProps;
+export function withGetFireTypesDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetFireTypesDisabledQuery,
+    GetFireTypesDisabledQueryVariables,
+    GetFireTypesDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetFireTypesDisabledQuery,
+    GetFireTypesDisabledQueryVariables,
+    GetFireTypesDisabledProps<TChildProps, TDataName>
+  >(GetFireTypesDisabledDocument, {
+    alias: "getFireTypesDisabled",
+    ...operationOptions,
+  });
+}
+export type GetFireTypesDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetFireTypesDisabledQuery,
+  GetFireTypesDisabledQueryVariables
+>;
 export const GetRanksDocument = gql`
   query getRanks {
     ranks {
@@ -2520,6 +2957,51 @@ export function withGetRanks<TProps, TChildProps = {}, TDataName extends string 
   );
 }
 export type GetRanksQueryResult = ApolloReactCommon.QueryResult<GetRanksQuery, GetRanksQueryVariables>;
+export const GetRanksDisabledDocument = gql`
+  query getRanksDisabled {
+    ranksDisabled {
+      ...rankAllFields
+    }
+  }
+  ${RankAllFieldsFragmentDoc}
+`;
+export type GetRanksDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetRanksDisabledQuery, GetRanksDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetRanksDisabledComponent = (props: GetRanksDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetRanksDisabledQuery, GetRanksDisabledQueryVariables>
+    query={GetRanksDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetRanksDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetRanksDisabledQuery, GetRanksDisabledQueryVariables>;
+} & TChildProps;
+export function withGetRanksDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetRanksDisabledQuery,
+    GetRanksDisabledQueryVariables,
+    GetRanksDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetRanksDisabledQuery,
+    GetRanksDisabledQueryVariables,
+    GetRanksDisabledProps<TChildProps, TDataName>
+  >(GetRanksDisabledDocument, {
+    alias: "getRanksDisabled",
+    ...operationOptions,
+  });
+}
+export type GetRanksDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetRanksDisabledQuery,
+  GetRanksDisabledQueryVariables
+>;
 export const FindRankDocument = gql`
   query findRank($id: String!) {
     rank(id: $id) {
@@ -2734,6 +3216,51 @@ export function withGetServices<TProps, TChildProps = {}, TDataName extends stri
   });
 }
 export type GetServicesQueryResult = ApolloReactCommon.QueryResult<GetServicesQuery, GetServicesQueryVariables>;
+export const GetServicesDisabledDocument = gql`
+  query getServicesDisabled {
+    servicesDisabled {
+      ...servicesAllFields
+    }
+  }
+  ${ServicesAllFieldsFragmentDoc}
+`;
+export type GetServicesDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetServicesDisabledQuery, GetServicesDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetServicesDisabledComponent = (props: GetServicesDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetServicesDisabledQuery, GetServicesDisabledQueryVariables>
+    query={GetServicesDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetServicesDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetServicesDisabledQuery, GetServicesDisabledQueryVariables>;
+} & TChildProps;
+export function withGetServicesDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetServicesDisabledQuery,
+    GetServicesDisabledQueryVariables,
+    GetServicesDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetServicesDisabledQuery,
+    GetServicesDisabledQueryVariables,
+    GetServicesDisabledProps<TChildProps, TDataName>
+  >(GetServicesDisabledDocument, {
+    alias: "getServicesDisabled",
+    ...operationOptions,
+  });
+}
+export type GetServicesDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetServicesDisabledQuery,
+  GetServicesDisabledQueryVariables
+>;
 export const FindServiceDocument = gql`
   query findService($id: String!) {
     service(id: $id) {
@@ -2966,6 +3493,51 @@ export function withGetVolunteers<TProps, TChildProps = {}, TDataName extends st
   });
 }
 export type GetVolunteersQueryResult = ApolloReactCommon.QueryResult<GetVolunteersQuery, GetVolunteersQueryVariables>;
+export const GetVolunteersDisabledDocument = gql`
+  query getVolunteersDisabled {
+    volunteersDisabled {
+      ...volunteerAllFields
+    }
+  }
+  ${VolunteerAllFieldsFragmentDoc}
+`;
+export type GetVolunteersDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetVolunteersDisabledQuery, GetVolunteersDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetVolunteersDisabledComponent = (props: GetVolunteersDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetVolunteersDisabledQuery, GetVolunteersDisabledQueryVariables>
+    query={GetVolunteersDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetVolunteersDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetVolunteersDisabledQuery, GetVolunteersDisabledQueryVariables>;
+} & TChildProps;
+export function withGetVolunteersDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetVolunteersDisabledQuery,
+    GetVolunteersDisabledQueryVariables,
+    GetVolunteersDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetVolunteersDisabledQuery,
+    GetVolunteersDisabledQueryVariables,
+    GetVolunteersDisabledProps<TChildProps, TDataName>
+  >(GetVolunteersDisabledDocument, {
+    alias: "getVolunteersDisabled",
+    ...operationOptions,
+  });
+}
+export type GetVolunteersDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetVolunteersDisabledQuery,
+  GetVolunteersDisabledQueryVariables
+>;
 export const FindVolunteerDocument = gql`
   query findVolunteer($id: String!) {
     volunteer(id: $id) {

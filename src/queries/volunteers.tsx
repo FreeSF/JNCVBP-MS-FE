@@ -27,6 +27,15 @@ export const GET_VOLUNTEERS = gql`
   ${volunteerAllFieldsFragment}
 `;
 
+export const GET_VOLUNTEERS_DISABLED = gql`
+  query getVolunteersDisabled {
+    volunteersDisabled {
+      ...volunteerAllFields
+    }
+  }
+  ${volunteerAllFieldsFragment}
+`;
+
 export const FIND_VOLUNTEER = gql`
   query findVolunteer($id: String!) {
     volunteer(id: $id) {
