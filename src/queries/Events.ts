@@ -21,6 +21,15 @@ export const GET_EVENTS = gql`
   ${EVENT_ALL_FIELDS_FRAGMENT}
 `;
 
+export const GET_EVENTS_DISABLED = gql`
+  query getEventsDisabled {
+    eventsDisabled {
+      ...eventAllFields
+    }
+  }
+  ${EVENT_ALL_FIELDS_FRAGMENT}
+`;
+
 export const FIND_EVENT = gql`
   query findEvent($id: String!) {
     event(id: $id) {

@@ -22,6 +22,15 @@ export const GET_GUARDS = gql`
   ${GUARDS_ALL_FIELDS_FRAGMENT}
 `;
 
+export const GET_GUARDS_DISABLED = gql`
+  query getGuardsDisabled {
+    guardsDisabled {
+      ...guardAllFields
+    }
+  }
+  ${GUARDS_ALL_FIELDS_FRAGMENT}
+`;
+
 export const FIND_GUARD = gql`
   query findGuard($id: String!) {
     guard(id: $id) {

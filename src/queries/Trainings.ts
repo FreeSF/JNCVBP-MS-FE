@@ -22,6 +22,15 @@ export const GET_TRAININGS = gql`
   ${TRAINING_ALL_FIELDS_FRAGMENT}
 `;
 
+export const GET_TRAININGS_DISABLED = gql`
+  query getTrainingsDisabled {
+    trainingsDisabled {
+      ...trainingAllFields
+    }
+  }
+  ${TRAINING_ALL_FIELDS_FRAGMENT}
+`;
+
 export const FIND_TRAINING = gql`
   query findTraining($id: String!) {
     training(id: $id) {

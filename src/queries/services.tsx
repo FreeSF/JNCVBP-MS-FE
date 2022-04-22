@@ -79,6 +79,15 @@ export const GET_SERVICES = gql`
   ${serviceAllFieldsFragment}
 `;
 
+export const GET_SERVICES_DISABLED = gql`
+  query getServicesDisabled {
+    servicesDisabled {
+      ...servicesAllFields
+    }
+  }
+  ${serviceAllFieldsFragment}
+`;
+
 export const FIND_SERVICE = gql`
   query findService($id: String!) {
     service(id: $id) {

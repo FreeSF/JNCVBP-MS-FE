@@ -18,6 +18,15 @@ export const GET_DUTIES = gql`
   ${allFieldsFragment}
 `;
 
+export const GET_DUTIES_DISABLED = gql`
+  query getDutiesDisabled {
+    dutiesDisabled {
+      ...dutyAllFields
+    }
+  }
+  ${allFieldsFragment}
+`;
+
 export const FIND_DUTY = gql`
   query findDuty($id: String!) {
     duty(id: $id) {

@@ -25,6 +25,15 @@ export const GET_COURSES = gql`
   ${COURSES_ALL_FIELDS_FRAGMENT}
 `;
 
+export const GET_COURSES_DISABLED = gql`
+  query getCoursesDisabled {
+    coursesDisabled {
+      ...coursesAllFields
+    }
+  }
+  ${COURSES_ALL_FIELDS_FRAGMENT}
+`;
+
 export const FIND_COURSE = gql`
   query findCourse($id: String!) {
     course(id: $id) {

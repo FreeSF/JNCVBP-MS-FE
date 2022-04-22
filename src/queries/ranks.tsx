@@ -18,6 +18,15 @@ export const GET_RANKS = gql`
   ${rankAllFieldsFragment}
 `;
 
+export const GET_RANKS_DISABLED = gql`
+  query getRanksDisabled {
+    ranksDisabled {
+      ...rankAllFields
+    }
+  }
+  ${rankAllFieldsFragment}
+`;
+
 export const FIND_RANK = gql`
   query findRank($id: String!) {
     rank(id: $id) {
