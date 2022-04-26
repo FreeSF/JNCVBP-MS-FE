@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 import { Container, Dropdown, Navbar, Nav } from "react-bootstrap";
 import routes from "routes.js";
@@ -45,41 +45,42 @@ const Header = () => {
 
           {/* right side */}
           <Nav className="ml-auto" navbar>
-            <Nav.Item>
+            {/* <Nav.Item>
               <Nav.Link className="m-0" href="#url" onClick={(e) => e.preventDefault()}>
                 <span className="no-icon">Account</span>
               </Nav.Link>
-            </Nav.Item>
+            </Nav.Item> */}
             <Dropdown as={Nav.Item}>
               <Dropdown.Toggle
-                aria-expanded={false}
-                aria-haspopup={true}
+                // aria-expanded={false}
+                // aria-haspopup={true}
                 as={Nav.Link}
                 data-toggle="dropdown"
                 id="navbarDropdownMenuLink"
                 variant="default"
                 className="m-0"
               >
-                <span className="no-icon">Dropdown</span>
+                <span className="no-icon">Administrar</span>
               </Dropdown.Toggle>
               <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
-                <Dropdown.Item href="#url" onClick={(e) => e.preventDefault()}>
-                  Action
-                </Dropdown.Item>
-
-                <Dropdown.Item href="#url" onClick={(e) => e.preventDefault()}>
-                  Something else here
+                <Dropdown.Item>
+                  {" "}
+                  <NavLink to={"/duties"} className="dropdown-item">
+                    Tipos de Servicio
+                  </NavLink>
                 </Dropdown.Item>
                 <div className="divider"></div>
-                <Dropdown.Item href="#url" onClick={(e) => e.preventDefault()}>
+                <Dropdown.Item>
                   {" "}
-                  Separated link{" "}
+                  <NavLink to={"/ranks"} className="dropdown-item">
+                    Rangos
+                  </NavLink>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
             <Nav.Item>
               <Nav.Link className="m-0" href="#url" onClick={(e) => e.preventDefault()}>
-                <span className="no-icon">Log out</span>
+                {/* <span className="no-icon">Log out</span> */}
               </Nav.Link>
             </Nav.Item>
           </Nav>
