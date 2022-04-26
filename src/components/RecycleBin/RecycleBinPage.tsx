@@ -9,7 +9,7 @@ import {
   GetFireCausesDisabledQuery,
   GetFireCausesQuery,
   GetFireClassesDisabledQuery,
-  GetFireTypesDisabledQuery,
+  GetSubTypesDisabledQuery,
   GetGuardsDisabledQuery,
   GetRanksDisabledQuery,
   GetServicesDisabledQuery,
@@ -23,7 +23,7 @@ import { GET_DUTIES_DISABLED } from "../../queries/duties";
 import { GET_EVENTS_DISABLED } from "../../queries/Events";
 import { GET_FIRE_CAUSES_DISABLED } from "../../queries/fireCause";
 import { GET_FIRE_CLASSES_DISABLED } from "../../queries/fireClass";
-import { GET_FIRE_TYPES_DISABLED } from "../../queries/fireType";
+import { GET_SUB_TYPES_DISABLED } from "../../queries/subType";
 import { GET_GUARDS_DISABLED } from "../../queries/Guards";
 import { GET_RANKS_DISABLED } from "../../queries/ranks";
 import { GET_SERVICES_DISABLED } from "../../queries/services";
@@ -33,7 +33,7 @@ const COURSE = "Curso";
 const DUTY = "duty";
 const FIRE_CAUSE = "Causa de fuego";
 const FIRE_CLASS = "Clase de fuego";
-const FIRE_TYPE = "Tipo de fuego";
+const SUB_TYPE = "Sub tipo";
 const EVENT = "Evento";
 const GUARD = "Guardia";
 const RANK = "Rango";
@@ -60,8 +60,8 @@ const OPTIONS = [
     label: FIRE_CLASS,
   },
   {
-    value: FIRE_TYPE,
-    label: FIRE_TYPE,
+    value: SUB_TYPE,
+    label: SUB_TYPE,
   },
   {
     value: EVENT,
@@ -100,7 +100,7 @@ const RecycleBinPage = (props) => {
   const [loadEvents, events] = useLazyQuery<GetEventsDisabledQuery>(GET_EVENTS_DISABLED, {});
   const [loadFireCause, fireCauses] = useLazyQuery<GetFireCausesDisabledQuery>(GET_FIRE_CAUSES_DISABLED, {});
   const [loadFireClass, fireClasses] = useLazyQuery<GetFireClassesDisabledQuery>(GET_FIRE_CLASSES_DISABLED, {});
-  const [loadFireType, fireTypes] = useLazyQuery<GetFireTypesDisabledQuery>(GET_FIRE_TYPES_DISABLED, {});
+  const [loadSubType, subTypes] = useLazyQuery<GetSubTypesDisabledQuery>(GET_SUB_TYPES_DISABLED, {});
   const [loadGuards, guards] = useLazyQuery<GetGuardsDisabledQuery>(GET_GUARDS_DISABLED, {});
   const [loadRanks, ranks] = useLazyQuery<GetRanksDisabledQuery>(GET_RANKS_DISABLED, {});
   const [loadServices, services] = useLazyQuery<GetServicesDisabledQuery>(GET_SERVICES_DISABLED, {});
@@ -129,8 +129,8 @@ const RecycleBinPage = (props) => {
         loadFireClass();
         break;
       }
-      case FIRE_TYPE: {
-        loadFireType();
+      case SUB_TYPE: {
+        loadSubType();
         break;
       }
       case GUARD: {
@@ -191,8 +191,8 @@ const RecycleBinPage = (props) => {
       data = fireClasses.called && !fireClasses.loading ? fireClasses.data.fireClassesDisabled : [];
       break;
     }
-    case FIRE_TYPE: {
-      data = fireTypes.called && !fireTypes.loading ? fireTypes.data.fireTypesDisabled : [];
+    case SUB_TYPE: {
+      data = subTypes.called && !subTypes.loading ? subTypes.data.subTypesDisabled : [];
       break;
     }
     case GUARD: {

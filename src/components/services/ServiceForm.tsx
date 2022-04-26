@@ -7,13 +7,13 @@ import {
   CreateServiceInput,
   GetFireCausesQuery,
   GetFireClassesQuery,
-  GetFireTypesQuery,
+  GetSubTypesQuery,
   GetVolunteersQuery,
   OnlyIdVolunteerInput,
   UpdateServiceInput,
 } from "../../types";
 import { GET_VOLUNTEERS } from "../../queries/volunteers";
-import { GET_FIRE_TYPES } from "../../queries/fireType";
+import { GET_SUB_TYPES } from "../../queries/subType";
 import { GET_FIRE_CAUSES } from "../../queries/fireCause";
 import { GET_FIRE_CLASSES } from "../../queries/fireClass";
 import Spinner from "../spinner";
@@ -35,13 +35,13 @@ const ServiceForm = (props: theProps) => {
 
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
 
-  const getFireTypesQuery = useQuery<GetFireTypesQuery>(GET_FIRE_TYPES);
+  const getSubTypesQuery = useQuery<GetSubTypesQuery>(GET_SUB_TYPES);
   const getFireCausesQuery = useQuery<GetFireCausesQuery>(GET_FIRE_CAUSES);
   const getFireClassesQuery = useQuery<GetFireClassesQuery>(GET_FIRE_CLASSES);
 
   if (
     getVolunteersQuery.loading ||
-    getFireTypesQuery.loading ||
+    getSubTypesQuery.loading ||
     getFireCausesQuery.loading ||
     getFireClassesQuery.loading
   )
@@ -149,10 +149,10 @@ const ServiceForm = (props: theProps) => {
       <br />
       <h2>10.40 Incendios</h2>
       <label>Tipo de Fuego:</label>
-      <InformedSelect field={`fire_type._id`} initialValue={getFireTypesQuery.data.fireTypes[0]?.id}>
-        {getFireTypesQuery.data.fireTypes.map((fireType) => (
-          <option value={fireType.id} key={fireType.id}>
-            {fireType.name}
+      <InformedSelect field={`sub_type._id`} initialValue={getSubTypesQuery.data.subTypes[0]?.id}>
+        {getSubTypesQuery.data.subTypes.map((subType) => (
+          <option value={subType.id} key={subType.id}>
+            {subType.name}
           </option>
         ))}
       </InformedSelect>

@@ -60,10 +60,6 @@ export type CreateFireClassInput = {
   name: Scalars["String"];
 };
 
-export type CreateFireTypeInput = {
-  name: Scalars["String"];
-};
-
 export type CreateGuardInput = {
   start_time: Scalars["Timestamp"];
   end_time: Scalars["Timestamp"];
@@ -93,7 +89,7 @@ export type CreateServiceInput = {
   received_by?: Maybe<Scalars["String"]>;
   crew?: Maybe<Scalars["String"]>;
   officer_in_charge?: Maybe<OnlyIdVolunteerInput>;
-  fire_type?: Maybe<OnlyIdFireTypeInput>;
+  sub_type?: Maybe<OnlyIdSubTypeInput>;
   fire_type_total_surface?: Maybe<Scalars["Float"]>;
   fire_type_burned_surface?: Maybe<Scalars["Float"]>;
   fire_type_description?: Maybe<Scalars["String"]>;
@@ -115,6 +111,10 @@ export type CreateServiceInput = {
   magnitude1041?: Maybe<Array<Scalars["String"]>>;
   resources_used?: Maybe<Array<ResourceUsedInput>>;
   rescue_type?: Maybe<Scalars["String"]>;
+};
+
+export type CreateSubTypeInput = {
+  name: Scalars["String"];
 };
 
 export type CreateTrainingInput = {
@@ -168,13 +168,6 @@ export type FireClass = {
   name?: Maybe<Scalars["String"]>;
 };
 
-export type FireType = {
-  __typename?: "FireType";
-  id?: Maybe<Scalars["String"]>;
-  _id?: Maybe<Scalars["String"]>;
-  name?: Maybe<Scalars["String"]>;
-};
-
 export type Guard = {
   __typename?: "Guard";
   id: Scalars["String"];
@@ -200,9 +193,9 @@ export type Mutation = {
   createVolunteer: Volunteer;
   updateVolunteer: Volunteer;
   removeVolunteer: Volunteer;
-  createFireType: FireType;
-  updateFireType: FireType;
-  removeFireType: FireType;
+  createSubType: SubType;
+  updateSubType: SubType;
+  removeSubType: SubType;
   createFireCause: FireCause;
   updateFireCause: FireCause;
   removeFireCause: FireCause;
@@ -283,15 +276,15 @@ export type MutationRemoveVolunteerArgs = {
   id: Scalars["String"];
 };
 
-export type MutationCreateFireTypeArgs = {
-  createFireTypeInput: CreateFireTypeInput;
+export type MutationCreateSubTypeArgs = {
+  createSubTypeInput: CreateSubTypeInput;
 };
 
-export type MutationUpdateFireTypeArgs = {
-  updateFireTypeInput: UpdateFireTypeInput;
+export type MutationUpdateSubTypeArgs = {
+  updateSubTypeInput: UpdateSubTypeInput;
 };
 
-export type MutationRemoveFireTypeArgs = {
+export type MutationRemoveSubTypeArgs = {
   id: Scalars["String"];
 };
 
@@ -371,7 +364,7 @@ export type OnlyIdFireClassInput = {
   _id: Scalars["String"];
 };
 
-export type OnlyIdFireTypeInput = {
+export type OnlyIdSubTypeInput = {
   _id: Scalars["String"];
 };
 
@@ -411,9 +404,9 @@ export type Query = {
   volunteers: Array<Volunteer>;
   volunteersDisabled: Array<Volunteer>;
   volunteer: Volunteer;
-  fireTypes: Array<FireType>;
-  fireTypesDisabled: Array<FireType>;
-  fireType: FireType;
+  subTypes: Array<SubType>;
+  subTypesDisabled: Array<SubType>;
+  subType: SubType;
   fireCauses: Array<FireCause>;
   fireCausesDisabled: Array<FireCause>;
   fireCause: FireCause;
@@ -454,7 +447,7 @@ export type QueryVolunteerArgs = {
   id: Scalars["String"];
 };
 
-export type QueryFireTypeArgs = {
+export type QuerySubTypeArgs = {
   id: Scalars["String"];
 };
 
@@ -521,7 +514,7 @@ export type Service = {
   received_by?: Maybe<Scalars["String"]>;
   crew?: Maybe<Scalars["String"]>;
   officer_in_charge?: Maybe<Volunteer>;
-  fire_type?: Maybe<FireType>;
+  sub_type?: Maybe<SubType>;
   fire_type_total_surface?: Maybe<Scalars["Float"]>;
   fire_type_burned_surface?: Maybe<Scalars["Float"]>;
   fire_type_description?: Maybe<Scalars["String"]>;
@@ -543,6 +536,13 @@ export type Service = {
   magnitude1041?: Maybe<Array<Scalars["String"]>>;
   resources_used?: Maybe<Array<ResourceUsed>>;
   rescue_type?: Maybe<Scalars["String"]>;
+};
+
+export type SubType = {
+  __typename?: "SubType";
+  id?: Maybe<Scalars["String"]>;
+  _id?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
 };
 
 export type Training = {
@@ -583,11 +583,6 @@ export type UpdateFireClassInput = {
   id: Scalars["String"];
 };
 
-export type UpdateFireTypeInput = {
-  name: Scalars["String"];
-  id: Scalars["String"];
-};
-
 export type UpdateGuardInput = {
   start_time?: Maybe<Scalars["Timestamp"]>;
   end_time?: Maybe<Scalars["Timestamp"]>;
@@ -619,7 +614,7 @@ export type UpdateServiceInput = {
   received_by?: Maybe<Scalars["String"]>;
   crew?: Maybe<Scalars["String"]>;
   officer_in_charge?: Maybe<OnlyIdVolunteerInput>;
-  fire_type?: Maybe<OnlyIdFireTypeInput>;
+  sub_type?: Maybe<OnlyIdSubTypeInput>;
   fire_type_total_surface?: Maybe<Scalars["Float"]>;
   fire_type_burned_surface?: Maybe<Scalars["Float"]>;
   fire_type_description?: Maybe<Scalars["String"]>;
@@ -641,6 +636,11 @@ export type UpdateServiceInput = {
   magnitude1041?: Maybe<Array<Scalars["String"]>>;
   resources_used?: Maybe<Array<ResourceUsedInput>>;
   rescue_type?: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
+};
+
+export type UpdateSubTypeInput = {
+  name: Scalars["String"];
   id: Scalars["String"];
 };
 
@@ -959,20 +959,6 @@ export type GetFireClassesDisabledQuery = { __typename?: "Query" } & {
   fireClassesDisabled: Array<{ __typename?: "FireClass" } & FireClassAllFieldsFragment>;
 };
 
-export type FireTypeAllFieldsFragment = { __typename?: "FireType" } & Pick<FireType, "id" | "name">;
-
-export type GetFireTypesQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetFireTypesQuery = { __typename?: "Query" } & {
-  fireTypes: Array<{ __typename?: "FireType" } & FireTypeAllFieldsFragment>;
-};
-
-export type GetFireTypesDisabledQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetFireTypesDisabledQuery = { __typename?: "Query" } & {
-  fireTypesDisabled: Array<{ __typename?: "FireType" } & FireTypeAllFieldsFragment>;
-};
-
 export type RankAllFieldsFragment = { __typename?: "Rank" } & Pick<Rank, "id" | "name" | "isDeletable" | "description">;
 
 export type GetRanksQueryVariables = Exact<{ [key: string]: never }>;
@@ -1054,7 +1040,7 @@ export type ServicesAllFieldsFragment = { __typename?: "Service" } & Pick<
 > & {
     volunteers?: Maybe<Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>>;
     officer_in_charge?: Maybe<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>;
-    fire_type?: Maybe<{ __typename?: "FireType" } & FireTypeAllFieldsFragment>;
+    sub_type?: Maybe<{ __typename?: "SubType" } & SubTypeAllFieldsFragment>;
     possible_cause?: Maybe<{ __typename?: "FireCause" } & FireCauseAllFieldsFragment>;
     fire_class?: Maybe<Array<{ __typename?: "FireClass" } & FireClassAllFieldsFragment>>;
     quantities1044?: Maybe<Array<{ __typename?: "Quantity1044" } & Pick<Quantity1044, "type" | "quantity">>>;
@@ -1103,6 +1089,20 @@ export type RemoveServiceMutationVariables = Exact<{
 
 export type RemoveServiceMutation = { __typename?: "Mutation" } & {
   removeService: { __typename?: "Service" } & ServicesAllFieldsFragment;
+};
+
+export type SubTypeAllFieldsFragment = { __typename?: "SubType" } & Pick<SubType, "id" | "name">;
+
+export type GetSubTypesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetSubTypesQuery = { __typename?: "Query" } & {
+  subTypes: Array<{ __typename?: "SubType" } & SubTypeAllFieldsFragment>;
+};
+
+export type GetSubTypesDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetSubTypesDisabledQuery = { __typename?: "Query" } & {
+  subTypesDisabled: Array<{ __typename?: "SubType" } & SubTypeAllFieldsFragment>;
 };
 
 export type VolunteerAllFieldsFragment = { __typename?: "Volunteer" } & Pick<
@@ -1232,8 +1232,8 @@ export const DutyAllFieldsFragmentDoc = gql`
     description
   }
 `;
-export const FireTypeAllFieldsFragmentDoc = gql`
-  fragment fireTypeAllFields on FireType {
+export const SubTypeAllFieldsFragmentDoc = gql`
+  fragment subTypeAllFields on SubType {
     id
     name
   }
@@ -1273,8 +1273,8 @@ export const ServicesAllFieldsFragmentDoc = gql`
     officer_in_charge {
       ...volunteerAllFields
     }
-    fire_type {
-      ...fireTypeAllFields
+    sub_type {
+      ...subTypeAllFields
     }
     fire_type_total_surface
     fire_type_burned_surface
@@ -1309,7 +1309,7 @@ export const ServicesAllFieldsFragmentDoc = gql`
     rescue_type
   }
   ${VolunteerAllFieldsFragmentDoc}
-  ${FireTypeAllFieldsFragmentDoc}
+  ${SubTypeAllFieldsFragmentDoc}
   ${FireCauseAllFieldsFragmentDoc}
   ${FireClassAllFieldsFragmentDoc}
 `;
@@ -2836,90 +2836,6 @@ export type GetFireClassesDisabledQueryResult = ApolloReactCommon.QueryResult<
   GetFireClassesDisabledQuery,
   GetFireClassesDisabledQueryVariables
 >;
-export const GetFireTypesDocument = gql`
-  query getFireTypes {
-    fireTypes {
-      ...fireTypeAllFields
-    }
-  }
-  ${FireTypeAllFieldsFragmentDoc}
-`;
-export type GetFireTypesComponentProps = Omit<
-  ApolloReactComponents.QueryComponentOptions<GetFireTypesQuery, GetFireTypesQueryVariables>,
-  "query"
->;
-
-export const GetFireTypesComponent = (props: GetFireTypesComponentProps) => (
-  <ApolloReactComponents.Query<GetFireTypesQuery, GetFireTypesQueryVariables> query={GetFireTypesDocument} {...props} />
-);
-
-export type GetFireTypesProps<TChildProps = {}, TDataName extends string = "data"> = {
-  [key in TDataName]: ApolloReactHoc.DataValue<GetFireTypesQuery, GetFireTypesQueryVariables>;
-} & TChildProps;
-export function withGetFireTypes<TProps, TChildProps = {}, TDataName extends string = "data">(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    GetFireTypesQuery,
-    GetFireTypesQueryVariables,
-    GetFireTypesProps<TChildProps, TDataName>
-  >
-) {
-  return ApolloReactHoc.withQuery<
-    TProps,
-    GetFireTypesQuery,
-    GetFireTypesQueryVariables,
-    GetFireTypesProps<TChildProps, TDataName>
-  >(GetFireTypesDocument, {
-    alias: "getFireTypes",
-    ...operationOptions,
-  });
-}
-export type GetFireTypesQueryResult = ApolloReactCommon.QueryResult<GetFireTypesQuery, GetFireTypesQueryVariables>;
-export const GetFireTypesDisabledDocument = gql`
-  query getFireTypesDisabled {
-    fireTypesDisabled {
-      ...fireTypeAllFields
-    }
-  }
-  ${FireTypeAllFieldsFragmentDoc}
-`;
-export type GetFireTypesDisabledComponentProps = Omit<
-  ApolloReactComponents.QueryComponentOptions<GetFireTypesDisabledQuery, GetFireTypesDisabledQueryVariables>,
-  "query"
->;
-
-export const GetFireTypesDisabledComponent = (props: GetFireTypesDisabledComponentProps) => (
-  <ApolloReactComponents.Query<GetFireTypesDisabledQuery, GetFireTypesDisabledQueryVariables>
-    query={GetFireTypesDisabledDocument}
-    {...props}
-  />
-);
-
-export type GetFireTypesDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
-  [key in TDataName]: ApolloReactHoc.DataValue<GetFireTypesDisabledQuery, GetFireTypesDisabledQueryVariables>;
-} & TChildProps;
-export function withGetFireTypesDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    GetFireTypesDisabledQuery,
-    GetFireTypesDisabledQueryVariables,
-    GetFireTypesDisabledProps<TChildProps, TDataName>
-  >
-) {
-  return ApolloReactHoc.withQuery<
-    TProps,
-    GetFireTypesDisabledQuery,
-    GetFireTypesDisabledQueryVariables,
-    GetFireTypesDisabledProps<TChildProps, TDataName>
-  >(GetFireTypesDisabledDocument, {
-    alias: "getFireTypesDisabled",
-    ...operationOptions,
-  });
-}
-export type GetFireTypesDisabledQueryResult = ApolloReactCommon.QueryResult<
-  GetFireTypesDisabledQuery,
-  GetFireTypesDisabledQueryVariables
->;
 export const GetRanksDocument = gql`
   query getRanks {
     ranks {
@@ -3450,6 +3366,90 @@ export type RemoveServiceMutationResult = ApolloReactCommon.MutationResult<Remov
 export type RemoveServiceMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RemoveServiceMutation,
   RemoveServiceMutationVariables
+>;
+export const GetSubTypesDocument = gql`
+  query getSubTypes {
+    subTypes {
+      ...subTypeAllFields
+    }
+  }
+  ${SubTypeAllFieldsFragmentDoc}
+`;
+export type GetSubTypesComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetSubTypesQuery, GetSubTypesQueryVariables>,
+  "query"
+>;
+
+export const GetSubTypesComponent = (props: GetSubTypesComponentProps) => (
+  <ApolloReactComponents.Query<GetSubTypesQuery, GetSubTypesQueryVariables> query={GetSubTypesDocument} {...props} />
+);
+
+export type GetSubTypesProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetSubTypesQuery, GetSubTypesQueryVariables>;
+} & TChildProps;
+export function withGetSubTypes<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetSubTypesQuery,
+    GetSubTypesQueryVariables,
+    GetSubTypesProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetSubTypesQuery,
+    GetSubTypesQueryVariables,
+    GetSubTypesProps<TChildProps, TDataName>
+  >(GetSubTypesDocument, {
+    alias: "getSubTypes",
+    ...operationOptions,
+  });
+}
+export type GetSubTypesQueryResult = ApolloReactCommon.QueryResult<GetSubTypesQuery, GetSubTypesQueryVariables>;
+export const GetSubTypesDisabledDocument = gql`
+  query getSubTypesDisabled {
+    subTypesDisabled {
+      ...subTypeAllFields
+    }
+  }
+  ${SubTypeAllFieldsFragmentDoc}
+`;
+export type GetSubTypesDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetSubTypesDisabledQuery, GetSubTypesDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetSubTypesDisabledComponent = (props: GetSubTypesDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetSubTypesDisabledQuery, GetSubTypesDisabledQueryVariables>
+    query={GetSubTypesDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetSubTypesDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetSubTypesDisabledQuery, GetSubTypesDisabledQueryVariables>;
+} & TChildProps;
+export function withGetSubTypesDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetSubTypesDisabledQuery,
+    GetSubTypesDisabledQueryVariables,
+    GetSubTypesDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetSubTypesDisabledQuery,
+    GetSubTypesDisabledQueryVariables,
+    GetSubTypesDisabledProps<TChildProps, TDataName>
+  >(GetSubTypesDisabledDocument, {
+    alias: "getSubTypesDisabled",
+    ...operationOptions,
+  });
+}
+export type GetSubTypesDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetSubTypesDisabledQuery,
+  GetSubTypesDisabledQueryVariables
 >;
 export const GetVolunteersDocument = gql`
   query getVolunteers {

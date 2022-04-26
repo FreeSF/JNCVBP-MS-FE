@@ -26,7 +26,7 @@ const UpdateServicePage = (props) => {
     departure_time: service.departure_time,
     description: service.description,
     fire_class: service.fire_class.map((fireclass) => ({ _id: fireclass.id })),
-    fire_type: { _id: service.fire_type.id },
+    sub_type: { _id: service.sub_type.id },
     fire_type_burned_surface: service.fire_type_burned_surface,
     fire_type_description: service.fire_type_description,
     fire_type_total_surface: service.fire_type_total_surface,
