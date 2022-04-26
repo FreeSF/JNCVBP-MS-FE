@@ -68,7 +68,7 @@ const ShowServicePage: React.FC<TheProps> = (props) => {
       {service.officer_in_charge?.name || "-"}
       <br />
       <label>Tipo de Fuego:</label>
-      {service.fire_type?.name || "-"}
+      {service.sub_type?.name || "-"}
       <br />
       <label>Superficie del Local:</label>
       {service.fire_type_total_surface || "-"}

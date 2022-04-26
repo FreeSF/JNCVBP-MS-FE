@@ -1,6 +1,6 @@
 import { gql } from "apollo-boost";
 import { volunteerAllFieldsFragment } from "./volunteers";
-import { fireTypeAllFieldsFragment } from "./fireType";
+import { subTypeAllFieldsFragment } from "./subType";
 import { fireCauseAllFieldsFragment } from "./fireCause";
 import { fireClassAllFieldsFragment } from "./fireClass";
 
@@ -27,8 +27,8 @@ const serviceAllFieldsFragment = gql`
     officer_in_charge {
       ...volunteerAllFields
     }
-    fire_type {
-      ...fireTypeAllFields
+    sub_type {
+      ...subTypeAllFields
     }
     fire_type_total_surface
     fire_type_burned_surface
@@ -65,7 +65,7 @@ const serviceAllFieldsFragment = gql`
     rescue_type
   }
   ${volunteerAllFieldsFragment}
-  ${fireTypeAllFieldsFragment}
+  ${subTypeAllFieldsFragment}
   ${fireCauseAllFieldsFragment}
   ${fireClassAllFieldsFragment}
 `;

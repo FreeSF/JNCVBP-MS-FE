@@ -2,25 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Form, FormApi, Text, Select } from "informed";
 import { RouteComponentProps } from "react-router-dom";
 import { useLazyQuery, useMutation, useQuery } from "react-apollo";
-import {
-  CreateServiceInput,
-  CreateServiceMutation,
-  CreateServiceMutationVariables,
-  GetFireCausesQuery,
-  GetFireClassesQuery,
-  GetFireTypesQuery,
-  GetVolunteersQuery,
-  Service,
-  ServicesAllFieldsFragment,
-} from "../../types";
+import { CreateServiceInput, CreateServiceMutation, CreateServiceMutationVariables } from "../../types";
 import { CREATE_SERVICE, EDIT_SERVICE, FIND_SERVICE, GET_SERVICES } from "../../queries/services";
-import Spinner from "../spinner";
-import _ from "lodash";
-import { GET_VOLUNTEERS } from "../../queries/volunteers";
-import { Button } from "react-bootstrap";
-import { GET_FIRE_TYPES } from "../../queries/fireType";
-import { GET_FIRE_CAUSES } from "../../queries/fireCause";
-import { GET_FIRE_CLASSES } from "../../queries/fireClass";
 import ServiceForm from "./ServiceForm";
 
 const CreateServicePage: React.FC<TheProps> = (props) => {
@@ -56,7 +39,7 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
     damage: "There was some damage",
     description: "---",
     fire_class: undefined,
-    fire_type: undefined,
+    sub_type: undefined,
     fire_type_burned_surface: 0,
     fire_type_description: "0",
     fire_type_total_surface: 0,
