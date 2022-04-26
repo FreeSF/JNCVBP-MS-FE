@@ -42,7 +42,6 @@ const dutiesRoutes = [
     // icon: "fas fa-ambulance",
     icon: "nc-icon nc-settings-90",
     component: DutiesPage,
-    showOnSidebar: true,
   },
   {
     path: "/duties/create",
@@ -62,7 +61,6 @@ const ranksRoutes = [
     name: "Rangos",
     icon: "nc-icon nc-vector",
     component: RanksPage,
-    showOnSidebar: true,
   },
   {
     path: "/ranks/create",
