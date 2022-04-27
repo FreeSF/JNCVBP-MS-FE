@@ -115,6 +115,7 @@ export type CreateServiceInput = {
 
 export type CreateSubTypeInput = {
   name: Scalars["String"];
+  code: Scalars["String"];
 };
 
 export type CreateTrainingInput = {
@@ -542,7 +543,8 @@ export type SubType = {
   __typename?: "SubType";
   id?: Maybe<Scalars["String"]>;
   _id?: Maybe<Scalars["String"]>;
-  name?: Maybe<Scalars["String"]>;
+  name: Scalars["String"];
+  code: Scalars["String"];
 };
 
 export type Training = {
@@ -640,7 +642,8 @@ export type UpdateServiceInput = {
 };
 
 export type UpdateSubTypeInput = {
-  name: Scalars["String"];
+  name?: Maybe<Scalars["String"]>;
+  code: Scalars["String"];
   id: Scalars["String"];
 };
 
