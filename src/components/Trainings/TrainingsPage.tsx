@@ -15,6 +15,7 @@ import {
 } from "../../types";
 import Spinner from "../spinner";
 import { get_formatted_date, get_formatted_volunteers } from "utils/constants";
+import { get_training_columns } from "utils/columns";
 
 const TrainingsPage = (props) => {
   const getTrainingsQuery = useQuery<GetTrainingsQuery>(GET_TRAININGS);
@@ -25,41 +26,24 @@ const TrainingsPage = (props) => {
 
   if (getTrainingsQuery.loading) return <Spinner />;
 
-  const columns: ColumnDescription[] = [
-    { dataField: "description", text: "Descripción" },
-    {
-      dataField: "date",
-      text: "Fecha",
-      formatter: (cell, row: TrainingAllFieldsFragment) => get_formatted_date(row.date),
-    },
-    {
-      dataField: "volunteers",
-      text: "Voluntarios",
-      formatter: (cell: VolunteerAllFieldsFragment[]) => get_formatted_volunteers(cell),
-    },
-    {
-      dataField: "actions",
-      text: "Acciones",
-      formatter: (cell, row: TrainingAllFieldsFragment) => (
-        <div>
-          <Button
-            className="btn-fill btn-sm"
-            onClick={() => history.push(`/trainings/${row.id}/edit`)}
-            variant="success"
-          >
-            Editar{" "}
-          </Button>
-          <Button
-            className="btn-sm"
-            variant="danger"
-            onClick={() => removeTraining({ variables: { id: row.id }, refetchQueries: [{ query: GET_TRAININGS }] })}
-          >
-            Eliminar
-          </Button>
-        </div>
-      ),
-    },
-  ];
+  const columns: ColumnDescription[] = get_training_columns({
+    dataField: "actions",
+    text: "Acciones",
+    formatter: (cell, row: TrainingAllFieldsFragment) => (
+      <div>
+        <Button className="btn-fill btn-sm" onClick={() => history.push(`/trainings/${row.id}/edit`)} variant="success">
+          Editar{" "}
+        </Button>
+        <Button
+          className="btn-sm"
+          variant="danger"
+          onClick={() => removeTraining({ variables: { id: row.id }, refetchQueries: [{ query: GET_TRAININGS }] })}
+        >
+          Eliminar
+        </Button>
+      </div>
+    ),
+  });
 
   return (
     <Container fluid>

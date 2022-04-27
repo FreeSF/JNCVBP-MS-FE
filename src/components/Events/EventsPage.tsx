@@ -14,6 +14,7 @@ import { Button } from "react-bootstrap";
 import { GET_GUARDS } from "../../queries/Guards";
 import { useHistory } from "react-router-dom";
 import StandardTable from "../utils/standardTable";
+import { get_event_columns } from "utils/columns";
 
 const EventsPage = (props) => {
   const history = useHistory();
@@ -22,34 +23,24 @@ const EventsPage = (props) => {
 
   if (getEventsQuery.loading) return <Spinner />;
 
-  const columns: ColumnDescription[] = [
-    {
-      dataField: "id",
-      text: "ID",
-    },
-    {
-      dataField: "description",
-      text: "Descripción",
-    },
-    {
-      dataField: undefined,
-      text: "Acciones",
-      formatter: (cell, row: ServicesAllFieldsFragment) => (
-        <div>
-          <Button className="btn-fill btn-sm" onClick={() => history.push(`/events/${row.id}/edit`)} variant="success">
-            Editar
-          </Button>
-          <Button
-            className="btn-sm"
-            variant="danger"
-            onClick={() => removeEvent({ variables: { id: row.id }, refetchQueries: [{ query: GET_EVENTS }] })}
-          >
-            Eliminar
-          </Button>
-        </div>
-      ),
-    },
-  ];
+  const columns: ColumnDescription[] = get_event_columns({
+    dataField: undefined,
+    text: "Acciones",
+    formatter: (cell, row: ServicesAllFieldsFragment) => (
+      <div>
+        <Button className="btn-fill btn-sm" onClick={() => history.push(`/events/${row.id}/edit`)} variant="success">
+          Editar
+        </Button>
+        <Button
+          className="btn-sm"
+          variant="danger"
+          onClick={() => removeEvent({ variables: { id: row.id }, refetchQueries: [{ query: GET_EVENTS }] })}
+        >
+          Eliminar
+        </Button>
+      </div>
+    ),
+  });
 
   return (
     <div>

@@ -14,6 +14,7 @@ import {
 import { DELETE_VOLUNTEER, GET_VOLUNTEERS } from "../../queries/volunteers";
 import { get_blood_type, get_formatted_date, get_volunteer_status } from "utils/constants";
 import Spinner from "../spinner";
+import { get_volunteer_columns } from "utils/columns";
 
 const VolunteersPage = (props: RouteComponentProps) => {
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
@@ -25,45 +26,24 @@ const VolunteersPage = (props: RouteComponentProps) => {
   const handleEdit = (id: string) => props.history.push("/volunteers/" + id + "/edit");
   const handleDelete = (id: string) => deleteClient({ variables: { id: id } });
 
-  const columns: ColumnDescription[] = [
-    { dataField: "code", text: "Código" },
-    { dataField: "name", text: "Nombre" },
-    {
-      dataField: "status",
-      text: "Estado",
-      formatter: (cell, row: VolunteerAllFieldsFragment) => get_volunteer_status(row.status),
+  const columns: ColumnDescription[] = get_volunteer_columns({
+    headerStyle: () => {
+      return { width: "20%" };
     },
-    {
-      dataField: "blood_type",
-      text: "Grupo Sanguíneo",
-      formatter: (cell, row: VolunteerAllFieldsFragment) => get_blood_type(row.blood_type),
-    },
-    { dataField: "rank.name", text: "Rango" },
-    {
-      dataField: "incorporation_date",
-      text: "Fecha de Reclutamiento",
-      formatter: (cell, row: VolunteerAllFieldsFragment) => get_formatted_date(row.incorporation_date),
-    },
-
-    {
-      headerStyle: () => {
-        return { width: "20%" };
-      },
-      dataField: "actions",
-      text: "Acciones",
-      formatter: (cell, row: VolunteerAllFieldsFragment) => (
-        <div>
-          <Button className="btn-fill btn-sm" variant="success" onClick={() => handleEdit(row.id)}>
-            Editar
-          </Button>
-          <Button className="btn-sm ml-2" variant="danger" onClick={() => handleDelete(row.id)}>
-            {" "}
-            Eliminar
-          </Button>
-        </div>
-      ),
-    },
-  ];
+    dataField: "actions",
+    text: "Acciones",
+    formatter: (cell, row: VolunteerAllFieldsFragment) => (
+      <div>
+        <Button className="btn-fill btn-sm" variant="success" onClick={() => handleEdit(row.id)}>
+          Editar
+        </Button>
+        <Button className="btn-sm ml-2" variant="danger" onClick={() => handleDelete(row.id)}>
+          {" "}
+          Eliminar
+        </Button>
+      </div>
+    ),
+  });
 
   return (
     <Container fluid>
