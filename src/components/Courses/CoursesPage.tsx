@@ -15,7 +15,7 @@ import {
 import { GET_COURSES, REMOVE_COURSE } from "../../queries/Courses";
 
 import Spinner from "../spinner";
-import { DEFAULT_DATE_FORMAT } from "../../utils/constants";
+import { get_course_columns } from "utils/columns";
 
 const CoursesPage = (props) => {
   const getCoursesQuery = useQuery<GetCoursesQuery>(GET_COURSES);
@@ -25,32 +25,24 @@ const CoursesPage = (props) => {
 
   if (getCoursesQuery.loading) return <Spinner />;
 
-  const columns: ColumnDescription[] = [
-    { dataField: "description", text: "Descripción" },
-    {
-      dataField: "date",
-      text: "Fecha",
-      formatter: (cell, row) => (cell ? moment(cell).format(DEFAULT_DATE_FORMAT) : ""),
-    },
-    {
-      dataField: "actions",
-      text: "Acciones",
-      formatter: (cell, row: CoursesAllFieldsFragment) => (
-        <div>
-          <Button className="btn-fill btn-sm" onClick={() => history.push(`/courses/${row.id}/edit`)} variant="success">
-            Editar
-          </Button>
-          <Button
-            className="btn-sm"
-            variant="danger"
-            onClick={() => removeCourse({ variables: { id: row.id }, refetchQueries: [{ query: GET_COURSES }] })}
-          >
-            Eliminar
-          </Button>
-        </div>
-      ),
-    },
-  ];
+  const columns: ColumnDescription[] = get_course_columns({
+    dataField: "actions",
+    text: "Acciones",
+    formatter: (cell, row: CoursesAllFieldsFragment) => (
+      <div>
+        <Button className="btn-fill btn-sm" onClick={() => history.push(`/courses/${row.id}/edit`)} variant="success">
+          Editar
+        </Button>
+        <Button
+          className="btn-sm"
+          variant="danger"
+          onClick={() => removeCourse({ variables: { id: row.id }, refetchQueries: [{ query: GET_COURSES }] })}
+        >
+          Eliminar
+        </Button>
+      </div>
+    ),
+  });
 
   return (
     <Container fluid>

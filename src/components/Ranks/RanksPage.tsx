@@ -8,6 +8,7 @@ import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
 import { DeleteRankMutation, DeleteRankMutationVariables, GetRanksQuery, RankAllFieldsFragment } from "../../types";
 import { DELETE_RANK, GET_RANKS } from "../../queries/ranks";
 import Spinner from "../spinner";
+import { get_rank_columns } from "utils/columns";
 
 const RanksPage = (props: RouteComponentProps) => {
   const getRanksQuery = useQuery<GetRanksQuery>(GET_RANKS);
@@ -18,31 +19,27 @@ const RanksPage = (props: RouteComponentProps) => {
   const handleEdit = (id: string) => props.history.push("/ranks/" + id + "/edit");
   const handleDelete = (id: string) => deleteClient({ variables: { id: id } });
 
-  const columns: ColumnDescription[] = [
-    { dataField: "name", text: "Nombre" },
-    { dataField: "description", text: "Descripción" },
-    {
-      headerStyle: () => {
-        return { width: "15%" };
-      },
-      dataField: "",
-      text: "Acciones",
-      formatter: (cell, row: RankAllFieldsFragment) => (
-        <div>
-          <Button className="btn-fill btn-sm" variant="success" onClick={() => handleEdit(row.id)}>
-            {" "}
-            Editar{" "}
-          </Button>
-          {row.isDeletable && (
-            <Button className="btn-sm ml-2" variant="danger" onClick={() => handleDelete(row.id)}>
-              {" "}
-              Eliminar{" "}
-            </Button>
-          )}
-        </div>
-      ),
+  const columns: ColumnDescription[] = get_rank_columns({
+    headerStyle: () => {
+      return { width: "15%" };
     },
-  ];
+    dataField: "",
+    text: "Acciones",
+    formatter: (cell, row: RankAllFieldsFragment) => (
+      <div>
+        <Button className="btn-fill btn-sm" variant="success" onClick={() => handleEdit(row.id)}>
+          {" "}
+          Editar{" "}
+        </Button>
+        {row.isDeletable && (
+          <Button className="btn-sm ml-2" variant="danger" onClick={() => handleDelete(row.id)}>
+            {" "}
+            Eliminar{" "}
+          </Button>
+        )}
+      </div>
+    ),
+  });
 
   return (
     <Container fluid>

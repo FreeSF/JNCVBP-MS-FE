@@ -8,6 +8,7 @@ import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
 import { DeleteDutyMutation, DeleteDutyMutationVariables, DutyAllFieldsFragment, GetDutiesQuery } from "../../types";
 import { DELETE_DUTY, GET_DUTIES } from "../../queries/duties";
 import Spinner from "../spinner";
+import { get_course_columns } from "utils/columns";
 
 const DutiesPage = (props: RouteComponentProps) => {
   const getDutiesQuery = useQuery<GetDutiesQuery>(GET_DUTIES);
@@ -18,31 +19,27 @@ const DutiesPage = (props: RouteComponentProps) => {
   const handleEdit = (id: string) => props.history.push("/duties/" + id + "/edit");
   const handleDelete = (id: string) => deleteClient({ variables: { id: id } });
 
-  const columns: ColumnDescription[] = [
-    { dataField: "name", text: "Nombre" },
-    { dataField: "description", text: "Descripción" },
-    {
-      headerStyle: () => {
-        return { width: "15%" };
-      },
-      dataField: "",
-      text: "Acciones",
-      formatter: (cell, row: DutyAllFieldsFragment) => (
-        <div>
-          <Button className="btn-fill btn-sm" variant="success" onClick={() => handleEdit(row.id)}>
-            {" "}
-            Editar{" "}
-          </Button>
-          {row.isDeletable && (
-            <Button className="btn-sm ml-2" variant="danger" onClick={() => handleDelete(row.id)}>
-              {" "}
-              Eliminar{" "}
-            </Button>
-          )}
-        </div>
-      ),
+  const columns: ColumnDescription[] = get_course_columns({
+    headerStyle: () => {
+      return { width: "15%" };
     },
-  ];
+    dataField: "",
+    text: "Acciones",
+    formatter: (cell, row: DutyAllFieldsFragment) => (
+      <div>
+        <Button className="btn-fill btn-sm" variant="success" onClick={() => handleEdit(row.id)}>
+          {" "}
+          Editar{" "}
+        </Button>
+        {row.isDeletable && (
+          <Button className="btn-sm ml-2" variant="danger" onClick={() => handleDelete(row.id)}>
+            {" "}
+            Eliminar{" "}
+          </Button>
+        )}
+      </div>
+    ),
+  });
 
   return (
     <Container fluid>
