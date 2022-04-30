@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQuery } from "react-apollo";
 import {
   GetServicesQuery,
@@ -10,13 +10,16 @@ import {
 } from "../../types";
 import StandardTable from "../utils/standardTable";
 import { ColumnDescription } from "react-bootstrap-table-next";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Spinner from "../spinner";
 import { GET_SERVICES, REMOVE_SERVICE } from "../../queries/services";
+import SingleServiceReport from "../../reports/SingleServiceReport";
+import { BlobProvider, Document, Page, Text, View } from "@react-pdf/renderer";
 
 const ServicesPage: React.FC<TheProps> = (props) => {
   const getServicesQuery = useQuery<GetServicesQuery>(GET_SERVICES);
+  const [renderReport, setRenderReport] = useState<string>();
 
   const [removeService, removedService] = useMutation<RemoveServiceMutation, RemoveServiceMutationVariables>(
     REMOVE_SERVICE
@@ -48,6 +51,14 @@ const ServicesPage: React.FC<TheProps> = (props) => {
           <Button className="btn-fill btn-sm" href={`/services/${row.id}`} variant="info">
             Ver
           </Button>
+
+          <BlobProvider document={<SingleServiceReport service={row} />}>
+            {({ url }) => (
+              <Button href={url} target="_blank" className="btn-fill btn-sm" variant="info">
+                pdf
+              </Button>
+            )}
+          </BlobProvider>
           <Button className="btn-fill btn-sm" href={`/services/${row.id}/edit`} variant="success">
             Editar
           </Button>
