@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React from "react";
 import ReactDOM from "react-dom";
 import ReactPDF, { Page, Text, View, Document, StyleSheet, PDFViewer } from "@react-pdf/renderer";
@@ -116,7 +117,7 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
           </View>
 
           {/* 10.40 */}
-          {service.type === "10.41" && (
+          {service.type === "10.40" && (
             <React.Fragment>
               <View style={{ border: "1px solid blue" }}>
                 <View style={{ flexDirection: "row", border: "1px solid red" }}>
@@ -127,7 +128,7 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                 <View style={{ flexDirection: "row", border: "1px solid red" }}>
                   <Text style={{ width: "50%" }}>{service.fire_type_description || service.sub_type.name}</Text>
                   <Text style={{ width: "25%" }}>{service.fire_type_total_surface}</Text>
-                  <Text style={{ width: "25%" }}>S{service.fire_type_burned_surface}</Text>
+                  <Text style={{ width: "25%" }}>{service.fire_type_burned_surface}</Text>
                 </View>
               </View>
               <View style={{ border: "1px solid blue" }}>
@@ -186,19 +187,102 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                 <Text>Otros datos de interés:</Text>
                 <Text>---?</Text>
               </View>
-              <View style={{ border: "1px solid blue" }}>
-                <Text>Nómina de Voluntarios:</Text>
-
-                <View style={{ border: "1px solid blue", flexDirection: "row" }}>
-                  {service.volunteers.map((volunteer) => (
-                    <Text style={{ width: "33.333%", border: "1px solid red" }}>{volunteer.name}</Text>
-                  ))}
-                </View>
-              </View>
             </React.Fragment>
           )}
 
           {/* 10.41 */}
+          {service.type === "10.41" && (
+            <React.Fragment>
+              <View style={{ border: "1px solid blue" }}>
+                <View style={{ flexDirection: "row", border: "1px solid red" }}>
+                  <Text style={{ width: "34%" }}>Tipo</Text>
+                  <Text style={{ width: "33%" }}>Magnitudes</Text>
+                  <Text style={{ width: "33%" }}>Cantidad de 10.44</Text>
+                </View>
+                <View style={{ flexDirection: "row", border: "1px solid red" }}>
+                  <Text style={{ width: "34%" }}>{service.sub_type.name}</Text>
+                  <View style={{ flexDirection: "column", width: "33%" }}>
+                    {service.damage1041.map((damage) => (
+                      <Text>{damage}</Text>
+                    ))}
+                  </View>
+                  <View style={{ flexDirection: "column", width: "33%" }}>
+                    {service.quantities1044.map((the1044) => (
+                      <Text>
+                        {the1044.type}: {the1044.quantity}
+                      </Text>
+                    ))}
+                  </View>
+                </View>
+              </View>
+
+              <View style={{ border: "1px solid blue" }}>
+                <View style={{ flexDirection: "row", border: "1px solid red" }}>
+                  <Text style={{ width: "34%" }}>Involucrados</Text>
+                  <Text style={{ width: "33%" }}>Magnitudes</Text>
+                  <Text style={{ width: "33%" }}>Recursos Usados</Text>
+                </View>
+                <View style={{ flexDirection: "row", border: "1px solid red" }}>
+                  <View style={{ flexDirection: "column", width: "34%" }}>
+                    {service.involved_elements.map((element) => (
+                      <Text>{element}</Text>
+                    ))}
+                  </View>
+                  <View style={{ flexDirection: "column", width: "33%" }}>
+                    {service.magnitude1041.map((magnitude) => (
+                      <Text>{magnitude}</Text>
+                    ))}
+                  </View>
+                  <View style={{ flexDirection: "column", width: "33%" }}>
+                    {service.quantities1044.map((the1044) => (
+                      <Text>
+                        {the1044.type}: {the1044.quantity}
+                      </Text>
+                    ))}
+                  </View>
+                </View>
+              </View>
+
+              <Text>Mencione el mayor problema presente y el motivo en los servicios según la hoja 10.41</Text>
+              <Text>{service.description}</Text>
+            </React.Fragment>
+          )}
+
+          {service.type === "10.43" && (
+            <React.Fragment>
+              <View style={{ border: "1px solid blue" }}>
+                <View style={{ flexDirection: "row", border: "1px solid red" }}>
+                  <Text style={{ width: "34%" }}>Tipo</Text>
+                  <Text style={{ width: "33%" }}>Tipo de Rescate</Text>
+                  <Text style={{ width: "33%" }}>Cantidad de 10.44/10.45</Text>
+                </View>
+                <View style={{ flexDirection: "row", border: "1px solid red" }}>
+                  <Text style={{ width: "34%" }}>{service.sub_type.name}</Text>
+                  <Text style={{ width: "33%" }}>{service.rescue_type}</Text>
+                  <View style={{ flexDirection: "column", width: "33%" }}>
+                    {service.quantities1044.map((the1044) => (
+                      <Text>
+                        {the1044.type}: {the1044.quantity}
+                      </Text>
+                    ))}
+                  </View>
+                </View>
+              </View>
+
+              <Text>Otros datos de interés</Text>
+              <Text>{service.description}</Text>
+            </React.Fragment>
+          )}
+
+          <View style={{ border: "1px solid blue" }}>
+            <Text>Nómina de Voluntarios:</Text>
+
+            <View style={{ border: "1px solid blue", flexDirection: "row" }}>
+              {service.volunteers.map((volunteer) => (
+                <Text style={{ width: "33.333%", border: "1px solid red" }}>{volunteer.name}</Text>
+              ))}
+            </View>
+          </View>
         </View>
       </Page>
     </Document>
