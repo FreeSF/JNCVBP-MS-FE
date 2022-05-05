@@ -261,7 +261,7 @@ const ServiceForm = (props: theProps) => {
               {/* create constants */}
               {/* Does it need a db entry? */}
             </InformedSelect>
-            <Text field={`resources_used[${index}].quantity`} initialValue={1} />
+            <Text field={`resources_used[${index}].quantity`} initialValue={1} type="number" />
             <button
               onClick={(event) => {
                 event.preventDefault();
