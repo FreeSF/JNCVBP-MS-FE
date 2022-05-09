@@ -8,8 +8,7 @@ import { CreateServiceInput, UpdateServiceInput } from "types";
 type FireReportFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
   formState: FormState<CreateServiceInput | UpdateServiceInput>;
-  handleRemoveFireClass: any;
-  handleRemoveUsedResource: any;
+  arrayRemove: any;
   fireCausesOptions: any;
   fireClassesOptions: any;
 };
@@ -17,8 +16,7 @@ type FireReportFieldsProps = {
 const FireReportFields = ({
   formApi,
   formState,
-  handleRemoveFireClass,
-  handleRemoveUsedResource,
+  arrayRemove,
   fireCausesOptions,
   fireClassesOptions,
 }: FireReportFieldsProps) => {
@@ -70,7 +68,8 @@ const FireReportFields = ({
                 variant="danger"
                 onClick={(event) => {
                   event.preventDefault();
-                  handleRemoveFireClass(i);
+                  const newFireClasses = arrayRemove(formState.values.fire_class, i);
+                  formApi.setValues({ ...formState.values, fire_class: newFireClasses });
                 }}
               >
                 Eliminar
@@ -216,7 +215,8 @@ const FireReportFields = ({
             <button
               onClick={(event) => {
                 event.preventDefault();
-                handleRemoveUsedResource();
+                const resources_used = arrayRemove(formState.values.resources_used, index);
+                formApi.setValues({ ...formState.values, resources_used });
               }}
             >
               Quitar

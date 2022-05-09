@@ -39,7 +39,6 @@ const ServiceForm = (props: theProps) => {
   const { formApi, formState } = props;
 
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
-
   const getSubTypesQuery = useQuery<GetSubTypesQuery>(GET_SUB_TYPES);
   const getFireCausesQuery = useQuery<GetFireCausesQuery>(GET_FIRE_CAUSES);
   const getFireClassesQuery = useQuery<GetFireClassesQuery>(GET_FIRE_CLASSES);
@@ -51,44 +50,6 @@ const ServiceForm = (props: theProps) => {
     getFireClassesQuery.loading
   )
     return <Spinner />;
-
-  const handleRemoveVolunteer = (i) => {
-    const newVolunteers = arrayRemove(formState.values.volunteers, i);
-    formApi.setValues({ ...formState.values, volunteers: newVolunteers });
-  };
-
-  const handleRemoveFireClass = (i) => {
-    const newFireClasses = arrayRemove(formState.values.fire_class, i);
-    formApi.setValues({ ...formState.values, fire_class: newFireClasses });
-  };
-
-  const handleRemoveUsedResource = (index) => {
-    const resources_used = arrayRemove(formState.values.resources_used, index);
-    formApi.setValues({ ...formState.values, resources_used });
-  };
-
-  // Accident
-  const handleRemoveDamage = (index) => {
-    const damage1041 = arrayRemove(formState.values.damage1041, index);
-    formApi.setValues({ ...formState.values, damage1041 });
-  };
-
-  const handleRemoveQuantities1044 = (index) => {
-    const quantities1044 = arrayRemove(formState.values.quantities1044, index);
-    formApi.setValues({ ...formState.values, quantities1044 });
-  };
-
-  const handleRemoveInvolvedElements = (index) => {
-    const involved_elements = arrayRemove(formState.values.involved_elements, index);
-    formApi.setValues({ ...formState.values, involved_elements });
-  };
-
-  const handleRemoveMagnitude1041 = (index) => {
-    const magnitude1041 = arrayRemove(formState.values.magnitude1041, index);
-    formApi.setValues({ ...formState.values, magnitude1041 });
-  };
-
-  // Rescue
 
   return (
     <Row>
@@ -115,7 +76,7 @@ const ServiceForm = (props: theProps) => {
             <DefaultServiceFields
               formState={formState}
               formApi={formApi}
-              handleRemoveVolunteer={handleRemoveVolunteer}
+              arrayRemove={arrayRemove}
               volunteerOptions={getVolunteersQuery.data.volunteers}
             />
 
@@ -135,19 +96,11 @@ const ServiceForm = (props: theProps) => {
               fireClassesOptions={getFireClassesQuery.data.fireClasses}
               formState={formState}
               formApi={formApi}
-              handleRemoveFireClass={handleRemoveFireClass}
-              handleRemoveUsedResource={handleRemoveUsedResource}
+              arrayRemove={arrayRemove}
             />
 
             <h2>10.41 Accidentes</h2>
-            <AccidentReportFields
-              formApi={formApi}
-              formState={formState}
-              handleRemoveDamage={handleRemoveDamage}
-              handleRemoveQuantities1044={handleRemoveQuantities1044}
-              handleRemoveInvolvedElements={handleRemoveInvolvedElements}
-              handleRemoveMagnitude1041={handleRemoveMagnitude1041}
-            />
+            <AccidentReportFields formApi={formApi} formState={formState} arrayRemove={arrayRemove} />
 
             <h2>10.43 Rescates</h2>
             <RescueReportFields formApi={formApi} formState={formState} />

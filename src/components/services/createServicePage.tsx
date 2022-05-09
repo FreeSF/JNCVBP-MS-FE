@@ -67,17 +67,13 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
   };
 
   return (
-    <div>
-      <h2>Crear Service</h2>
-
-      <Form
-        getApi={(formRef: FormApi<CreateServiceInput>) => setFormRefCreate(formRef)}
-        onSubmit={handleSubmit}
-        initialValues={defaultValues}
-      >
-        {({ formApi, formState }) => <ServiceForm formApi={formApi} formState={formState} />}
-      </Form>
-    </div>
+    <Form
+      getApi={(formRef: FormApi<CreateServiceInput>) => setFormRefCreate(formRef)}
+      onSubmit={handleSubmit}
+      initialValues={defaultValues}
+    >
+      {({ formApi, formState }) => <ServiceForm formApi={formApi} formState={formState} />}
+    </Form>
   );
 };
 

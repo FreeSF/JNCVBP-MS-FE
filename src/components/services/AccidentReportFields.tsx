@@ -8,20 +8,10 @@ import { CreateServiceInput, UpdateServiceInput } from "types";
 type AccidentReportFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
   formState: FormState<CreateServiceInput | UpdateServiceInput>;
-  handleRemoveDamage: any;
-  handleRemoveQuantities1044: any;
-  handleRemoveInvolvedElements: any;
-  handleRemoveMagnitude1041: any;
+  arrayRemove: any;
 };
 
-const AccidentReportFields = ({
-  formApi,
-  formState,
-  handleRemoveDamage,
-  handleRemoveQuantities1044,
-  handleRemoveInvolvedElements,
-  handleRemoveMagnitude1041,
-}: AccidentReportFieldsProps) => {
+const AccidentReportFields = ({ formApi, formState, arrayRemove }: AccidentReportFieldsProps) => {
   return (
     <div>
       <Row>
@@ -60,7 +50,8 @@ const AccidentReportFields = ({
             <button
               onClick={(event) => {
                 event.preventDefault();
-                handleRemoveDamage(index);
+                const damage1041 = arrayRemove(formState.values.damage1041, index);
+                formApi.setValues({ ...formState.values, damage1041 });
               }}
             >
               Quitar
@@ -105,7 +96,8 @@ const AccidentReportFields = ({
             <button
               onClick={(event) => {
                 event.preventDefault();
-                handleRemoveQuantities1044(index);
+                const quantities1044 = arrayRemove(formState.values.quantities1044, index);
+                formApi.setValues({ ...formState.values, quantities1044 });
               }}
             >
               Quitar
@@ -149,7 +141,8 @@ const AccidentReportFields = ({
             <button
               onClick={(event) => {
                 event.preventDefault();
-                handleRemoveInvolvedElements(index);
+                const involved_elements = arrayRemove(formState.values.involved_elements, index);
+                formApi.setValues({ ...formState.values, involved_elements });
               }}
             >
               Quitar
@@ -192,7 +185,8 @@ const AccidentReportFields = ({
             <button
               onClick={(event) => {
                 event.preventDefault();
-                handleRemoveMagnitude1041(index);
+                const magnitude1041 = arrayRemove(formState.values.magnitude1041, index);
+                formApi.setValues({ ...formState.values, magnitude1041 });
               }}
             >
               Quitar

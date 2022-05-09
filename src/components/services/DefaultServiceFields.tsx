@@ -8,16 +8,11 @@ import { CreateServiceInput, UpdateServiceInput } from "types";
 type DefaultServiceFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
   formState: FormState<CreateServiceInput | UpdateServiceInput>;
-  handleRemoveVolunteer: any;
   volunteerOptions: any;
+  arrayRemove: any;
 };
 
-const DefaultServiceFields = ({
-  formApi,
-  formState,
-  handleRemoveVolunteer,
-  volunteerOptions,
-}: DefaultServiceFieldsProps) => {
+const DefaultServiceFields = ({ formApi, formState, volunteerOptions, arrayRemove }: DefaultServiceFieldsProps) => {
   return (
     <div>
       <Row>
@@ -153,7 +148,8 @@ const DefaultServiceFields = ({
                   variant="danger"
                   onClick={(event) => {
                     event.preventDefault();
-                    handleRemoveVolunteer(i);
+                    const newVolunteers = arrayRemove(formState.values.volunteers, i);
+                    formApi.setValues({ ...formState.values, volunteers: newVolunteers });
                   }}
                 >
                   Eliminar
