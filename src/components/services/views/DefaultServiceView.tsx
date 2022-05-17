@@ -1,43 +1,91 @@
 import React from "react";
-
 import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "informed";
 
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { CreateServiceInput, UpdateServiceInput } from "types";
+
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import TimePicker from "react-time-picker";
 
 type DefaultServiceFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
   formState: FormState<CreateServiceInput | UpdateServiceInput>;
   volunteerOptions: any;
   arrayRemove: any;
+  isCreate: boolean;
 };
 
-const DefaultServiceFields = ({ formApi, formState, volunteerOptions, arrayRemove }: DefaultServiceFieldsProps) => {
+const DefaultServiceView = ({
+  formApi,
+  formState,
+  volunteerOptions,
+  arrayRemove,
+  isCreate,
+}: DefaultServiceFieldsProps) => {
   return (
     <div>
       <Row>
         <Col md="3">
           <Form.Group>
             <label>Hora de Llamada:</label>
-            <Text className="form-control" field="call_time" type="text" />
+            <Text className="form-control" field="call_time" type="text" hidden />
+            <TimePicker
+              locale="es"
+              className="form-control"
+              field="call_time"
+              onChange={(value) => {
+                formApi.setValues({ ...formState.values, call_time: value });
+              }}
+              type="text"
+              value={formState.values.call_time}
+            />
           </Form.Group>
         </Col>
         <Col md="3">
           <Form.Group>
             <label>Hora de Salida:</label>
-            <Text className="form-control" field="departure_time" type="text" />
+            <Text className="form-control" field="departure_time" type="text" hidden />
+            <TimePicker
+              locale="es"
+              className="form-control"
+              field="departure_time"
+              onChange={(value) => {
+                formApi.setValues({ ...formState.values, departure_time: value });
+              }}
+              type="text"
+              value={formState.values.departure_time}
+            />
           </Form.Group>
         </Col>
         <Col md="3">
           <Form.Group>
             <label>Hora de Llegada:</label>
-            <Text className="form-control" field="arrival_time" type="text" />
+            <Text className="form-control" field="arrival_time" type="text" hidden />
+            <TimePicker
+              locale="es"
+              className="form-control"
+              field="arrival_time"
+              onChange={(value) => {
+                formApi.setValues({ ...formState.values, arrival_time: value });
+              }}
+              type="text"
+              value={formState.values.arrival_time}
+            />
           </Form.Group>
         </Col>
         <Col md="3">
           <Form.Group>
             <label>Hora de Retirada:</label>
-            <Text className="form-control" field="withdrawal_time" type="text" />
+            <Text className="form-control" field="withdrawal_time" type="text" hidden />
+            <TimePicker
+              locale="es"
+              className="form-control"
+              field="withdrawal_time"
+              onChange={(value) => {
+                formApi.setValues({ ...formState.values, withdrawal_time: value });
+              }}
+              type="text"
+              value={formState.values.withdrawal_time}
+            />
           </Form.Group>
         </Col>
       </Row>
@@ -105,11 +153,11 @@ const DefaultServiceFields = ({ formApi, formState, volunteerOptions, arrayRemov
       <Row>
         <Col md="12">
           <Form.Group>
-            <h4 style={{ display: "inline" }}>Asistencia de Voluntarios</h4>
+            <label style={{ display: "inline" }}>Asistencia de Voluntarios</label>
             <Button
               className="pull-right ml-2"
               variant="success"
-              // disabled={volunteers.length == volunteerList.length}
+              disabled={formState.values.volunteers?.length == volunteerOptions.length}
               onClick={(event) => {
                 event.preventDefault();
                 const newVolunteers = formState.values.volunteers || [];
@@ -123,23 +171,29 @@ const DefaultServiceFields = ({ formApi, formState, volunteerOptions, arrayRemov
         </Col>
       </Row>
       <Text field="volunteers" disabled={true} hidden /> {/*Need to be here to work*/}
-      {(formState.values.volunteers || []).map((volunteer, i) => {
+      {(formState.values.volunteers || []).map((currentVolunteer, i) => {
+        const selectedVolunteers = formState.values.volunteers.map((volunteer) => volunteer._id);
+        const nonSelectedVolunteers = volunteerOptions.filter(
+          (volunteer) => !selectedVolunteers.includes(volunteer.id) || volunteer.id == currentVolunteer._id
+        );
         return (
-          <React.Fragment>
+          <React.Fragment key={`volunteers[${i}]._id`}>
             <Row>
               <Col md="2"></Col>
               <Col md="6">
-                <InformedSelect
-                  className="form-control"
-                  field={`volunteers[${i}]._id`}
-                  initialValue={volunteerOptions[0]?.id}
-                >
-                  {volunteerOptions.map((volunteer) => (
-                    <option value={volunteer.id} key={volunteer.id}>
-                      {volunteer.name}
-                    </option>
-                  ))}
-                </InformedSelect>
+                <Form.Group>
+                  <InformedSelect
+                    className="form-control"
+                    field={`volunteers[${i}]._id`}
+                    initialValue={isCreate ? nonSelectedVolunteers[0]?.id : undefined}
+                  >
+                    {nonSelectedVolunteers.map((volunteer) => (
+                      <option value={volunteer.id} key={volunteer.id}>
+                        {volunteer.name}
+                      </option>
+                    ))}
+                  </InformedSelect>
+                </Form.Group>
               </Col>
               <Col md="2">
                 <Button
@@ -162,4 +216,4 @@ const DefaultServiceFields = ({ formApi, formState, volunteerOptions, arrayRemov
     </div>
   );
 };
-export default DefaultServiceFields;
+export default DefaultServiceView;

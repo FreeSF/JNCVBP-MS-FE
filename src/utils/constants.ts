@@ -28,6 +28,12 @@ export const BLOOD_TYPES = [
   { id: "0-", description: "0 RH(-)" },
 ];
 
+export const CODES = {
+  ACCIDENT: "10.41",
+  FIRE: "10.40",
+  RESCUE: "10.43",
+};
+
 export const VOLUNTEER_STATUS = [
   { id: "Active", description: "Activo" },
   { id: "Inactive", description: "Inactivo" },
