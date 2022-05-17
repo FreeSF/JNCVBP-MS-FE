@@ -8,6 +8,7 @@ const serviceAllFieldsFragment = gql`
   fragment servicesAllFields on Service {
     id
     type
+    date
     description
     call_time
     departure_time
@@ -52,7 +53,7 @@ const serviceAllFieldsFragment = gql`
 
     damage1041
     quantities1044 {
-      type
+      name
       quantity
     }
     involved_elements

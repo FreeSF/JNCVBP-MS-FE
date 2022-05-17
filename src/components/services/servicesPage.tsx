@@ -76,6 +76,7 @@ const ServicesPage = (props: RouteComponentProps) => {
       ),
     },
   ];
+  if (getServicesQuery.loading) return <Spinner />;
 
   return (
     <Container fluid>
@@ -94,11 +95,7 @@ const ServicesPage = (props: RouteComponentProps) => {
               </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              {getServicesQuery.loading ? (
-                <Spinner />
-              ) : (
-                <BootstrapTable keyField={"id"} data={getServicesQuery.data.services} columns={columns} />
-              )}
+              <BootstrapTable keyField={"id"} data={getServicesQuery.data?.services} columns={columns} />
             </Card.Body>
           </Card>
         </Col>
