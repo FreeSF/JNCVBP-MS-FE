@@ -13,9 +13,8 @@ import CreateVolunteerPage from "components/Volunteers/CreateVolunteerPage";
 import UpdateVolunteerPage from "components/Volunteers/UpdateVolunteerPage";
 import ShowVolunteerPage from "components/Volunteers/ShowVolunteerPage";
 
-import ServicesPage from "./components/services/servicesPage";
-import ShowServicePage from "./components/services/showServicePage";
-import CreateServicePage from "./components/services/CreateServicePage";
+import ServicesPage from "components/services/ServicesPage";
+import CreateServicePage from "components/services/CreateServicePage";
 import UpdateServicePage from "components/services/UpdateServicePage";
 
 import GuardsPage from "./components/Guards/GuardsPage";
@@ -87,11 +86,6 @@ const servicesRoutes = [
     path: "/services/create",
     name: "Crear Servicio",
     component: CreateServicePage,
-  },
-  {
-    path: "/services/:id",
-    name: "Servicios",
-    component: ShowServicePage,
   },
   {
     path: "/services/:id/edit",
