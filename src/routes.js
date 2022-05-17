@@ -13,9 +13,9 @@ import CreateVolunteerPage from "components/Volunteers/CreateVolunteerPage";
 import UpdateVolunteerPage from "components/Volunteers/UpdateVolunteerPage";
 import ShowVolunteerPage from "components/Volunteers/ShowVolunteerPage";
 
-import ServicesPage from "components/services/ServicesPage";
-import CreateServicePage from "components/services/CreateServicePage";
-import UpdateServicePage from "components/services/UpdateServicePage";
+import ServicesPage from "components/Services/ServicesPage";
+import CreateServicePage from "components/Services/CreateServicePage";
+import UpdateServicePage from "components/Services/UpdateServicePage";
 
 import GuardsPage from "./components/Guards/GuardsPage";
 import CreateGuardPage from "./components/Guards/CreateGuardPage";
