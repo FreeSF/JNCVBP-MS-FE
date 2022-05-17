@@ -161,7 +161,12 @@ const DefaultServiceView = ({
               onClick={(event) => {
                 event.preventDefault();
                 const newVolunteers = formState.values.volunteers || [];
-                newVolunteers.push({ _id: undefined });
+                const selectedVolunteers = formState.values.volunteers.map((volunteer) => volunteer._id);
+                const nonSelectedVolunteers = volunteerOptions.filter(
+                  (volunteer) => !selectedVolunteers.includes(volunteer.id)
+                );
+
+                newVolunteers.push({ _id: nonSelectedVolunteers[0].id });
                 formApi.setValues({ ...formState.values, volunteers: newVolunteers });
               }}
             >
