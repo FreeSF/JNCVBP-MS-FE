@@ -23,7 +23,6 @@ const TrainingForm = ({ formApi, formState, volunteers, setVolunteers }: Trainin
 
   const volunteerList = getVolunteersQuery.data.volunteers;
 
-  console.log(volunteers);
   return (
     <Row>
       <Col md="2"></Col>

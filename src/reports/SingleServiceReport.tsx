@@ -209,7 +209,7 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                   <View style={{ flexDirection: "column", width: "33%" }}>
                     {service.quantities1044.map((the1044) => (
                       <Text>
-                        {the1044.type}: {the1044.quantity}
+                        {the1044.name}: {the1044.quantity}
                       </Text>
                     ))}
                   </View>
@@ -236,7 +236,7 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                   <View style={{ flexDirection: "column", width: "33%" }}>
                     {service.quantities1044.map((the1044) => (
                       <Text>
-                        {the1044.type}: {the1044.quantity}
+                        {the1044.name}: {the1044.quantity}
                       </Text>
                     ))}
                   </View>
@@ -262,7 +262,7 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                   <View style={{ flexDirection: "column", width: "33%" }}>
                     {service.quantities1044.map((the1044) => (
                       <Text>
-                        {the1044.type}: {the1044.quantity}
+                        {the1044.name}: {the1044.quantity}
                       </Text>
                     ))}
                   </View>

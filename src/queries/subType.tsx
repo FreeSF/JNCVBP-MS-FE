@@ -4,6 +4,7 @@ export const subTypeAllFieldsFragment = gql`
   fragment subTypeAllFields on SubType {
     id
     name
+    code
   }
 `;
 

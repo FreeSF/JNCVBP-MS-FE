@@ -76,6 +76,7 @@ export type CreateServiceInput = {
   type: Scalars["String"];
   description?: Maybe<Scalars["String"]>;
   volunteers?: Maybe<Array<OnlyIdVolunteerInput>>;
+  date: Scalars["DateTime"];
   call_time?: Maybe<Scalars["String"]>;
   departure_time?: Maybe<Scalars["String"]>;
   arrival_time?: Maybe<Scalars["String"]>;
@@ -379,12 +380,12 @@ export type OnlyIdVolunteerInput = {
 
 export type Quantity1044 = {
   __typename?: "Quantity1044";
-  type?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
   quantity?: Maybe<Scalars["Float"]>;
 };
 
 export type Quantity1044Input = {
-  type?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
   quantity?: Maybe<Scalars["Float"]>;
 };
 
@@ -499,6 +500,7 @@ export type Service = {
   __typename?: "Service";
   _id?: Maybe<Scalars["String"]>;
   id?: Maybe<Scalars["String"]>;
+  date: Scalars["DateTime"];
   type?: Maybe<Scalars["String"]>;
   description?: Maybe<Scalars["String"]>;
   volunteers?: Maybe<Array<Volunteer>>;
@@ -603,6 +605,7 @@ export type UpdateServiceInput = {
   type?: Maybe<Scalars["String"]>;
   description?: Maybe<Scalars["String"]>;
   volunteers?: Maybe<Array<OnlyIdVolunteerInput>>;
+  date?: Maybe<Scalars["DateTime"]>;
   call_time?: Maybe<Scalars["String"]>;
   departure_time?: Maybe<Scalars["String"]>;
   arrival_time?: Maybe<Scalars["String"]>;
@@ -643,7 +646,7 @@ export type UpdateServiceInput = {
 
 export type UpdateSubTypeInput = {
   name?: Maybe<Scalars["String"]>;
-  code: Scalars["String"];
+  code?: Maybe<Scalars["String"]>;
   id: Scalars["String"];
 };
 
@@ -1010,6 +1013,7 @@ export type ServicesAllFieldsFragment = { __typename?: "Service" } & Pick<
   Service,
   | "id"
   | "type"
+  | "date"
   | "description"
   | "call_time"
   | "departure_time"
@@ -1046,7 +1050,7 @@ export type ServicesAllFieldsFragment = { __typename?: "Service" } & Pick<
     sub_type?: Maybe<{ __typename?: "SubType" } & SubTypeAllFieldsFragment>;
     possible_cause?: Maybe<{ __typename?: "FireCause" } & FireCauseAllFieldsFragment>;
     fire_class?: Maybe<Array<{ __typename?: "FireClass" } & FireClassAllFieldsFragment>>;
-    quantities1044?: Maybe<Array<{ __typename?: "Quantity1044" } & Pick<Quantity1044, "type" | "quantity">>>;
+    quantities1044?: Maybe<Array<{ __typename?: "Quantity1044" } & Pick<Quantity1044, "name" | "quantity">>>;
     resources_used?: Maybe<Array<{ __typename?: "ResourceUsed" } & Pick<ResourceUsed, "resource" | "quantity">>>;
   };
 
@@ -1094,7 +1098,7 @@ export type RemoveServiceMutation = { __typename?: "Mutation" } & {
   removeService: { __typename?: "Service" } & ServicesAllFieldsFragment;
 };
 
-export type SubTypeAllFieldsFragment = { __typename?: "SubType" } & Pick<SubType, "id" | "name">;
+export type SubTypeAllFieldsFragment = { __typename?: "SubType" } & Pick<SubType, "id" | "name" | "code">;
 
 export type GetSubTypesQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -1239,6 +1243,7 @@ export const SubTypeAllFieldsFragmentDoc = gql`
   fragment subTypeAllFields on SubType {
     id
     name
+    code
   }
 `;
 export const FireCauseAllFieldsFragmentDoc = gql`
@@ -1257,6 +1262,7 @@ export const ServicesAllFieldsFragmentDoc = gql`
   fragment servicesAllFields on Service {
     id
     type
+    date
     description
     call_time
     departure_time
@@ -1300,7 +1306,7 @@ export const ServicesAllFieldsFragmentDoc = gql`
     judge_in_charge
     damage1041
     quantities1044 {
-      type
+      name
       quantity
     }
     involved_elements

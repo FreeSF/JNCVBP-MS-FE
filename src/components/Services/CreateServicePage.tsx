@@ -5,6 +5,7 @@ import { useLazyQuery, useMutation, useQuery } from "react-apollo";
 import { CreateServiceInput, CreateServiceMutation, CreateServiceMutationVariables } from "../../types";
 import { CREATE_SERVICE, EDIT_SERVICE, FIND_SERVICE, GET_SERVICES } from "../../queries/services";
 import ServiceForm from "./ServiceForm";
+import { CODES } from "utils/constants";
 
 const CreateServicePage: React.FC<TheProps> = (props) => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateServiceInput>>(null);
@@ -15,44 +16,52 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
 
   // Example of how to do it without informed
   const defaultValues: CreateServiceInput = {
-    damage1041: undefined,
-    involved_elements: undefined,
-    judge_in_charge: "",
-    magnitude1041: undefined,
-    other_occurrences: "",
-    other_units: "",
-    police_force_in_charge: "",
-    quantities1044: undefined,
-    rescue_type: undefined,
-    resources_used: undefined,
-    vehicles_used: "",
-    address: "Calle 123",
+    // Default
+    sub_type: undefined,
     type: "10.41",
-    affected_owner: "0",
-    affected_owner_description: "0",
-    alerted_by: "Alguien",
+    officer_in_charge: undefined,
+    date: new Date(),
     call_time: "00:00",
     departure_time: "01:00",
     arrival_time: "02:00",
     withdrawal_time: "02:01",
-    crew: "The Crew",
-    damage: "There was some damage",
-    description: "---",
-    fire_class: undefined,
-    sub_type: undefined,
-    fire_type_burned_surface: 0,
-    fire_type_description: "0",
-    fire_type_total_surface: 0,
-    locality: "Cap. Miranda",
-    magnitude: "Great",
-    neighborhood: "Centro",
-    officer_in_charge: undefined,
+    neighborhood: "",
+    locality: "",
+    address: "",
+    place: "",
+    alerted_by: "",
     phone: "+595",
-    place: "Cerca",
+    received_by: "",
+    crew: "",
+    description: "---",
+    volunteers: [],
+
+    // Fire
+    fire_type_description: "----",
+    fire_type_total_surface: 0,
+    fire_type_burned_surface: 0,
+    affected_owner: "",
+    affected_owner_description: "",
     possible_cause: undefined,
     possible_cause_other_description: "----",
-    received_by: "Someone",
-    volunteers: [],
+    magnitude: "---",
+    damage: "",
+    vehicles_used: "",
+    other_units: "",
+    other_occurrences: "",
+    fire_class: undefined,
+    police_force_in_charge: "",
+    judge_in_charge: "",
+    resources_used: undefined,
+
+    // Accident
+    damage1041: undefined,
+    quantities1044: undefined,
+    involved_elements: undefined,
+    magnitude1041: undefined,
+
+    // Rescue
+    rescue_type: undefined,
   };
 
   const handleSubmit = (formStateValues) => {
@@ -67,17 +76,13 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
   };
 
   return (
-    <div>
-      <h2>Crear Service</h2>
-
-      <Form
-        getApi={(formRef: FormApi<CreateServiceInput>) => setFormRefCreate(formRef)}
-        onSubmit={handleSubmit}
-        initialValues={defaultValues}
-      >
-        {({ formApi, formState }) => <ServiceForm formApi={formApi} formState={formState} />}
-      </Form>
-    </div>
+    <Form
+      getApi={(formRef: FormApi<CreateServiceInput>) => setFormRefCreate(formRef)}
+      onSubmit={handleSubmit}
+      initialValues={defaultValues}
+    >
+      {({ formApi, formState }) => <ServiceForm formApi={formApi} formState={formState} isCreate={true} />}
+    </Form>
   );
 };
 

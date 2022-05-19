@@ -3,10 +3,10 @@
 import moment from "moment";
 
 // For Development
-export const API_URL = "http://localhost:3000/graphql";
+// export const API_URL = "http://localhost:3000/graphql";
 
 // For Deploy
-//export const API_URL = "https://jncvbp-ms.herokuapp.com/graphql";
+export const API_URL = "https://jncvbp-ms.herokuapp.com/graphql";
 
 // Can be moved up to make the constants
 export const MODE_CREATE = "CREATE";
@@ -27,6 +27,12 @@ export const BLOOD_TYPES = [
   { id: "0+", description: "0 RH(+)" },
   { id: "0-", description: "0 RH(-)" },
 ];
+
+export const CODES = {
+  ACCIDENT: "10.41",
+  FIRE: "10.40",
+  RESCUE: "10.43",
+};
 
 export const VOLUNTEER_STATUS = [
   { id: "Active", description: "Activo" },
