@@ -40,6 +40,43 @@ export const VOLUNTEER_STATUS = [
   { id: "Deceased", description: "Muerto en combate" },
 ];
 
+export const DAMAGE_OPTIONS = [
+  { id: "peq", name: "Pequeña" },
+  { id: "mediana", name: "Mediana" },
+  { id: "grande", name: "Grande" },
+  { id: "total", name: "Total" },
+];
+
+export const AFFECTED_OWNER_OPTIONS = [
+  { id: "Estatal", name: "Estatal" },
+  { id: "Departamental", name: "Departamental" },
+  { id: "Municipal", name: "Municipal" },
+  { id: "Particular", name: "Particular" },
+];
+
+export const DAMAGE_1041_OPTIONS = [
+  { id: "materiales", name: "Materiales" },
+  { id: "heridos", name: "Heridos" },
+  { id: "heridos_atrapados", name: "Heridos Atrapados" },
+  { id: "incendios", name: "Incendios" },
+  { id: "mat_pel", name: "Materiales Peligrosos" },
+];
+
+export const INVOLVED_ELEMENTS_OPTIONS = [
+  { id: "peatones", name: "Peatones" },
+  { id: "motos", name: "Motos" },
+  { id: "vehiculos_livianos", name: "Vehículos livianos" },
+  { id: "vehiculos_pesados", name: "Vehículos pesados" },
+  { id: "buses", name: "Buses" },
+];
+
+export const MAGNITUDE_1041_OPTIONS = [
+  { id: "cinturon_conductor", name: "Cinturón Conductor" },
+  { id: "cinturon_acomp", name: "Cinturón Acompañante" },
+  { id: "casco_conductor", name: "Casco Conductor" },
+  { id: "casco_acomp", name: "Casco Acompañante" },
+];
+
 export const get_formatted_volunteers = (volunteers) =>
   volunteers
     .map((volunteer) => volunteer.name)

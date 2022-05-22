@@ -5,6 +5,7 @@ import { CreateServiceInput, UpdateServiceInput } from "types";
 
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import TimePicker from "react-time-picker";
+import { ErrorText, notEmptyValidation } from "../../utils/Validations";
 
 type DefaultServiceFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
@@ -93,7 +94,14 @@ const DefaultServiceView = ({
         <Col md="3">
           <Form.Group>
             <label>Localidad</label>
-            <Text className="form-control" field="locality" type="text" />
+            <ErrorText
+              className="form-control"
+              field="locality"
+              type="text"
+              validateOnChange
+              validateOnBlur
+              validate={notEmptyValidation}
+            />
           </Form.Group>
         </Col>
         <Col md="3">
