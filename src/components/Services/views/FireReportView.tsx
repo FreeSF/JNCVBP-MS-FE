@@ -5,7 +5,7 @@ import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "in
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { CreateServiceInput, UpdateServiceInput } from "types";
 import ResourcesField from "../fields/ResourcesField";
-import { CODES } from "utils/constants";
+import { AFFECTED_OWNER_OPTIONS, CODES, DAMAGE_OPTIONS } from "utils/constants";
 
 type FireReportFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
@@ -111,7 +111,14 @@ const FireReportView = ({
         <Col md="3">
           <Form.Group>
             <label>Destrucción</label>
-            <Text className="form-control" field="damage" type="text" />
+            <InformedSelect className="form-control" field="damage" initialValue={isCreate ? "Pequeña" : undefined}>
+              {DAMAGE_OPTIONS.map((option) => (
+                <option value={option.id} key={option.id}>
+                  {option.name}
+                </option>
+              ))}
+            </InformedSelect>
+            {/*<Text className="form-control" field="damage" type="text"/>*/}
           </Form.Group>
         </Col>
         <Col md="3">
@@ -159,10 +166,11 @@ const FireReportView = ({
               field="affected_owner"
               initialValue={isCreate ? "Estatal" : undefined}
             >
-              <option value="Estatal">Estatal</option>
-              <option value="Departamental">Departamental</option>
-              <option value="Municipal">Municipal</option>
-              <option value="Particular">Particular</option>
+              {AFFECTED_OWNER_OPTIONS.map((option) => (
+                <option value={option.id} key={option.id}>
+                  {option.name}
+                </option>
+              ))}
             </InformedSelect>
           </Form.Group>
         </Col>

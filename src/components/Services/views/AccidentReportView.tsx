@@ -6,7 +6,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { CreateServiceInput, UpdateServiceInput } from "types";
 import ResourcesField from "../fields/ResourcesField";
 import Quantities1040Field from "../fields/Quantities1040Field";
-import { CODES } from "utils/constants";
+import { CODES, DAMAGE_1041_OPTIONS, INVOLVED_ELEMENTS_OPTIONS, MAGNITUDE_1041_OPTIONS } from "utils/constants";
 
 type AccidentReportFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
@@ -54,11 +54,11 @@ const AccidentReportView = ({ formApi, formState, arrayRemove, isCreate }: Accid
                         field={`damage1041[${index}]`}
                         initialValue={isCreate ? "materiales" : undefined}
                       >
-                        <option value="materiales">Daños Materiales</option>
-                        <option value="heridos">Con Heridos</option>
-                        <option value="heridos_atrapados">Con Heridos Atrapados</option>
-                        <option value="incendios">Con Incendios</option>
-                        <option value="mat_pel">Con Mat-Pel</option>
+                        {DAMAGE_1041_OPTIONS.map((option) => (
+                          <option value={option.id} key={option.id}>
+                            {option.name}
+                          </option>
+                        ))}
                         {/* create constants */}
                       </InformedSelect>
                     </Form.Group>
@@ -118,11 +118,11 @@ const AccidentReportView = ({ formApi, formState, arrayRemove, isCreate }: Accid
                         field={`involved_elements[${index}]`}
                         initialValue={isCreate ? "peatones" : undefined}
                       >
-                        <option value="peatones">Peatones</option>
-                        <option value="motos">Motos</option>
-                        <option value="vehiculos_livianos">Vehículos livianos</option>
-                        <option value="vehiculos_pesados">Vehículos pesados</option>
-                        <option value="buses">Buses</option>
+                        {INVOLVED_ELEMENTS_OPTIONS.map((option) => (
+                          <option value={option.id} key={option.id}>
+                            {option.name}
+                          </option>
+                        ))}
                         {/* create constants */}
                       </InformedSelect>
                     </Form.Group>
@@ -157,7 +157,7 @@ const AccidentReportView = ({ formApi, formState, arrayRemove, isCreate }: Accid
               onClick={(event) => {
                 event.preventDefault();
                 const newMagnitudes = formState.values.magnitude1041 || [];
-                newMagnitudes.push("cinturon_conductor");
+                newMagnitudes.push(MAGNITUDE_1041_OPTIONS[0].id);
                 formApi.setValues({ ...formState.values, magnitude1041: newMagnitudes });
               }}
             >
@@ -175,12 +175,13 @@ const AccidentReportView = ({ formApi, formState, arrayRemove, isCreate }: Accid
                       <InformedSelect
                         className="form-control"
                         field={`magnitude1041[${index}]`}
-                        initialValue={isCreate ? "cinturon_conductor" : undefined}
+                        initialValue={isCreate ? MAGNITUDE_1041_OPTIONS[0].id : undefined}
                       >
-                        <option value="cinturon_conductor">Cinturón Conductor</option>
-                        <option value="cinturon_acomp">Cinturón Acompañante</option>
-                        <option value="casco_conductor">Casco Conductor</option>
-                        <option value="casco_acomp">Casco Acompañante</option>
+                        {MAGNITUDE_1041_OPTIONS.map((option) => (
+                          <option value={option.id} key={option.id}>
+                            {option.name}
+                          </option>
+                        ))}
                         {/* create constants */}
                       </InformedSelect>
                     </Form.Group>
