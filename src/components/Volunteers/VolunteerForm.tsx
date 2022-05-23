@@ -15,6 +15,7 @@ import {
 } from "../../utils/constants";
 import { GET_RANKS } from "queries/ranks";
 import { CreateVolunteerInput, GetRanksQuery, UpdateVolunteerInput } from "types";
+import { ErrorText, notEmptyValidation } from "components/utils/Validations";
 
 type VolunteerProps = {
   volunteer: CreateVolunteerInput | UpdateVolunteerInput;
@@ -40,20 +41,29 @@ const VolunteerForm = ({ volunteer, formApi, formState }: VolunteerProps) => {
               <Col md="6">
                 <Form.Group>
                   <label>Nombre (*)</label>
-                  <Text
+                  <ErrorText
                     className="form-control"
                     field="name"
-                    minLength={3}
                     placeholder="Nombre y Apellido"
-                    required
                     type="text"
+                    validateOnChange
+                    validateOnBlur
+                    validate={notEmptyValidation}
                   />
                 </Form.Group>
               </Col>
               <Col md="6">
                 <Form.Group>
                   <label> Código (*)</label>
-                  <Text className="form-control" field="code" minLength={3} placeholder="Código" required type="text" />
+                  <ErrorText
+                    className="form-control"
+                    field="code"
+                    placeholder="Código"
+                    type="text"
+                    validateOnChange
+                    validateOnBlur
+                    validate={notEmptyValidation}
+                  />
                 </Form.Group>
               </Col>
             </Row>
@@ -118,6 +128,8 @@ const VolunteerForm = ({ volunteer, formApi, formState }: VolunteerProps) => {
                   <DatePicker
                     className="form-control"
                     locale="es"
+                    showYearDropdown
+                    maxDate={new Date()}
                     onChange={(value) => {
                       formApi.setValues({ ...formState.values, incorporation_date: value });
                     }}
@@ -133,6 +145,8 @@ const VolunteerForm = ({ volunteer, formApi, formState }: VolunteerProps) => {
                   <DatePicker
                     className="form-control"
                     locale="es"
+                    showYearDropdown
+                    maxDate={new Date()}
                     onChange={(value) => {
                       formApi.setValues({ ...formState.values, birth_date: value });
                     }}
@@ -165,12 +179,12 @@ const VolunteerForm = ({ volunteer, formApi, formState }: VolunteerProps) => {
       <Col md="4">
         <Card className="card-user">
           <div className="card-image">
-            <img alt="..." src={require("../../assets/img/photo-1431578500526-4d9613015464.jpeg")}></img>
+            <img alt="..." src={require("../../assets/img/incendio.jpg")}></img>
           </div>
           <Card.Body>
             <div className="author">
               <a href="#" onClick={(e) => e.preventDefault()}>
-                <img alt="..." className="avatar border-gray" src={require("../../assets/img/faces/face-3.jpg")}></img>
+                <img alt="..." className="avatar border-gray" src={require("../../assets/img/faces/face-0.jpg")}></img>
                 <h5 className="title">{`${formState.values?.name || "Nombre"} (${get_volunteer_status(
                   formState.values?.status
                 )})`}</h5>

@@ -35,9 +35,9 @@ export const CODES = {
 };
 
 export const VOLUNTEER_STATUS = [
-  { id: "Active", description: "Activo" },
-  { id: "Inactive", description: "Inactivo" },
-  { id: "Deceased", description: "Muerto en combate" },
+  { id: "active", description: "Activo" },
+  { id: "inactive", description: "Inactivo" },
+  { id: "deceased", description: "Muerto en combate" },
 ];
 
 export const DAMAGE_OPTIONS = [
@@ -48,10 +48,10 @@ export const DAMAGE_OPTIONS = [
 ];
 
 export const AFFECTED_OWNER_OPTIONS = [
-  { id: "Estatal", name: "Estatal" },
-  { id: "Departamental", name: "Departamental" },
-  { id: "Municipal", name: "Municipal" },
-  { id: "Particular", name: "Particular" },
+  { id: "estatal", name: "Estatal" },
+  { id: "departamental", name: "Departamental" },
+  { id: "municipal", name: "Municipal" },
+  { id: "particular", name: "Particular" },
 ];
 
 export const DAMAGE_1041_OPTIONS = [
@@ -103,7 +103,7 @@ export const get_formatted_datetime = (date) => {
 export const volunteerDefaultValues = {
   name: undefined,
   code: undefined,
-  status: "Active",
+  status: VOLUNTEER_STATUS[0].id,
   blood_type: "Not Set",
   rank: { id: null },
 };
