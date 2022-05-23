@@ -22,7 +22,7 @@ const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
         input: formRefCreate.getState().values,
       },
       refetchQueries: [{ query: GET_VOLUNTEERS }],
-    }).then((value) => {
+    }).then((_value) => {
       props.history.push("/volunteers");
     });
   };
