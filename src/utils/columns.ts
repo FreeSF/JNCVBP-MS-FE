@@ -82,7 +82,6 @@ export const get_training_columns = (options) => {
       text: "Voluntarios",
       formatter: (cell: VolunteerAllFieldsFragment[]) => get_formatted_volunteers(cell),
     },
-    ,
     options,
   ];
 

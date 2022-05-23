@@ -9,7 +9,7 @@ import { CreateGuardInput, CreateGuardMutation, CreateGuardMutationVariables } f
 import { CREATE_GUARD, GET_GUARDS } from "../../queries/Guards";
 import GuardForm from "./GuardForm";
 
-const CreateGuardPage = (props) => {
+const CreateGuardPage = (_props) => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateGuardInput>>(null);
   const [volunteers, setVolunteers] = useState<[]>([]);
 
@@ -17,8 +17,8 @@ const CreateGuardPage = (props) => {
   const history = useHistory();
 
   const defaultValues: CreateGuardInput = {
-    start_time: new Date().getTime(),
-    end_time: new Date().getTime(),
+    start_time: new Date(new Date().setHours(8, 0, 0, 0)).getTime(), // default 06:00
+    end_time: new Date(new Date().setHours(16, 0, 0, 0)).getTime(), // default 16:00
     volunteers: [],
   };
 
@@ -32,8 +32,8 @@ const CreateGuardPage = (props) => {
         },
       },
       refetchQueries: [{ query: GET_GUARDS }],
-    }).then((value) => {
-      props.history.push("/guards");
+    }).then((_value) => {
+      history.push("/guards");
     });
   };
 
