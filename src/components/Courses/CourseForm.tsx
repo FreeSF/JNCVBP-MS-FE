@@ -9,6 +9,7 @@ import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { GetVolunteersQuery } from "types";
 import { GET_VOLUNTEERS } from "queries/volunteers";
 import Spinner from "components/spinner";
+import { ErrorText, notEmptyValidation } from "components/utils/Validations";
 
 type CourseFormProps = {
   formApi: any; //FormApi<CreateCourseInput | UpdateCourseInput>;
@@ -34,14 +35,15 @@ const CourseForm = ({ formApi, formState, details, setDetails }: CourseFormProps
             <Row>
               <Col md="6">
                 <Form.Group>
-                  <label>Descripción</label>
-                  <Text
+                  <label>Descripción (*)</label>
+                  <ErrorText
                     className="form-control"
                     field="description"
-                    minLength={3}
                     placeholder="Descripción"
-                    required
                     type="text"
+                    validateOnChange
+                    validateOnBlur
+                    validate={notEmptyValidation}
                   />
                 </Form.Group>
               </Col>
@@ -51,6 +53,7 @@ const CourseForm = ({ formApi, formState, details, setDetails }: CourseFormProps
                   <DatePicker
                     className="form-control"
                     locale="es"
+                    maxDate={new Date()}
                     onChange={(value) => {
                       formApi.setValues({ ...formState.values, date: value });
                     }}
@@ -119,13 +122,15 @@ const CourseForm = ({ formApi, formState, details, setDetails }: CourseFormProps
                     </Col>
                     <Col md="4">
                       <Form.Group>
-                        <Text
+                        <ErrorText
                           className="form-control"
                           field={`details[${index}].score`}
                           initialValue={currentDetail.score}
                           placeholder="Calificación"
-                          required
                           type="text"
+                          validateOnChange
+                          validateOnBlur
+                          validate={notEmptyValidation}
                         />
                       </Form.Group>
                     </Col>

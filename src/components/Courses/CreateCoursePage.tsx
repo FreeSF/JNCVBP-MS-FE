@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import { Form, FormApi } from "informed";
 import { Container } from "react-bootstrap";
-// import _ from "lodash";
 
 import { useMutation, useQuery } from "react-apollo";
 import { useHistory } from "react-router-dom";
 
-import {
-  CreateCourseInput,
-  CreateCourseMutation,
-  CreateCourseMutationVariables,
-  GetVolunteersQuery,
-} from "../../types";
-import { GET_VOLUNTEERS } from "../../queries/volunteers";
+import { CreateCourseInput, CreateCourseMutation, CreateCourseMutationVariables } from "../../types";
 import { CREATE_COURSE, GET_COURSES } from "../../queries/Courses";
-import CourseForm from "./CourseForm";
-import Spinner from "../spinner";
 
-const CreateCoursePage = (props) => {
+import CourseForm from "./CourseForm";
+
+const CreateCoursePage = (_props) => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateCourseInput>>(null);
   const [details, setDetails] = useState<[]>([]);
 
@@ -40,8 +33,8 @@ const CreateCoursePage = (props) => {
         },
       },
       refetchQueries: [{ query: GET_COURSES }],
-    }).then((value) => {
-      props.history.push("/courses");
+    }).then((_value) => {
+      history.push("/courses");
     });
   };
 
