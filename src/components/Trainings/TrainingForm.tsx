@@ -9,6 +9,7 @@ import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { CreateTrainingInput, GetVolunteersQuery, UpdateTrainingInput } from "../../types";
 import { GET_VOLUNTEERS } from "queries/volunteers";
 import Spinner from "components/spinner";
+import { ErrorText, notEmptyValidation } from "components/utils/Validations";
 
 type TrainingFormProps = {
   formApi: any; // FormApi<CreateTrainingInput | UpdateTrainingInput>;
@@ -35,14 +36,15 @@ const TrainingForm = ({ formApi, formState, volunteers, setVolunteers }: Trainin
             <Row>
               <Col md="6">
                 <Form.Group>
-                  <label>Descripción</label>
-                  <Text
+                  <label>Descripción (*)</label>
+                  <ErrorText
                     className="form-control"
                     field="description"
-                    minLength={3}
                     placeholder="Descripción"
-                    required
                     type="text"
+                    validateOnChange
+                    validateOnBlur
+                    validate={notEmptyValidation}
                   />
                 </Form.Group>
               </Col>
@@ -52,6 +54,8 @@ const TrainingForm = ({ formApi, formState, volunteers, setVolunteers }: Trainin
                   <DatePicker
                     className="form-control"
                     locale="es"
+                    showYearDropdown
+                    maxDate={new Date()}
                     onChange={(value) => {
                       formApi.setValues({ ...formState.values, date: value });
                     }}
@@ -136,7 +140,7 @@ const TrainingForm = ({ formApi, formState, volunteers, setVolunteers }: Trainin
                 </React.Fragment>
               );
             })}
-            <Button className="btn-fill btn-pull-right" variant="info" type="submit">
+            <Button disabled={volunteers.length === 0} className="btn-fill btn-pull-right" variant="info" type="submit">
               Guardar Práctica
             </Button>
             <div className="clearfix"></div>

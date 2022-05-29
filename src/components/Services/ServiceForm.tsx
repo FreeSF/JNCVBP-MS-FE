@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "informed";
 import _ from "lodash";
 
@@ -12,13 +12,14 @@ import {
   GetFireClassesQuery,
   GetSubTypesQuery,
   GetVolunteersQuery,
-  OnlyIdVolunteerInput,
   UpdateServiceInput,
 } from "../../types";
+
 import { GET_VOLUNTEERS } from "../../queries/volunteers";
 import { GET_SUB_TYPES } from "../../queries/subType";
 import { GET_FIRE_CAUSES } from "../../queries/fireCause";
 import { GET_FIRE_CLASSES } from "../../queries/fireClass";
+
 import Spinner from "../spinner";
 import { CODES } from "utils/constants";
 
@@ -106,6 +107,7 @@ const ServiceForm = (props: theProps) => {
                   <DatePicker
                     className="form-control"
                     locale="es"
+                    maxDate={new Date()}
                     onChange={(value) => {
                       formApi.setValues({ ...formState.values, date: value });
                     }}

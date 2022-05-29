@@ -9,6 +9,7 @@ import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { GetVolunteersQuery } from "types";
 import { GET_VOLUNTEERS } from "queries/volunteers";
 import Spinner from "components/spinner";
+import { ErrorText, notEmptyValidation } from "components/utils/Validations";
 
 type CourseFormProps = {
   formApi: any; //FormApi<CreateCourseInput | UpdateCourseInput>;
@@ -34,14 +35,15 @@ const CourseForm = ({ formApi, formState, details, setDetails }: CourseFormProps
             <Row>
               <Col md="6">
                 <Form.Group>
-                  <label>Descripción</label>
-                  <Text
+                  <label>Descripción (*)</label>
+                  <ErrorText
                     className="form-control"
                     field="description"
-                    minLength={3}
                     placeholder="Descripción"
-                    required
                     type="text"
+                    validateOnChange
+                    validateOnBlur
+                    validate={notEmptyValidation}
                   />
                 </Form.Group>
               </Col>
@@ -51,6 +53,7 @@ const CourseForm = ({ formApi, formState, details, setDetails }: CourseFormProps
                   <DatePicker
                     className="form-control"
                     locale="es"
+                    maxDate={new Date()}
                     onChange={(value) => {
                       formApi.setValues({ ...formState.values, date: value });
                     }}
@@ -68,8 +71,8 @@ const CourseForm = ({ formApi, formState, details, setDetails }: CourseFormProps
                   <Button
                     className="pull-right ml-2"
                     variant="success"
-                    disabled={details?.length == volunteerList.length}
-                    onClick={(event) => {
+                    disabled={details?.length === volunteerList.length}
+                    onClick={(_event) => {
                       const selectedVolunteers = details.map((details) => details.volunteer._id);
                       const newVolunteer = volunteerList.find(
                         (volunteer) => !selectedVolunteers.includes(volunteer.id)
@@ -90,7 +93,8 @@ const CourseForm = ({ formApi, formState, details, setDetails }: CourseFormProps
             {details?.map((currentDetail, index) => {
               const selectedVolunteers = details.map((detail) => detail.volunteer._id);
               const nonSelectedVolunteers = volunteerList.filter(
-                (volunteer) => !selectedVolunteers.includes(volunteer.id) || volunteer.id == currentDetail.volunteer._id
+                (volunteer) =>
+                  !selectedVolunteers.includes(volunteer.id) || volunteer.id === currentDetail.volunteer._id
               );
 
               return (
@@ -103,7 +107,7 @@ const CourseForm = ({ formApi, formState, details, setDetails }: CourseFormProps
                           className="form-control"
                           field={`details[${index}].volunteer._id`}
                           initialValue={currentDetail.volunteer._id}
-                          onChange={(value) => {
+                          onChange={(_value) => {
                             const newDetails = _.cloneDeep(details);
                             newDetails[index].volunteer._id = formState?.values?.details[index].volunteer._id;
                             setDetails(newDetails);
@@ -119,13 +123,15 @@ const CourseForm = ({ formApi, formState, details, setDetails }: CourseFormProps
                     </Col>
                     <Col md="4">
                       <Form.Group>
-                        <Text
+                        <ErrorText
                           className="form-control"
                           field={`details[${index}].score`}
                           initialValue={currentDetail.score}
                           placeholder="Calificación"
-                          required
                           type="text"
+                          validateOnChange
+                          validateOnBlur
+                          validate={notEmptyValidation}
                         />
                       </Form.Group>
                     </Col>
@@ -134,7 +140,7 @@ const CourseForm = ({ formApi, formState, details, setDetails }: CourseFormProps
                         style={{ height: "40px" }}
                         className="btn-md"
                         variant="danger"
-                        onClick={(event) => {
+                        onClick={(_event) => {
                           let newDetails = _.cloneDeep(formState.values.details);
                           newDetails.splice(index, 1);
                           newDetails = newDetails.filter((x) => x);
@@ -150,7 +156,7 @@ const CourseForm = ({ formApi, formState, details, setDetails }: CourseFormProps
               );
             })}
 
-            <Button className="btn-fill btn-pull-right" variant="info" type="submit">
+            <Button disabled={details?.length === 0} className="btn-fill btn-pull-right" variant="info" type="submit">
               Guardar Curso
             </Button>
             <div className="clearfix"></div>

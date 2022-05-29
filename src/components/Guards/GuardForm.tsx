@@ -9,6 +9,7 @@ import { CreateGuardInput, GetVolunteersQuery, UpdateGuardInput } from "types";
 import Spinner from "components/spinner";
 import { GET_VOLUNTEERS } from "queries/volunteers";
 import { useQuery } from "react-apollo";
+import { addDays } from "date-fns";
 
 type GuardFormProps = {
   formApi: FormApi<CreateGuardInput | UpdateGuardInput>;
@@ -18,13 +19,7 @@ type GuardFormProps = {
   initialVolunteersQuantity?: number; // Todo improve with initial quantity
 };
 
-const GuardForm = ({
-  formApi,
-  formState,
-  volunteers,
-  setVolunteers,
-  initialVolunteersQuantity = 0,
-}: GuardFormProps) => {
+const GuardForm = ({ formApi, formState, volunteers, setVolunteers }: GuardFormProps) => {
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
   if (getVolunteersQuery.loading) return <Spinner />;
 
@@ -50,6 +45,7 @@ const GuardForm = ({
                     }}
                     value={formState.values.start_time && new Date(formState.values.start_time)}
                     clearIcon={null}
+                    maxDate={new Date()}
                     maxDetail="minute"
                     minDetail="month"
                   />
@@ -67,6 +63,7 @@ const GuardForm = ({
                     }}
                     value={formState.values.end_time && new Date(formState.values.end_time)}
                     clearIcon={null}
+                    maxDate={addDays(new Date(), 1)}
                     maxDetail="minute"
                     minDetail="month"
                   />
@@ -78,11 +75,11 @@ const GuardForm = ({
             <Row>
               <Col md="12">
                 <Form.Group>
-                  <h4 style={{ display: "inline" }}>Asistencia de Voluntarios</h4>
+                  <h4 style={{ display: "inline" }}>Asistencia de Voluntarios (*)</h4>
                   <Button
                     className="pull-right ml-2"
                     variant="success"
-                    disabled={volunteers.length == volunteerList.length}
+                    disabled={volunteers.length === volunteerList.length}
                     onClick={(event) => {
                       const selectedVolunteers = volunteers.map((volunteer) => volunteer._id);
                       const newVolunteer = volunteerList.find(
@@ -116,7 +113,7 @@ const GuardForm = ({
                           className="form-control"
                           field={`volunteers[${index}]._id`}
                           initialValue={currentVolunteer._id}
-                          onChange={(value) => {
+                          onChange={(_value) => {
                             const newVolunteers = _.cloneDeep(volunteers);
                             newVolunteers[index]._id = formState?.values?.volunteers[index]._id;
                             setVolunteers(newVolunteers);
@@ -135,7 +132,7 @@ const GuardForm = ({
                         style={{ height: "40px" }}
                         className="btn-md"
                         variant="danger"
-                        onClick={(event) => {
+                        onClick={(_event) => {
                           const newVolunteers = _.cloneDeep(volunteers);
                           newVolunteers.splice(index, 1);
                           formApi.setValues({ ...formState.values, volunteers: newVolunteers || [] });
@@ -150,7 +147,7 @@ const GuardForm = ({
               );
             })}
 
-            <Button className="btn-fill btn-pull-right" variant="info" type="submit">
+            <Button disabled={volunteers.length === 0} className="btn-fill btn-pull-right" variant="info" type="submit">
               Crear Guardia
             </Button>
             <div className="clearfix"></div>
