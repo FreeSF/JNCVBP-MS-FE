@@ -2,6 +2,8 @@ import React from "react";
 import ChartistGraph from "react-chartist";
 import { Button, Card, Table, Container, Row, Col, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import Select from "react-select";
+import { BlobProvider } from "@react-pdf/renderer";
+import GeneralReport from "../reports/GeneralReport";
 const HomePage = () => {
   return (
     <>
@@ -15,6 +17,13 @@ const HomePage = () => {
             ]}
             value={{ value: "2022", label: "2022" }}
           />
+          <BlobProvider document={<GeneralReport />}>
+            {({ url }) => (
+              <Button href={url} target="_blank" className="btn-fill btn-sm" variant="info">
+                Reporte Mensual
+              </Button>
+            )}
+          </BlobProvider>
         </div>
         <Row>
           <Col lg="3" sm="6">

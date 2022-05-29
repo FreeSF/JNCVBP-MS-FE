@@ -40,11 +40,16 @@ export const VOLUNTEER_STATUS = [
   { id: "Deceased", description: "Muerto en combate" },
 ];
 
+const DAMAGE_PEQ_ID = "peq";
+const DAMAGE_MEDIANA_ID = "mediana";
+const DAMAGE_GRANDE_ID = "grande";
+const DAMAGE_TOTAL_ID = "total";
+
 export const DAMAGE_OPTIONS = [
-  { id: "peq", name: "Pequeña" },
-  { id: "mediana", name: "Mediana" },
-  { id: "grande", name: "Grande" },
-  { id: "total", name: "Total" },
+  { id: DAMAGE_PEQ_ID, name: "Pequeña" },
+  { id: DAMAGE_MEDIANA_ID, name: "Mediana" },
+  { id: DAMAGE_GRANDE_ID, name: "Grande" },
+  { id: DAMAGE_TOTAL_ID, name: "Total" },
 ];
 
 export const AFFECTED_OWNER_OPTIONS = [
@@ -75,6 +80,14 @@ export const MAGNITUDE_1041_OPTIONS = [
   { id: "cinturon_acomp", name: "Cinturón Acompañante" },
   { id: "casco_conductor", name: "Casco Conductor" },
   { id: "casco_acomp", name: "Casco Acompañante" },
+];
+
+export const QUANTITIES_1044_1045_OPTIONS = [
+  { id: "ilesos", name: "Ileso/s" },
+  { id: "heridos", name: "Herido/s" },
+  { id: "fallecidos", name: "Fallecido/s" },
+  { id: "rescates", name: "Rescate/s" },
+  { id: "enfermos", name: "Enfermo/s" },
 ];
 
 export const get_formatted_volunteers = (volunteers) =>
