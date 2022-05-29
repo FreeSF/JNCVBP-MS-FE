@@ -107,19 +107,40 @@ const DefaultServiceView = ({
         <Col md="3">
           <Form.Group>
             <label>Barrio</label>
-            <Text className="form-control" field="neighborhood" type="text" />
+            <ErrorText
+              className="form-control"
+              field="neighborhood"
+              type="text"
+              validateOnChange
+              validateOnBlur
+              validate={notEmptyValidation}
+            />
           </Form.Group>
         </Col>
         <Col md="3">
           <Form.Group>
             <label>Dirección</label>
-            <Text className="form-control" field="address" type="text" />
+            <ErrorText
+              className="form-control"
+              field="address"
+              type="text"
+              validateOnChange
+              validateOnBlur
+              validate={notEmptyValidation}
+            />
           </Form.Group>
         </Col>
         <Col md="3">
           <Form.Group>
             <label>Lugar</label>
-            <Text className="form-control" field="place" type="text" />
+            <ErrorText
+              className="form-control"
+              field="place"
+              type="text"
+              validateOnChange
+              validateOnBlur
+              validate={notEmptyValidation}
+            />
           </Form.Group>
         </Col>
       </Row>
@@ -127,7 +148,14 @@ const DefaultServiceView = ({
         <Col md="3">
           <Form.Group>
             <label>Comunicado por</label>
-            <Text className="form-control" field="alerted_by" type="text" />
+            <ErrorText
+              className="form-control"
+              field="alerted_by"
+              type="text"
+              validateOnChange
+              validateOnBlur
+              validate={notEmptyValidation}
+            />
           </Form.Group>
         </Col>
         <Col md="3">
@@ -145,7 +173,14 @@ const DefaultServiceView = ({
         <Col md="3">
           <Form.Group>
             <label>Equipo</label>
-            <Text className="form-control" field="crew" type="text" />
+            <ErrorText
+              className="form-control"
+              field="crew"
+              type="text"
+              validateOnChange
+              validateOnBlur
+              validate={notEmptyValidation}
+            />
           </Form.Group>
         </Col>
       </Row>

@@ -11,8 +11,6 @@ export const ErrorText = asField((props) => {
   return (
     <div>
       <BasicText
-        validateOnChange
-        validateOnBlur
         fieldState={props.fieldState}
         {...props}
         style={{
@@ -29,4 +27,4 @@ export const ErrorText = asField((props) => {
 });
 
 export const notEmptyValidation = (value) =>
-  !value || value.toString().length === 0 ? "This field is required" : undefined;
+  !value || value.toString().trim().length === 0 ? "Este campo es requerido" : undefined;
