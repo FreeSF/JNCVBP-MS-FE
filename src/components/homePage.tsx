@@ -4,7 +4,16 @@ import { Button, Card, Table, Container, Row, Col, Form, OverlayTrigger, Tooltip
 import Select from "react-select";
 import { BlobProvider } from "@react-pdf/renderer";
 import GeneralReport from "../reports/GeneralReport";
+import { useQuery } from "react-apollo";
+import { GetReportQuery, GetVolunteersQuery } from "../types";
+import { GET_REPORT } from "../queries/Reports";
+import Spinner from "./spinner";
 const HomePage = () => {
+  const query = useQuery<GetReportQuery>(GET_REPORT, {
+    variables: { startDate: 1653870509762, endDate: 1653887013671 },
+  });
+  if (query.loading) return <Spinner />;
+
   return (
     <>
       <Container fluid>
@@ -17,7 +26,7 @@ const HomePage = () => {
             ]}
             value={{ value: "2022", label: "2022" }}
           />
-          <BlobProvider document={<GeneralReport />}>
+          <BlobProvider document={<GeneralReport report={query.data.report} />}>
             {({ url }) => (
               <Button href={url} target="_blank" className="btn-fill btn-sm" variant="info">
                 Reporte Mensual

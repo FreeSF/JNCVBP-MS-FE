@@ -111,7 +111,11 @@ const FireReportView = ({
         <Col md="3">
           <Form.Group>
             <label>Destrucción</label>
-            <InformedSelect className="form-control" field="damage" initialValue={isCreate ? "Pequeña" : undefined}>
+            <InformedSelect
+              className="form-control"
+              field="damage"
+              initialValue={isCreate ? DAMAGE_OPTIONS[0].id : undefined}
+            >
               {DAMAGE_OPTIONS.map((option) => (
                 <option value={option.id} key={option.id}>
                   {option.name}
@@ -164,7 +168,7 @@ const FireReportView = ({
             <InformedSelect
               className="form-control"
               field="affected_owner"
-              initialValue={isCreate ? "Estatal" : undefined}
+              initialValue={isCreate ? AFFECTED_OWNER_OPTIONS[0].id : undefined}
             >
               {AFFECTED_OWNER_OPTIONS.map((option) => (
                 <option value={option.id} key={option.id}>

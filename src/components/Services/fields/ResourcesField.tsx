@@ -4,6 +4,7 @@ import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "in
 
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { CreateServiceInput, UpdateServiceInput } from "types";
+import { RESOURCES_OPTIONS } from "../../../utils/constants";
 
 type FireReportFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
@@ -47,19 +48,13 @@ const ResourcesField = ({ formApi, formState, arrayRemove, isCreate }: FireRepor
                   <InformedSelect
                     className="form-control"
                     field={`resources_used[${index}].resource`}
-                    initialValue={isCreate ? "combustible" : undefined}
+                    initialValue={isCreate ? RESOURCES_OPTIONS[0].id : undefined}
                   >
-                    <option value="combustible">Combustible (L)</option>
-                    <option value="bomberos">Bomberos</option>
-                    <option value="kilometros">Km. recorridos (Km)</option>
-                    <option value="tiempo">Tiempo total (min)</option>
-                    <option value="agua">Agua (L)</option>
-                    <option value="polvo">Polvo químico</option>
-                    <option value="gas">Gas carbónico (Kg)</option>
-                    <option value="espuma">Espuma (L)</option>
-                    {/* <option value="otro">Otro</option> */}
-                    {/* create constants */}
-                    {/* Does it need a db entry? */}
+                    {RESOURCES_OPTIONS.map((option) => (
+                      <option value={option.id} key={option.id}>
+                        {option.name}
+                      </option>
+                    ))}
                   </InformedSelect>
                 </Form.Group>
               </Col>

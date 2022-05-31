@@ -90,6 +90,17 @@ export const QUANTITIES_1044_1045_OPTIONS = [
   { id: "enfermos", name: "Enfermo/s" },
 ];
 
+export const RESOURCES_OPTIONS = [
+  { id: "combustible", name: "Combustible (L)" },
+  { id: "bomberos", name: "Bomberos" },
+  { id: "kilometros", name: "Km. recorridos (Km)" },
+  { id: "tiempo", name: "Tiempo total (min)" },
+  { id: "agua", name: "Agua (L)" },
+  { id: "polvo", name: "Polvo químico" },
+  { id: "gas", name: "Gas carbónico (Kg)" },
+  { id: "espuma", name: "Espuma (L)" },
+];
+
 export const get_formatted_volunteers = (volunteers) =>
   volunteers
     .map((volunteer) => volunteer.name)
