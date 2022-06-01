@@ -26,12 +26,12 @@ const styles = StyleSheet.create({
 });
 
 interface TheProps {
-  report: Report;
+  report: any;
 }
 
 // Create Document Component
 const GeneralReport: React.FC<TheProps> = (props) => {
-  const { report } = props;
+  const report: Report = props.report;
 
   /*const getSubTypesDisabledQuery = useQuery<GetSubTypesDisabledQuery>(GET_SUB_TYPES_DISABLED);
   const getSubTypesQuery = useQuery<GetSubTypesQuery>(GET_SUB_TYPES);
@@ -60,7 +60,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
           <Text>Enviado desde: ________________</Text>
           <Text>Fax habilitado (para posible reenvío): ________________</Text>
           <Text>Fecha de cierre del informe: ________________</Text>
-          <Text>Cantidad total de Servicio: () ________________</Text>
+          <Text>Cantidad total de Servicio: {report.count1040} ________________</Text>
 
           <View style={{ border: "1px solid blue" }}>
             <Text style={{ backgroundColor: "black", color: "white", width: "60px" }}>10.40</Text>
@@ -113,7 +113,13 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               </View>
               <View style={{ border: "1px solid green", width: "33.33%" }}>
                 <Text>Recursos Utilizados</Text>
-                {/*report.resourcesUsedCount1040.map(row => (<View style={{ border: "1px solid magenta" }}><Text>{row.name} {row.count}</Text></View>))*/}
+                {report.resourcesUsedCount1040.map((row) => (
+                  <View style={{ border: "1px solid magenta" }}>
+                    <Text>
+                      {row.name} {row.count}
+                    </Text>
+                  </View>
+                ))}
               </View>
               <View style={{ border: "1px solid green", width: "33.33%" }}>
                 <Text>Móviles / Km.</Text>
@@ -123,6 +129,18 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                 </View>
               </View>
             </View>
+
+            <View style={{ border: "1px solid red", flexDirection: "row" }}>
+              <Text>
+                Mencione el mayor problema presente y el motivo en los servicios según la hoja 10.40
+                ___________________________________________
+              </Text>
+            </View>
+          </View>
+
+          <View style={{ border: "1px solid blue" }}>
+            <Text style={{ backgroundColor: "black", color: "white", width: "60px" }}>10.41</Text>
+            <Text style={{ textTransform: "uppercase" }}>Cantidad Global de 10.41: () ________________</Text>
           </View>
         </View>
       </Page>

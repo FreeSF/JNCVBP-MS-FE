@@ -502,9 +502,14 @@ export type Report = {
   __typename?: "Report";
   date?: Maybe<Scalars["DateTime"]>;
   subTypeCount?: Maybe<Array<Detail>>;
+  count1040?: Maybe<Scalars["Float"]>;
+  count1041?: Maybe<Scalars["Float"]>;
+  count1043?: Maybe<Scalars["Float"]>;
   damageCount?: Maybe<Array<Detail>>;
   quantities1044Count?: Maybe<Array<Detail>>;
   possibleCausesCount?: Maybe<Array<Detail>>;
+  resourcesUsedCount1040?: Maybe<Array<Detail>>;
+  resourcesUsedCount1041?: Maybe<Array<Detail>>;
 };
 
 export type ResourceUsed = {
@@ -867,11 +872,15 @@ export type RemoveGuardMutation = { __typename?: "Mutation" } & {
   removeGuard: { __typename?: "Guard" } & GuardAllFieldsFragment;
 };
 
-export type ReportAllFieldsFragment = { __typename?: "Report" } & Pick<Report, "date"> & {
+export type ReportAllFieldsFragment = { __typename?: "Report" } & Pick<
+  Report,
+  "date" | "count1040" | "count1041" | "count1043"
+> & {
     subTypeCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
     damageCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
     quantities1044Count?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
     possibleCausesCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    resourcesUsedCount1040?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
   };
 
 export type GetReportQueryVariables = Exact<{
@@ -1264,6 +1273,9 @@ export const ReportAllFieldsFragmentDoc = gql`
       name
       count
     }
+    count1040
+    count1041
+    count1043
     damageCount {
       id
       count
@@ -1273,6 +1285,16 @@ export const ReportAllFieldsFragmentDoc = gql`
       count
     }
     possibleCausesCount {
+      id
+      name
+      count
+    }
+    possibleCausesCount {
+      id
+      name
+      count
+    }
+    resourcesUsedCount1040 {
       id
       name
       count

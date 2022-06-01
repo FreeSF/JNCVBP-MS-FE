@@ -8,6 +8,9 @@ export const REPORT_ALL_FIELDS_FRAGMENT = gql`
       name
       count
     }
+    count1040
+    count1041
+    count1043
     damageCount {
       id
       count
@@ -17,6 +20,16 @@ export const REPORT_ALL_FIELDS_FRAGMENT = gql`
       count
     }
     possibleCausesCount {
+      id
+      name
+      count
+    }
+    possibleCausesCount {
+      id
+      name
+      count
+    }
+    resourcesUsedCount1040 {
       id
       name
       count
