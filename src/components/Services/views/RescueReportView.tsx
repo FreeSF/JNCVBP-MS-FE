@@ -4,8 +4,9 @@ import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "in
 
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { CreateServiceInput, UpdateServiceInput } from "types";
-import { CODES } from "utils/constants";
+import { CODES, RESCUE_TYPE_OPTIONS } from "utils/constants";
 import ResourcesField from "../fields/ResourcesField";
+import Quantities1040Field from "../fields/Quantities1040Field";
 
 type RescueReportFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
@@ -24,7 +25,8 @@ const RescueReportView = ({ formApi, formState, arrayRemove, isCreate }: RescueR
       </Row>
       <Row>
         <Col md="6">
-          <ResourcesField formApi={formApi} formState={formState} arrayRemove={arrayRemove} isCreate={isCreate} />
+          <Quantities1040Field formApi={formApi} formState={formState} arrayRemove={arrayRemove} isCreate={isCreate} />
+          {/*<ResourcesField formApi={formApi} formState={formState} arrayRemove={arrayRemove} isCreate={isCreate}/>*/}
         </Col>
         <Col md="4">
           <Form.Group>
@@ -35,13 +37,11 @@ const RescueReportView = ({ formApi, formState, arrayRemove, isCreate }: RescueR
               field="rescue_type"
               initialValue={isCreate ? "vivienda" : undefined}
             >
-              <option value="vivienda">En Vivienda</option>
-              <option value="profundidad">Profundidad</option>
-              <option value="altura">Altura</option>
-              <option value="derrumbe">Derrumbe</option>
-              <option value="raudal">Raudal-Naufragio</option>
-              <option value="bomba">Amenaza de bomba</option>
-              <option value="suicidio">Intento de suidicio</option>
+              {RESCUE_TYPE_OPTIONS.map((option) => (
+                <option value={option.id} key={option.id}>
+                  {option.name}
+                </option>
+              ))}
             </InformedSelect>
           </Form.Group>
         </Col>

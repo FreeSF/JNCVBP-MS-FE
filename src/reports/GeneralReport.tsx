@@ -5,6 +5,7 @@ import { FindCourseQuery, GetSubTypesDisabledQuery, GetSubTypesQuery, Report } f
 import {
   DAMAGE_1041_OPTIONS,
   DAMAGE_OPTIONS,
+  INVOLVED_ELEMENTS_OPTIONS,
   MAGNITUDE_1041_OPTIONS,
   QUANTITIES_1044_1045_OPTIONS,
 } from "../utils/constants";
@@ -102,7 +103,8 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                 {QUANTITIES_1044_1045_OPTIONS.map((damage) => (
                   <View style={{ border: "1px solid magenta" }}>
                     <Text>
-                      {damage.name} {report.quantities1044Count.find((the1044) => the1044.id === damage.id)?.count || 0}
+                      {damage.name}{" "}
+                      {report.quantities1044Count1040.find((the1044) => the1044.id === damage.id)?.count || 0}
                     </Text>
                   </View>
                 ))}
@@ -121,7 +123,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                 ))}
               </View>
               <View style={{ border: "1px solid green", width: "33.33%" }}>
-                <Text>Recursos Utilizados</Text>
+                <Text>Recursos Utilizados (numeros incorrectos creo)</Text>
                 {report.resourcesUsedCount1040.map((row) => (
                   <View style={{ border: "1px solid magenta" }}>
                     <Text>
@@ -150,7 +152,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
           <View style={{ border: "1px solid blue" }}>
             <Text style={{ backgroundColor: "black", color: "white", width: "60px" }}>10.41</Text>
             <Text style={{ textTransform: "uppercase" }}>
-              Cantidad Global de 10.43: ({report.count1041}) ________________
+              Cantidad Global de 10.41: ({report.count1041}) ________________
             </Text>
 
             <View style={{ border: "1px solid red", flexDirection: "row" }}>
@@ -179,41 +181,84 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                 {QUANTITIES_1044_1045_OPTIONS.map((damage) => (
                   <View style={{ border: "1px solid magenta" }}>
                     <Text>
-                      {damage.name} {report.quantities1044Count.find((the1044) => the1044.id === damage.id)?.count || 0}
+                      {damage.name}{" "}
+                      {report.quantities1044Count1041.find((the1044) => the1044.id === damage.id)?.count || 0}
                     </Text>
                   </View>
                 ))}
               </View>
             </View>
             <View style={{ border: "1px solid red", flexDirection: "row" }}>
-              <View style={{ border: "1px solid green", width: "33.33%" }}></View>
+              <View style={{ border: "1px solid green", width: "33.33%" }}>
+                <Text>Elementos Involucrados</Text>
+                {INVOLVED_ELEMENTS_OPTIONS.map((item) => (
+                  <View style={{ border: "1px solid magenta" }}>
+                    <Text>
+                      {item.name}{" "}
+                      {report.involvedElementsCount.find((theDamage) => theDamage.id === item.id)?.count || 0}
+                    </Text>
+                  </View>
+                ))}
+              </View>
               <View style={{ border: "1px solid green", width: "33.33%" }}>
                 <Text>Seguridad de involucrados</Text>
                 {MAGNITUDE_1041_OPTIONS.map((damage) => (
                   <View style={{ border: "1px solid magenta" }}>
                     <Text>
-                      {damage.name} {report.damage1041Count.find((theDamage) => theDamage.id === damage.id)?.count || 0}
+                      {damage.name}{" "}
+                      {report.magnitude1041Count.find((theDamage) => theDamage.id === damage.id)?.count || 0}
                     </Text>
                   </View>
                 ))}
               </View>
-              <View style={{ border: "1px solid green", width: "33.33%" }}></View>
+              <View style={{ border: "1px solid green", width: "33.33%" }}>
+                <Text>Recursos Utilizados</Text>
+                {report.resourcesUsedCount1041.map((row) => (
+                  <View style={{ border: "1px solid magenta" }}>
+                    <Text>
+                      {row.name} {row.count}
+                    </Text>
+                  </View>
+                ))}
+              </View>
             </View>
           </View>
 
           <View style={{ border: "1px solid blue" }}>
-            <Text style={{ backgroundColor: "black", color: "white", width: "60px" }}>10.41</Text>
+            <Text style={{ backgroundColor: "black", color: "white", width: "60px" }}>10.43</Text>
             <Text style={{ textTransform: "uppercase" }}>
               Cantidad Global de 10.43: ({report.count1043}) ________________
             </Text>
 
             <View style={{ border: "1px solid red", flexDirection: "row" }}>
               <View style={{ border: "1px solid green", width: "33.33%" }}>
-                <Text>Servicio 10.40</Text>
-                {report.damage1041Count.map((row) => (
+                <Text>Servicio 10.43</Text>
+                {report.subTypeCount1043.map((row) => (
                   <View style={{ border: "1px solid magenta" }}>
                     <Text>
                       {row.name} {row.count}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+              <View style={{ border: "1px solid green", width: "33.33%" }}>
+                <Text>Tipo de Rescate</Text>
+                {report.rescueTypeCount.map((row) => (
+                  <View style={{ border: "1px solid magenta" }}>
+                    <Text>
+                      {row.name} {row.count}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+
+              <View style={{ border: "1px solid green", width: "33.33%" }}>
+                <Text>Cantidad de 10.44/10.45</Text>
+                {QUANTITIES_1044_1045_OPTIONS.map((damage) => (
+                  <View style={{ border: "1px solid magenta" }}>
+                    <Text>
+                      {damage.name}{" "}
+                      {report.quantities1044Count1043.find((the1044) => the1044.id === damage.id)?.count || 0}
                     </Text>
                   </View>
                 ))}

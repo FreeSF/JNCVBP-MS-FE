@@ -25,7 +25,23 @@ export const REPORT_ALL_FIELDS_FRAGMENT = gql`
       id
       count
     }
-    quantities1044Count {
+    quantities1044Count1040 {
+      id
+      count
+    }
+    quantities1044Count1041 {
+      id
+      count
+    }
+    quantities1044Count1043 {
+      id
+      count
+    }
+    involvedElementsCount {
+      id
+      count
+    }
+    magnitude1041Count {
       id
       count
     }
@@ -40,6 +56,16 @@ export const REPORT_ALL_FIELDS_FRAGMENT = gql`
       count
     }
     resourcesUsedCount1040 {
+      id
+      name
+      count
+    }
+    resourcesUsedCount1041 {
+      id
+      name
+      count
+    }
+    rescueTypeCount {
       id
       name
       count

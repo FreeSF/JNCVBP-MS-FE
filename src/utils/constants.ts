@@ -101,6 +101,16 @@ export const RESOURCES_OPTIONS = [
   { id: "espuma", name: "Espuma (L)" },
 ];
 
+export const RESCUE_TYPE_OPTIONS = [
+  { id: "vivienda", name: "En Vivienda" },
+  { id: "profundidad", name: "Profundidad" },
+  { id: "altura", name: "Altura" },
+  { id: "derrumbe", name: "Derrumbe" },
+  { id: "raudal", name: "Raudal-Naufragio" },
+  { id: "bomba", name: "Amenaza de bomba" },
+  { id: "suicidio", name: "Intento de suidicio" },
+];
+
 export const get_formatted_volunteers = (volunteers) =>
   volunteers
     .map((volunteer) => volunteer.name)
