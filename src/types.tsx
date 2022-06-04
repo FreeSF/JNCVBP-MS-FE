@@ -501,7 +501,9 @@ export type Rank = {
 export type Report = {
   __typename?: "Report";
   date?: Maybe<Scalars["DateTime"]>;
-  subTypeCount?: Maybe<Array<Detail>>;
+  subTypeCount1040?: Maybe<Array<Detail>>;
+  subTypeCount1041?: Maybe<Array<Detail>>;
+  subTypeCount1043?: Maybe<Array<Detail>>;
   count1040?: Maybe<Scalars["Float"]>;
   count1041?: Maybe<Scalars["Float"]>;
   count1043?: Maybe<Scalars["Float"]>;
@@ -510,6 +512,7 @@ export type Report = {
   possibleCausesCount?: Maybe<Array<Detail>>;
   resourcesUsedCount1040?: Maybe<Array<Detail>>;
   resourcesUsedCount1041?: Maybe<Array<Detail>>;
+  damage1041Count?: Maybe<Array<Detail>>;
 };
 
 export type ResourceUsed = {
@@ -876,11 +879,14 @@ export type ReportAllFieldsFragment = { __typename?: "Report" } & Pick<
   Report,
   "date" | "count1040" | "count1041" | "count1043"
 > & {
-    subTypeCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    subTypeCount1040?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    subTypeCount1041?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    subTypeCount1043?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
     damageCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
     quantities1044Count?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
     possibleCausesCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
     resourcesUsedCount1040?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    damage1041Count?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "name" | "count">>>;
   };
 
 export type GetReportQueryVariables = Exact<{
@@ -1268,7 +1274,17 @@ export const GuardAllFieldsFragmentDoc = gql`
 export const ReportAllFieldsFragmentDoc = gql`
   fragment reportAllFields on Report {
     date
-    subTypeCount {
+    subTypeCount1040 {
+      id
+      name
+      count
+    }
+    subTypeCount1041 {
+      id
+      name
+      count
+    }
+    subTypeCount1043 {
       id
       name
       count
@@ -1296,6 +1312,10 @@ export const ReportAllFieldsFragmentDoc = gql`
     }
     resourcesUsedCount1040 {
       id
+      name
+      count
+    }
+    damage1041Count {
       name
       count
     }

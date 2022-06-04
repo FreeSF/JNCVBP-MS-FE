@@ -2,7 +2,12 @@
 import { Page, StyleSheet, Document, View, Text } from "@react-pdf/renderer";
 import React from "react";
 import { FindCourseQuery, GetSubTypesDisabledQuery, GetSubTypesQuery, Report } from "../types";
-import { DAMAGE_OPTIONS, QUANTITIES_1044_1045_OPTIONS } from "../utils/constants";
+import {
+  DAMAGE_1041_OPTIONS,
+  DAMAGE_OPTIONS,
+  MAGNITUDE_1041_OPTIONS,
+  QUANTITIES_1044_1045_OPTIONS,
+} from "../utils/constants";
 import { useQuery } from "react-apollo";
 import { GET_REPORT } from "../queries/Reports";
 import { GET_SUB_TYPES, GET_SUB_TYPES_DISABLED } from "../queries/subType";
@@ -60,16 +65,20 @@ const GeneralReport: React.FC<TheProps> = (props) => {
           <Text>Enviado desde: ________________</Text>
           <Text>Fax habilitado (para posible reenvío): ________________</Text>
           <Text>Fecha de cierre del informe: ________________</Text>
-          <Text>Cantidad total de Servicio: {report.count1040} ________________</Text>
+          <Text>
+            Cantidad total de Servicio: {report.count1040 + report.count1041 + report.count1043} ________________
+          </Text>
 
           <View style={{ border: "1px solid blue" }}>
             <Text style={{ backgroundColor: "black", color: "white", width: "60px" }}>10.40</Text>
-            <Text style={{ textTransform: "uppercase" }}>Cantidad Global de 10.40: () ________________</Text>
+            <Text style={{ textTransform: "uppercase" }}>
+              Cantidad Global de 10.40: ({report.count1040}) ________________
+            </Text>
 
             <View style={{ border: "1px solid red", flexDirection: "row" }}>
               <View style={{ border: "1px solid green", width: "33.33%" }}>
                 <Text>Servicio 10.40</Text>
-                {report.subTypeCount.map((row) => (
+                {report.subTypeCount1040.map((row) => (
                   <View style={{ border: "1px solid magenta" }}>
                     <Text>
                       {row.name} {row.count}
@@ -140,7 +149,76 @@ const GeneralReport: React.FC<TheProps> = (props) => {
 
           <View style={{ border: "1px solid blue" }}>
             <Text style={{ backgroundColor: "black", color: "white", width: "60px" }}>10.41</Text>
-            <Text style={{ textTransform: "uppercase" }}>Cantidad Global de 10.41: () ________________</Text>
+            <Text style={{ textTransform: "uppercase" }}>
+              Cantidad Global de 10.43: ({report.count1041}) ________________
+            </Text>
+
+            <View style={{ border: "1px solid red", flexDirection: "row" }}>
+              <View style={{ border: "1px solid green", width: "33.33%" }}>
+                <Text>Servicio 10.41</Text>
+                {report.subTypeCount1041.map((row) => (
+                  <View style={{ border: "1px solid magenta" }}>
+                    <Text>
+                      {row.name} {row.count}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+              <View style={{ border: "1px solid green", width: "33.33%" }}>
+                <Text>Magnitudes (damage1041)</Text>
+                {DAMAGE_1041_OPTIONS.map((damage) => (
+                  <View style={{ border: "1px solid magenta" }}>
+                    <Text>
+                      {damage.name} {report.damage1041Count.find((theDamage) => theDamage.id === damage.id)?.count || 0}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+              <View style={{ border: "1px solid green", width: "33.33%" }}>
+                <Text>Cantidad de 10.44/10.45</Text>
+                {QUANTITIES_1044_1045_OPTIONS.map((damage) => (
+                  <View style={{ border: "1px solid magenta" }}>
+                    <Text>
+                      {damage.name} {report.quantities1044Count.find((the1044) => the1044.id === damage.id)?.count || 0}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+            <View style={{ border: "1px solid red", flexDirection: "row" }}>
+              <View style={{ border: "1px solid green", width: "33.33%" }}></View>
+              <View style={{ border: "1px solid green", width: "33.33%" }}>
+                <Text>Seguridad de involucrados</Text>
+                {MAGNITUDE_1041_OPTIONS.map((damage) => (
+                  <View style={{ border: "1px solid magenta" }}>
+                    <Text>
+                      {damage.name} {report.damage1041Count.find((theDamage) => theDamage.id === damage.id)?.count || 0}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+              <View style={{ border: "1px solid green", width: "33.33%" }}></View>
+            </View>
+          </View>
+
+          <View style={{ border: "1px solid blue" }}>
+            <Text style={{ backgroundColor: "black", color: "white", width: "60px" }}>10.41</Text>
+            <Text style={{ textTransform: "uppercase" }}>
+              Cantidad Global de 10.43: ({report.count1043}) ________________
+            </Text>
+
+            <View style={{ border: "1px solid red", flexDirection: "row" }}>
+              <View style={{ border: "1px solid green", width: "33.33%" }}>
+                <Text>Servicio 10.40</Text>
+                {report.damage1041Count.map((row) => (
+                  <View style={{ border: "1px solid magenta" }}>
+                    <Text>
+                      {row.name} {row.count}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            </View>
           </View>
         </View>
       </Page>

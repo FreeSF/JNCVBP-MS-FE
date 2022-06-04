@@ -10,7 +10,7 @@ import { GET_REPORT } from "../queries/Reports";
 import Spinner from "./spinner";
 const HomePage = () => {
   const query = useQuery<GetReportQuery>(GET_REPORT, {
-    variables: { startDate: 1653870509762, endDate: 1653887013671 },
+    variables: { startDate: 1653870509762, endDate: 1654057601889 },
   });
   if (query.loading) return <Spinner />;
 
