@@ -6,10 +6,20 @@ import { Query, Mutation, Subscription } from "@apollo/client/react/components";
 import { ApolloClient, InMemoryCache } from "@apollo/client/core";
 import { graphql } from "@apollo/client/react/hoc";
 import { FIND_SERVICE, GET_SERVICES } from "../queries/services";
-import { API_URL } from "../utils/constants";
+import {
+  AFFECTED_OWNER_OPTIONS,
+  API_URL,
+  CODES,
+  DAMAGE_OPTIONS,
+  DEFAULT_DATE_FORMAT,
+  DEFAULT_DATETIME_FORMAT,
+  PROPORTION_OPTIONS,
+  RESOURCES_OPTIONS,
+} from "../utils/constants";
 import { FindServiceQuery, ServicesAllFieldsFragment } from "../types";
 import { useQuery } from "react-apollo";
 import Spinner from "../components/spinner";
+import moment from "moment";
 
 /*const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -61,19 +71,19 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
   return (
     //<PDFViewer style={styles.viewer}>
     <Document>
-      <Page size="A4" style={styles.page} debug={true}>
+      <Page size="A4" style={styles.page} debug={false}>
         <View style={{ border: "1px solid blue", width: "100%", fontSize: "12px" }}>
           <Text style={{ textAlign: "center", width: "100%", marginTop: "10px" }}>
-            {service.type === "10.40"
+            {service.sub_type.code === CODES.FIRE
               ? "Comunicación de Incendios"
-              : service.type === "10.41"
+              : service.type === CODES.ACCIDENT
               ? "Informe de Accidentes"
               : "Pending"}
           </Text>
           <Text style={{ textAlign: "center", width: "100%" }}>{"CBV de Capitán Miranda"}</Text>
           <Text
             style={{ textAlign: "center", width: "100%", marginTop: "4px", border: "1px solid red" }}
-          >{`Número: ___ Compañía: ___ Fecha: (Falta campo de fecha)`}</Text>
+          >{`Número: ___ Compañía: ___ Fecha: ${moment(service.date).format(DEFAULT_DATE_FORMAT)}`}</Text>
           <View
             style={{
               marginTop: "4px",
@@ -117,7 +127,7 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
           </View>
 
           {/* 10.40 */}
-          {service.type === "10.40" && (
+          {service.sub_type.code === CODES.FIRE && (
             <React.Fragment>
               <View style={{ border: "1px solid blue" }}>
                 <View style={{ flexDirection: "row", border: "1px solid red" }}>
@@ -133,7 +143,10 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
               </View>
               <View style={{ border: "1px solid blue" }}>
                 <Text style={{ width: "25%" }}>Propietarios Afectados:</Text>
-                <Text>{`${service.affected_owner} - ${service.affected_owner_description}`}</Text>
+                <Text>{`${
+                  AFFECTED_OWNER_OPTIONS.find((owner) => owner.id === service.affected_owner)?.name ||
+                  service.affected_owner
+                } - ${service.affected_owner_description}`}</Text>
               </View>
               <View style={{ flexDirection: "row", border: "1px solid blue" }}>
                 <View style={{ border: "1px solid red", width: "50%" }}>
@@ -143,7 +156,9 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                 <View style={{ border: "1px solid red", width: "50%" }}>
                   <Text>Agentes Extintores Utilizados:</Text>
                   {service.resources_used.map((resource) => (
-                    <Text>{`${resource.resource}: ${resource.quantity}`}</Text>
+                    <Text>{`${
+                      RESOURCES_OPTIONS.find((option) => option.id === resource.resource)?.name || resource.resource
+                    }: ${resource.quantity}`}</Text>
                   ))}
                 </View>
               </View>
@@ -156,11 +171,16 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                 </View>
                 <View style={{ border: "1px solid red", width: "25%" }}>
                   <Text>Proporción:</Text>
-                  <Text>{`${service.magnitude}`}</Text>
+                  <Text>{`${
+                    PROPORTION_OPTIONS.find((proportion) => proportion.id === service.magnitude)?.name ||
+                    service.magnitude
+                  }`}</Text>
                 </View>
                 <View style={{ border: "1px solid red", width: "25%" }}>
                   <Text>Destrucción:</Text>
-                  <Text>{`${service.damage}`}</Text>
+                  <Text>{`${
+                    DAMAGE_OPTIONS.find((damage) => damage.id === service.damage)?.name || service.damage
+                  }`}</Text>
                 </View>
               </View>
               <View style={{ border: "1px solid blue" }}>

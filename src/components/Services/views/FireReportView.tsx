@@ -5,7 +5,7 @@ import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "in
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { CreateServiceInput, UpdateServiceInput } from "types";
 import ResourcesField from "../fields/ResourcesField";
-import { AFFECTED_OWNER_OPTIONS, CODES, DAMAGE_OPTIONS } from "utils/constants";
+import { AFFECTED_OWNER_OPTIONS, CODES, DAMAGE_OPTIONS, PROPORTION_OPTIONS } from "utils/constants";
 
 type FireReportFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
@@ -105,7 +105,17 @@ const FireReportView = ({
         <Col md="3">
           <Form.Group>
             <label>Proporción:</label>
-            <Text className="form-control" field="magnitude" type="text" />
+            <InformedSelect
+              className="form-control"
+              field="magnitude"
+              initialValue={isCreate ? PROPORTION_OPTIONS[0].id : undefined}
+            >
+              {PROPORTION_OPTIONS.map((option) => (
+                <option value={option.id} key={option.id}>
+                  {option.name}
+                </option>
+              ))}
+            </InformedSelect>
           </Form.Group>
         </Col>
         <Col md="3">

@@ -52,6 +52,12 @@ export const DAMAGE_OPTIONS = [
   { id: DAMAGE_TOTAL_ID, name: "Total" },
 ];
 
+export const PROPORTION_OPTIONS = [
+  { id: DAMAGE_PEQ_ID, name: "Pequeña" },
+  { id: DAMAGE_MEDIANA_ID, name: "Mediana" },
+  { id: DAMAGE_GRANDE_ID, name: "Grande" },
+];
+
 export const AFFECTED_OWNER_OPTIONS = [
   { id: "estatal", name: "Estatal" },
   { id: "departamental", name: "Departamental" },
