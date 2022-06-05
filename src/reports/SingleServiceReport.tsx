@@ -10,10 +10,15 @@ import {
   AFFECTED_OWNER_OPTIONS,
   API_URL,
   CODES,
+  DAMAGE_1041_OPTIONS,
   DAMAGE_OPTIONS,
   DEFAULT_DATE_FORMAT,
   DEFAULT_DATETIME_FORMAT,
+  INVOLVED_ELEMENTS_OPTIONS,
+  MAGNITUDE_1041_OPTIONS,
   PROPORTION_OPTIONS,
+  QUANTITIES_1044_1045_OPTIONS,
+  RESCUE_TYPE_OPTIONS,
   RESOURCES_OPTIONS,
 } from "../utils/constants";
 import { FindServiceQuery, ServicesAllFieldsFragment } from "../types";
@@ -76,9 +81,11 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
           <Text style={{ textAlign: "center", width: "100%", marginTop: "10px" }}>
             {service.sub_type.code === CODES.FIRE
               ? "Comunicación de Incendios"
-              : service.type === CODES.ACCIDENT
+              : service.sub_type.code === CODES.ACCIDENT
               ? "Informe de Accidentes"
-              : "Pending"}
+              : service.sub_type.code === CODES.RESCUE
+              ? "Informe de Rescates"
+              : "?"}
           </Text>
           <Text style={{ textAlign: "center", width: "100%" }}>{"CBV de Capitán Miranda"}</Text>
           <Text
@@ -211,25 +218,26 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
           )}
 
           {/* 10.41 */}
-          {service.type === "10.41" && (
+          {service.sub_type.code === CODES.ACCIDENT && (
             <React.Fragment>
               <View style={{ border: "1px solid blue" }}>
                 <View style={{ flexDirection: "row", border: "1px solid red" }}>
                   <Text style={{ width: "34%" }}>Tipo</Text>
-                  <Text style={{ width: "33%" }}>Magnitudes</Text>
+                  <Text style={{ width: "33%" }}>Magnitudes (damage1041)</Text>
                   <Text style={{ width: "33%" }}>Cantidad de 10.44</Text>
                 </View>
                 <View style={{ flexDirection: "row", border: "1px solid red" }}>
                   <Text style={{ width: "34%" }}>{service.sub_type.name}</Text>
                   <View style={{ flexDirection: "column", width: "33%" }}>
                     {service.damage1041.map((damage) => (
-                      <Text>{damage}</Text>
+                      <Text>{DAMAGE_1041_OPTIONS.find((item) => item.id === damage)?.name || damage}</Text>
                     ))}
                   </View>
                   <View style={{ flexDirection: "column", width: "33%" }}>
                     {service.quantities1044.map((the1044) => (
                       <Text>
-                        {the1044.name}: {the1044.quantity}
+                        {QUANTITIES_1044_1045_OPTIONS.find((item) => item.id === the1044.name)?.name || the1044.name}:{" "}
+                        {the1044.quantity}
                       </Text>
                     ))}
                   </View>
@@ -245,19 +253,19 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                 <View style={{ flexDirection: "row", border: "1px solid red" }}>
                   <View style={{ flexDirection: "column", width: "34%" }}>
                     {service.involved_elements.map((element) => (
-                      <Text>{element}</Text>
+                      <Text>{INVOLVED_ELEMENTS_OPTIONS.find((item) => item.id === element)?.name || element}</Text>
                     ))}
                   </View>
                   <View style={{ flexDirection: "column", width: "33%" }}>
                     {service.magnitude1041.map((magnitude) => (
-                      <Text>{magnitude}</Text>
+                      <Text>{MAGNITUDE_1041_OPTIONS.find((item) => item.id === magnitude)?.name || magnitude}</Text>
                     ))}
                   </View>
                   <View style={{ flexDirection: "column", width: "33%" }}>
-                    {service.quantities1044.map((the1044) => (
-                      <Text>
-                        {the1044.name}: {the1044.quantity}
-                      </Text>
+                    {service.resources_used.map((resource) => (
+                      <Text>{`${
+                        RESOURCES_OPTIONS.find((option) => option.id === resource.resource)?.name || resource.resource
+                      }: ${resource.quantity}`}</Text>
                     ))}
                   </View>
                 </View>
@@ -268,7 +276,7 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
             </React.Fragment>
           )}
 
-          {service.type === "10.43" && (
+          {service.sub_type.code === CODES.RESCUE && (
             <React.Fragment>
               <View style={{ border: "1px solid blue" }}>
                 <View style={{ flexDirection: "row", border: "1px solid red" }}>
@@ -278,11 +286,14 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                 </View>
                 <View style={{ flexDirection: "row", border: "1px solid red" }}>
                   <Text style={{ width: "34%" }}>{service.sub_type.name}</Text>
-                  <Text style={{ width: "33%" }}>{service.rescue_type}</Text>
+                  <Text style={{ width: "33%" }}>
+                    {RESCUE_TYPE_OPTIONS.find((item) => item.id === service.rescue_type)?.name || service.rescue_type}
+                  </Text>
                   <View style={{ flexDirection: "column", width: "33%" }}>
                     {service.quantities1044.map((the1044) => (
                       <Text>
-                        {the1044.name}: {the1044.quantity}
+                        {QUANTITIES_1044_1045_OPTIONS.find((item) => item.id === the1044.name)?.name || the1044.name}:{" "}
+                        {the1044.quantity}
                       </Text>
                     ))}
                   </View>

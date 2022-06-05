@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ChartistGraph from "react-chartist";
 import { Button, Card, Table, Container, Row, Col, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import Select from "react-select";
@@ -8,9 +8,13 @@ import { useQuery } from "react-apollo";
 import { GetReportQuery, GetVolunteersQuery } from "../types";
 import { GET_REPORT } from "../queries/Reports";
 import Spinner from "./spinner";
+import { endOfDay, startOfDay } from "../utils/Utils";
+import DatePicker from "react-datepicker";
 const HomePage = () => {
+  const [startDate, setStartDate] = useState<Date>(startOfDay(new Date()));
+  const [endDate, setEndDate] = useState<Date>(endOfDay(new Date()));
   const query = useQuery<GetReportQuery>(GET_REPORT, {
-    variables: { startDate: 1653870509762, endDate: 1654312422018 },
+    variables: { startDate: startDate.getTime(), endDate: endDate.getTime() },
   });
   if (query.loading) return <Spinner />;
 
@@ -26,6 +30,10 @@ const HomePage = () => {
             ]}
             value={{ value: "2022", label: "2022" }}
           />
+          Inicio Reporte
+          <DatePicker onChange={(date) => setStartDate(startOfDay(date))} selected={startDate} />
+          Fin Reporte
+          <DatePicker onChange={(date) => setEndDate(endOfDay(date))} selected={endDate} />
           <BlobProvider document={<GeneralReport report={query.data.report} />}>
             {({ url }) => (
               <Button href={url} target="_blank" className="btn-fill btn-sm" variant="info">

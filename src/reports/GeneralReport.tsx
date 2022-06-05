@@ -8,6 +8,7 @@ import {
   INVOLVED_ELEMENTS_OPTIONS,
   MAGNITUDE_1041_OPTIONS,
   QUANTITIES_1044_1045_OPTIONS,
+  RESOURCES_OPTIONS,
 } from "../utils/constants";
 import { useQuery } from "react-apollo";
 import { GET_REPORT } from "../queries/Reports";
@@ -124,10 +125,11 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               </View>
               <View style={{ border: "1px solid green", width: "33.33%" }}>
                 <Text>Recursos Utilizados (numeros incorrectos creo)</Text>
-                {report.resourcesUsedCount1040.map((row) => (
+                {report.resourcesUsedCount1040.map((resource) => (
                   <View style={{ border: "1px solid magenta" }}>
                     <Text>
-                      {row.name} {row.count}
+                      {RESOURCES_OPTIONS.find((option) => option.id === resource.id)?.name || resource.id}{" "}
+                      {resource.count}
                     </Text>
                   </View>
                 ))}
@@ -213,10 +215,11 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               </View>
               <View style={{ border: "1px solid green", width: "33.33%" }}>
                 <Text>Recursos Utilizados</Text>
-                {report.resourcesUsedCount1041.map((row) => (
+                {report.resourcesUsedCount1041.map((resource) => (
                   <View style={{ border: "1px solid magenta" }}>
                     <Text>
-                      {row.name} {row.count}
+                      {RESOURCES_OPTIONS.find((option) => option.id === resource.id)?.name || resource.id}{" "}
+                      {resource.count}
                     </Text>
                   </View>
                 ))}
