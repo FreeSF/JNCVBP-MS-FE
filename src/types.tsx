@@ -140,6 +140,13 @@ export type CreateVolunteerInput = {
   rank: OnlyIdTypeInput;
 };
 
+export type Detail = {
+  __typename?: "Detail";
+  id?: Maybe<Scalars["String"]>;
+  name: Scalars["String"];
+  count: Scalars["Float"];
+};
+
 export type Duty = {
   __typename?: "Duty";
   id: Scalars["String"];
@@ -427,6 +434,7 @@ export type Query = {
   courses: Array<Course>;
   coursesDisabled: Array<Course>;
   course: Course;
+  report: Report;
 };
 
 export type QueryUserArgs = {
@@ -477,12 +485,41 @@ export type QueryCourseArgs = {
   id: Scalars["String"];
 };
 
+export type QueryReportArgs = {
+  endDate: Scalars["Float"];
+  startDate: Scalars["Float"];
+};
+
 export type Rank = {
   __typename?: "Rank";
   id: Scalars["String"];
   name: Scalars["String"];
   isDeletable?: Maybe<Scalars["Boolean"]>;
   description?: Maybe<Scalars["String"]>;
+};
+
+export type Report = {
+  __typename?: "Report";
+  date?: Maybe<Scalars["DateTime"]>;
+  startDate?: Maybe<Scalars["DateTime"]>;
+  endDate?: Maybe<Scalars["DateTime"]>;
+  subTypeCount1040?: Maybe<Array<Detail>>;
+  subTypeCount1041?: Maybe<Array<Detail>>;
+  subTypeCount1043?: Maybe<Array<Detail>>;
+  count1040?: Maybe<Scalars["Float"]>;
+  count1041?: Maybe<Scalars["Float"]>;
+  count1043?: Maybe<Scalars["Float"]>;
+  damageCount?: Maybe<Array<Detail>>;
+  quantities1044Count1040?: Maybe<Array<Detail>>;
+  quantities1044Count1041?: Maybe<Array<Detail>>;
+  quantities1044Count1043?: Maybe<Array<Detail>>;
+  possibleCausesCount?: Maybe<Array<Detail>>;
+  resourcesUsedCount1040?: Maybe<Array<Detail>>;
+  resourcesUsedCount1041?: Maybe<Array<Detail>>;
+  damage1041Count?: Maybe<Array<Detail>>;
+  involvedElementsCount?: Maybe<Array<Detail>>;
+  magnitude1041Count?: Maybe<Array<Detail>>;
+  rescueTypeCount?: Maybe<Array<Detail>>;
 };
 
 export type ResourceUsed = {
@@ -844,6 +881,33 @@ export type RemoveGuardMutationVariables = Exact<{
 export type RemoveGuardMutation = { __typename?: "Mutation" } & {
   removeGuard: { __typename?: "Guard" } & GuardAllFieldsFragment;
 };
+
+export type ReportAllFieldsFragment = { __typename?: "Report" } & Pick<
+  Report,
+  "date" | "startDate" | "endDate" | "count1040" | "count1041" | "count1043"
+> & {
+    subTypeCount1040?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    subTypeCount1041?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    subTypeCount1043?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    damageCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
+    quantities1044Count1040?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
+    quantities1044Count1041?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
+    quantities1044Count1043?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
+    involvedElementsCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
+    magnitude1041Count?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
+    possibleCausesCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    resourcesUsedCount1040?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    resourcesUsedCount1041?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    rescueTypeCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    damage1041Count?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+  };
+
+export type GetReportQueryVariables = Exact<{
+  startDate: Scalars["Float"];
+  endDate: Scalars["Float"];
+}>;
+
+export type GetReportQuery = { __typename?: "Query" } & { report: { __typename?: "Report" } & ReportAllFieldsFragment };
 
 export type TrainingAllFieldsFragment = { __typename?: "Training" } & Pick<Training, "id" | "description" | "date"> & {
     volunteers?: Maybe<Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>>;
@@ -1219,6 +1283,85 @@ export const GuardAllFieldsFragmentDoc = gql`
     }
   }
   ${VolunteerAllFieldsFragmentDoc}
+`;
+export const ReportAllFieldsFragmentDoc = gql`
+  fragment reportAllFields on Report {
+    date
+    startDate
+    endDate
+    subTypeCount1040 {
+      id
+      name
+      count
+    }
+    subTypeCount1041 {
+      id
+      name
+      count
+    }
+    subTypeCount1043 {
+      id
+      name
+      count
+    }
+    count1040
+    count1041
+    count1043
+    damageCount {
+      id
+      count
+    }
+    quantities1044Count1040 {
+      id
+      count
+    }
+    quantities1044Count1041 {
+      id
+      count
+    }
+    quantities1044Count1043 {
+      id
+      count
+    }
+    involvedElementsCount {
+      id
+      count
+    }
+    magnitude1041Count {
+      id
+      count
+    }
+    possibleCausesCount {
+      id
+      name
+      count
+    }
+    possibleCausesCount {
+      id
+      name
+      count
+    }
+    resourcesUsedCount1040 {
+      id
+      name
+      count
+    }
+    resourcesUsedCount1041 {
+      id
+      name
+      count
+    }
+    rescueTypeCount {
+      id
+      name
+      count
+    }
+    damage1041Count {
+      id
+      name
+      count
+    }
+  }
 `;
 export const TrainingAllFieldsFragmentDoc = gql`
   fragment trainingAllFields on Training {
@@ -2135,6 +2278,46 @@ export type RemoveGuardMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RemoveGuardMutation,
   RemoveGuardMutationVariables
 >;
+export const GetReportDocument = gql`
+  query getReport($startDate: Float!, $endDate: Float!) {
+    report(startDate: $startDate, endDate: $endDate) {
+      ...reportAllFields
+    }
+  }
+  ${ReportAllFieldsFragmentDoc}
+`;
+export type GetReportComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetReportQuery, GetReportQueryVariables>,
+  "query"
+> &
+  ({ variables: GetReportQueryVariables; skip?: boolean } | { skip: boolean });
+
+export const GetReportComponent = (props: GetReportComponentProps) => (
+  <ApolloReactComponents.Query<GetReportQuery, GetReportQueryVariables> query={GetReportDocument} {...props} />
+);
+
+export type GetReportProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetReportQuery, GetReportQueryVariables>;
+} & TChildProps;
+export function withGetReport<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetReportQuery,
+    GetReportQueryVariables,
+    GetReportProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetReportQuery,
+    GetReportQueryVariables,
+    GetReportProps<TChildProps, TDataName>
+  >(GetReportDocument, {
+    alias: "getReport",
+    ...operationOptions,
+  });
+}
+export type GetReportQueryResult = ApolloReactCommon.QueryResult<GetReportQuery, GetReportQueryVariables>;
 export const GetTrainingsDocument = gql`
   query getTrainings {
     trainings {

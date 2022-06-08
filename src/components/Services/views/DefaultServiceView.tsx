@@ -188,7 +188,7 @@ const DefaultServiceView = ({
         {/* Default fields */}
         <Col md="12">
           <Form.Group>
-            <label>Descripción</label>
+            <label>Mencione el mayor problema / Otros datos de interés</label>
             <TextArea className="form-control" field="description" type="text" />
           </Form.Group>
         </Col>

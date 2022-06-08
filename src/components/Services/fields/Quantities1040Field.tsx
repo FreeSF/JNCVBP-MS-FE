@@ -4,6 +4,7 @@ import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "in
 
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { CreateServiceInput, UpdateServiceInput } from "types";
+import { QUANTITIES_1044_1045_OPTIONS } from "../../../utils/constants";
 
 type FireReportFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
@@ -44,11 +45,11 @@ const Quantities1040Field = ({ formApi, formState, arrayRemove, isCreate }: Fire
                     field={`quantities1044[${index}].name`}
                     initialValue={isCreate ? "ilesos" : undefined}
                   >
-                    <option value="ilesos">Ileso/s</option>
-                    <option value="heridos">Herido/s</option>
-                    <option value="fallecidos">Fallecido/s</option>
-                    <option value="rescates">Rescate/s</option>
-                    <option value="enfermos">Enfermo/s</option>
+                    {QUANTITIES_1044_1045_OPTIONS.map((option) => (
+                      <option value={option.id} key={option.id}>
+                        {option.name}
+                      </option>
+                    ))}
                     {/* create constants */}
                   </InformedSelect>
                 </Form.Group>

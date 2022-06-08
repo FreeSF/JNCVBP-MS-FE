@@ -42,6 +42,11 @@ const ServicesPage = (props: RouteComponentProps) => {
       text: "Localidad",
     },
     {
+      dataField: "sub_type",
+      text: "Código",
+      formatter: (cell) => cell.code,
+    },
+    {
       dataField: "volunteers",
       text: "Voluntarios",
       formatter: (cell: Volunteer[]) => cell.map((volunteer) => volunteer.name).join(","),
