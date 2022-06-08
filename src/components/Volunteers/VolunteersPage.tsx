@@ -15,6 +15,7 @@ import { DELETE_VOLUNTEER, GET_VOLUNTEERS } from "../../queries/volunteers";
 import { get_blood_type, get_formatted_date, get_volunteer_status } from "utils/constants";
 import Spinner from "../spinner";
 import { get_volunteer_columns } from "utils/columns";
+import StandardTable from "../utils/standardTable";
 
 const VolunteersPage = (props: RouteComponentProps) => {
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
@@ -65,7 +66,7 @@ const VolunteersPage = (props: RouteComponentProps) => {
               {getVolunteersQuery.loading ? (
                 <Spinner />
               ) : (
-                <BootstrapTable keyField={"id"} data={getVolunteersQuery.data?.volunteers} columns={columns} />
+                <StandardTable columns={columns} data={getVolunteersQuery.data?.volunteers} />
               )}
             </Card.Body>
           </Card>

@@ -501,6 +501,8 @@ export type Rank = {
 export type Report = {
   __typename?: "Report";
   date?: Maybe<Scalars["DateTime"]>;
+  startDate?: Maybe<Scalars["DateTime"]>;
+  endDate?: Maybe<Scalars["DateTime"]>;
   subTypeCount1040?: Maybe<Array<Detail>>;
   subTypeCount1041?: Maybe<Array<Detail>>;
   subTypeCount1043?: Maybe<Array<Detail>>;
@@ -882,7 +884,7 @@ export type RemoveGuardMutation = { __typename?: "Mutation" } & {
 
 export type ReportAllFieldsFragment = { __typename?: "Report" } & Pick<
   Report,
-  "date" | "count1040" | "count1041" | "count1043"
+  "date" | "startDate" | "endDate" | "count1040" | "count1041" | "count1043"
 > & {
     subTypeCount1040?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
     subTypeCount1041?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
@@ -896,6 +898,7 @@ export type ReportAllFieldsFragment = { __typename?: "Report" } & Pick<
     possibleCausesCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
     resourcesUsedCount1040?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
     resourcesUsedCount1041?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    rescueTypeCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
     damage1041Count?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
   };
 
@@ -1284,6 +1287,8 @@ export const GuardAllFieldsFragmentDoc = gql`
 export const ReportAllFieldsFragmentDoc = gql`
   fragment reportAllFields on Report {
     date
+    startDate
+    endDate
     subTypeCount1040 {
       id
       name
@@ -1342,6 +1347,11 @@ export const ReportAllFieldsFragmentDoc = gql`
       count
     }
     resourcesUsedCount1041 {
+      id
+      name
+      count
+    }
+    rescueTypeCount {
       id
       name
       count

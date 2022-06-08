@@ -5,6 +5,7 @@ import { FindCourseQuery, GetSubTypesDisabledQuery, GetSubTypesQuery, Report } f
 import {
   DAMAGE_1041_OPTIONS,
   DAMAGE_OPTIONS,
+  DEFAULT_DATE_FORMAT,
   INVOLVED_ELEMENTS_OPTIONS,
   MAGNITUDE_1041_OPTIONS,
   QUANTITIES_1044_1045_OPTIONS,
@@ -14,6 +15,7 @@ import { useQuery } from "react-apollo";
 import { GET_REPORT } from "../queries/Reports";
 import { GET_SUB_TYPES, GET_SUB_TYPES_DISABLED } from "../queries/subType";
 import Spinner from "../components/spinner";
+import moment from "moment";
 
 const styles = StyleSheet.create({
   page: {
@@ -50,11 +52,21 @@ const GeneralReport: React.FC<TheProps> = (props) => {
     <Document>
       <Page size="A4" style={styles.page} debug={false}>
         <View style={{ border: "1px solid blue", width: "100%", fontSize: "12px" }}>
-          <Text style={{ textAlign: "center", width: "100%", marginTop: "10px" }}>Informe de Servicios</Text>
-          <Text style={{ textAlign: "center", width: "100%", marginTop: "10px" }}>CBV de Capitán Miranda</Text>
-          <View style={{ flexDirection: "row", border: "1px solid red" }}>
-            <Text style={{ width: "25%" }}>Fecha: - al -</Text>
+          <Text style={{ textAlign: "center", width: "100%", marginTop: "10px", fontSize: "16px" }}>
+            Informe Mensual de Servicios
+          </Text>
+          <Text style={{ textAlign: "center", width: "100%", marginTop: "10px", marginBottom: "4px" }}>
+            CBV de Capitán Miranda
+          </Text>
+          <View style={{ flexDirection: "row", border: "1px solid red", marginBottom: "10px" }}>
+            <Text style={{ width: "30%", fontWeight: "bold" }}>Fecha de Envío: / / </Text>
+            <Text style={{ width: "25%" }}>Hora:_______</Text>
+            <Text style={{ width: "25%" }}>Mes:_______</Text>
+            <Text style={{ width: "20%" }}>Año:_______</Text>
           </View>
+          {/*<View style={{flexDirection: "row", border: "1px solid red"}}>
+            <Text>Fecha: {moment(report.startDate).format(DEFAULT_DATE_FORMAT)} al {moment(report.endDate).format(DEFAULT_DATE_FORMAT)}</Text>
+          </View>*/}
           <Text>Datos de Envío</Text>
           <View style={{ flexDirection: "row", border: "1px solid blue" }}>
             <Text style={{ width: "50%" }}>CBV de Capitán Miranda</Text>

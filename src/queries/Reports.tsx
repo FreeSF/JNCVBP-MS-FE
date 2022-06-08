@@ -3,6 +3,8 @@ import { gql } from "apollo-boost";
 export const REPORT_ALL_FIELDS_FRAGMENT = gql`
   fragment reportAllFields on Report {
     date
+    startDate
+    endDate
     subTypeCount1040 {
       id
       name
