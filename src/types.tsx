@@ -21,6 +21,11 @@ export type Scalars = {
   Timestamp: any;
 };
 
+export type AccessToken = {
+  __typename?: "AccessToken";
+  access_token: Scalars["String"];
+};
+
 export type Course = {
   __typename?: "Course";
   id: Scalars["String"];
@@ -126,7 +131,11 @@ export type CreateTrainingInput = {
 };
 
 export type CreateUserInput = {
-  name: Scalars["String"];
+  firstName: Scalars["String"];
+  lastName: Scalars["String"];
+  username: Scalars["String"];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type CreateVolunteerInput = {
@@ -183,6 +192,11 @@ export type Guard = {
   start_time: Scalars["Timestamp"];
   end_time: Scalars["Timestamp"];
   volunteers?: Maybe<Array<Volunteer>>;
+};
+
+export type LoginInput = {
+  username: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type Mutation = {
@@ -398,6 +412,7 @@ export type Quantity1044Input = {
 
 export type Query = {
   __typename?: "Query";
+  login: AccessToken;
   users: Array<User>;
   usersDisabled: Array<User>;
   user: User;
@@ -435,6 +450,10 @@ export type Query = {
   coursesDisabled: Array<Course>;
   course: Course;
   report: Report;
+};
+
+export type QueryLoginArgs = {
+  loginInput: LoginInput;
 };
 
 export type QueryUserArgs = {
@@ -695,7 +714,11 @@ export type UpdateTrainingInput = {
 };
 
 export type UpdateUserInput = {
-  name?: Maybe<Scalars["String"]>;
+  firstName?: Maybe<Scalars["String"]>;
+  lastName?: Maybe<Scalars["String"]>;
+  username?: Maybe<Scalars["String"]>;
+  email?: Maybe<Scalars["String"]>;
+  password?: Maybe<Scalars["String"]>;
   id: Scalars["Int"];
 };
 
@@ -714,7 +737,11 @@ export type UpdateVolunteerInput = {
 export type User = {
   __typename?: "User";
   id: Scalars["String"];
-  name: Scalars["String"];
+  firstName: Scalars["String"];
+  lastName: Scalars["String"];
+  username: Scalars["String"];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type Volunteer = {
@@ -880,6 +907,15 @@ export type RemoveGuardMutationVariables = Exact<{
 
 export type RemoveGuardMutation = { __typename?: "Mutation" } & {
   removeGuard: { __typename?: "Guard" } & GuardAllFieldsFragment;
+};
+
+export type LoginQueryVariables = Exact<{
+  username: Scalars["String"];
+  password: Scalars["String"];
+}>;
+
+export type LoginQuery = { __typename?: "Query" } & {
+  login: { __typename?: "AccessToken" } & Pick<AccessToken, "access_token">;
 };
 
 export type ReportAllFieldsFragment = { __typename?: "Report" } & Pick<
@@ -2278,6 +2314,43 @@ export type RemoveGuardMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RemoveGuardMutation,
   RemoveGuardMutationVariables
 >;
+export const LoginDocument = gql`
+  query login($username: String!, $password: String!) {
+    login(loginInput: { username: $username, password: $password }) {
+      access_token
+    }
+  }
+`;
+export type LoginComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<LoginQuery, LoginQueryVariables>,
+  "query"
+> &
+  ({ variables: LoginQueryVariables; skip?: boolean } | { skip: boolean });
+
+export const LoginComponent = (props: LoginComponentProps) => (
+  <ApolloReactComponents.Query<LoginQuery, LoginQueryVariables> query={LoginDocument} {...props} />
+);
+
+export type LoginProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<LoginQuery, LoginQueryVariables>;
+} & TChildProps;
+export function withLogin<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    LoginQuery,
+    LoginQueryVariables,
+    LoginProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<TProps, LoginQuery, LoginQueryVariables, LoginProps<TChildProps, TDataName>>(
+    LoginDocument,
+    {
+      alias: "login",
+      ...operationOptions,
+    }
+  );
+}
+export type LoginQueryResult = ApolloReactCommon.QueryResult<LoginQuery, LoginQueryVariables>;
 export const GetReportDocument = gql`
   query getReport($startDate: Float!, $endDate: Float!) {
     report(startDate: $startDate, endDate: $endDate) {

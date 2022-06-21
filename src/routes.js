@@ -34,6 +34,7 @@ import CreateCoursePage from "./components/Courses/CreateCoursePage";
 import UpdateCoursePage from "./components/Courses/UpdateCoursePage";
 import ShowCoursePage from "./components/Courses/ShowCoursePage";
 import RecycleBinPage from "./components/RecycleBin/RecycleBinPage";
+import LoginPage from "./components/Login/LoginPage";
 
 const dutiesRoutes = [
   {
@@ -210,6 +211,13 @@ const routes = [
     icon: "nc-icon nc-chart-pie-35",
     component: HomePage,
     showOnSidebar: true,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    icon: "nc-icon nc-chart-pie-35",
+    component: LoginPage,
+    showOnSidebar: false,
   },
   ...volunteerRoutes,
   ...dutiesRoutes,
