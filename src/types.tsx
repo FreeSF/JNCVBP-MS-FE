@@ -413,6 +413,7 @@ export type Quantity1044Input = {
 export type Query = {
   __typename?: "Query";
   login: AccessToken;
+  currentUser: User;
   users: Array<User>;
   usersDisabled: Array<User>;
   user: User;
@@ -918,6 +919,17 @@ export type LoginQuery = { __typename?: "Query" } & {
   login: { __typename?: "AccessToken" } & Pick<AccessToken, "access_token">;
 };
 
+export type UserAllFieldsFragment = { __typename?: "User" } & Pick<
+  User,
+  "id" | "username" | "firstName" | "lastName" | "email"
+>;
+
+export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCurrentUserQuery = { __typename?: "Query" } & {
+  currentUser: { __typename?: "User" } & UserAllFieldsFragment;
+};
+
 export type ReportAllFieldsFragment = { __typename?: "Report" } & Pick<
   Report,
   "date" | "startDate" | "endDate" | "count1040" | "count1041" | "count1043"
@@ -1319,6 +1331,15 @@ export const GuardAllFieldsFragmentDoc = gql`
     }
   }
   ${VolunteerAllFieldsFragmentDoc}
+`;
+export const UserAllFieldsFragmentDoc = gql`
+  fragment userAllFields on User {
+    id
+    username
+    firstName
+    lastName
+    email
+  }
 `;
 export const ReportAllFieldsFragmentDoc = gql`
   fragment reportAllFields on Report {
@@ -2351,6 +2372,51 @@ export function withLogin<TProps, TChildProps = {}, TDataName extends string = "
   );
 }
 export type LoginQueryResult = ApolloReactCommon.QueryResult<LoginQuery, LoginQueryVariables>;
+export const GetCurrentUserDocument = gql`
+  query getCurrentUser {
+    currentUser {
+      ...userAllFields
+    }
+  }
+  ${UserAllFieldsFragmentDoc}
+`;
+export type GetCurrentUserComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetCurrentUserQuery, GetCurrentUserQueryVariables>,
+  "query"
+>;
+
+export const GetCurrentUserComponent = (props: GetCurrentUserComponentProps) => (
+  <ApolloReactComponents.Query<GetCurrentUserQuery, GetCurrentUserQueryVariables>
+    query={GetCurrentUserDocument}
+    {...props}
+  />
+);
+
+export type GetCurrentUserProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
+} & TChildProps;
+export function withGetCurrentUser<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetCurrentUserQuery,
+    GetCurrentUserQueryVariables,
+    GetCurrentUserProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetCurrentUserQuery,
+    GetCurrentUserQueryVariables,
+    GetCurrentUserProps<TChildProps, TDataName>
+  >(GetCurrentUserDocument, {
+    alias: "getCurrentUser",
+    ...operationOptions,
+  });
+}
+export type GetCurrentUserQueryResult = ApolloReactCommon.QueryResult<
+  GetCurrentUserQuery,
+  GetCurrentUserQueryVariables
+>;
 export const GetReportDocument = gql`
   query getReport($startDate: Float!, $endDate: Float!) {
     report(startDate: $startDate, endDate: $endDate) {

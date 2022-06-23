@@ -3,9 +3,9 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 import { API_URL, AUTH_TOKEN_NAME } from "../../utils/constants";
 import { useLazyQuery, useQuery } from "react-apollo";
-import { LoginQuery, LoginQueryVariables } from "../../types";
+import { GetCurrentUserQuery, LoginQuery, LoginQueryVariables } from "../../types";
 import { FIND_COURSE } from "../../queries/Courses";
-import { LOGIN } from "../../queries/Login";
+import { CURRENT_USER, LOGIN } from "../../queries/Login";
 
 const LoginPage = (props) => {
   const [username, setUsername] = useState("");
@@ -15,10 +15,13 @@ const LoginPage = (props) => {
       localStorage.setItem(AUTH_TOKEN_NAME, data.login.access_token);
     },
   });
+  const curr = useQuery<GetCurrentUserQuery>(CURRENT_USER);
 
   const login = () => {
     loadGuard({ variables: { username, password } });
   };
+
+  console.log({ data: curr.data });
 
   return (
     <div>

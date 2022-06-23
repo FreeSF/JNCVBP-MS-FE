@@ -7,3 +7,22 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const USER_ALL_FIELDS_FRAGMENT = gql`
+  fragment userAllFields on User {
+    id
+    username
+    firstName
+    lastName
+    email
+  }
+`;
+
+export const CURRENT_USER = gql`
+  query getCurrentUser {
+    currentUser {
+      ...userAllFields
+    }
+  }
+  ${USER_ALL_FIELDS_FRAGMENT}
+`;
