@@ -1,27 +1,32 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import axios from "axios";
-import { API_URL, AUTH_TOKEN_NAME } from "../../utils/constants";
-import { useLazyQuery, useQuery } from "react-apollo";
-import { GetCurrentUserQuery, LoginQuery, LoginQueryVariables } from "../../types";
-import { FIND_COURSE } from "../../queries/Courses";
-import { CURRENT_USER, LOGIN } from "../../queries/Login";
+import { AUTH_TOKEN_NAME } from "../../utils/constants";
+import { LoginMutation, LoginMutationVariables } from "../../types";
+import { LOGIN } from "../../queries/Login";
+import { useMutation } from "react-apollo";
+import { Redirect, BrowserRouter } from "react-router-dom";
 
 const LoginPage = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loadGuard, loadResult] = useLazyQuery<LoginQuery, LoginQueryVariables>(LOGIN, {
+  const [redirect, setRedirect] = useState(false);
+  const [loginMutation, loadResult] = useMutation<LoginMutation, LoginMutationVariables>(LOGIN, {
     onCompleted: (data) => {
       localStorage.setItem(AUTH_TOKEN_NAME, data.login.access_token);
+      setRedirect(true);
     },
   });
-  const curr = useQuery<GetCurrentUserQuery>(CURRENT_USER);
 
   const login = () => {
-    loadGuard({ variables: { username, password } });
+    loginMutation({ variables: { username, password } });
   };
 
-  console.log({ data: curr.data });
+  if (redirect)
+    return (
+      <BrowserRouter forceRefresh={true}>
+        <Redirect push to={"/"} />
+      </BrowserRouter>
+    );
 
   return (
     <div>

@@ -4,9 +4,13 @@ import { NavLink, useLocation } from "react-router-dom";
 import { Container, Dropdown, Navbar, Nav } from "react-bootstrap";
 import routes from "routes.js";
 import EventForm from "components/Events/EventForm";
+import { useQuery } from "react-apollo";
+import { GetCurrentUserQuery } from "../../types";
+import { CURRENT_USER } from "../../queries/Login";
 
 const Header = () => {
   const location = useLocation();
+  const currentUserQuery = useQuery<GetCurrentUserQuery>(CURRENT_USER);
 
   const getBrandText = () => {
     // TODO: fix nested routes title (if needed)
@@ -50,6 +54,7 @@ const Header = () => {
                 <span className="no-icon">Account</span>
               </Nav.Link>
             </Nav.Item> */}
+            <span>Usuario: {currentUserQuery.data?.currentUser?.username}</span>
             <Dropdown as={Nav.Item}>
               <Dropdown.Toggle
                 // aria-expanded={false}
