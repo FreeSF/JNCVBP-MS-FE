@@ -219,6 +219,7 @@ const routes = [
     component: LoginPage,
     showOnSidebar: false,
     hideTheSidebar: true,
+    noAuthRoute: true,
   },
   ...volunteerRoutes,
   ...dutiesRoutes,

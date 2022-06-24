@@ -11,16 +11,21 @@ import "react-notifications/lib/notifications.css";
 import routes from "routes.js";
 import { setDefaultLocale, registerLocale } from "react-datepicker";
 import { NotificationContainer } from "react-notifications";
+import { useQuery } from "react-apollo";
+import { GetCurrentUserQuery, UserAllFieldsFragment } from "./types";
+import { CURRENT_USER } from "./queries/Login";
+import Spinner from "./components/spinner";
 
 registerLocale("es", es);
 setDefaultLocale("es");
 
-const getRoutes = (routes) => {
+const getRoutes = (routes, currentUser: UserAllFieldsFragment) => {
   return routes.map((route, key) => (
     <Route
       exact
       path={route.path}
       render={(props) => {
+        if (!route.noAuthRoute && !currentUser) window.location.href = "/login";
         if (route.hideTheSidebar) return <route.component {...props} />;
         else {
           return (
@@ -44,9 +49,13 @@ const getRoutes = (routes) => {
 };
 
 const App = () => {
+  const currentUserQuery = useQuery<GetCurrentUserQuery>(CURRENT_USER);
+
+  if (currentUserQuery.loading) return <Spinner />;
+
   return (
     <div className="wrapper">
-      <Switch> {getRoutes(routes)} </Switch>
+      <Switch> {getRoutes(routes, currentUserQuery.data?.currentUser)} </Switch>
     </div>
   );
 };

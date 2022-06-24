@@ -1,16 +1,18 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
 
-import { Container, Dropdown, Navbar, Nav } from "react-bootstrap";
+import { Container, Dropdown, Navbar, Nav, Button } from "react-bootstrap";
 import routes from "routes.js";
 import EventForm from "components/Events/EventForm";
 import { useQuery } from "react-apollo";
 import { GetCurrentUserQuery } from "../../types";
 import { CURRENT_USER } from "../../queries/Login";
+import { AUTH_TOKEN_NAME } from "../../utils/constants";
 
 const Header = () => {
   const location = useLocation();
   const currentUserQuery = useQuery<GetCurrentUserQuery>(CURRENT_USER);
+  const history = useHistory();
 
   const getBrandText = () => {
     // TODO: fix nested routes title (if needed)
@@ -54,7 +56,17 @@ const Header = () => {
                 <span className="no-icon">Account</span>
               </Nav.Link>
             </Nav.Item> */}
-            <span>Usuario: {currentUserQuery.data?.currentUser?.username}</span>
+            <span style={{ marginTop: "auto", marginBottom: "auto" }}>
+              Usuario: {currentUserQuery.data?.currentUser?.username}
+            </span>
+            <Button
+              onClick={() => {
+                localStorage.setItem(AUTH_TOKEN_NAME, undefined);
+                history.go(0); // refresh
+              }}
+            >
+              Logout
+            </Button>
             <Dropdown as={Nav.Item}>
               <Dropdown.Toggle
                 // aria-expanded={false}
