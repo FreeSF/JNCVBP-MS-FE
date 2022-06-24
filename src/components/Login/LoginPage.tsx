@@ -13,7 +13,6 @@ const LoginPage = (props) => {
   const [redirect, setRedirect] = useState(false);
   const [loginMutation, loadResult] = useMutation<LoginMutation, LoginMutationVariables>(LOGIN, {
     onCompleted: (data) => {
-      console.log({ data }, data?.login?.access_token);
       if (data?.login?.access_token) {
         localStorage.setItem(AUTH_TOKEN_NAME, data.login.access_token);
         setRedirect(true);
@@ -33,7 +32,16 @@ const LoginPage = (props) => {
     );
 
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <div>Username</div>
       <input value={username} onChange={(event) => setUsername(event.target.value)} />
       <div>Contraseña</div>

@@ -16,23 +16,37 @@ registerLocale("es", es);
 setDefaultLocale("es");
 
 const getRoutes = (routes) => {
-  return routes.map((prop, key) => (
-    <Route exact path={prop.path} render={(props) => <prop.component {...props} />} key={key} />
+  return routes.map((route, key) => (
+    <Route
+      exact
+      path={route.path}
+      render={(props) => {
+        if (route.hideTheSidebar) return <route.component {...props} />;
+        else {
+          return (
+            <React.Fragment>
+              <NotificationContainer />
+              <Sidebar color={"black"} image={""} routes={routes} />
+              <div className="main-panel">
+                <Header />
+                <div className="content">
+                  <route.component {...props} />
+                </div>
+                <Footer />
+              </div>
+            </React.Fragment>
+          );
+        }
+      }}
+      key={key}
+    />
   ));
 };
 
 const App = () => {
   return (
     <div className="wrapper">
-      <NotificationContainer />
-      <Sidebar color={"black"} image={""} routes={routes} />
-      <div className="main-panel">
-        <Header />
-        <div className="content">
-          <Switch> {getRoutes(routes)} </Switch>
-        </div>
-        <Footer />
-      </div>
+      <Switch> {getRoutes(routes)} </Switch>
     </div>
   );
 };

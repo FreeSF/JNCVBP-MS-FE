@@ -218,6 +218,7 @@ const routes = [
     icon: "nc-icon nc-chart-pie-35",
     component: LoginPage,
     showOnSidebar: false,
+    hideTheSidebar: true,
   },
   ...volunteerRoutes,
   ...dutiesRoutes,
