@@ -21,6 +21,11 @@ export type Scalars = {
   Timestamp: any;
 };
 
+export type AccessToken = {
+  __typename?: "AccessToken";
+  access_token?: Maybe<Scalars["String"]>;
+};
+
 export type Course = {
   __typename?: "Course";
   id: Scalars["String"];
@@ -126,7 +131,11 @@ export type CreateTrainingInput = {
 };
 
 export type CreateUserInput = {
-  name: Scalars["String"];
+  firstName: Scalars["String"];
+  lastName: Scalars["String"];
+  username: Scalars["String"];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type CreateVolunteerInput = {
@@ -185,8 +194,14 @@ export type Guard = {
   volunteers?: Maybe<Array<Volunteer>>;
 };
 
+export type LoginInput = {
+  username: Scalars["String"];
+  password: Scalars["String"];
+};
+
 export type Mutation = {
   __typename?: "Mutation";
+  login: AccessToken;
   createUser: User;
   updateUser: User;
   removeUser: User;
@@ -223,6 +238,10 @@ export type Mutation = {
   createCourse: Course;
   updateCourse: Course;
   removeCourse: Course;
+};
+
+export type MutationLoginArgs = {
+  loginInput: LoginInput;
 };
 
 export type MutationCreateUserArgs = {
@@ -398,6 +417,7 @@ export type Quantity1044Input = {
 
 export type Query = {
   __typename?: "Query";
+  currentUser: User;
   users: Array<User>;
   usersDisabled: Array<User>;
   user: User;
@@ -695,7 +715,11 @@ export type UpdateTrainingInput = {
 };
 
 export type UpdateUserInput = {
-  name?: Maybe<Scalars["String"]>;
+  firstName?: Maybe<Scalars["String"]>;
+  lastName?: Maybe<Scalars["String"]>;
+  username?: Maybe<Scalars["String"]>;
+  email?: Maybe<Scalars["String"]>;
+  password?: Maybe<Scalars["String"]>;
   id: Scalars["Int"];
 };
 
@@ -714,7 +738,11 @@ export type UpdateVolunteerInput = {
 export type User = {
   __typename?: "User";
   id: Scalars["String"];
-  name: Scalars["String"];
+  firstName: Scalars["String"];
+  lastName: Scalars["String"];
+  username: Scalars["String"];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type Volunteer = {
@@ -880,6 +908,26 @@ export type RemoveGuardMutationVariables = Exact<{
 
 export type RemoveGuardMutation = { __typename?: "Mutation" } & {
   removeGuard: { __typename?: "Guard" } & GuardAllFieldsFragment;
+};
+
+export type LoginMutationVariables = Exact<{
+  username: Scalars["String"];
+  password: Scalars["String"];
+}>;
+
+export type LoginMutation = { __typename?: "Mutation" } & {
+  login: { __typename?: "AccessToken" } & Pick<AccessToken, "access_token">;
+};
+
+export type UserAllFieldsFragment = { __typename?: "User" } & Pick<
+  User,
+  "id" | "username" | "firstName" | "lastName" | "email"
+>;
+
+export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCurrentUserQuery = { __typename?: "Query" } & {
+  currentUser: { __typename?: "User" } & UserAllFieldsFragment;
 };
 
 export type ReportAllFieldsFragment = { __typename?: "Report" } & Pick<
@@ -1283,6 +1331,15 @@ export const GuardAllFieldsFragmentDoc = gql`
     }
   }
   ${VolunteerAllFieldsFragmentDoc}
+`;
+export const UserAllFieldsFragmentDoc = gql`
+  fragment userAllFields on User {
+    id
+    username
+    firstName
+    lastName
+    email
+  }
 `;
 export const ReportAllFieldsFragmentDoc = gql`
   fragment reportAllFields on Report {
@@ -2277,6 +2334,89 @@ export type RemoveGuardMutationResult = ApolloReactCommon.MutationResult<RemoveG
 export type RemoveGuardMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RemoveGuardMutation,
   RemoveGuardMutationVariables
+>;
+export const LoginDocument = gql`
+  mutation login($username: String!, $password: String!) {
+    login(loginInput: { username: $username, password: $password }) {
+      access_token
+    }
+  }
+`;
+export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
+export type LoginComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<LoginMutation, LoginMutationVariables>,
+  "mutation"
+>;
+
+export const LoginComponent = (props: LoginComponentProps) => (
+  <ApolloReactComponents.Mutation<LoginMutation, LoginMutationVariables> mutation={LoginDocument} {...props} />
+);
+
+export type LoginProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
+} & TChildProps;
+export function withLogin<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    LoginMutation,
+    LoginMutationVariables,
+    LoginProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<TProps, LoginMutation, LoginMutationVariables, LoginProps<TChildProps, TDataName>>(
+    LoginDocument,
+    {
+      alias: "login",
+      ...operationOptions,
+    }
+  );
+}
+export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
+export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const GetCurrentUserDocument = gql`
+  query getCurrentUser {
+    currentUser {
+      ...userAllFields
+    }
+  }
+  ${UserAllFieldsFragmentDoc}
+`;
+export type GetCurrentUserComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetCurrentUserQuery, GetCurrentUserQueryVariables>,
+  "query"
+>;
+
+export const GetCurrentUserComponent = (props: GetCurrentUserComponentProps) => (
+  <ApolloReactComponents.Query<GetCurrentUserQuery, GetCurrentUserQueryVariables>
+    query={GetCurrentUserDocument}
+    {...props}
+  />
+);
+
+export type GetCurrentUserProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
+} & TChildProps;
+export function withGetCurrentUser<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetCurrentUserQuery,
+    GetCurrentUserQueryVariables,
+    GetCurrentUserProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetCurrentUserQuery,
+    GetCurrentUserQueryVariables,
+    GetCurrentUserProps<TChildProps, TDataName>
+  >(GetCurrentUserDocument, {
+    alias: "getCurrentUser",
+    ...operationOptions,
+  });
+}
+export type GetCurrentUserQueryResult = ApolloReactCommon.QueryResult<
+  GetCurrentUserQuery,
+  GetCurrentUserQueryVariables
 >;
 export const GetReportDocument = gql`
   query getReport($startDate: Float!, $endDate: Float!) {

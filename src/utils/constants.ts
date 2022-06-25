@@ -16,6 +16,8 @@ export const DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
 export const DEFAULT_DATETIME_FORMAT = "MM/DD/YYYY HH:mm";
 // export const API_URL = process.env.JNCVBP_URL || "http://localhost:3000/graphql";
 
+export const AUTH_TOKEN_NAME = "jncvbp-ms-token";
+
 export const BLOOD_TYPES = [
   { id: "Not Set", description: "No definido" },
   { id: "A+", description: "A RH(+)" },
