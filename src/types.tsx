@@ -135,6 +135,7 @@ export type CreateUserInput = {
   lastName: Scalars["String"];
   username: Scalars["String"];
   email: Scalars["String"];
+  isAdmin: Scalars["Boolean"];
   password: Scalars["String"];
 };
 
@@ -417,7 +418,7 @@ export type Quantity1044Input = {
 
 export type Query = {
   __typename?: "Query";
-  currentUser: User;
+  currentUser?: Maybe<User>;
   users: Array<User>;
   usersDisabled: Array<User>;
   user: User;
@@ -719,8 +720,9 @@ export type UpdateUserInput = {
   lastName?: Maybe<Scalars["String"]>;
   username?: Maybe<Scalars["String"]>;
   email?: Maybe<Scalars["String"]>;
+  isAdmin?: Maybe<Scalars["Boolean"]>;
   password?: Maybe<Scalars["String"]>;
-  id: Scalars["Int"];
+  id: Scalars["String"];
 };
 
 export type UpdateVolunteerInput = {
@@ -742,6 +744,7 @@ export type User = {
   lastName: Scalars["String"];
   username: Scalars["String"];
   email: Scalars["String"];
+  isAdmin: Scalars["Boolean"];
   password: Scalars["String"];
 };
 
@@ -921,13 +924,13 @@ export type LoginMutation = { __typename?: "Mutation" } & {
 
 export type UserAllFieldsFragment = { __typename?: "User" } & Pick<
   User,
-  "id" | "username" | "firstName" | "lastName" | "email"
+  "id" | "username" | "firstName" | "lastName" | "email" | "isAdmin"
 >;
 
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetCurrentUserQuery = { __typename?: "Query" } & {
-  currentUser: { __typename?: "User" } & UserAllFieldsFragment;
+  currentUser?: Maybe<{ __typename?: "User" } & UserAllFieldsFragment>;
 };
 
 export type ReportAllFieldsFragment = { __typename?: "Report" } & Pick<
@@ -1339,6 +1342,7 @@ export const UserAllFieldsFragmentDoc = gql`
     firstName
     lastName
     email
+    isAdmin
   }
 `;
 export const ReportAllFieldsFragmentDoc = gql`

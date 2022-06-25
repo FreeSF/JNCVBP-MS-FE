@@ -235,6 +235,7 @@ const routes = [
     icon: "nc-icon nc-chart-pie-35",
     component: RecycleBinPage,
     showOnSidebar: true,
+    onlyAdmin: true,
   },
 ];
 

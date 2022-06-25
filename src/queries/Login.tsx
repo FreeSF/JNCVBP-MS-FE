@@ -15,6 +15,7 @@ export const USER_ALL_FIELDS_FRAGMENT = gql`
     firstName
     lastName
     email
+    isAdmin
   }
 `;
 
