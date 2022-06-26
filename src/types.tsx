@@ -239,6 +239,7 @@ export type Mutation = {
   createCourse: Course;
   updateCourse: Course;
   removeCourse: Course;
+  restoreCourse: Course;
 };
 
 export type MutationLoginArgs = {
@@ -386,6 +387,10 @@ export type MutationUpdateCourseArgs = {
 };
 
 export type MutationRemoveCourseArgs = {
+  id: Scalars["String"];
+};
+
+export type MutationRestoreCourseArgs = {
   id: Scalars["String"];
 };
 
@@ -819,6 +824,14 @@ export type RemoveCourseMutationVariables = Exact<{
 
 export type RemoveCourseMutation = { __typename?: "Mutation" } & {
   removeCourse: { __typename?: "Course" } & CoursesAllFieldsFragment;
+};
+
+export type RestoreCourseMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RestoreCourseMutation = { __typename?: "Mutation" } & {
+  restoreCourse: { __typename?: "Course" } & CoursesAllFieldsFragment;
 };
 
 export type EventAllFieldsFragment = { __typename?: "Event" } & Pick<Event, "id" | "description"> & {
@@ -1796,6 +1809,56 @@ export type RemoveCourseMutationResult = ApolloReactCommon.MutationResult<Remove
 export type RemoveCourseMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RemoveCourseMutation,
   RemoveCourseMutationVariables
+>;
+export const RestoreCourseDocument = gql`
+  mutation restoreCourse($id: String!) {
+    restoreCourse(id: $id) {
+      ...coursesAllFields
+    }
+  }
+  ${CoursesAllFieldsFragmentDoc}
+`;
+export type RestoreCourseMutationFn = ApolloReactCommon.MutationFunction<
+  RestoreCourseMutation,
+  RestoreCourseMutationVariables
+>;
+export type RestoreCourseComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RestoreCourseMutation, RestoreCourseMutationVariables>,
+  "mutation"
+>;
+
+export const RestoreCourseComponent = (props: RestoreCourseComponentProps) => (
+  <ApolloReactComponents.Mutation<RestoreCourseMutation, RestoreCourseMutationVariables>
+    mutation={RestoreCourseDocument}
+    {...props}
+  />
+);
+
+export type RestoreCourseProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RestoreCourseMutation, RestoreCourseMutationVariables>;
+} & TChildProps;
+export function withRestoreCourse<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RestoreCourseMutation,
+    RestoreCourseMutationVariables,
+    RestoreCourseProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RestoreCourseMutation,
+    RestoreCourseMutationVariables,
+    RestoreCourseProps<TChildProps, TDataName>
+  >(RestoreCourseDocument, {
+    alias: "restoreCourse",
+    ...operationOptions,
+  });
+}
+export type RestoreCourseMutationResult = ApolloReactCommon.MutationResult<RestoreCourseMutation>;
+export type RestoreCourseMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RestoreCourseMutation,
+  RestoreCourseMutationVariables
 >;
 export const GetEventsDocument = gql`
   query getEvents {

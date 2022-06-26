@@ -4,7 +4,7 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
 import Select from "react-select";
 
-import { useLazyQuery } from "react-apollo";
+import { useLazyQuery, useMutation } from "react-apollo";
 import {
   GetCoursesDisabledQuery,
   GetDutiesDisabledQuery,
@@ -18,8 +18,9 @@ import {
   GetServicesDisabledQuery,
   GetTrainingsDisabledQuery,
   GetVolunteersDisabledQuery,
+  RestoreCourseMutation,
 } from "../../types";
-import { GET_COURSES_DISABLED } from "../../queries/Courses";
+import { GET_COURSES, GET_COURSES_DISABLED, RESTORE_COURSE } from "../../queries/Courses";
 import { GET_VOLUNTEERS_DISABLED } from "../../queries/volunteers";
 import { GET_DUTIES_DISABLED } from "../../queries/duties";
 import { GET_EVENTS_DISABLED } from "../../queries/Events";
@@ -28,7 +29,7 @@ import { GET_EVENTS_DISABLED } from "../../queries/Events";
 // import { GET_SUB_TYPES_DISABLED } from "../../queries/subType";
 import { GET_GUARDS_DISABLED } from "../../queries/Guards";
 import { GET_RANKS_DISABLED } from "../../queries/ranks";
-import { GET_SERVICES_DISABLED } from "../../queries/services";
+import { GET_SERVICES, GET_SERVICES_DISABLED } from "../../queries/services";
 import { GET_TRAININGS_DISABLED } from "../../queries/Trainings";
 import {
   get_course_columns,
@@ -71,6 +72,9 @@ const OPTIONS = [
 const RecycleBinPage = (props) => {
   const [type, setType] = useState({ value: COURSE, label: COURSE });
   const [loadCourses, courses] = useLazyQuery<GetCoursesDisabledQuery>(GET_COURSES_DISABLED, {
+    fetchPolicy: "no-cache",
+  });
+  const [restoreCourse, restoredCourse] = useMutation<RestoreCourseMutation>(RESTORE_COURSE, {
     fetchPolicy: "no-cache",
   });
   const [loadDuties, duties] = useLazyQuery<GetDutiesDisabledQuery>(GET_DUTIES_DISABLED, { fetchPolicy: "no-cache" });
@@ -142,7 +146,20 @@ const RecycleBinPage = (props) => {
   const restoreColumn = {
     dataField: "",
     text: "Acciones",
-    formatter: (cell, row) => <button>Restaurar</button>,
+    formatter: (cell, row) => (
+      <button
+        onClick={() => {
+          switch (type.value) {
+            case COURSE: {
+              restoreCourse({ variables: { id: row.id } }).then(() => loadCourses());
+              break;
+            }
+          }
+        }}
+      >
+        Restaurar
+      </button>
+    ),
   };
 
   let columns: ColumnDescription[] = [
