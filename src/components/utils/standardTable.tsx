@@ -12,7 +12,7 @@ interface TheProps {
 const StandardTable: React.FC<TheProps> = (props) => {
   return (
     <div>
-      <ToolkitProvider hover keyField={props.keyField || "id"} data={props.data} columns={props.columns}>
+      <ToolkitProvider hover keyField={props.keyField || "id"} data={props.data} columns={props.columns} search>
         {({ searchProps, baseProps }) => (
           <React.Fragment>
             <CustomSearch {...searchProps} />
@@ -25,26 +25,21 @@ const StandardTable: React.FC<TheProps> = (props) => {
 };
 
 const CustomSearch = (props) => {
-  const { className = "", style = {}, input, ...restProps } = props;
+  const { input, ...restProps } = props;
 
   return (
-    <Container className={className} style={style}>
-      <i className="fas fa-search" />
-      <input
-        ref={input}
-        type="text"
-        onChange={(e) => {
-          restProps.onSearch(e.target.value);
-        }}
-        style={{
-          border: "none",
-          outline: "none",
-          boxShadow: "none",
-          padding: 0,
-        }}
-        //placeholder={t(props.placeholder)}
-      />
-    </Container>
+    <input
+      ref={input}
+      type="text"
+      onChange={(e) => {
+        restProps.onSearch(e.target.value);
+      }}
+      style={{
+        marginBottom: "10px",
+      }}
+      className="form-control"
+      placeholder="Buscar"
+    />
   );
 };
 

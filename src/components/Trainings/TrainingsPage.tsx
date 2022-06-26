@@ -16,6 +16,7 @@ import {
 import Spinner from "../spinner";
 import { get_formatted_date, get_formatted_volunteers } from "utils/constants";
 import { get_training_columns } from "utils/columns";
+import StandardTable from "../utils/standardTable";
 
 const TrainingsPage = (props) => {
   const getTrainingsQuery = useQuery<GetTrainingsQuery>(GET_TRAININGS);
@@ -66,7 +67,7 @@ const TrainingsPage = (props) => {
               {getTrainingsQuery.loading ? (
                 <Spinner />
               ) : (
-                <BootstrapTable keyField={"id"} data={getTrainingsQuery.data?.trainings} columns={columns} />
+                <StandardTable keyField={"id"} data={getTrainingsQuery.data?.trainings} columns={columns} />
               )}
             </Card.Body>
           </Card>
