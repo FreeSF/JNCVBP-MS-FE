@@ -65,3 +65,12 @@ export const REMOVE_EVENT = gql`
   }
   ${EVENT_ALL_FIELDS_FRAGMENT}
 `;
+
+export const RESTORE_EVENT = gql`
+  mutation restoreEvent($id: String!) {
+    restoreEvent(id: $id) {
+      ...eventAllFields
+    }
+  }
+  ${EVENT_ALL_FIELDS_FRAGMENT}
+`;
