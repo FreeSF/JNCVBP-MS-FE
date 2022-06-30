@@ -35,6 +35,8 @@ import UpdateCoursePage from "./components/Courses/UpdateCoursePage";
 import ShowCoursePage from "./components/Courses/ShowCoursePage";
 import RecycleBinPage from "./components/RecycleBin/RecycleBinPage";
 import LoginPage from "./components/Login/LoginPage";
+import UsersPage from "./components/Users/UsersPage";
+import CreateUserPage from "./components/Users/CreateUserPage";
 
 const dutiesRoutes = [
   {
@@ -117,6 +119,24 @@ const volunteerRoutes = [
     path: "/volunteers/:id",
     name: "Voluntario",
     component: ShowVolunteerPage,
+  },
+];
+
+const usersRoutes = [
+  {
+    path: "/users",
+    name: "Usuarios",
+    icon: "fas fa-users",
+    component: UsersPage,
+    showOnSidebar: true,
+    onlyAdmin: true,
+  },
+  {
+    path: "/users/create",
+    name: "Usuarios",
+    icon: "fas fa-users",
+    component: CreateUserPage,
+    onlyAdmin: true,
   },
 ];
 const guardRoutes = [
@@ -222,6 +242,7 @@ const routes = [
     noAuthRoute: true,
   },
   ...volunteerRoutes,
+  ...usersRoutes,
   ...dutiesRoutes,
   ...ranksRoutes,
   ...guardRoutes,

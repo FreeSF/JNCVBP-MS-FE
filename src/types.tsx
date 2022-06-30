@@ -206,36 +206,47 @@ export type Mutation = {
   createUser: User;
   updateUser: User;
   removeUser: User;
+  restoreUser: User;
   createDuty: Duty;
   updateDuty: Duty;
   removeDuty: Duty;
+  restoreDuty: Duty;
   createRank: Rank;
   updateRank: Rank;
   removeRank: Rank;
+  restoreRank: Rank;
   createService: Service;
   updateService: Service;
   removeService: Service;
+  restoreService: Service;
   createVolunteer: Volunteer;
   updateVolunteer: Volunteer;
   removeVolunteer: Volunteer;
+  restoreVolunteer: Volunteer;
   createSubType: SubType;
   updateSubType: SubType;
   removeSubType: SubType;
+  restoreSubType: SubType;
   createFireCause: FireCause;
   updateFireCause: FireCause;
   removeFireCause: FireCause;
+  restoreFireCause: FireCause;
   createFireClass: FireClass;
   updateFireClass: FireClass;
   removeFireClass: FireClass;
+  restoreFireClass: FireClass;
   createGuard: Guard;
   updateGuard: Guard;
   removeGuard: Guard;
+  restoreGuard: Guard;
   createEvent: Event;
   updateEvent: Event;
   removeEvent: Event;
+  restoreEvent: Event;
   createTraining: Training;
   updateTraining: Training;
   removeTraining: Training;
+  restoreTraining: Training;
   createCourse: Course;
   updateCourse: Course;
   removeCourse: Course;
@@ -258,6 +269,10 @@ export type MutationRemoveUserArgs = {
   id: Scalars["String"];
 };
 
+export type MutationRestoreUserArgs = {
+  id: Scalars["String"];
+};
+
 export type MutationCreateDutyArgs = {
   createDutyInput: CreateDutyInput;
 };
@@ -267,6 +282,10 @@ export type MutationUpdateDutyArgs = {
 };
 
 export type MutationRemoveDutyArgs = {
+  id: Scalars["String"];
+};
+
+export type MutationRestoreDutyArgs = {
   id: Scalars["String"];
 };
 
@@ -282,6 +301,10 @@ export type MutationRemoveRankArgs = {
   id: Scalars["String"];
 };
 
+export type MutationRestoreRankArgs = {
+  id: Scalars["String"];
+};
+
 export type MutationCreateServiceArgs = {
   createServiceInput: CreateServiceInput;
 };
@@ -291,6 +314,10 @@ export type MutationUpdateServiceArgs = {
 };
 
 export type MutationRemoveServiceArgs = {
+  id: Scalars["String"];
+};
+
+export type MutationRestoreServiceArgs = {
   id: Scalars["String"];
 };
 
@@ -306,6 +333,10 @@ export type MutationRemoveVolunteerArgs = {
   id: Scalars["String"];
 };
 
+export type MutationRestoreVolunteerArgs = {
+  id: Scalars["String"];
+};
+
 export type MutationCreateSubTypeArgs = {
   createSubTypeInput: CreateSubTypeInput;
 };
@@ -315,6 +346,10 @@ export type MutationUpdateSubTypeArgs = {
 };
 
 export type MutationRemoveSubTypeArgs = {
+  id: Scalars["String"];
+};
+
+export type MutationRestoreSubTypeArgs = {
   id: Scalars["String"];
 };
 
@@ -330,6 +365,10 @@ export type MutationRemoveFireCauseArgs = {
   id: Scalars["String"];
 };
 
+export type MutationRestoreFireCauseArgs = {
+  id: Scalars["String"];
+};
+
 export type MutationCreateFireClassArgs = {
   createFireClassInput: CreateFireClassInput;
 };
@@ -339,6 +378,10 @@ export type MutationUpdateFireClassArgs = {
 };
 
 export type MutationRemoveFireClassArgs = {
+  id: Scalars["String"];
+};
+
+export type MutationRestoreFireClassArgs = {
   id: Scalars["String"];
 };
 
@@ -354,6 +397,10 @@ export type MutationRemoveGuardArgs = {
   id: Scalars["String"];
 };
 
+export type MutationRestoreGuardArgs = {
+  id: Scalars["String"];
+};
+
 export type MutationCreateEventArgs = {
   createEventInput: CreateEventInput;
 };
@@ -366,6 +413,10 @@ export type MutationRemoveEventArgs = {
   id: Scalars["String"];
 };
 
+export type MutationRestoreEventArgs = {
+  id: Scalars["String"];
+};
+
 export type MutationCreateTrainingArgs = {
   createTrainingInput: CreateTrainingInput;
 };
@@ -375,6 +426,10 @@ export type MutationUpdateTrainingArgs = {
 };
 
 export type MutationRemoveTrainingArgs = {
+  id: Scalars["String"];
+};
+
+export type MutationRestoreTrainingArgs = {
   id: Scalars["String"];
 };
 
@@ -880,6 +935,14 @@ export type RemoveEventMutation = { __typename?: "Mutation" } & {
   removeEvent: { __typename?: "Event" } & EventAllFieldsFragment;
 };
 
+export type RestoreEventMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RestoreEventMutation = { __typename?: "Mutation" } & {
+  restoreEvent: { __typename?: "Event" } & EventAllFieldsFragment;
+};
+
 export type GuardAllFieldsFragment = { __typename?: "Guard" } & Pick<Guard, "id" | "start_time" | "end_time"> & {
     volunteers?: Maybe<Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>>;
   };
@@ -926,6 +989,14 @@ export type RemoveGuardMutation = { __typename?: "Mutation" } & {
   removeGuard: { __typename?: "Guard" } & GuardAllFieldsFragment;
 };
 
+export type RestoreGuardMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RestoreGuardMutation = { __typename?: "Mutation" } & {
+  restoreGuard: { __typename?: "Guard" } & GuardAllFieldsFragment;
+};
+
 export type LoginMutationVariables = Exact<{
   username: Scalars["String"];
   password: Scalars["String"];
@@ -934,11 +1005,6 @@ export type LoginMutationVariables = Exact<{
 export type LoginMutation = { __typename?: "Mutation" } & {
   login: { __typename?: "AccessToken" } & Pick<AccessToken, "access_token">;
 };
-
-export type UserAllFieldsFragment = { __typename?: "User" } & Pick<
-  User,
-  "id" | "username" | "firstName" | "lastName" | "email" | "isAdmin"
->;
 
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -1021,6 +1087,69 @@ export type RemoveTrainingMutation = { __typename?: "Mutation" } & {
   removeTraining: { __typename?: "Training" } & TrainingAllFieldsFragment;
 };
 
+export type RestoreTrainingMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RestoreTrainingMutation = { __typename?: "Mutation" } & {
+  restoreTraining: { __typename?: "Training" } & TrainingAllFieldsFragment;
+};
+
+export type UserAllFieldsFragment = { __typename?: "User" } & Pick<
+  User,
+  "id" | "isAdmin" | "email" | "lastName" | "firstName" | "username"
+>;
+
+export type GetUsersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetUsersQuery = { __typename?: "Query" } & {
+  users: Array<{ __typename?: "User" } & UserAllFieldsFragment>;
+};
+
+export type GetUsersDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetUsersDisabledQuery = { __typename?: "Query" } & {
+  users: Array<{ __typename?: "User" } & UserAllFieldsFragment>;
+};
+
+export type FindUserQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type FindUserQuery = { __typename?: "Query" } & { user: { __typename?: "User" } & UserAllFieldsFragment };
+
+export type EditUserMutationVariables = Exact<{
+  input: UpdateUserInput;
+}>;
+
+export type EditUserMutation = { __typename?: "Mutation" } & {
+  updateUser: { __typename?: "User" } & UserAllFieldsFragment;
+};
+
+export type CreateUserMutationVariables = Exact<{
+  input: CreateUserInput;
+}>;
+
+export type CreateUserMutation = { __typename?: "Mutation" } & {
+  createUser: { __typename?: "User" } & UserAllFieldsFragment;
+};
+
+export type RemoveUserMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RemoveUserMutation = { __typename?: "Mutation" } & {
+  removeUser: { __typename?: "User" } & UserAllFieldsFragment;
+};
+
+export type RestoreUserMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RestoreUserMutation = { __typename?: "Mutation" } & {
+  restoreUser: { __typename?: "User" } & UserAllFieldsFragment;
+};
+
 export type DutyAllFieldsFragment = { __typename?: "Duty" } & Pick<Duty, "id" | "name" | "isDeletable" | "description">;
 
 export type GetDutiesQueryVariables = Exact<{ [key: string]: never }>;
@@ -1065,6 +1194,14 @@ export type DeleteDutyMutation = { __typename?: "Mutation" } & {
   removeDuty: { __typename?: "Duty" } & Pick<Duty, "id">;
 };
 
+export type RestoreDutyMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RestoreDutyMutation = { __typename?: "Mutation" } & {
+  restoreDuty: { __typename?: "Duty" } & Pick<Duty, "id">;
+};
+
 export type FireCauseAllFieldsFragment = { __typename?: "FireCause" } & Pick<FireCause, "id" | "name">;
 
 export type GetFireCausesQueryVariables = Exact<{ [key: string]: never }>;
@@ -1079,6 +1216,22 @@ export type GetFireCausesDisabledQuery = { __typename?: "Query" } & {
   fireCausesDisabled: Array<{ __typename?: "FireCause" } & FireCauseAllFieldsFragment>;
 };
 
+export type RemoveFireCauseMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RemoveFireCauseMutation = { __typename?: "Mutation" } & {
+  removeFireCause: { __typename?: "FireCause" } & FireCauseAllFieldsFragment;
+};
+
+export type RestoreFireCauseMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RestoreFireCauseMutation = { __typename?: "Mutation" } & {
+  restoreFireCause: { __typename?: "FireCause" } & FireCauseAllFieldsFragment;
+};
+
 export type FireClassAllFieldsFragment = { __typename?: "FireClass" } & Pick<FireClass, "id" | "name">;
 
 export type GetFireClassesQueryVariables = Exact<{ [key: string]: never }>;
@@ -1091,6 +1244,22 @@ export type GetFireClassesDisabledQueryVariables = Exact<{ [key: string]: never 
 
 export type GetFireClassesDisabledQuery = { __typename?: "Query" } & {
   fireClassesDisabled: Array<{ __typename?: "FireClass" } & FireClassAllFieldsFragment>;
+};
+
+export type RemoveFireClassMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RemoveFireClassMutation = { __typename?: "Mutation" } & {
+  removeFireClass: { __typename?: "FireClass" } & FireClassAllFieldsFragment;
+};
+
+export type RestoreFireClassMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RestoreFireClassMutation = { __typename?: "Mutation" } & {
+  restoreFireClass: { __typename?: "FireClass" } & FireClassAllFieldsFragment;
 };
 
 export type RankAllFieldsFragment = { __typename?: "Rank" } & Pick<Rank, "id" | "name" | "isDeletable" | "description">;
@@ -1135,6 +1304,14 @@ export type DeleteRankMutationVariables = Exact<{
 
 export type DeleteRankMutation = { __typename?: "Mutation" } & {
   removeRank: { __typename?: "Rank" } & Pick<Rank, "id">;
+};
+
+export type RestoreRankMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RestoreRankMutation = { __typename?: "Mutation" } & {
+  restoreRank: { __typename?: "Rank" } & Pick<Rank, "id">;
 };
 
 export type ServicesAllFieldsFragment = { __typename?: "Service" } & Pick<
@@ -1226,6 +1403,14 @@ export type RemoveServiceMutation = { __typename?: "Mutation" } & {
   removeService: { __typename?: "Service" } & ServicesAllFieldsFragment;
 };
 
+export type RestoreServiceMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RestoreServiceMutation = { __typename?: "Mutation" } & {
+  restoreService: { __typename?: "Service" } & ServicesAllFieldsFragment;
+};
+
 export type SubTypeAllFieldsFragment = { __typename?: "SubType" } & Pick<SubType, "id" | "name" | "code">;
 
 export type GetSubTypesQueryVariables = Exact<{ [key: string]: never }>;
@@ -1289,6 +1474,14 @@ export type DeleteVolunteerMutation = { __typename?: "Mutation" } & {
   removeVolunteer: { __typename?: "Volunteer" } & Pick<Volunteer, "id">;
 };
 
+export type RestoreVolunteerMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RestoreVolunteerMutation = { __typename?: "Mutation" } & {
+  restoreVolunteer: { __typename?: "Volunteer" } & Pick<Volunteer, "id">;
+};
+
 export const RankAllFieldsFragmentDoc = gql`
   fragment rankAllFields on Rank {
     id
@@ -1347,16 +1540,6 @@ export const GuardAllFieldsFragmentDoc = gql`
     }
   }
   ${VolunteerAllFieldsFragmentDoc}
-`;
-export const UserAllFieldsFragmentDoc = gql`
-  fragment userAllFields on User {
-    id
-    username
-    firstName
-    lastName
-    email
-    isAdmin
-  }
 `;
 export const ReportAllFieldsFragmentDoc = gql`
   fragment reportAllFields on Report {
@@ -1447,6 +1630,16 @@ export const TrainingAllFieldsFragmentDoc = gql`
     }
   }
   ${VolunteerAllFieldsFragmentDoc}
+`;
+export const UserAllFieldsFragmentDoc = gql`
+  fragment userAllFields on User {
+    id
+    isAdmin
+    email
+    lastName
+    firstName
+    username
+  }
 `;
 export const DutyAllFieldsFragmentDoc = gql`
   fragment dutyAllFields on Duty {
@@ -2131,6 +2324,56 @@ export type RemoveEventMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RemoveEventMutation,
   RemoveEventMutationVariables
 >;
+export const RestoreEventDocument = gql`
+  mutation restoreEvent($id: String!) {
+    restoreEvent(id: $id) {
+      ...eventAllFields
+    }
+  }
+  ${EventAllFieldsFragmentDoc}
+`;
+export type RestoreEventMutationFn = ApolloReactCommon.MutationFunction<
+  RestoreEventMutation,
+  RestoreEventMutationVariables
+>;
+export type RestoreEventComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RestoreEventMutation, RestoreEventMutationVariables>,
+  "mutation"
+>;
+
+export const RestoreEventComponent = (props: RestoreEventComponentProps) => (
+  <ApolloReactComponents.Mutation<RestoreEventMutation, RestoreEventMutationVariables>
+    mutation={RestoreEventDocument}
+    {...props}
+  />
+);
+
+export type RestoreEventProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RestoreEventMutation, RestoreEventMutationVariables>;
+} & TChildProps;
+export function withRestoreEvent<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RestoreEventMutation,
+    RestoreEventMutationVariables,
+    RestoreEventProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RestoreEventMutation,
+    RestoreEventMutationVariables,
+    RestoreEventProps<TChildProps, TDataName>
+  >(RestoreEventDocument, {
+    alias: "restoreEvent",
+    ...operationOptions,
+  });
+}
+export type RestoreEventMutationResult = ApolloReactCommon.MutationResult<RestoreEventMutation>;
+export type RestoreEventMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RestoreEventMutation,
+  RestoreEventMutationVariables
+>;
 export const GetGuardsDocument = gql`
   query getGuards {
     guards {
@@ -2401,6 +2644,56 @@ export type RemoveGuardMutationResult = ApolloReactCommon.MutationResult<RemoveG
 export type RemoveGuardMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RemoveGuardMutation,
   RemoveGuardMutationVariables
+>;
+export const RestoreGuardDocument = gql`
+  mutation restoreGuard($id: String!) {
+    restoreGuard(id: $id) {
+      ...guardAllFields
+    }
+  }
+  ${GuardAllFieldsFragmentDoc}
+`;
+export type RestoreGuardMutationFn = ApolloReactCommon.MutationFunction<
+  RestoreGuardMutation,
+  RestoreGuardMutationVariables
+>;
+export type RestoreGuardComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RestoreGuardMutation, RestoreGuardMutationVariables>,
+  "mutation"
+>;
+
+export const RestoreGuardComponent = (props: RestoreGuardComponentProps) => (
+  <ApolloReactComponents.Mutation<RestoreGuardMutation, RestoreGuardMutationVariables>
+    mutation={RestoreGuardDocument}
+    {...props}
+  />
+);
+
+export type RestoreGuardProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RestoreGuardMutation, RestoreGuardMutationVariables>;
+} & TChildProps;
+export function withRestoreGuard<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RestoreGuardMutation,
+    RestoreGuardMutationVariables,
+    RestoreGuardProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RestoreGuardMutation,
+    RestoreGuardMutationVariables,
+    RestoreGuardProps<TChildProps, TDataName>
+  >(RestoreGuardDocument, {
+    alias: "restoreGuard",
+    ...operationOptions,
+  });
+}
+export type RestoreGuardMutationResult = ApolloReactCommon.MutationResult<RestoreGuardMutation>;
+export type RestoreGuardMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RestoreGuardMutation,
+  RestoreGuardMutationVariables
 >;
 export const LoginDocument = gql`
   mutation login($username: String!, $password: String!) {
@@ -2799,6 +3092,364 @@ export type RemoveTrainingMutationOptions = ApolloReactCommon.BaseMutationOption
   RemoveTrainingMutation,
   RemoveTrainingMutationVariables
 >;
+export const RestoreTrainingDocument = gql`
+  mutation restoreTraining($id: String!) {
+    restoreTraining(id: $id) {
+      ...trainingAllFields
+    }
+  }
+  ${TrainingAllFieldsFragmentDoc}
+`;
+export type RestoreTrainingMutationFn = ApolloReactCommon.MutationFunction<
+  RestoreTrainingMutation,
+  RestoreTrainingMutationVariables
+>;
+export type RestoreTrainingComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RestoreTrainingMutation, RestoreTrainingMutationVariables>,
+  "mutation"
+>;
+
+export const RestoreTrainingComponent = (props: RestoreTrainingComponentProps) => (
+  <ApolloReactComponents.Mutation<RestoreTrainingMutation, RestoreTrainingMutationVariables>
+    mutation={RestoreTrainingDocument}
+    {...props}
+  />
+);
+
+export type RestoreTrainingProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RestoreTrainingMutation, RestoreTrainingMutationVariables>;
+} & TChildProps;
+export function withRestoreTraining<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RestoreTrainingMutation,
+    RestoreTrainingMutationVariables,
+    RestoreTrainingProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RestoreTrainingMutation,
+    RestoreTrainingMutationVariables,
+    RestoreTrainingProps<TChildProps, TDataName>
+  >(RestoreTrainingDocument, {
+    alias: "restoreTraining",
+    ...operationOptions,
+  });
+}
+export type RestoreTrainingMutationResult = ApolloReactCommon.MutationResult<RestoreTrainingMutation>;
+export type RestoreTrainingMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RestoreTrainingMutation,
+  RestoreTrainingMutationVariables
+>;
+export const GetUsersDocument = gql`
+  query getUsers {
+    users {
+      ...userAllFields
+    }
+  }
+  ${UserAllFieldsFragmentDoc}
+`;
+export type GetUsersComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetUsersQuery, GetUsersQueryVariables>,
+  "query"
+>;
+
+export const GetUsersComponent = (props: GetUsersComponentProps) => (
+  <ApolloReactComponents.Query<GetUsersQuery, GetUsersQueryVariables> query={GetUsersDocument} {...props} />
+);
+
+export type GetUsersProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetUsersQuery, GetUsersQueryVariables>;
+} & TChildProps;
+export function withGetUsers<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetUsersQuery,
+    GetUsersQueryVariables,
+    GetUsersProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<TProps, GetUsersQuery, GetUsersQueryVariables, GetUsersProps<TChildProps, TDataName>>(
+    GetUsersDocument,
+    {
+      alias: "getUsers",
+      ...operationOptions,
+    }
+  );
+}
+export type GetUsersQueryResult = ApolloReactCommon.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
+export const GetUsersDisabledDocument = gql`
+  query getUsersDisabled {
+    users {
+      ...userAllFields
+    }
+  }
+  ${UserAllFieldsFragmentDoc}
+`;
+export type GetUsersDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetUsersDisabledQuery, GetUsersDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetUsersDisabledComponent = (props: GetUsersDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetUsersDisabledQuery, GetUsersDisabledQueryVariables>
+    query={GetUsersDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetUsersDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetUsersDisabledQuery, GetUsersDisabledQueryVariables>;
+} & TChildProps;
+export function withGetUsersDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetUsersDisabledQuery,
+    GetUsersDisabledQueryVariables,
+    GetUsersDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetUsersDisabledQuery,
+    GetUsersDisabledQueryVariables,
+    GetUsersDisabledProps<TChildProps, TDataName>
+  >(GetUsersDisabledDocument, {
+    alias: "getUsersDisabled",
+    ...operationOptions,
+  });
+}
+export type GetUsersDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetUsersDisabledQuery,
+  GetUsersDisabledQueryVariables
+>;
+export const FindUserDocument = gql`
+  query findUser($id: String!) {
+    user(id: $id) {
+      ...userAllFields
+    }
+  }
+  ${UserAllFieldsFragmentDoc}
+`;
+export type FindUserComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<FindUserQuery, FindUserQueryVariables>,
+  "query"
+> &
+  ({ variables: FindUserQueryVariables; skip?: boolean } | { skip: boolean });
+
+export const FindUserComponent = (props: FindUserComponentProps) => (
+  <ApolloReactComponents.Query<FindUserQuery, FindUserQueryVariables> query={FindUserDocument} {...props} />
+);
+
+export type FindUserProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<FindUserQuery, FindUserQueryVariables>;
+} & TChildProps;
+export function withFindUser<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    FindUserQuery,
+    FindUserQueryVariables,
+    FindUserProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<TProps, FindUserQuery, FindUserQueryVariables, FindUserProps<TChildProps, TDataName>>(
+    FindUserDocument,
+    {
+      alias: "findUser",
+      ...operationOptions,
+    }
+  );
+}
+export type FindUserQueryResult = ApolloReactCommon.QueryResult<FindUserQuery, FindUserQueryVariables>;
+export const EditUserDocument = gql`
+  mutation editUser($input: UpdateUserInput!) {
+    updateUser(updateUserInput: $input) {
+      ...userAllFields
+    }
+  }
+  ${UserAllFieldsFragmentDoc}
+`;
+export type EditUserMutationFn = ApolloReactCommon.MutationFunction<EditUserMutation, EditUserMutationVariables>;
+export type EditUserComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<EditUserMutation, EditUserMutationVariables>,
+  "mutation"
+>;
+
+export const EditUserComponent = (props: EditUserComponentProps) => (
+  <ApolloReactComponents.Mutation<EditUserMutation, EditUserMutationVariables> mutation={EditUserDocument} {...props} />
+);
+
+export type EditUserProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<EditUserMutation, EditUserMutationVariables>;
+} & TChildProps;
+export function withEditUser<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    EditUserMutation,
+    EditUserMutationVariables,
+    EditUserProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    EditUserMutation,
+    EditUserMutationVariables,
+    EditUserProps<TChildProps, TDataName>
+  >(EditUserDocument, {
+    alias: "editUser",
+    ...operationOptions,
+  });
+}
+export type EditUserMutationResult = ApolloReactCommon.MutationResult<EditUserMutation>;
+export type EditUserMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  EditUserMutation,
+  EditUserMutationVariables
+>;
+export const CreateUserDocument = gql`
+  mutation createUser($input: CreateUserInput!) {
+    createUser(createUserInput: $input) {
+      ...userAllFields
+    }
+  }
+  ${UserAllFieldsFragmentDoc}
+`;
+export type CreateUserMutationFn = ApolloReactCommon.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+export type CreateUserComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<CreateUserMutation, CreateUserMutationVariables>,
+  "mutation"
+>;
+
+export const CreateUserComponent = (props: CreateUserComponentProps) => (
+  <ApolloReactComponents.Mutation<CreateUserMutation, CreateUserMutationVariables>
+    mutation={CreateUserDocument}
+    {...props}
+  />
+);
+
+export type CreateUserProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+} & TChildProps;
+export function withCreateUser<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateUserMutation,
+    CreateUserMutationVariables,
+    CreateUserProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateUserMutation,
+    CreateUserMutationVariables,
+    CreateUserProps<TChildProps, TDataName>
+  >(CreateUserDocument, {
+    alias: "createUser",
+    ...operationOptions,
+  });
+}
+export type CreateUserMutationResult = ApolloReactCommon.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateUserMutation,
+  CreateUserMutationVariables
+>;
+export const RemoveUserDocument = gql`
+  mutation removeUser($id: String!) {
+    removeUser(id: $id) {
+      ...userAllFields
+    }
+  }
+  ${UserAllFieldsFragmentDoc}
+`;
+export type RemoveUserMutationFn = ApolloReactCommon.MutationFunction<RemoveUserMutation, RemoveUserMutationVariables>;
+export type RemoveUserComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RemoveUserMutation, RemoveUserMutationVariables>,
+  "mutation"
+>;
+
+export const RemoveUserComponent = (props: RemoveUserComponentProps) => (
+  <ApolloReactComponents.Mutation<RemoveUserMutation, RemoveUserMutationVariables>
+    mutation={RemoveUserDocument}
+    {...props}
+  />
+);
+
+export type RemoveUserProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RemoveUserMutation, RemoveUserMutationVariables>;
+} & TChildProps;
+export function withRemoveUser<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RemoveUserMutation,
+    RemoveUserMutationVariables,
+    RemoveUserProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RemoveUserMutation,
+    RemoveUserMutationVariables,
+    RemoveUserProps<TChildProps, TDataName>
+  >(RemoveUserDocument, {
+    alias: "removeUser",
+    ...operationOptions,
+  });
+}
+export type RemoveUserMutationResult = ApolloReactCommon.MutationResult<RemoveUserMutation>;
+export type RemoveUserMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RemoveUserMutation,
+  RemoveUserMutationVariables
+>;
+export const RestoreUserDocument = gql`
+  mutation restoreUser($id: String!) {
+    restoreUser(id: $id) {
+      ...userAllFields
+    }
+  }
+  ${UserAllFieldsFragmentDoc}
+`;
+export type RestoreUserMutationFn = ApolloReactCommon.MutationFunction<
+  RestoreUserMutation,
+  RestoreUserMutationVariables
+>;
+export type RestoreUserComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RestoreUserMutation, RestoreUserMutationVariables>,
+  "mutation"
+>;
+
+export const RestoreUserComponent = (props: RestoreUserComponentProps) => (
+  <ApolloReactComponents.Mutation<RestoreUserMutation, RestoreUserMutationVariables>
+    mutation={RestoreUserDocument}
+    {...props}
+  />
+);
+
+export type RestoreUserProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RestoreUserMutation, RestoreUserMutationVariables>;
+} & TChildProps;
+export function withRestoreUser<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RestoreUserMutation,
+    RestoreUserMutationVariables,
+    RestoreUserProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RestoreUserMutation,
+    RestoreUserMutationVariables,
+    RestoreUserProps<TChildProps, TDataName>
+  >(RestoreUserDocument, {
+    alias: "restoreUser",
+    ...operationOptions,
+  });
+}
+export type RestoreUserMutationResult = ApolloReactCommon.MutationResult<RestoreUserMutation>;
+export type RestoreUserMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RestoreUserMutation,
+  RestoreUserMutationVariables
+>;
 export const GetDutiesDocument = gql`
   query getDuties {
     duties {
@@ -3058,6 +3709,55 @@ export type DeleteDutyMutationOptions = ApolloReactCommon.BaseMutationOptions<
   DeleteDutyMutation,
   DeleteDutyMutationVariables
 >;
+export const RestoreDutyDocument = gql`
+  mutation restoreDuty($id: String!) {
+    restoreDuty(id: $id) {
+      id
+    }
+  }
+`;
+export type RestoreDutyMutationFn = ApolloReactCommon.MutationFunction<
+  RestoreDutyMutation,
+  RestoreDutyMutationVariables
+>;
+export type RestoreDutyComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RestoreDutyMutation, RestoreDutyMutationVariables>,
+  "mutation"
+>;
+
+export const RestoreDutyComponent = (props: RestoreDutyComponentProps) => (
+  <ApolloReactComponents.Mutation<RestoreDutyMutation, RestoreDutyMutationVariables>
+    mutation={RestoreDutyDocument}
+    {...props}
+  />
+);
+
+export type RestoreDutyProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RestoreDutyMutation, RestoreDutyMutationVariables>;
+} & TChildProps;
+export function withRestoreDuty<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RestoreDutyMutation,
+    RestoreDutyMutationVariables,
+    RestoreDutyProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RestoreDutyMutation,
+    RestoreDutyMutationVariables,
+    RestoreDutyProps<TChildProps, TDataName>
+  >(RestoreDutyDocument, {
+    alias: "restoreDuty",
+    ...operationOptions,
+  });
+}
+export type RestoreDutyMutationResult = ApolloReactCommon.MutationResult<RestoreDutyMutation>;
+export type RestoreDutyMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RestoreDutyMutation,
+  RestoreDutyMutationVariables
+>;
 export const GetFireCausesDocument = gql`
   query getFireCauses {
     fireCauses {
@@ -3144,6 +3844,106 @@ export function withGetFireCausesDisabled<TProps, TChildProps = {}, TDataName ex
 export type GetFireCausesDisabledQueryResult = ApolloReactCommon.QueryResult<
   GetFireCausesDisabledQuery,
   GetFireCausesDisabledQueryVariables
+>;
+export const RemoveFireCauseDocument = gql`
+  mutation removeFireCause($id: String!) {
+    removeFireCause(id: $id) {
+      ...fireCauseAllFields
+    }
+  }
+  ${FireCauseAllFieldsFragmentDoc}
+`;
+export type RemoveFireCauseMutationFn = ApolloReactCommon.MutationFunction<
+  RemoveFireCauseMutation,
+  RemoveFireCauseMutationVariables
+>;
+export type RemoveFireCauseComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RemoveFireCauseMutation, RemoveFireCauseMutationVariables>,
+  "mutation"
+>;
+
+export const RemoveFireCauseComponent = (props: RemoveFireCauseComponentProps) => (
+  <ApolloReactComponents.Mutation<RemoveFireCauseMutation, RemoveFireCauseMutationVariables>
+    mutation={RemoveFireCauseDocument}
+    {...props}
+  />
+);
+
+export type RemoveFireCauseProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RemoveFireCauseMutation, RemoveFireCauseMutationVariables>;
+} & TChildProps;
+export function withRemoveFireCause<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RemoveFireCauseMutation,
+    RemoveFireCauseMutationVariables,
+    RemoveFireCauseProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RemoveFireCauseMutation,
+    RemoveFireCauseMutationVariables,
+    RemoveFireCauseProps<TChildProps, TDataName>
+  >(RemoveFireCauseDocument, {
+    alias: "removeFireCause",
+    ...operationOptions,
+  });
+}
+export type RemoveFireCauseMutationResult = ApolloReactCommon.MutationResult<RemoveFireCauseMutation>;
+export type RemoveFireCauseMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RemoveFireCauseMutation,
+  RemoveFireCauseMutationVariables
+>;
+export const RestoreFireCauseDocument = gql`
+  mutation restoreFireCause($id: String!) {
+    restoreFireCause(id: $id) {
+      ...fireCauseAllFields
+    }
+  }
+  ${FireCauseAllFieldsFragmentDoc}
+`;
+export type RestoreFireCauseMutationFn = ApolloReactCommon.MutationFunction<
+  RestoreFireCauseMutation,
+  RestoreFireCauseMutationVariables
+>;
+export type RestoreFireCauseComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RestoreFireCauseMutation, RestoreFireCauseMutationVariables>,
+  "mutation"
+>;
+
+export const RestoreFireCauseComponent = (props: RestoreFireCauseComponentProps) => (
+  <ApolloReactComponents.Mutation<RestoreFireCauseMutation, RestoreFireCauseMutationVariables>
+    mutation={RestoreFireCauseDocument}
+    {...props}
+  />
+);
+
+export type RestoreFireCauseProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RestoreFireCauseMutation, RestoreFireCauseMutationVariables>;
+} & TChildProps;
+export function withRestoreFireCause<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RestoreFireCauseMutation,
+    RestoreFireCauseMutationVariables,
+    RestoreFireCauseProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RestoreFireCauseMutation,
+    RestoreFireCauseMutationVariables,
+    RestoreFireCauseProps<TChildProps, TDataName>
+  >(RestoreFireCauseDocument, {
+    alias: "restoreFireCause",
+    ...operationOptions,
+  });
+}
+export type RestoreFireCauseMutationResult = ApolloReactCommon.MutationResult<RestoreFireCauseMutation>;
+export type RestoreFireCauseMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RestoreFireCauseMutation,
+  RestoreFireCauseMutationVariables
 >;
 export const GetFireClassesDocument = gql`
   query getFireClasses {
@@ -3234,6 +4034,106 @@ export function withGetFireClassesDisabled<TProps, TChildProps = {}, TDataName e
 export type GetFireClassesDisabledQueryResult = ApolloReactCommon.QueryResult<
   GetFireClassesDisabledQuery,
   GetFireClassesDisabledQueryVariables
+>;
+export const RemoveFireClassDocument = gql`
+  mutation removeFireClass($id: String!) {
+    removeFireClass(id: $id) {
+      ...fireClassAllFields
+    }
+  }
+  ${FireClassAllFieldsFragmentDoc}
+`;
+export type RemoveFireClassMutationFn = ApolloReactCommon.MutationFunction<
+  RemoveFireClassMutation,
+  RemoveFireClassMutationVariables
+>;
+export type RemoveFireClassComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RemoveFireClassMutation, RemoveFireClassMutationVariables>,
+  "mutation"
+>;
+
+export const RemoveFireClassComponent = (props: RemoveFireClassComponentProps) => (
+  <ApolloReactComponents.Mutation<RemoveFireClassMutation, RemoveFireClassMutationVariables>
+    mutation={RemoveFireClassDocument}
+    {...props}
+  />
+);
+
+export type RemoveFireClassProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RemoveFireClassMutation, RemoveFireClassMutationVariables>;
+} & TChildProps;
+export function withRemoveFireClass<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RemoveFireClassMutation,
+    RemoveFireClassMutationVariables,
+    RemoveFireClassProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RemoveFireClassMutation,
+    RemoveFireClassMutationVariables,
+    RemoveFireClassProps<TChildProps, TDataName>
+  >(RemoveFireClassDocument, {
+    alias: "removeFireClass",
+    ...operationOptions,
+  });
+}
+export type RemoveFireClassMutationResult = ApolloReactCommon.MutationResult<RemoveFireClassMutation>;
+export type RemoveFireClassMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RemoveFireClassMutation,
+  RemoveFireClassMutationVariables
+>;
+export const RestoreFireClassDocument = gql`
+  mutation restoreFireClass($id: String!) {
+    restoreFireClass(id: $id) {
+      ...fireClassAllFields
+    }
+  }
+  ${FireClassAllFieldsFragmentDoc}
+`;
+export type RestoreFireClassMutationFn = ApolloReactCommon.MutationFunction<
+  RestoreFireClassMutation,
+  RestoreFireClassMutationVariables
+>;
+export type RestoreFireClassComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RestoreFireClassMutation, RestoreFireClassMutationVariables>,
+  "mutation"
+>;
+
+export const RestoreFireClassComponent = (props: RestoreFireClassComponentProps) => (
+  <ApolloReactComponents.Mutation<RestoreFireClassMutation, RestoreFireClassMutationVariables>
+    mutation={RestoreFireClassDocument}
+    {...props}
+  />
+);
+
+export type RestoreFireClassProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RestoreFireClassMutation, RestoreFireClassMutationVariables>;
+} & TChildProps;
+export function withRestoreFireClass<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RestoreFireClassMutation,
+    RestoreFireClassMutationVariables,
+    RestoreFireClassProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RestoreFireClassMutation,
+    RestoreFireClassMutationVariables,
+    RestoreFireClassProps<TChildProps, TDataName>
+  >(RestoreFireClassDocument, {
+    alias: "restoreFireClass",
+    ...operationOptions,
+  });
+}
+export type RestoreFireClassMutationResult = ApolloReactCommon.MutationResult<RestoreFireClassMutation>;
+export type RestoreFireClassMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RestoreFireClassMutation,
+  RestoreFireClassMutationVariables
 >;
 export const GetRanksDocument = gql`
   query getRanks {
@@ -3491,6 +4391,55 @@ export type DeleteRankMutationResult = ApolloReactCommon.MutationResult<DeleteRa
 export type DeleteRankMutationOptions = ApolloReactCommon.BaseMutationOptions<
   DeleteRankMutation,
   DeleteRankMutationVariables
+>;
+export const RestoreRankDocument = gql`
+  mutation restoreRank($id: String!) {
+    restoreRank(id: $id) {
+      id
+    }
+  }
+`;
+export type RestoreRankMutationFn = ApolloReactCommon.MutationFunction<
+  RestoreRankMutation,
+  RestoreRankMutationVariables
+>;
+export type RestoreRankComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RestoreRankMutation, RestoreRankMutationVariables>,
+  "mutation"
+>;
+
+export const RestoreRankComponent = (props: RestoreRankComponentProps) => (
+  <ApolloReactComponents.Mutation<RestoreRankMutation, RestoreRankMutationVariables>
+    mutation={RestoreRankDocument}
+    {...props}
+  />
+);
+
+export type RestoreRankProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RestoreRankMutation, RestoreRankMutationVariables>;
+} & TChildProps;
+export function withRestoreRank<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RestoreRankMutation,
+    RestoreRankMutationVariables,
+    RestoreRankProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RestoreRankMutation,
+    RestoreRankMutationVariables,
+    RestoreRankProps<TChildProps, TDataName>
+  >(RestoreRankDocument, {
+    alias: "restoreRank",
+    ...operationOptions,
+  });
+}
+export type RestoreRankMutationResult = ApolloReactCommon.MutationResult<RestoreRankMutation>;
+export type RestoreRankMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RestoreRankMutation,
+  RestoreRankMutationVariables
 >;
 export const GetServicesDocument = gql`
   query getServices {
@@ -3765,6 +4714,56 @@ export type RemoveServiceMutationResult = ApolloReactCommon.MutationResult<Remov
 export type RemoveServiceMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RemoveServiceMutation,
   RemoveServiceMutationVariables
+>;
+export const RestoreServiceDocument = gql`
+  mutation restoreService($id: String!) {
+    restoreService(id: $id) {
+      ...servicesAllFields
+    }
+  }
+  ${ServicesAllFieldsFragmentDoc}
+`;
+export type RestoreServiceMutationFn = ApolloReactCommon.MutationFunction<
+  RestoreServiceMutation,
+  RestoreServiceMutationVariables
+>;
+export type RestoreServiceComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RestoreServiceMutation, RestoreServiceMutationVariables>,
+  "mutation"
+>;
+
+export const RestoreServiceComponent = (props: RestoreServiceComponentProps) => (
+  <ApolloReactComponents.Mutation<RestoreServiceMutation, RestoreServiceMutationVariables>
+    mutation={RestoreServiceDocument}
+    {...props}
+  />
+);
+
+export type RestoreServiceProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RestoreServiceMutation, RestoreServiceMutationVariables>;
+} & TChildProps;
+export function withRestoreService<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RestoreServiceMutation,
+    RestoreServiceMutationVariables,
+    RestoreServiceProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RestoreServiceMutation,
+    RestoreServiceMutationVariables,
+    RestoreServiceProps<TChildProps, TDataName>
+  >(RestoreServiceDocument, {
+    alias: "restoreService",
+    ...operationOptions,
+  });
+}
+export type RestoreServiceMutationResult = ApolloReactCommon.MutationResult<RestoreServiceMutation>;
+export type RestoreServiceMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RestoreServiceMutation,
+  RestoreServiceMutationVariables
 >;
 export const GetSubTypesDocument = gql`
   query getSubTypes {
@@ -4128,4 +5127,53 @@ export type DeleteVolunteerMutationResult = ApolloReactCommon.MutationResult<Del
 export type DeleteVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<
   DeleteVolunteerMutation,
   DeleteVolunteerMutationVariables
+>;
+export const RestoreVolunteerDocument = gql`
+  mutation restoreVolunteer($id: String!) {
+    restoreVolunteer(id: $id) {
+      id
+    }
+  }
+`;
+export type RestoreVolunteerMutationFn = ApolloReactCommon.MutationFunction<
+  RestoreVolunteerMutation,
+  RestoreVolunteerMutationVariables
+>;
+export type RestoreVolunteerComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RestoreVolunteerMutation, RestoreVolunteerMutationVariables>,
+  "mutation"
+>;
+
+export const RestoreVolunteerComponent = (props: RestoreVolunteerComponentProps) => (
+  <ApolloReactComponents.Mutation<RestoreVolunteerMutation, RestoreVolunteerMutationVariables>
+    mutation={RestoreVolunteerDocument}
+    {...props}
+  />
+);
+
+export type RestoreVolunteerProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RestoreVolunteerMutation, RestoreVolunteerMutationVariables>;
+} & TChildProps;
+export function withRestoreVolunteer<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RestoreVolunteerMutation,
+    RestoreVolunteerMutationVariables,
+    RestoreVolunteerProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RestoreVolunteerMutation,
+    RestoreVolunteerMutationVariables,
+    RestoreVolunteerProps<TChildProps, TDataName>
+  >(RestoreVolunteerDocument, {
+    alias: "restoreVolunteer",
+    ...operationOptions,
+  });
+}
+export type RestoreVolunteerMutationResult = ApolloReactCommon.MutationResult<RestoreVolunteerMutation>;
+export type RestoreVolunteerMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RestoreVolunteerMutation,
+  RestoreVolunteerMutationVariables
 >;
