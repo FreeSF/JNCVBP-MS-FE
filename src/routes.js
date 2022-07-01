@@ -37,6 +37,7 @@ import RecycleBinPage from "./components/RecycleBin/RecycleBinPage";
 import LoginPage from "./components/Login/LoginPage";
 import UsersPage from "./components/Users/UsersPage";
 import CreateUserPage from "./components/Users/CreateUserPage";
+import UpdateUserPage from "./components/Users/UpdateUserPage";
 
 const dutiesRoutes = [
   {
@@ -137,6 +138,13 @@ const usersRoutes = [
     icon: "fas fa-users",
     component: CreateUserPage,
     onlyAdmin: true,
+  },
+  {
+    path: "/users/:id/edit",
+    name: "Usuarios",
+    icon: "fas fa-users",
+    component: UpdateUserPage,
+    onlyAdmin: false,
   },
 ];
 const guardRoutes = [

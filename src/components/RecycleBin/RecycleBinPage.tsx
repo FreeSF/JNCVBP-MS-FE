@@ -17,6 +17,7 @@ import {
   GetRanksDisabledQuery,
   GetServicesDisabledQuery,
   GetTrainingsDisabledQuery,
+  GetUsersDisabledQuery,
   GetVolunteersDisabledQuery,
   RestoreCourseMutation,
 } from "../../types";
@@ -38,8 +39,10 @@ import {
   get_guard_columns,
   get_rank_columns,
   get_training_columns,
+  get_users_columns,
   get_volunteer_columns,
 } from "utils/columns";
+import { GET_USERS_DISABLED } from "../../queries/Users";
 
 const COURSE = "Cursos";
 const DUTY = "Tipo de Servicios";
@@ -48,6 +51,7 @@ const DUTY = "Tipo de Servicios";
 // const SUB_TYPE = "Sub tipo";
 const EVENT = "Eventos";
 const GUARD = "Guardias";
+const USERS = "Usuarios";
 const RANK = "Rangos";
 const SERVICE = "Servicios";
 const TRAINING = "Prácticas";
@@ -62,6 +66,7 @@ const OPTIONS = [
   // { value: SUB_TYPE, label: SUB_TYPE },
   { value: EVENT, label: EVENT },
   { value: GUARD, label: GUARD },
+  { value: USERS, label: USERS },
   { value: RANK, label: RANK },
   { value: SERVICE, label: SERVICE },
   { value: TRAINING, label: TRAINING },
@@ -93,6 +98,9 @@ const RecycleBinPage = (props) => {
   const [loadVolunteers, volunteers] = useLazyQuery<GetVolunteersDisabledQuery>(GET_VOLUNTEERS_DISABLED, {
     fetchPolicy: "no-cache",
   });
+  const [loadUsers, users] = useLazyQuery<GetUsersDisabledQuery>(GET_USERS_DISABLED, {
+    fetchPolicy: "no-cache",
+  });
 
   useEffect(() => {
     switch (type.value) {
@@ -122,6 +130,10 @@ const RecycleBinPage = (props) => {
       // }
       case GUARD: {
         loadGuards();
+        break;
+      }
+      case USERS: {
+        loadUsers();
         break;
       }
       case RANK: {
@@ -202,6 +214,11 @@ const RecycleBinPage = (props) => {
     case GUARD: {
       columns = get_guard_columns(restoreColumn);
       data = guards.called && !guards.loading ? guards.data.guardsDisabled : [];
+      break;
+    }
+    case USERS: {
+      columns = get_users_columns(restoreColumn);
+      data = users.called && !users.loading ? users.data.usersDisabled : [];
       break;
     }
     case RANK: {

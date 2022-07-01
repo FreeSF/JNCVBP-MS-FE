@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Checkbox, FormApi, FormState, Select as InformedSelect, Text, TextArea } from "informed";
 import { CreateUserInput, GetCurrentUserQuery, UpdateUserInput } from "../../types";
 import { useQuery } from "react-apollo";
@@ -14,6 +14,7 @@ type theProps = {
 
 const UserForm = (props: theProps) => {
   const currentUserQuery = useQuery<GetCurrentUserQuery>(CURRENT_USER);
+  const [updatePassword, setUpdatePassword] = useState(false);
 
   if (currentUserQuery.loading) return <Spinner />;
 
@@ -29,10 +30,30 @@ const UserForm = (props: theProps) => {
       <Text className="form-control" field="lastName" type="text" />
       <label>Email:</label>
       <Text className="form-control" field="email" type="text" />
-      {props.isCreate && (
+      {props.isCreate ? (
         <React.Fragment>
-          <label>Password:</label>
+          <label>Contraseña:</label>
           <Text className="form-control" field="password" type="password" />
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <label>Modificar Contraseña?:</label>
+          <input
+            type="checkbox"
+            checked={updatePassword}
+            onClick={(event) => {
+              // @ts-ignore
+              setUpdatePassword(event.target.checked);
+              props.formApi.setValues({ ...props.formState.values, password: "" });
+            }}
+          />
+          <br />
+          {updatePassword && (
+            <React.Fragment>
+              <label>Contraseña:</label>
+              <Text className="form-control" field="password" type="password" />
+            </React.Fragment>
+          )}
         </React.Fragment>
       )}
       <Checkbox field="isAdmin" hidden />

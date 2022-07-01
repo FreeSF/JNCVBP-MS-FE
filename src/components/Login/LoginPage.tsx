@@ -47,7 +47,7 @@ const LoginPage = (props) => {
       <div>Contraseña</div>
       <input value={password} type="password" onChange={(event) => setPassword(event.target.value)} />
       <br />
-      {incorrectCredentials && <span style={{ color: "red" }}>Usuario - Contraseña incorrectos</span>}
+      {incorrectCredentials && <span style={{ color: "red" }}>La combinación de Usuario - Contraseña no existe</span>}
       <br />
       <Button onClick={login}>Login</Button>
     </div>

@@ -1109,7 +1109,7 @@ export type GetUsersQuery = { __typename?: "Query" } & {
 export type GetUsersDisabledQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetUsersDisabledQuery = { __typename?: "Query" } & {
-  users: Array<{ __typename?: "User" } & UserAllFieldsFragment>;
+  usersDisabled: Array<{ __typename?: "User" } & UserAllFieldsFragment>;
 };
 
 export type FindUserQueryVariables = Exact<{
@@ -3181,7 +3181,7 @@ export function withGetUsers<TProps, TChildProps = {}, TDataName extends string 
 export type GetUsersQueryResult = ApolloReactCommon.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
 export const GetUsersDisabledDocument = gql`
   query getUsersDisabled {
-    users {
+    usersDisabled {
       ...userAllFields
     }
   }

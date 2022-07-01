@@ -22,7 +22,7 @@ export const GET_USERS = gql`
 
 export const GET_USERS_DISABLED = gql`
   query getUsersDisabled {
-    users {
+    usersDisabled {
       ...userAllFields
     }
   }
