@@ -66,3 +66,12 @@ export const REMOVE_TRAINING = gql`
   }
   ${TRAINING_ALL_FIELDS_FRAGMENT}
 `;
+
+export const RESTORE_TRAINING = gql`
+  mutation restoreTraining($id: String!) {
+    restoreTraining(id: $id) {
+      ...trainingAllFields
+    }
+  }
+  ${TRAINING_ALL_FIELDS_FRAGMENT}
+`;

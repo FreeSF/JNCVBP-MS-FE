@@ -59,6 +59,34 @@ export const get_guard_columns = (options) => {
   return columns;
 };
 
+export const get_users_columns = (options) => {
+  const columns: ColumnDescription[] = [
+    {
+      dataField: "id",
+      text: "ID",
+    },
+    {
+      dataField: "username",
+      text: "Usuario",
+    },
+    {
+      dataField: "firstName",
+      text: "Nombre",
+    },
+    {
+      dataField: "lastName",
+      text: "Apellido",
+    },
+    {
+      dataField: "email",
+      text: "Email",
+    },
+    options,
+  ];
+
+  return columns;
+};
+
 export const get_rank_columns = (options) => {
   const columns: ColumnDescription[] = [
     { dataField: "name", text: "Nombre" },

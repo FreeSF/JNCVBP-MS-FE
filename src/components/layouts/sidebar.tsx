@@ -2,15 +2,22 @@ import React, { Component } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 
 import { Nav } from "react-bootstrap";
+import { useQuery } from "react-apollo";
+import { GetCurrentUserQuery } from "../../types";
+import { CURRENT_USER } from "../../queries/Login";
+import Spinner from "../spinner";
 
 function Sidebar({ color, image, routes }) {
   const location = useLocation();
   const activeRoute = (routeName) => {
-    if (routeName == '/') {
-      return location.pathname == '/' ? "active" : "";
+    if (routeName == "/") {
+      return location.pathname == "/" ? "active" : "";
     }
-    return (location.pathname.indexOf(routeName) > -1) ? "active" : "";
+    return location.pathname.indexOf(routeName) > -1 ? "active" : "";
   };
+  const currentUserQuery = useQuery<GetCurrentUserQuery>(CURRENT_USER);
+
+  if (currentUserQuery.loading) return <Spinner />;
 
   return (
     <div className="sidebar" data-image={image} data-color={color}>
@@ -22,15 +29,9 @@ function Sidebar({ color, image, routes }) {
       />
       <div className="sidebar-wrapper">
         <div className="logo d-flex align-items-center justify-content-start">
-          <a
-            href="/"
-            className="simple-text logo-mini mx-1"
-          >
+          <a href="/" className="simple-text logo-mini mx-1">
             <div className="logo-img">
-              <img
-                src={require("../../assets/img/reactlogo.png")}
-                alt="..."
-              />
+              <img src={require("../../assets/img/reactlogo.png")} alt="..." />
             </div>
           </a>
           <a className="simple-text" href="/">
@@ -38,21 +39,18 @@ function Sidebar({ color, image, routes }) {
           </a>
         </div>
         <Nav>
-          {routes.map((prop, key) => {
-            if (!prop.redirect && prop.showOnSidebar)
+          {routes.map((route, key) => {
+            if (route.onlyAdmin && !currentUserQuery.data?.currentUser?.isAdmin) return undefined;
+            if (!route.redirect && route.showOnSidebar)
               return (
-                <li className={activeRoute(prop.path)} key={key}>
-                  <NavLink
-                    to={prop.path}
-                    className="nav-link"
-                    activeClassName="active"
-                  >
-                    <i className={prop.icon} />
-                    <p>{prop.name}</p>
+                <li className={activeRoute(route.path)} key={key}>
+                  <NavLink to={route.path} className="nav-link" activeClassName="active">
+                    <i className={route.icon} />
+                    <p>{route.name}</p>
                   </NavLink>
                 </li>
               );
-            return null;
+            return undefined;
           })}
         </Nav>
       </div>

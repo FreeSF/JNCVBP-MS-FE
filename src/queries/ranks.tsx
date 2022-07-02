@@ -61,3 +61,11 @@ export const DELETE_RANK = gql`
     }
   }
 `;
+
+export const RESTORE_RANK = gql`
+  mutation restoreRank($id: String!) {
+    restoreRank(id: $id) {
+      id
+    }
+  }
+`;

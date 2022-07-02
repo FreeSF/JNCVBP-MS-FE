@@ -70,3 +70,11 @@ export const DELETE_VOLUNTEER = gql`
     }
   }
 `;
+
+export const RESTORE_VOLUNTEER = gql`
+  mutation restoreVolunteer($id: String!) {
+    restoreVolunteer(id: $id) {
+      id
+    }
+  }
+`;

@@ -62,7 +62,8 @@ const Header = () => {
             <Button
               onClick={() => {
                 localStorage.setItem(AUTH_TOKEN_NAME, undefined);
-                history.go(0); // refresh
+                history.push("/login");
+                currentUserQuery.refetch();
               }}
             >
               Logout

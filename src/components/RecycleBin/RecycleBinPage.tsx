@@ -4,7 +4,7 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
 import Select from "react-select";
 
-import { useLazyQuery } from "react-apollo";
+import { useLazyQuery, useMutation } from "react-apollo";
 import {
   GetCoursesDisabledQuery,
   GetDutiesDisabledQuery,
@@ -17,9 +17,11 @@ import {
   GetRanksDisabledQuery,
   GetServicesDisabledQuery,
   GetTrainingsDisabledQuery,
+  GetUsersDisabledQuery,
   GetVolunteersDisabledQuery,
+  RestoreCourseMutation,
 } from "../../types";
-import { GET_COURSES_DISABLED } from "../../queries/Courses";
+import { GET_COURSES, GET_COURSES_DISABLED, RESTORE_COURSE } from "../../queries/Courses";
 import { GET_VOLUNTEERS_DISABLED } from "../../queries/volunteers";
 import { GET_DUTIES_DISABLED } from "../../queries/duties";
 import { GET_EVENTS_DISABLED } from "../../queries/Events";
@@ -28,7 +30,7 @@ import { GET_EVENTS_DISABLED } from "../../queries/Events";
 // import { GET_SUB_TYPES_DISABLED } from "../../queries/subType";
 import { GET_GUARDS_DISABLED } from "../../queries/Guards";
 import { GET_RANKS_DISABLED } from "../../queries/ranks";
-import { GET_SERVICES_DISABLED } from "../../queries/services";
+import { GET_SERVICES, GET_SERVICES_DISABLED } from "../../queries/services";
 import { GET_TRAININGS_DISABLED } from "../../queries/Trainings";
 import {
   get_course_columns,
@@ -37,8 +39,10 @@ import {
   get_guard_columns,
   get_rank_columns,
   get_training_columns,
+  get_users_columns,
   get_volunteer_columns,
 } from "utils/columns";
+import { GET_USERS_DISABLED } from "../../queries/Users";
 
 const COURSE = "Cursos";
 const DUTY = "Tipo de Servicios";
@@ -47,6 +51,7 @@ const DUTY = "Tipo de Servicios";
 // const SUB_TYPE = "Sub tipo";
 const EVENT = "Eventos";
 const GUARD = "Guardias";
+const USERS = "Usuarios";
 const RANK = "Rangos";
 const SERVICE = "Servicios";
 const TRAINING = "Prácticas";
@@ -61,6 +66,7 @@ const OPTIONS = [
   // { value: SUB_TYPE, label: SUB_TYPE },
   { value: EVENT, label: EVENT },
   { value: GUARD, label: GUARD },
+  { value: USERS, label: USERS },
   { value: RANK, label: RANK },
   { value: SERVICE, label: SERVICE },
   { value: TRAINING, label: TRAINING },
@@ -71,6 +77,9 @@ const OPTIONS = [
 const RecycleBinPage = (props) => {
   const [type, setType] = useState({ value: COURSE, label: COURSE });
   const [loadCourses, courses] = useLazyQuery<GetCoursesDisabledQuery>(GET_COURSES_DISABLED, {
+    fetchPolicy: "no-cache",
+  });
+  const [restoreCourse, restoredCourse] = useMutation<RestoreCourseMutation>(RESTORE_COURSE, {
     fetchPolicy: "no-cache",
   });
   const [loadDuties, duties] = useLazyQuery<GetDutiesDisabledQuery>(GET_DUTIES_DISABLED, { fetchPolicy: "no-cache" });
@@ -87,6 +96,9 @@ const RecycleBinPage = (props) => {
     fetchPolicy: "no-cache",
   });
   const [loadVolunteers, volunteers] = useLazyQuery<GetVolunteersDisabledQuery>(GET_VOLUNTEERS_DISABLED, {
+    fetchPolicy: "no-cache",
+  });
+  const [loadUsers, users] = useLazyQuery<GetUsersDisabledQuery>(GET_USERS_DISABLED, {
     fetchPolicy: "no-cache",
   });
 
@@ -120,6 +132,10 @@ const RecycleBinPage = (props) => {
         loadGuards();
         break;
       }
+      case USERS: {
+        loadUsers();
+        break;
+      }
       case RANK: {
         loadRanks();
         break;
@@ -142,7 +158,20 @@ const RecycleBinPage = (props) => {
   const restoreColumn = {
     dataField: "",
     text: "Acciones",
-    formatter: (cell, row) => <button>Restaurar</button>,
+    formatter: (cell, row) => (
+      <button
+        onClick={() => {
+          switch (type.value) {
+            case COURSE: {
+              restoreCourse({ variables: { id: row.id } }).then(() => loadCourses());
+              break;
+            }
+          }
+        }}
+      >
+        Restaurar
+      </button>
+    ),
   };
 
   let columns: ColumnDescription[] = [
@@ -185,6 +214,11 @@ const RecycleBinPage = (props) => {
     case GUARD: {
       columns = get_guard_columns(restoreColumn);
       data = guards.called && !guards.loading ? guards.data.guardsDisabled : [];
+      break;
+    }
+    case USERS: {
+      columns = get_users_columns(restoreColumn);
+      data = users.called && !users.loading ? users.data.usersDisabled : [];
       break;
     }
     case RANK: {

@@ -61,3 +61,11 @@ export const DELETE_DUTY = gql`
     }
   }
 `;
+
+export const RESTORE_DUTY = gql`
+  mutation restoreDuty($id: String!) {
+    restoreDuty(id: $id) {
+      id
+    }
+  }
+`;

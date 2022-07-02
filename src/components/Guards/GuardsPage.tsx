@@ -14,6 +14,7 @@ import {
 import { GET_GUARDS, REMOVE_GUARD } from "../../queries/Guards";
 import Spinner from "../spinner";
 import { get_guard_columns } from "utils/columns";
+import StandardTable from "../utils/standardTable";
 
 const GuardsPage = (props) => {
   const getGuardsQuery = useQuery<GetGuardsQuery>(GET_GUARDS);
@@ -60,7 +61,7 @@ const GuardsPage = (props) => {
               {getGuardsQuery.loading ? (
                 <Spinner />
               ) : (
-                <BootstrapTable keyField={"id"} data={getGuardsQuery.data?.guards} columns={columns} />
+                <StandardTable keyField={"id"} data={getGuardsQuery.data?.guards} columns={columns} />
               )}
             </Card.Body>
           </Card>

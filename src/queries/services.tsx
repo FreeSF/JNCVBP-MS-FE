@@ -124,3 +124,12 @@ export const REMOVE_SERVICE = gql`
   }
   ${serviceAllFieldsFragment}
 `;
+
+export const RESTORE_SERVICE = gql`
+  mutation restoreService($id: String!) {
+    restoreService(id: $id) {
+      ...servicesAllFields
+    }
+  }
+  ${serviceAllFieldsFragment}
+`;

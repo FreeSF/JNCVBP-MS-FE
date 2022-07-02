@@ -69,3 +69,12 @@ export const REMOVE_COURSE = gql`
   }
   ${COURSES_ALL_FIELDS_FRAGMENT}
 `;
+
+export const RESTORE_COURSE = gql`
+  mutation restoreCourse($id: String!) {
+    restoreCourse(id: $id) {
+      ...coursesAllFields
+    }
+  }
+  ${COURSES_ALL_FIELDS_FRAGMENT}
+`;

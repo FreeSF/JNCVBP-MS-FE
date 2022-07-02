@@ -35,6 +35,9 @@ import UpdateCoursePage from "./components/Courses/UpdateCoursePage";
 import ShowCoursePage from "./components/Courses/ShowCoursePage";
 import RecycleBinPage from "./components/RecycleBin/RecycleBinPage";
 import LoginPage from "./components/Login/LoginPage";
+import UsersPage from "./components/Users/UsersPage";
+import CreateUserPage from "./components/Users/CreateUserPage";
+import UpdateUserPage from "./components/Users/UpdateUserPage";
 
 const dutiesRoutes = [
   {
@@ -117,6 +120,31 @@ const volunteerRoutes = [
     path: "/volunteers/:id",
     name: "Voluntario",
     component: ShowVolunteerPage,
+  },
+];
+
+const usersRoutes = [
+  {
+    path: "/users",
+    name: "Usuarios",
+    icon: "fas fa-users",
+    component: UsersPage,
+    showOnSidebar: true,
+    onlyAdmin: true,
+  },
+  {
+    path: "/users/create",
+    name: "Usuarios",
+    icon: "fas fa-users",
+    component: CreateUserPage,
+    onlyAdmin: true,
+  },
+  {
+    path: "/users/:id/edit",
+    name: "Usuarios",
+    icon: "fas fa-users",
+    component: UpdateUserPage,
+    onlyAdmin: false,
   },
 ];
 const guardRoutes = [
@@ -222,6 +250,7 @@ const routes = [
     noAuthRoute: true,
   },
   ...volunteerRoutes,
+  ...usersRoutes,
   ...dutiesRoutes,
   ...ranksRoutes,
   ...guardRoutes,
@@ -235,6 +264,7 @@ const routes = [
     icon: "nc-icon nc-chart-pie-35",
     component: RecycleBinPage,
     showOnSidebar: true,
+    onlyAdmin: true,
   },
 ];
 

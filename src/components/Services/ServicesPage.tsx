@@ -42,9 +42,8 @@ const ServicesPage = (props: RouteComponentProps) => {
       text: "Localidad",
     },
     {
-      dataField: "sub_type",
+      dataField: "sub_type.code",
       text: "Código",
-      formatter: (cell) => cell.code,
     },
     {
       dataField: "volunteers",
@@ -95,12 +94,9 @@ const ServicesPage = (props: RouteComponentProps) => {
                   Agregar
                 </Button>
               </Card.Title>
-              <p className="cardu-category">
-                ({getServicesQuery.data?.services.length}) Servicios registrados en el sistema{" "}
-              </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              <BootstrapTable keyField={"id"} data={getServicesQuery.data?.services} columns={columns} />
+              <StandardTable keyField={"id"} data={getServicesQuery.data?.services} columns={columns} />
             </Card.Body>
           </Card>
         </Col>

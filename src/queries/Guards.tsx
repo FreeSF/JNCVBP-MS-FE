@@ -66,3 +66,12 @@ export const REMOVE_GUARD = gql`
   }
   ${GUARDS_ALL_FIELDS_FRAGMENT}
 `;
+
+export const RESTORE_GUARD = gql`
+  mutation restoreGuard($id: String!) {
+    restoreGuard(id: $id) {
+      ...guardAllFields
+    }
+  }
+  ${GUARDS_ALL_FIELDS_FRAGMENT}
+`;

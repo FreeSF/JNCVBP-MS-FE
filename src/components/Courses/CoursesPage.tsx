@@ -16,6 +16,7 @@ import { GET_COURSES, REMOVE_COURSE } from "../../queries/Courses";
 
 import Spinner from "../spinner";
 import { get_course_columns } from "utils/columns";
+import StandardTable from "../utils/standardTable";
 
 const CoursesPage = (props) => {
   const getCoursesQuery = useQuery<GetCoursesQuery>(GET_COURSES);
@@ -63,7 +64,7 @@ const CoursesPage = (props) => {
               {getCoursesQuery.loading ? (
                 <Spinner />
               ) : (
-                <BootstrapTable keyField={"id"} data={getCoursesQuery.data?.courses} columns={columns} />
+                <StandardTable keyField={"id"} data={getCoursesQuery.data?.courses} columns={columns} />
               )}
             </Card.Body>
           </Card>
