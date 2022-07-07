@@ -8,15 +8,59 @@ import { useQuery } from "react-apollo";
 import { GetReportQuery, GetVolunteersQuery } from "../types";
 import { GET_REPORT } from "../queries/Reports";
 import Spinner from "./spinner";
-import { endOfDay, startOfDay } from "../utils/Utils";
+import { endOfDay, endOfMonth, startOfDay, startOfMonth } from "../utils/Utils";
 import DatePicker from "react-datepicker";
+import moment from "moment";
+import _ from "lodash";
+import ReactApexChart from "react-apexcharts";
+
+const MONTH_OPTIONS = [
+  { value: "0", label: "Enero" },
+  { value: "1", label: "Febrero" },
+  { value: "2", label: "Marzo" },
+  { value: "3", label: "Abril" },
+  { value: "4", label: "Mayo" },
+  { value: "5", label: "Junio" },
+  { value: "6", label: "Julio" },
+  { value: "7", label: "Agosto" },
+  { value: "8", label: "Septiembre" },
+  { value: "9", label: "Octubre" },
+  { value: "10", label: "Noviembre" },
+  { value: "11", label: "Diciembre" },
+];
+
 const HomePage = () => {
   const [startDate, setStartDate] = useState<Date>(startOfDay(new Date()));
   const [endDate, setEndDate] = useState<Date>(endOfDay(new Date()));
-  const query = useQuery<GetReportQuery>(GET_REPORT, {
-    variables: { startDate: startDate.getTime(), endDate: endDate.getTime() },
+  const [year, setYear] = useState("" + moment().year());
+  const [month, setMonth] = useState(MONTH_OPTIONS.find((option) => option.value === "" + moment().month()));
+  const reportQuery = useQuery<GetReportQuery>(GET_REPORT, {
+    variables: {
+      startDate: startOfMonth(month.value, year).getTime(),
+      endDate: endOfMonth(month.value, year).getTime(),
+    },
   });
-  if (query.loading) return <Spinner />;
+  if (reportQuery.loading) return <Spinner />;
+
+  const { count1040, count1041, count1043 } = reportQuery.data.report;
+  const totalServicesCount = count1040 + count1041 + count1043;
+  const allSubtypes = [
+    ...reportQuery.data.report.subTypeCount1040,
+    ...reportQuery.data.report.subTypeCount1041,
+    ...reportQuery.data.report.subTypeCount1043,
+  ];
+
+  const options = {
+    chart: {
+      type: "pie",
+    },
+    labels: allSubtypes.map((subtype) => subtype.name),
+    legend: {
+      show: true,
+      position: "bottom",
+    },
+  };
+  const series = allSubtypes.map((subtype) => subtype.count);
 
   return (
     <>
@@ -25,16 +69,16 @@ const HomePage = () => {
           <label>Año</label>
           <Select
             options={[
+              { value: "2023", label: "2023" },
               { value: "2022", label: "2022" },
               { value: "2021", label: "2021" },
             ]}
-            value={{ value: "2022", label: "2022" }}
+            onChange={(option) => setYear(option.value)}
+            value={{ value: year, label: year }}
           />
-          Inicio Reporte
-          <DatePicker onChange={(date) => setStartDate(startOfDay(date))} selected={startDate} />
-          Fin Reporte
-          <DatePicker onChange={(date) => setEndDate(endOfDay(date))} selected={endDate} />
-          <BlobProvider document={<GeneralReport report={query.data.report} />}>
+          <label>Mes</label>
+          <Select options={MONTH_OPTIONS} onChange={setMonth} value={month} />
+          <BlobProvider document={<GeneralReport report={reportQuery.data.report} />}>
             {({ url }) => (
               <Button href={url} target="_blank" className="btn-fill btn-sm" variant="info">
                 Reporte Mensual
@@ -54,8 +98,8 @@ const HomePage = () => {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Voluntarios Activos</p>
-                      <Card.Title as="h4">150</Card.Title>
+                      <p className="card-category">Total de servicios</p>
+                      <Card.Title as="h4">{totalServicesCount}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -63,8 +107,34 @@ const HomePage = () => {
               <Card.Footer>
                 <hr></hr>
                 <div className="stats">
-                  <i className="fas fa-redo mr-1"></i>
-                  Update Now
+                  <i className="far fa-calendar-alt mr-1"></i>
+                  Mes Actual
+                </div>
+              </Card.Footer>
+            </Card>
+          </Col>
+          <Col lg="3" sm="6">
+            <Card className="card-stats">
+              <Card.Body>
+                <Row>
+                  <Col xs="5">
+                    <div className="icon-big text-center icon-warning">
+                      <i className="nc-icon nc-chart text-warning"></i>
+                    </div>
+                  </Col>
+                  <Col xs="7">
+                    <div className="numbers">
+                      <p className="card-category">Servicios 10.40</p>
+                      <Card.Title as="h4">{count1040}</Card.Title>
+                    </div>
+                  </Col>
+                </Row>
+              </Card.Body>
+              <Card.Footer>
+                <hr></hr>
+                <div className="stats">
+                  <i className="far fa-calendar-alt mr-1"></i>
+                  Mes Actual
                 </div>
               </Card.Footer>
             </Card>
@@ -80,8 +150,8 @@ const HomePage = () => {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Servicios Realizados</p>
-                      <Card.Title as="h4">1,345</Card.Title>
+                      <p className="card-category">Servicios 10.41</p>
+                      <Card.Title as="h4">{count1041}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -90,7 +160,7 @@ const HomePage = () => {
                 <hr></hr>
                 <div className="stats">
                   <i className="far fa-calendar-alt mr-1"></i>
-                  Last day
+                  Mes Actual
                 </div>
               </Card.Footer>
             </Card>
@@ -106,8 +176,8 @@ const HomePage = () => {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Cursos Realizados</p>
-                      <Card.Title as="h4">23</Card.Title>
+                      <p className="card-category">Servicios 10.43</p>
+                      <Card.Title as="h4">{count1043}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -115,40 +185,102 @@ const HomePage = () => {
               <Card.Footer>
                 <hr></hr>
                 <div className="stats">
-                  <i className="far fa-clock-o mr-1"></i>
-                  In the last hour
-                </div>
-              </Card.Footer>
-            </Card>
-          </Col>
-          <Col lg="3" sm="6">
-            <Card className="card-stats">
-              <Card.Body>
-                <Row>
-                  <Col xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-favourite-28 text-primary"></i>
-                    </div>
-                  </Col>
-                  <Col xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Prácticas Realizadas</p>
-                      <Card.Title as="h4">45</Card.Title>
-                    </div>
-                  </Col>
-                </Row>
-              </Card.Body>
-              <Card.Footer>
-                <hr></hr>
-                <div className="stats">
-                  <i className="fas fa-redo mr-1"></i>
-                  Update now
+                  <i className="far fa-calendar-alt mr-1"></i>
+                  Mes Actual
                 </div>
               </Card.Footer>
             </Card>
           </Col>
         </Row>
         <Row>
+          <Col md="4">
+            <Card>
+              <Card.Header>
+                <Card.Title as="h4">Tipo de Servicio</Card.Title>
+                <p className="card-category">Last Campaign Performance</p>
+              </Card.Header>
+              <Card.Body>
+                <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
+                  <ChartistGraph
+                    data={{
+                      labels: [
+                        ((count1040 / totalServicesCount) * 100 || 0).toFixed(2) + "%",
+                        ((count1041 / totalServicesCount) * 100 || 0).toFixed(2) + "%",
+                        ((count1043 / totalServicesCount) * 100 || 0).toFixed(2) + "%",
+                      ],
+                      series: [
+                        count1040 / totalServicesCount,
+                        count1041 / totalServicesCount,
+                        count1043 / totalServicesCount,
+                      ],
+                    }}
+                    type="Pie"
+                  />
+                </div>
+                <div className="legend">
+                  <i className="fas fa-circle text-info" />
+                  10.40 <i className="fas fa-circle text-danger" />
+                  10.41 <i className="fas fa-circle text-warning" />
+                  10.43
+                </div>
+                <hr></hr>
+                <div className="stats">
+                  <i className="far fa-clock"></i>
+                  Campaign sent 2 days ago
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md="4">
+            <Card>
+              <Card.Header>
+                <Card.Title as="h4">Sub tipos</Card.Title>
+                <p className="card-category">Last Campaign Performance</p>
+              </Card.Header>
+              <Card.Body>
+                <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
+                  {/*@ts-ignore*/}
+                  <ReactApexChart options={options} series={series} type="pie" width={"100%"} />
+                </div>
+                <hr></hr>
+                <div className="stats">
+                  <i className="far fa-clock"></i>
+                  Campaign sent 2 days ago
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md="4">
+            <Card>
+              <Card.Header>
+                <Card.Title as="h4">Cantidad de 10.44/10.45</Card.Title>
+                <p className="card-category">Last Campaign Performance</p>
+              </Card.Header>
+              <Card.Body>
+                <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
+                  <ChartistGraph
+                    data={{
+                      labels: ["40%", "20%", "40%"],
+                      series: [40, 20, 40],
+                    }}
+                    type="Pie"
+                  />
+                </div>
+                <div className="legend">
+                  <i className="fas fa-circle text-info"></i>
+                  Sólidos Fibrosos <i className="fas fa-circle text-danger"></i>
+                  Líquidos Inflamables <i className="fas fa-circle text-warning"></i>
+                  Eléctricos
+                </div>
+                <hr></hr>
+                <div className="stats">
+                  <i className="far fa-clock"></i>
+                  Campaign sent 2 days ago
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+
           <Col md="8">
             <Card>
               <Card.Header>
@@ -213,97 +345,8 @@ const HomePage = () => {
               </Card.Footer>
             </Card>
           </Col>
-          <Col md="4">
-            <Card>
-              <Card.Header>
-                <Card.Title as="h4">Tipo de Fuego (Buscar mejor título)</Card.Title>
-                <p className="card-category">Last Campaign Performance</p>
-              </Card.Header>
-              <Card.Body>
-                <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
-                  <ChartistGraph
-                    data={{
-                      labels: ["40%", "20%", "40%"],
-                      series: [40, 20, 40],
-                    }}
-                    type="Pie"
-                  />
-                </div>
-                <div className="legend">
-                  <i className="fas fa-circle text-info"></i>
-                  Basura <i className="fas fa-circle text-danger"></i>
-                  Madera <i className="fas fa-circle text-warning"></i>
-                  Papel
-                </div>
-                <hr></hr>
-                <div className="stats">
-                  <i className="far fa-clock"></i>
-                  Campaign sent 2 days ago
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md="4">
-            <Card>
-              <Card.Header>
-                <Card.Title as="h4">Causas Posibles (Buscar mejor título)</Card.Title>
-                <p className="card-category">Last Campaign Performance</p>
-              </Card.Header>
-              <Card.Body>
-                <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
-                  <ChartistGraph
-                    data={{
-                      labels: ["40%", "20%", "40%"],
-                      series: [40, 20, 40],
-                    }}
-                    type="Pie"
-                  />
-                </div>
-                <div className="legend">
-                  <i className="fas fa-circle text-info"></i>
-                  Cortocircuito <i className="fas fa-circle text-danger"></i>
-                  Escape de gas <i className="fas fa-circle text-warning"></i>
-                  Fines de limpieza
-                </div>
-                <hr></hr>
-                <div className="stats">
-                  <i className="far fa-clock"></i>
-                  Campaign sent 2 days ago
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md="4">
-            <Card>
-              <Card.Header>
-                <Card.Title as="h4">Clases de fuego (Buscar mejor título)</Card.Title>
-                <p className="card-category">Last Campaign Performance</p>
-              </Card.Header>
-              <Card.Body>
-                <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
-                  <ChartistGraph
-                    data={{
-                      labels: ["40%", "20%", "40%"],
-                      series: [40, 20, 40],
-                    }}
-                    type="Pie"
-                  />
-                </div>
-                <div className="legend">
-                  <i className="fas fa-circle text-info"></i>
-                  Sólidos Fibrosos <i className="fas fa-circle text-danger"></i>
-                  Líquidos Inflamables <i className="fas fa-circle text-warning"></i>
-                  Eléctricos
-                </div>
-                <hr></hr>
-                <div className="stats">
-                  <i className="far fa-clock"></i>
-                  Campaign sent 2 days ago
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
         </Row>
+
         <Row>
           <Col md="6">
             <Card>
