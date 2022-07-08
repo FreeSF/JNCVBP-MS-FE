@@ -13,6 +13,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import _ from "lodash";
 import ReactApexChart from "react-apexcharts";
+import { CODES, QUANTITIES_1044_1045_OPTIONS } from "../utils/constants";
 
 const MONTH_OPTIONS = [
   { value: "0", label: "Enero" },
@@ -49,8 +50,19 @@ const HomePage = () => {
     ...reportQuery.data.report.subTypeCount1041,
     ...reportQuery.data.report.subTypeCount1043,
   ];
+  const all1044 = [
+    ...reportQuery.data.report.quantities1044Count1040,
+    ...reportQuery.data.report.quantities1044Count1041,
+    ...reportQuery.data.report.quantities1044Count1043,
+  ];
+  const all1044flat = _.flattenDeep(all1044.map((the1044) => Array(the1044.count).fill(the1044.id)));
+  const all1044Counted = _.countBy(all1044flat);
+  const all1044Labels = Object.entries(all1044Counted).map(
+    ([key, value]) => QUANTITIES_1044_1045_OPTIONS.find((option) => option.id === key).name
+  );
+  const all1044Values = Object.values(all1044Counted);
 
-  const options = {
+  const subTypeOptions = {
     chart: {
       type: "pie",
     },
@@ -60,7 +72,30 @@ const HomePage = () => {
       position: "bottom",
     },
   };
-  const series = allSubtypes.map((subtype) => subtype.count);
+  const subTypeSeries = allSubtypes.map((subtype) => subtype.count);
+
+  const typeOptions = {
+    chart: {
+      type: "pie",
+    },
+    labels: [CODES.FIRE, CODES.ACCIDENT, CODES.RESCUE],
+    legend: {
+      show: true,
+      position: "bottom",
+    },
+  };
+  const typeSeries = [count1040, count1041, count1043];
+
+  const quantities1044Options = {
+    chart: {
+      type: "pie",
+    },
+    labels: all1044Labels,
+    legend: {
+      show: true,
+      position: "bottom",
+    },
+  };
 
   return (
     <>
@@ -193,7 +228,7 @@ const HomePage = () => {
           </Col>
         </Row>
         <Row>
-          <Col md="4">
+          <Col md="6">
             <Card>
               <Card.Header>
                 <Card.Title as="h4">Tipo de Servicio</Card.Title>
@@ -201,37 +236,18 @@ const HomePage = () => {
               </Card.Header>
               <Card.Body>
                 <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
-                  <ChartistGraph
-                    data={{
-                      labels: [
-                        ((count1040 / totalServicesCount) * 100 || 0).toFixed(2) + "%",
-                        ((count1041 / totalServicesCount) * 100 || 0).toFixed(2) + "%",
-                        ((count1043 / totalServicesCount) * 100 || 0).toFixed(2) + "%",
-                      ],
-                      series: [
-                        count1040 / totalServicesCount,
-                        count1041 / totalServicesCount,
-                        count1043 / totalServicesCount,
-                      ],
-                    }}
-                    type="Pie"
-                  />
+                  {/*@ts-ignore*/}
+                  <ReactApexChart options={typeOptions} series={typeSeries} type="pie" width={"100%"} />
                 </div>
-                <div className="legend">
-                  <i className="fas fa-circle text-info" />
-                  10.40 <i className="fas fa-circle text-danger" />
-                  10.41 <i className="fas fa-circle text-warning" />
-                  10.43
-                </div>
-                <hr></hr>
-                <div className="stats">
+                {/*<hr></hr>
+                  <div className="stats">
                   <i className="far fa-clock"></i>
                   Campaign sent 2 days ago
-                </div>
+                  </div>*/}
               </Card.Body>
             </Card>
           </Col>
-          <Col md="4">
+          <Col md="6">
             <Card>
               <Card.Header>
                 <Card.Title as="h4">Sub tipos</Card.Title>
@@ -240,17 +256,17 @@ const HomePage = () => {
               <Card.Body>
                 <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
                   {/*@ts-ignore*/}
-                  <ReactApexChart options={options} series={series} type="pie" width={"100%"} />
+                  <ReactApexChart options={subTypeOptions} series={subTypeSeries} type="pie" width={"100%"} />
                 </div>
-                <hr></hr>
-                <div className="stats">
+                {/*<hr></hr>
+                  <div className="stats">
                   <i className="far fa-clock"></i>
                   Campaign sent 2 days ago
-                </div>
+                  </div>*/}
               </Card.Body>
             </Card>
           </Col>
-          <Col md="4">
+          <Col md="6">
             <Card>
               <Card.Header>
                 <Card.Title as="h4">Cantidad de 10.44/10.45</Card.Title>
@@ -258,25 +274,14 @@ const HomePage = () => {
               </Card.Header>
               <Card.Body>
                 <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
-                  <ChartistGraph
-                    data={{
-                      labels: ["40%", "20%", "40%"],
-                      series: [40, 20, 40],
-                    }}
-                    type="Pie"
-                  />
+                  {/*@ts-ignore*/}
+                  <ReactApexChart options={quantities1044Options} series={all1044Values} type="pie" width={"100%"} />
                 </div>
-                <div className="legend">
-                  <i className="fas fa-circle text-info"></i>
-                  Sólidos Fibrosos <i className="fas fa-circle text-danger"></i>
-                  Líquidos Inflamables <i className="fas fa-circle text-warning"></i>
-                  Eléctricos
-                </div>
-                <hr></hr>
-                <div className="stats">
+                {/*<hr></hr>
+                  <div className="stats">
                   <i className="far fa-clock"></i>
                   Campaign sent 2 days ago
-                </div>
+                  </div>*/}
               </Card.Body>
             </Card>
           </Col>
