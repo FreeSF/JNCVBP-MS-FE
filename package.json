@@ -21,6 +21,8 @@
     "moment": "^2.29.1",
     "node-sass": "^4.11.0",
     "react": "^16.13.1",
+    "apexcharts": "^3.35.3",
+    "react-apexcharts": "^1.4.0",
     "react-apollo": "^3.1.5",
     "react-bootstrap": "^1.1.1",
     "react-bootstrap-table-next": "^3.1.9",

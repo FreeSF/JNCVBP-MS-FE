@@ -59,15 +59,6 @@ const Header = () => {
             <span style={{ marginTop: "auto", marginBottom: "auto" }}>
               Usuario: {currentUserQuery.data?.currentUser?.username}
             </span>
-            <Button
-              onClick={() => {
-                localStorage.setItem(AUTH_TOKEN_NAME, undefined);
-                history.push("/login");
-                currentUserQuery.refetch();
-              }}
-            >
-              Logout
-            </Button>
             <Dropdown as={Nav.Item}>
               <Dropdown.Toggle
                 // aria-expanded={false}
@@ -78,7 +69,7 @@ const Header = () => {
                 variant="default"
                 className="m-0"
               >
-                <span className="no-icon">Administrar</span>
+                <span className="no-icon">Opciones</span>
               </Dropdown.Toggle>
               <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
                 <Dropdown.Item>
@@ -90,8 +81,17 @@ const Header = () => {
                 <div className="divider"></div>
                 <Dropdown.Item>
                   {" "}
-                  <NavLink to={"/ranks"} className="dropdown-item">
-                    Rangos
+                  <NavLink
+                    to={"#"}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      localStorage.setItem(AUTH_TOKEN_NAME, undefined);
+                      history.push("/login");
+                      currentUserQuery.refetch();
+                    }}
+                    className="dropdown-item"
+                  >
+                    Salir
                   </NavLink>
                 </Dropdown.Item>
               </Dropdown.Menu>
