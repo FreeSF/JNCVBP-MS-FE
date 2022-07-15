@@ -90,7 +90,7 @@ const AccidentReportView = ({ formApi, formState, arrayRemove, isCreate }: Accid
       <Row style={{ marginTop: "15px" }}>
         <Col md="6">
           <Form.Group>
-            <label style={{ display: "inline" }}>Involucrados</label>
+            <label style={{ display: "inline" }}>Involucrados:</label>
             <Button
               className="pull-right ml-2"
               variant="success"

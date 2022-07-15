@@ -19,7 +19,7 @@ const ResourcesField = ({ formApi, formState, arrayRemove, isCreate }: FireRepor
       <Row>
         <Col md="12">
           <Form.Group>
-            <label style={{ display: "inline" }}>Recursos Utilizados</label>
+            <label style={{ display: "inline" }}>Recursos Utilizados:</label>
             <Button
               className="pull-right ml-2"
               variant="success"
