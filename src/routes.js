@@ -38,6 +38,7 @@ import LoginPage from "./components/Login/LoginPage";
 import UsersPage from "./components/Users/UsersPage";
 import CreateUserPage from "./components/Users/CreateUserPage";
 import UpdateUserPage from "./components/Users/UpdateUserPage";
+import ShowServicePage from "./components/Services/ShowServicePage";
 
 const dutiesRoutes = [
   {
@@ -95,6 +96,11 @@ const servicesRoutes = [
     path: "/services/:id/edit",
     name: "Editar Servicio",
     component: UpdateServicePage,
+  },
+  {
+    path: "/services/:id",
+    name: "Servicio",
+    component: ShowServicePage,
   },
 ];
 

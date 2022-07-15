@@ -1,14 +1,16 @@
 import React, { Component } from "react";
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink, useHistory } from "react-router-dom";
 
 import { Nav } from "react-bootstrap";
 import { useQuery } from "react-apollo";
 import { GetCurrentUserQuery } from "../../types";
 import { CURRENT_USER } from "../../queries/Login";
 import Spinner from "../spinner";
+import { AUTH_TOKEN_NAME } from "../../utils/constants";
 
 function Sidebar({ color, image, routes }) {
   const location = useLocation();
+  const history = useHistory();
   const activeRoute = (routeName) => {
     if (routeName == "/") {
       return location.pathname == "/" ? "active" : "";
@@ -52,6 +54,21 @@ function Sidebar({ color, image, routes }) {
               );
             return undefined;
           })}
+          <li>
+            <NavLink
+              to={"#"}
+              onClick={(event) => {
+                event.preventDefault();
+                localStorage.setItem(AUTH_TOKEN_NAME, undefined);
+                history.push("/login");
+                currentUserQuery.refetch();
+              }}
+              className="nav-link"
+              activeClassName="active"
+            >
+              Salir
+            </NavLink>
+          </li>
         </Nav>
       </div>
     </div>

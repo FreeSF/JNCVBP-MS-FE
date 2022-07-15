@@ -17,7 +17,7 @@ const Quantities1040Field = ({ formApi, formState, arrayRemove, isCreate }: Fire
   return (
     <div>
       <Form.Group>
-        <label style={{ display: "inline" }}>Cantidad 10.44</label>
+        <label style={{ display: "inline" }}>Cantidad 10.44:</label>
         <Button
           className="pull-right ml-2"
           variant="success"

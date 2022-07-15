@@ -17,6 +17,8 @@ import StandardTable from "../utils/standardTable";
 import Spinner from "../spinner";
 import { GET_SERVICES, REMOVE_SERVICE } from "../../queries/services";
 import SingleServiceReport from "../../reports/SingleServiceReport";
+import moment from "moment";
+import { DEFAULT_DATE_FORMAT, DEFAULT_DATETIME_FORMAT } from "../../utils/constants";
 
 const ServicesPage = (props: RouteComponentProps) => {
   const getServicesQuery = useQuery<GetServicesQuery>(GET_SERVICES);
@@ -34,8 +36,14 @@ const ServicesPage = (props: RouteComponentProps) => {
 
   const columns: ColumnDescription[] = [
     {
-      dataField: "description",
-      text: "Descripción",
+      dataField: "date",
+      text: "Fecha",
+      formatter: (cell, row) => moment(cell).format(DEFAULT_DATETIME_FORMAT),
+      searchable: false,
+    },
+    {
+      dataField: "officer_in_charge.name",
+      text: "Oficial",
     },
     {
       dataField: "locality",
@@ -44,6 +52,10 @@ const ServicesPage = (props: RouteComponentProps) => {
     {
       dataField: "sub_type.code",
       text: "Código",
+    },
+    {
+      dataField: "sub_type.name",
+      text: "Sub Tipo",
     },
     {
       dataField: "volunteers",
@@ -58,14 +70,6 @@ const ServicesPage = (props: RouteComponentProps) => {
           <Button className="btn-fill btn-sm" href={`/services/${row.id}`} variant="info">
             Ver
           </Button>
-
-          <BlobProvider document={<SingleServiceReport service={row} />}>
-            {({ url }) => (
-              <Button href={url} target="_blank" className="btn-fill btn-sm" variant="info">
-                pdf
-              </Button>
-            )}
-          </BlobProvider>
           <Button className="btn-fill btn-sm" href={`/services/${row.id}/edit`} variant="success">
             Editar
           </Button>

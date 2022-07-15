@@ -137,7 +137,7 @@ const FireReportView = ({
         </Col>
         <Col md="3">
           <Form.Group>
-            <label>Vehículos Utilizados</label>
+            <label>Vehículos Utilizados:</label>
             <Text className="form-control" field="vehicles_used" type="text" />
           </Form.Group>
         </Col>
@@ -152,19 +152,19 @@ const FireReportView = ({
       <Row>
         <Col md="6">
           <Form.Group>
-            <label>Otras Ocurrencias</label>
+            <label>Otras Ocurrencias:</label>
             <Text className="form-control" field="other_occurrences" type="text" />
           </Form.Group>
         </Col>
         <Col md="3">
           <Form.Group>
-            <label>Fuerzas Policiales a cargo</label>
+            <label>Fuerzas Policiales a cargo:</label>
             <Text className="form-control" field="police_force_in_charge" type="text" />
           </Form.Group>
         </Col>
         <Col md="3">
           <Form.Group>
-            <label>Juzgado de Crimen oficiado por</label>
+            <label>Juzgado de Crimen oficiado por:</label>
             <Text className="form-control" field="judge_in_charge" type="text" />
           </Form.Group>
         </Col>
@@ -190,7 +190,7 @@ const FireReportView = ({
         </Col>
         <Col md="4">
           <Form.Group>
-            <label>Propietarios Afectados (descripción)</label>
+            <label>Propietarios Afectados (descripción):</label>
             <Text className="form-control" field="affected_owner_description" type="text" />
           </Form.Group>
         </Col>
@@ -202,7 +202,7 @@ const FireReportView = ({
         </Col>
         <Col md="6">
           <Form.Group>
-            <label style={{ display: "inline" }}>Fuego Clase</label>
+            <label style={{ display: "inline" }}>Fuego Clase:</label>
             <Button
               className="pull-right ml-2"
               variant="success"
