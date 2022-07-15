@@ -40,7 +40,7 @@ const UsersPage = (props) => {
     <Container fluid>
       <Row>
         <Col md="12">
-        <Card className="strpied-tabled-with-hover">
+          <Card className="strpied-tabled-with-hover">
             <Card.Header>
               <Card.Title as="h4">
                 Lista de Usuarios
