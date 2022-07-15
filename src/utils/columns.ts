@@ -1,6 +1,11 @@
 import moment from "moment";
 import { ColumnDescription } from "react-bootstrap-table-next";
-import { GuardAllFieldsFragment, TrainingAllFieldsFragment, VolunteerAllFieldsFragment } from "types";
+import {
+  GuardAllFieldsFragment,
+  TrainingAllFieldsFragment,
+  UserAllFieldsFragment,
+  VolunteerAllFieldsFragment,
+} from "types";
 import {
   DEFAULT_DATE_FORMAT,
   get_blood_type,
@@ -62,10 +67,6 @@ export const get_guard_columns = (options) => {
 export const get_users_columns = (options) => {
   const columns: ColumnDescription[] = [
     {
-      dataField: "id",
-      text: "ID",
-    },
-    {
       dataField: "username",
       text: "Usuario",
     },
@@ -80,6 +81,11 @@ export const get_users_columns = (options) => {
     {
       dataField: "email",
       text: "Email",
+    },
+    {
+      dataField: "admin",
+      text: "Rol",
+      formatter: (cell, row: UserAllFieldsFragment) => (row?.isAdmin ? "Administrador" : "Usuario"),
     },
     options,
   ];

@@ -4,6 +4,7 @@ import { CreateUserInput, CreateUserMutation, CreateUserMutationVariables } from
 import { CREATE_SERVICE, GET_SERVICES } from "../../queries/services";
 import { useMutation } from "react-apollo";
 import { CREATE_USER, GET_USERS } from "../../queries/Users";
+import { Container } from "react-bootstrap";
 import UserForm from "./UserForm";
 
 const CreateUserPage = (props) => {
@@ -31,8 +32,7 @@ const CreateUserPage = (props) => {
   };
 
   return (
-    <div>
-      <h2>Create user</h2>
+    <Container fluid>
       <Form
         initialValues={{ ...defaultValues }}
         getApi={(formRef: FormApi<CreateUserInput>) => setFormRef(formRef)}
@@ -40,7 +40,7 @@ const CreateUserPage = (props) => {
       >
         {({ formApi, formState }) => <UserForm formApi={formApi} formState={formState} isCreate={true} />}
       </Form>
-    </div>
+    </Container>
   );
 };
 
