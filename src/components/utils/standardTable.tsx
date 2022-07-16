@@ -29,18 +29,24 @@ const CustomSearch = (props) => {
   const { input, ...restProps } = props;
 
   return (
-    <input
-      ref={input}
-      type="text"
-      onChange={(e) => {
-        restProps.onSearch(e.target.value);
-      }}
-      style={{
-        marginBottom: "10px",
-      }}
-      className="form-control"
-      placeholder="Buscar"
-    />
+    <div>
+      <div className="input-group mb-3">
+        <div className="input-group-prepend">
+          <div className="input-group-text">
+            <i className="fas fa-search" />
+          </div>
+        </div>
+        <input
+          ref={input}
+          type="text"
+          className="form-control"
+          placeholder="Buscar"
+          onChange={(e) => {
+            restProps.onSearch(e.target.value);
+          }}
+        />
+      </div>
+    </div>
   );
 };
 

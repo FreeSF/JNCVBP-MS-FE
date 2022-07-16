@@ -16,14 +16,12 @@ import ShowVolunteerPage from "components/Volunteers/ShowVolunteerPage";
 import ServicesPage from "components/Services/ServicesPage";
 import CreateServicePage from "components/Services/CreateServicePage";
 import UpdateServicePage from "components/Services/UpdateServicePage";
+import ShowServicePage from "./components/Services/ShowServicePage";
 
 import GuardsPage from "./components/Guards/GuardsPage";
 import CreateGuardPage from "./components/Guards/CreateGuardPage";
 import UpdateGuardPage from "./components/Guards/UpdateGuardPage";
 import ShowGuardPage from "./components/Guards/ShowGuardPage";
-
-import EventsPage from "./components/Events/EventsPage";
-import CreateEventPage from "./components/Events/CreateEventPage";
 
 import TrainingsPage from "./components/Trainings/TrainingsPage";
 import CreateTrainingPage from "./components/Trainings/CreateTrainingPage";
@@ -33,12 +31,16 @@ import CoursesPage from "./components/Courses/CoursesPage";
 import CreateCoursePage from "./components/Courses/CreateCoursePage";
 import UpdateCoursePage from "./components/Courses/UpdateCoursePage";
 import ShowCoursePage from "./components/Courses/ShowCoursePage";
-import RecycleBinPage from "./components/RecycleBin/RecycleBinPage";
-import LoginPage from "./components/Login/LoginPage";
+
 import UsersPage from "./components/Users/UsersPage";
 import CreateUserPage from "./components/Users/CreateUserPage";
 import UpdateUserPage from "./components/Users/UpdateUserPage";
-import ShowServicePage from "./components/Services/ShowServicePage";
+
+import EventsPage from "./components/Events/EventsPage";
+import UpdateEventPage from "components/Events/UpdateEventPage";
+
+import LoginPage from "./components/Login/LoginPage";
+import RecycleBinPage from "./components/RecycleBin/RecycleBinPage";
 
 const dutiesRoutes = [
   {
@@ -108,7 +110,7 @@ const volunteerRoutes = [
   {
     path: "/volunteers",
     name: "Voluntarios",
-    icon: "fas fa-users",
+    icon: "fas fa-user-nurse",
     component: VolunteersPage,
     showOnSidebar: true,
   },
@@ -157,7 +159,7 @@ const guardRoutes = [
   {
     path: "/guards",
     name: "Guardias",
-    icon: "fas fa-users",
+    icon: "fas fa-hospital-user",
     component: GuardsPage,
     showOnSidebar: true,
   },
@@ -182,14 +184,14 @@ const eventRoutes = [
   {
     path: "/events",
     name: "Libro de Novedades",
-    icon: "fas fa-users",
+    icon: "fas fa-clock",
     component: EventsPage,
     showOnSidebar: true,
   },
   {
-    path: "/events/create",
-    name: "Registrar Evento",
-    component: CreateEventPage,
+    path: "/events/:id/edit",
+    name: "Editar Evento",
+    component: UpdateEventPage,
   },
 ];
 
@@ -197,7 +199,7 @@ const trainingRoutes = [
   {
     path: "/trainings",
     name: "Prácticas",
-    icon: "fas fa-users",
+    icon: "fas fa-briefcase-medical",
     component: TrainingsPage,
     showOnSidebar: true,
   },
@@ -217,7 +219,7 @@ const coursesRoutes = [
   {
     path: "/courses",
     name: "Cursos",
-    icon: "fas fa-users",
+    icon: "fas fa-book-medical",
     component: CoursesPage,
     showOnSidebar: true,
   },
@@ -256,7 +258,6 @@ const routes = [
     noAuthRoute: true,
   },
   ...volunteerRoutes,
-  ...usersRoutes,
   ...dutiesRoutes,
   ...ranksRoutes,
   ...guardRoutes,
@@ -264,6 +265,7 @@ const routes = [
   ...trainingRoutes,
   ...servicesRoutes,
   ...eventRoutes,
+  ...usersRoutes,
   {
     path: "/recycleBin",
     name: "Papelera de Reciclaje",

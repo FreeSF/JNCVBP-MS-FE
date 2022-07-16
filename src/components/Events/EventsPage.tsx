@@ -7,10 +7,10 @@ import {
   ServicesAllFieldsFragment,
   VolunteerAllFieldsFragment,
 } from "../../types";
-import { GET_EVENTS, REMOVE_EVENT } from "../../queries/Events";
+import { GET_EVENTS, REMOVE_EVENT } from "../../queries/events";
 import Spinner from "../spinner";
 import { ColumnDescription } from "react-bootstrap-table-next";
-import { Button } from "react-bootstrap";
+import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
 import { GET_GUARDS } from "../../queries/Guards";
 import { useHistory } from "react-router-dom";
 import StandardTable from "../utils/standardTable";
@@ -43,11 +43,27 @@ const EventsPage = (props) => {
   });
 
   return (
-    <div>
-      <h1>Libro de Novedades</h1>
-      <Button onClick={() => history.push(`/events/create`)}>Crear</Button>
-      <StandardTable columns={columns} data={getEventsQuery.data.events} />
-    </div>
+    <Container fluid>
+      <Row>
+        <Col md="12">
+          <Card className="strpied-tabled-with-hover">
+            <Card.Header>
+              <Card.Title as="h4">Libro de Novedades</Card.Title>
+              <p className="cardu-category">
+                ({getEventsQuery.data?.events.length}) Voluntarios registrados en el sistema{" "}
+              </p>
+            </Card.Header>
+            <Card.Body className="table-full-width table-responsive">
+              {getEventsQuery.loading ? (
+                <Spinner />
+              ) : (
+                <StandardTable columns={columns} data={getEventsQuery.data?.events} />
+              )}
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

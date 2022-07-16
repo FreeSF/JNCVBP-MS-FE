@@ -3,7 +3,7 @@ import { FormApi, Form as IForm, Text } from "informed";
 
 import { CreateEventInput, CreateEventMutation, CreateEventMutationVariables } from "../../types";
 import { useMutation } from "react-apollo";
-import { CREATE_EVENT, GET_EVENTS } from "../../queries/Events";
+import { CREATE_EVENT, GET_EVENTS } from "../../queries/events";
 
 import { Button, Row } from "react-bootstrap";
 import { NotificationManager } from "react-notifications";

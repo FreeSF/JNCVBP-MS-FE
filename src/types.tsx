@@ -891,60 +891,6 @@ export type RestoreCourseMutation = { __typename?: "Mutation" } & {
   restoreCourse: { __typename?: "Course" } & CoursesAllFieldsFragment;
 };
 
-export type EventAllFieldsFragment = { __typename?: "Event" } & Pick<Event, "id" | "description"> & {
-    created_by?: Maybe<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>;
-  };
-
-export type GetEventsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetEventsQuery = { __typename?: "Query" } & {
-  events: Array<{ __typename?: "Event" } & EventAllFieldsFragment>;
-};
-
-export type GetEventsDisabledQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetEventsDisabledQuery = { __typename?: "Query" } & {
-  eventsDisabled: Array<{ __typename?: "Event" } & EventAllFieldsFragment>;
-};
-
-export type FindEventQueryVariables = Exact<{
-  id: Scalars["String"];
-}>;
-
-export type FindEventQuery = { __typename?: "Query" } & { event: { __typename?: "Event" } & EventAllFieldsFragment };
-
-export type EditEventMutationVariables = Exact<{
-  input: UpdateEventInput;
-}>;
-
-export type EditEventMutation = { __typename?: "Mutation" } & {
-  updateEvent: { __typename?: "Event" } & EventAllFieldsFragment;
-};
-
-export type CreateEventMutationVariables = Exact<{
-  input: CreateEventInput;
-}>;
-
-export type CreateEventMutation = { __typename?: "Mutation" } & {
-  createEvent: { __typename?: "Event" } & EventAllFieldsFragment;
-};
-
-export type RemoveEventMutationVariables = Exact<{
-  id: Scalars["String"];
-}>;
-
-export type RemoveEventMutation = { __typename?: "Mutation" } & {
-  removeEvent: { __typename?: "Event" } & EventAllFieldsFragment;
-};
-
-export type RestoreEventMutationVariables = Exact<{
-  id: Scalars["String"];
-}>;
-
-export type RestoreEventMutation = { __typename?: "Mutation" } & {
-  restoreEvent: { __typename?: "Event" } & EventAllFieldsFragment;
-};
-
 export type GuardAllFieldsFragment = { __typename?: "Guard" } & Pick<Guard, "id" | "start_time" | "end_time"> & {
     volunteers?: Maybe<Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>>;
   };
@@ -1214,6 +1160,60 @@ export type RestoreDutyMutationVariables = Exact<{
 
 export type RestoreDutyMutation = { __typename?: "Mutation" } & {
   restoreDuty: { __typename?: "Duty" } & Pick<Duty, "id">;
+};
+
+export type EventAllFieldsFragment = { __typename?: "Event" } & Pick<Event, "id" | "description"> & {
+    created_by?: Maybe<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>;
+  };
+
+export type GetEventsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetEventsQuery = { __typename?: "Query" } & {
+  events: Array<{ __typename?: "Event" } & EventAllFieldsFragment>;
+};
+
+export type GetEventsDisabledQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetEventsDisabledQuery = { __typename?: "Query" } & {
+  eventsDisabled: Array<{ __typename?: "Event" } & EventAllFieldsFragment>;
+};
+
+export type FindEventQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type FindEventQuery = { __typename?: "Query" } & { event: { __typename?: "Event" } & EventAllFieldsFragment };
+
+export type EditEventMutationVariables = Exact<{
+  input: UpdateEventInput;
+}>;
+
+export type EditEventMutation = { __typename?: "Mutation" } & {
+  updateEvent: { __typename?: "Event" } & EventAllFieldsFragment;
+};
+
+export type CreateEventMutationVariables = Exact<{
+  input: CreateEventInput;
+}>;
+
+export type CreateEventMutation = { __typename?: "Mutation" } & {
+  createEvent: { __typename?: "Event" } & EventAllFieldsFragment;
+};
+
+export type RemoveEventMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RemoveEventMutation = { __typename?: "Mutation" } & {
+  removeEvent: { __typename?: "Event" } & EventAllFieldsFragment;
+};
+
+export type RestoreEventMutationVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type RestoreEventMutation = { __typename?: "Mutation" } & {
+  restoreEvent: { __typename?: "Event" } & EventAllFieldsFragment;
 };
 
 export type FireCauseAllFieldsFragment = { __typename?: "FireCause" } & Pick<FireCause, "id" | "name">;
@@ -1534,16 +1534,6 @@ export const CoursesAllFieldsFragmentDoc = gql`
   }
   ${VolunteerAllFieldsFragmentDoc}
 `;
-export const EventAllFieldsFragmentDoc = gql`
-  fragment eventAllFields on Event {
-    id
-    description
-    created_by {
-      ...volunteerAllFields
-    }
-  }
-  ${VolunteerAllFieldsFragmentDoc}
-`;
 export const GuardAllFieldsFragmentDoc = gql`
   fragment guardAllFields on Guard {
     id
@@ -1662,6 +1652,16 @@ export const DutyAllFieldsFragmentDoc = gql`
     isDeletable
     description
   }
+`;
+export const EventAllFieldsFragmentDoc = gql`
+  fragment eventAllFields on Event {
+    id
+    description
+    created_by {
+      ...volunteerAllFields
+    }
+  }
+  ${VolunteerAllFieldsFragmentDoc}
 `;
 export const SubTypeAllFieldsFragmentDoc = gql`
   fragment subTypeAllFields on SubType {
@@ -2066,327 +2066,6 @@ export type RestoreCourseMutationResult = ApolloReactCommon.MutationResult<Resto
 export type RestoreCourseMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RestoreCourseMutation,
   RestoreCourseMutationVariables
->;
-export const GetEventsDocument = gql`
-  query getEvents {
-    events {
-      ...eventAllFields
-    }
-  }
-  ${EventAllFieldsFragmentDoc}
-`;
-export type GetEventsComponentProps = Omit<
-  ApolloReactComponents.QueryComponentOptions<GetEventsQuery, GetEventsQueryVariables>,
-  "query"
->;
-
-export const GetEventsComponent = (props: GetEventsComponentProps) => (
-  <ApolloReactComponents.Query<GetEventsQuery, GetEventsQueryVariables> query={GetEventsDocument} {...props} />
-);
-
-export type GetEventsProps<TChildProps = {}, TDataName extends string = "data"> = {
-  [key in TDataName]: ApolloReactHoc.DataValue<GetEventsQuery, GetEventsQueryVariables>;
-} & TChildProps;
-export function withGetEvents<TProps, TChildProps = {}, TDataName extends string = "data">(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    GetEventsQuery,
-    GetEventsQueryVariables,
-    GetEventsProps<TChildProps, TDataName>
-  >
-) {
-  return ApolloReactHoc.withQuery<
-    TProps,
-    GetEventsQuery,
-    GetEventsQueryVariables,
-    GetEventsProps<TChildProps, TDataName>
-  >(GetEventsDocument, {
-    alias: "getEvents",
-    ...operationOptions,
-  });
-}
-export type GetEventsQueryResult = ApolloReactCommon.QueryResult<GetEventsQuery, GetEventsQueryVariables>;
-export const GetEventsDisabledDocument = gql`
-  query getEventsDisabled {
-    eventsDisabled {
-      ...eventAllFields
-    }
-  }
-  ${EventAllFieldsFragmentDoc}
-`;
-export type GetEventsDisabledComponentProps = Omit<
-  ApolloReactComponents.QueryComponentOptions<GetEventsDisabledQuery, GetEventsDisabledQueryVariables>,
-  "query"
->;
-
-export const GetEventsDisabledComponent = (props: GetEventsDisabledComponentProps) => (
-  <ApolloReactComponents.Query<GetEventsDisabledQuery, GetEventsDisabledQueryVariables>
-    query={GetEventsDisabledDocument}
-    {...props}
-  />
-);
-
-export type GetEventsDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
-  [key in TDataName]: ApolloReactHoc.DataValue<GetEventsDisabledQuery, GetEventsDisabledQueryVariables>;
-} & TChildProps;
-export function withGetEventsDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    GetEventsDisabledQuery,
-    GetEventsDisabledQueryVariables,
-    GetEventsDisabledProps<TChildProps, TDataName>
-  >
-) {
-  return ApolloReactHoc.withQuery<
-    TProps,
-    GetEventsDisabledQuery,
-    GetEventsDisabledQueryVariables,
-    GetEventsDisabledProps<TChildProps, TDataName>
-  >(GetEventsDisabledDocument, {
-    alias: "getEventsDisabled",
-    ...operationOptions,
-  });
-}
-export type GetEventsDisabledQueryResult = ApolloReactCommon.QueryResult<
-  GetEventsDisabledQuery,
-  GetEventsDisabledQueryVariables
->;
-export const FindEventDocument = gql`
-  query findEvent($id: String!) {
-    event(id: $id) {
-      ...eventAllFields
-    }
-  }
-  ${EventAllFieldsFragmentDoc}
-`;
-export type FindEventComponentProps = Omit<
-  ApolloReactComponents.QueryComponentOptions<FindEventQuery, FindEventQueryVariables>,
-  "query"
-> &
-  ({ variables: FindEventQueryVariables; skip?: boolean } | { skip: boolean });
-
-export const FindEventComponent = (props: FindEventComponentProps) => (
-  <ApolloReactComponents.Query<FindEventQuery, FindEventQueryVariables> query={FindEventDocument} {...props} />
-);
-
-export type FindEventProps<TChildProps = {}, TDataName extends string = "data"> = {
-  [key in TDataName]: ApolloReactHoc.DataValue<FindEventQuery, FindEventQueryVariables>;
-} & TChildProps;
-export function withFindEvent<TProps, TChildProps = {}, TDataName extends string = "data">(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    FindEventQuery,
-    FindEventQueryVariables,
-    FindEventProps<TChildProps, TDataName>
-  >
-) {
-  return ApolloReactHoc.withQuery<
-    TProps,
-    FindEventQuery,
-    FindEventQueryVariables,
-    FindEventProps<TChildProps, TDataName>
-  >(FindEventDocument, {
-    alias: "findEvent",
-    ...operationOptions,
-  });
-}
-export type FindEventQueryResult = ApolloReactCommon.QueryResult<FindEventQuery, FindEventQueryVariables>;
-export const EditEventDocument = gql`
-  mutation editEvent($input: UpdateEventInput!) {
-    updateEvent(updateEventInput: $input) {
-      ...eventAllFields
-    }
-  }
-  ${EventAllFieldsFragmentDoc}
-`;
-export type EditEventMutationFn = ApolloReactCommon.MutationFunction<EditEventMutation, EditEventMutationVariables>;
-export type EditEventComponentProps = Omit<
-  ApolloReactComponents.MutationComponentOptions<EditEventMutation, EditEventMutationVariables>,
-  "mutation"
->;
-
-export const EditEventComponent = (props: EditEventComponentProps) => (
-  <ApolloReactComponents.Mutation<EditEventMutation, EditEventMutationVariables>
-    mutation={EditEventDocument}
-    {...props}
-  />
-);
-
-export type EditEventProps<TChildProps = {}, TDataName extends string = "mutate"> = {
-  [key in TDataName]: ApolloReactCommon.MutationFunction<EditEventMutation, EditEventMutationVariables>;
-} & TChildProps;
-export function withEditEvent<TProps, TChildProps = {}, TDataName extends string = "mutate">(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    EditEventMutation,
-    EditEventMutationVariables,
-    EditEventProps<TChildProps, TDataName>
-  >
-) {
-  return ApolloReactHoc.withMutation<
-    TProps,
-    EditEventMutation,
-    EditEventMutationVariables,
-    EditEventProps<TChildProps, TDataName>
-  >(EditEventDocument, {
-    alias: "editEvent",
-    ...operationOptions,
-  });
-}
-export type EditEventMutationResult = ApolloReactCommon.MutationResult<EditEventMutation>;
-export type EditEventMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  EditEventMutation,
-  EditEventMutationVariables
->;
-export const CreateEventDocument = gql`
-  mutation createEvent($input: CreateEventInput!) {
-    createEvent(createEventInput: $input) {
-      ...eventAllFields
-    }
-  }
-  ${EventAllFieldsFragmentDoc}
-`;
-export type CreateEventMutationFn = ApolloReactCommon.MutationFunction<
-  CreateEventMutation,
-  CreateEventMutationVariables
->;
-export type CreateEventComponentProps = Omit<
-  ApolloReactComponents.MutationComponentOptions<CreateEventMutation, CreateEventMutationVariables>,
-  "mutation"
->;
-
-export const CreateEventComponent = (props: CreateEventComponentProps) => (
-  <ApolloReactComponents.Mutation<CreateEventMutation, CreateEventMutationVariables>
-    mutation={CreateEventDocument}
-    {...props}
-  />
-);
-
-export type CreateEventProps<TChildProps = {}, TDataName extends string = "mutate"> = {
-  [key in TDataName]: ApolloReactCommon.MutationFunction<CreateEventMutation, CreateEventMutationVariables>;
-} & TChildProps;
-export function withCreateEvent<TProps, TChildProps = {}, TDataName extends string = "mutate">(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    CreateEventMutation,
-    CreateEventMutationVariables,
-    CreateEventProps<TChildProps, TDataName>
-  >
-) {
-  return ApolloReactHoc.withMutation<
-    TProps,
-    CreateEventMutation,
-    CreateEventMutationVariables,
-    CreateEventProps<TChildProps, TDataName>
-  >(CreateEventDocument, {
-    alias: "createEvent",
-    ...operationOptions,
-  });
-}
-export type CreateEventMutationResult = ApolloReactCommon.MutationResult<CreateEventMutation>;
-export type CreateEventMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  CreateEventMutation,
-  CreateEventMutationVariables
->;
-export const RemoveEventDocument = gql`
-  mutation removeEvent($id: String!) {
-    removeEvent(id: $id) {
-      ...eventAllFields
-    }
-  }
-  ${EventAllFieldsFragmentDoc}
-`;
-export type RemoveEventMutationFn = ApolloReactCommon.MutationFunction<
-  RemoveEventMutation,
-  RemoveEventMutationVariables
->;
-export type RemoveEventComponentProps = Omit<
-  ApolloReactComponents.MutationComponentOptions<RemoveEventMutation, RemoveEventMutationVariables>,
-  "mutation"
->;
-
-export const RemoveEventComponent = (props: RemoveEventComponentProps) => (
-  <ApolloReactComponents.Mutation<RemoveEventMutation, RemoveEventMutationVariables>
-    mutation={RemoveEventDocument}
-    {...props}
-  />
-);
-
-export type RemoveEventProps<TChildProps = {}, TDataName extends string = "mutate"> = {
-  [key in TDataName]: ApolloReactCommon.MutationFunction<RemoveEventMutation, RemoveEventMutationVariables>;
-} & TChildProps;
-export function withRemoveEvent<TProps, TChildProps = {}, TDataName extends string = "mutate">(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    RemoveEventMutation,
-    RemoveEventMutationVariables,
-    RemoveEventProps<TChildProps, TDataName>
-  >
-) {
-  return ApolloReactHoc.withMutation<
-    TProps,
-    RemoveEventMutation,
-    RemoveEventMutationVariables,
-    RemoveEventProps<TChildProps, TDataName>
-  >(RemoveEventDocument, {
-    alias: "removeEvent",
-    ...operationOptions,
-  });
-}
-export type RemoveEventMutationResult = ApolloReactCommon.MutationResult<RemoveEventMutation>;
-export type RemoveEventMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  RemoveEventMutation,
-  RemoveEventMutationVariables
->;
-export const RestoreEventDocument = gql`
-  mutation restoreEvent($id: String!) {
-    restoreEvent(id: $id) {
-      ...eventAllFields
-    }
-  }
-  ${EventAllFieldsFragmentDoc}
-`;
-export type RestoreEventMutationFn = ApolloReactCommon.MutationFunction<
-  RestoreEventMutation,
-  RestoreEventMutationVariables
->;
-export type RestoreEventComponentProps = Omit<
-  ApolloReactComponents.MutationComponentOptions<RestoreEventMutation, RestoreEventMutationVariables>,
-  "mutation"
->;
-
-export const RestoreEventComponent = (props: RestoreEventComponentProps) => (
-  <ApolloReactComponents.Mutation<RestoreEventMutation, RestoreEventMutationVariables>
-    mutation={RestoreEventDocument}
-    {...props}
-  />
-);
-
-export type RestoreEventProps<TChildProps = {}, TDataName extends string = "mutate"> = {
-  [key in TDataName]: ApolloReactCommon.MutationFunction<RestoreEventMutation, RestoreEventMutationVariables>;
-} & TChildProps;
-export function withRestoreEvent<TProps, TChildProps = {}, TDataName extends string = "mutate">(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    RestoreEventMutation,
-    RestoreEventMutationVariables,
-    RestoreEventProps<TChildProps, TDataName>
-  >
-) {
-  return ApolloReactHoc.withMutation<
-    TProps,
-    RestoreEventMutation,
-    RestoreEventMutationVariables,
-    RestoreEventProps<TChildProps, TDataName>
-  >(RestoreEventDocument, {
-    alias: "restoreEvent",
-    ...operationOptions,
-  });
-}
-export type RestoreEventMutationResult = ApolloReactCommon.MutationResult<RestoreEventMutation>;
-export type RestoreEventMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  RestoreEventMutation,
-  RestoreEventMutationVariables
 >;
 export const GetGuardsDocument = gql`
   query getGuards {
@@ -3849,6 +3528,327 @@ export type RestoreDutyMutationResult = ApolloReactCommon.MutationResult<Restore
 export type RestoreDutyMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RestoreDutyMutation,
   RestoreDutyMutationVariables
+>;
+export const GetEventsDocument = gql`
+  query getEvents {
+    events {
+      ...eventAllFields
+    }
+  }
+  ${EventAllFieldsFragmentDoc}
+`;
+export type GetEventsComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetEventsQuery, GetEventsQueryVariables>,
+  "query"
+>;
+
+export const GetEventsComponent = (props: GetEventsComponentProps) => (
+  <ApolloReactComponents.Query<GetEventsQuery, GetEventsQueryVariables> query={GetEventsDocument} {...props} />
+);
+
+export type GetEventsProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetEventsQuery, GetEventsQueryVariables>;
+} & TChildProps;
+export function withGetEvents<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetEventsQuery,
+    GetEventsQueryVariables,
+    GetEventsProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetEventsQuery,
+    GetEventsQueryVariables,
+    GetEventsProps<TChildProps, TDataName>
+  >(GetEventsDocument, {
+    alias: "getEvents",
+    ...operationOptions,
+  });
+}
+export type GetEventsQueryResult = ApolloReactCommon.QueryResult<GetEventsQuery, GetEventsQueryVariables>;
+export const GetEventsDisabledDocument = gql`
+  query getEventsDisabled {
+    eventsDisabled {
+      ...eventAllFields
+    }
+  }
+  ${EventAllFieldsFragmentDoc}
+`;
+export type GetEventsDisabledComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetEventsDisabledQuery, GetEventsDisabledQueryVariables>,
+  "query"
+>;
+
+export const GetEventsDisabledComponent = (props: GetEventsDisabledComponentProps) => (
+  <ApolloReactComponents.Query<GetEventsDisabledQuery, GetEventsDisabledQueryVariables>
+    query={GetEventsDisabledDocument}
+    {...props}
+  />
+);
+
+export type GetEventsDisabledProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetEventsDisabledQuery, GetEventsDisabledQueryVariables>;
+} & TChildProps;
+export function withGetEventsDisabled<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetEventsDisabledQuery,
+    GetEventsDisabledQueryVariables,
+    GetEventsDisabledProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetEventsDisabledQuery,
+    GetEventsDisabledQueryVariables,
+    GetEventsDisabledProps<TChildProps, TDataName>
+  >(GetEventsDisabledDocument, {
+    alias: "getEventsDisabled",
+    ...operationOptions,
+  });
+}
+export type GetEventsDisabledQueryResult = ApolloReactCommon.QueryResult<
+  GetEventsDisabledQuery,
+  GetEventsDisabledQueryVariables
+>;
+export const FindEventDocument = gql`
+  query findEvent($id: String!) {
+    event(id: $id) {
+      ...eventAllFields
+    }
+  }
+  ${EventAllFieldsFragmentDoc}
+`;
+export type FindEventComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<FindEventQuery, FindEventQueryVariables>,
+  "query"
+> &
+  ({ variables: FindEventQueryVariables; skip?: boolean } | { skip: boolean });
+
+export const FindEventComponent = (props: FindEventComponentProps) => (
+  <ApolloReactComponents.Query<FindEventQuery, FindEventQueryVariables> query={FindEventDocument} {...props} />
+);
+
+export type FindEventProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<FindEventQuery, FindEventQueryVariables>;
+} & TChildProps;
+export function withFindEvent<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    FindEventQuery,
+    FindEventQueryVariables,
+    FindEventProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    FindEventQuery,
+    FindEventQueryVariables,
+    FindEventProps<TChildProps, TDataName>
+  >(FindEventDocument, {
+    alias: "findEvent",
+    ...operationOptions,
+  });
+}
+export type FindEventQueryResult = ApolloReactCommon.QueryResult<FindEventQuery, FindEventQueryVariables>;
+export const EditEventDocument = gql`
+  mutation editEvent($input: UpdateEventInput!) {
+    updateEvent(updateEventInput: $input) {
+      ...eventAllFields
+    }
+  }
+  ${EventAllFieldsFragmentDoc}
+`;
+export type EditEventMutationFn = ApolloReactCommon.MutationFunction<EditEventMutation, EditEventMutationVariables>;
+export type EditEventComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<EditEventMutation, EditEventMutationVariables>,
+  "mutation"
+>;
+
+export const EditEventComponent = (props: EditEventComponentProps) => (
+  <ApolloReactComponents.Mutation<EditEventMutation, EditEventMutationVariables>
+    mutation={EditEventDocument}
+    {...props}
+  />
+);
+
+export type EditEventProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<EditEventMutation, EditEventMutationVariables>;
+} & TChildProps;
+export function withEditEvent<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    EditEventMutation,
+    EditEventMutationVariables,
+    EditEventProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    EditEventMutation,
+    EditEventMutationVariables,
+    EditEventProps<TChildProps, TDataName>
+  >(EditEventDocument, {
+    alias: "editEvent",
+    ...operationOptions,
+  });
+}
+export type EditEventMutationResult = ApolloReactCommon.MutationResult<EditEventMutation>;
+export type EditEventMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  EditEventMutation,
+  EditEventMutationVariables
+>;
+export const CreateEventDocument = gql`
+  mutation createEvent($input: CreateEventInput!) {
+    createEvent(createEventInput: $input) {
+      ...eventAllFields
+    }
+  }
+  ${EventAllFieldsFragmentDoc}
+`;
+export type CreateEventMutationFn = ApolloReactCommon.MutationFunction<
+  CreateEventMutation,
+  CreateEventMutationVariables
+>;
+export type CreateEventComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<CreateEventMutation, CreateEventMutationVariables>,
+  "mutation"
+>;
+
+export const CreateEventComponent = (props: CreateEventComponentProps) => (
+  <ApolloReactComponents.Mutation<CreateEventMutation, CreateEventMutationVariables>
+    mutation={CreateEventDocument}
+    {...props}
+  />
+);
+
+export type CreateEventProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<CreateEventMutation, CreateEventMutationVariables>;
+} & TChildProps;
+export function withCreateEvent<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CreateEventMutation,
+    CreateEventMutationVariables,
+    CreateEventProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    CreateEventMutation,
+    CreateEventMutationVariables,
+    CreateEventProps<TChildProps, TDataName>
+  >(CreateEventDocument, {
+    alias: "createEvent",
+    ...operationOptions,
+  });
+}
+export type CreateEventMutationResult = ApolloReactCommon.MutationResult<CreateEventMutation>;
+export type CreateEventMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateEventMutation,
+  CreateEventMutationVariables
+>;
+export const RemoveEventDocument = gql`
+  mutation removeEvent($id: String!) {
+    removeEvent(id: $id) {
+      ...eventAllFields
+    }
+  }
+  ${EventAllFieldsFragmentDoc}
+`;
+export type RemoveEventMutationFn = ApolloReactCommon.MutationFunction<
+  RemoveEventMutation,
+  RemoveEventMutationVariables
+>;
+export type RemoveEventComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RemoveEventMutation, RemoveEventMutationVariables>,
+  "mutation"
+>;
+
+export const RemoveEventComponent = (props: RemoveEventComponentProps) => (
+  <ApolloReactComponents.Mutation<RemoveEventMutation, RemoveEventMutationVariables>
+    mutation={RemoveEventDocument}
+    {...props}
+  />
+);
+
+export type RemoveEventProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RemoveEventMutation, RemoveEventMutationVariables>;
+} & TChildProps;
+export function withRemoveEvent<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RemoveEventMutation,
+    RemoveEventMutationVariables,
+    RemoveEventProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RemoveEventMutation,
+    RemoveEventMutationVariables,
+    RemoveEventProps<TChildProps, TDataName>
+  >(RemoveEventDocument, {
+    alias: "removeEvent",
+    ...operationOptions,
+  });
+}
+export type RemoveEventMutationResult = ApolloReactCommon.MutationResult<RemoveEventMutation>;
+export type RemoveEventMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RemoveEventMutation,
+  RemoveEventMutationVariables
+>;
+export const RestoreEventDocument = gql`
+  mutation restoreEvent($id: String!) {
+    restoreEvent(id: $id) {
+      ...eventAllFields
+    }
+  }
+  ${EventAllFieldsFragmentDoc}
+`;
+export type RestoreEventMutationFn = ApolloReactCommon.MutationFunction<
+  RestoreEventMutation,
+  RestoreEventMutationVariables
+>;
+export type RestoreEventComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<RestoreEventMutation, RestoreEventMutationVariables>,
+  "mutation"
+>;
+
+export const RestoreEventComponent = (props: RestoreEventComponentProps) => (
+  <ApolloReactComponents.Mutation<RestoreEventMutation, RestoreEventMutationVariables>
+    mutation={RestoreEventDocument}
+    {...props}
+  />
+);
+
+export type RestoreEventProps<TChildProps = {}, TDataName extends string = "mutate"> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<RestoreEventMutation, RestoreEventMutationVariables>;
+} & TChildProps;
+export function withRestoreEvent<TProps, TChildProps = {}, TDataName extends string = "mutate">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    RestoreEventMutation,
+    RestoreEventMutationVariables,
+    RestoreEventProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    RestoreEventMutation,
+    RestoreEventMutationVariables,
+    RestoreEventProps<TChildProps, TDataName>
+  >(RestoreEventDocument, {
+    alias: "restoreEvent",
+    ...operationOptions,
+  });
+}
+export type RestoreEventMutationResult = ApolloReactCommon.MutationResult<RestoreEventMutation>;
+export type RestoreEventMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RestoreEventMutation,
+  RestoreEventMutationVariables
 >;
 export const GetFireCausesDocument = gql`
   query getFireCauses {
