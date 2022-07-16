@@ -45,7 +45,7 @@ const GuardForm = ({ formApi, formState, volunteers, setVolunteers }: GuardFormP
                     }}
                     value={formState.values.start_time && new Date(formState.values.start_time)}
                     clearIcon={null}
-                    maxDate={new Date()}
+                    //maxDate={new Date()}
                     maxDetail="minute"
                     minDetail="month"
                   />
@@ -63,7 +63,7 @@ const GuardForm = ({ formApi, formState, volunteers, setVolunteers }: GuardFormP
                     }}
                     value={formState.values.end_time && new Date(formState.values.end_time)}
                     clearIcon={null}
-                    maxDate={addDays(new Date(), 1)}
+                    //maxDate={addDays(new Date(), 1)}
                     maxDetail="minute"
                     minDetail="month"
                   />
@@ -148,7 +148,7 @@ const GuardForm = ({ formApi, formState, volunteers, setVolunteers }: GuardFormP
             })}
 
             <Button disabled={volunteers.length === 0} className="btn-fill btn-pull-right" variant="info" type="submit">
-              Crear Guardia
+              Guardar
             </Button>
             <div className="clearfix"></div>
           </Card.Body>

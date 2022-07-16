@@ -3,10 +3,10 @@ import { Form as Form, FormApi } from "informed";
 import { Container } from "react-bootstrap";
 
 import { useMutation } from "react-apollo";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { CreateGuardInput, CreateGuardMutation, CreateGuardMutationVariables } from "../../types";
 
-import { CREATE_GUARD, GET_GUARDS } from "../../queries/Guards";
+import { CREATE_GUARD, CURRENT_GUARD, GET_GUARDS, NEXT_GUARD } from "../../queries/Guards";
 import GuardForm from "./GuardForm";
 
 const CreateGuardPage = (_props) => {
@@ -31,7 +31,7 @@ const CreateGuardPage = (_props) => {
           volunteers: volunteers,
         },
       },
-      refetchQueries: [{ query: GET_GUARDS }],
+      refetchQueries: [{ query: GET_GUARDS }, { query: CURRENT_GUARD }, { query: NEXT_GUARD }],
     }).then((_value) => {
       history.push("/guards");
     });
