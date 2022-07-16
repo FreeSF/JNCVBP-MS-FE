@@ -24,7 +24,7 @@ import {
 import { GET_COURSES, GET_COURSES_DISABLED, RESTORE_COURSE } from "../../queries/Courses";
 import { GET_VOLUNTEERS_DISABLED } from "../../queries/volunteers";
 import { GET_DUTIES_DISABLED } from "../../queries/duties";
-import { GET_EVENTS_DISABLED } from "../../queries/Events";
+import { GET_EVENTS_DISABLED } from "../../queries/events";
 // import { GET_FIRE_CAUSES_DISABLED } from "../../queries/fireCause";
 // import { GET_FIRE_CLASSES_DISABLED } from "../../queries/fireClass";
 // import { GET_SUB_TYPES_DISABLED } from "../../queries/subType";
