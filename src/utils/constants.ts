@@ -12,8 +12,8 @@ export const API_URL = "https://jncvbp-ms.herokuapp.com/graphql";
 export const MODE_CREATE = "CREATE";
 export const MODE_EDIT = "EDIT";
 
-export const DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
-export const DEFAULT_DATETIME_FORMAT = "MM/DD/YYYY HH:mm";
+export const DEFAULT_DATE_FORMAT = "DD/MM/YYYY";
+export const DEFAULT_DATETIME_FORMAT = "DD/MM/YYYY HH:mm";
 // export const API_URL = process.env.JNCVBP_URL || "http://localhost:3000/graphql";
 
 export const AUTH_TOKEN_NAME = "jncvbp-ms-token";

@@ -10,10 +10,11 @@ import {
   UpdateGuardInput,
 } from "../../types";
 import { useMutation, useLazyQuery } from "react-apollo";
-import { EDIT_GUARD, FIND_GUARD, GET_GUARDS } from "../../queries/Guards";
+import { CURRENT_GUARD, EDIT_GUARD, FIND_GUARD, GET_GUARDS, NEXT_GUARD } from "../../queries/Guards";
 
 import GuardForm from "./GuardForm";
 import Spinner from "components/spinner";
+import { useParams } from "react-router-dom";
 
 const CreateGuardPage = (props) => {
   const [loadGuard, loadResult] = useLazyQuery<FindGuardQuery, FindGuardQueryVariables>(FIND_GUARD, {
@@ -23,13 +24,14 @@ const CreateGuardPage = (props) => {
       setVolunteers(volunteers);
     },
   });
+  const params = useParams<any>();
 
   const [formRef, setFormRef] = useState<FormApi<UpdateGuardInput>>(null);
   const [volunteers, setVolunteers] = useState<any>([]);
   const [updateGuard, editedGuard] = useMutation<EditGuardMutation, EditGuardMutationVariables>(EDIT_GUARD);
 
   useEffect(() => {
-    loadGuard({ variables: { id: props.match.params.id } });
+    loadGuard({ variables: { id: params.id } });
   }, []);
 
   if (loadResult.loading || !loadResult.called) return <Spinner />;
@@ -44,7 +46,7 @@ const CreateGuardPage = (props) => {
           id: props.match.params.id,
         },
       },
-      refetchQueries: [{ query: GET_GUARDS }],
+      refetchQueries: [{ query: GET_GUARDS }, { query: CURRENT_GUARD }, { query: NEXT_GUARD }],
     }).then((value) => {
       props.history.push("/guards");
     });

@@ -5,7 +5,7 @@ import Select from "react-select";
 import { BlobProvider } from "@react-pdf/renderer";
 import GeneralReport from "../reports/GeneralReport";
 import { useQuery } from "react-apollo";
-import { GetReportQuery, GetVolunteersQuery } from "../types";
+import { CurrentGuardQuery, GetCurrentUserQuery, GetReportQuery, GetVolunteersQuery, NextGuardQuery } from "../types";
 import { GET_REPORT } from "../queries/Reports";
 import Spinner from "./spinner";
 import { endOfDay, endOfMonth, startOfDay, startOfMonth } from "../utils/Utils";
@@ -13,7 +13,10 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import _ from "lodash";
 import ReactApexChart from "react-apexcharts";
-import { CODES, QUANTITIES_1044_1045_OPTIONS } from "../utils/constants";
+import { CODES, DEFAULT_DATETIME_FORMAT, QUANTITIES_1044_1045_OPTIONS } from "../utils/constants";
+import { CURRENT_USER } from "../queries/Login";
+import { CURRENT_GUARD, NEXT_GUARD } from "../queries/Guards";
+import "./HomePage.sass";
 
 const MONTH_OPTIONS = [
   { value: "0", label: "Enero" },
@@ -41,7 +44,9 @@ const HomePage = () => {
       endDate: endOfMonth(month.value, year).getTime(),
     },
   });
-  if (reportQuery.loading) return <Spinner />;
+  const currentGuardQuery = useQuery<CurrentGuardQuery>(CURRENT_GUARD);
+  const nextGuardQuery = useQuery<NextGuardQuery>(NEXT_GUARD);
+  if (reportQuery.loading || currentGuardQuery.loading || nextGuardQuery.loading) return <Spinner />;
 
   const { count1040, count1041, count1043 } = reportQuery.data.report;
   const totalServicesCount = count1040 + count1041 + count1043;
@@ -100,6 +105,56 @@ const HomePage = () => {
   return (
     <>
       <Container fluid>
+        <Row>
+          <div className="col-6">
+            <Card className={"card-stats" + (currentGuardQuery.data.currentGuard ? " flashing-card" : "")}>
+              <Card.Header>
+                <Card.Title as="h4">Guardia Actual:</Card.Title>
+              </Card.Header>
+              <Card.Body>
+                {currentGuardQuery.data.currentGuard && (
+                  <React.Fragment>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Inicio:</span>{" "}
+                      {moment(currentGuardQuery.data.currentGuard.start_time).format(DEFAULT_DATETIME_FORMAT)}
+                      <span style={{ fontWeight: "bold" }}> Fin:</span>{" "}
+                      {moment(currentGuardQuery.data.currentGuard.end_time).format(DEFAULT_DATETIME_FORMAT)}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Encargados:</span>{" "}
+                      {currentGuardQuery.data.currentGuard.volunteers.map((volunteer) => volunteer.name).join(", ")}
+                    </p>
+                  </React.Fragment>
+                )}
+              </Card.Body>
+            </Card>
+          </div>
+
+          <div className="col-6">
+            <Card className="card-stats">
+              <Card.Header>
+                <Card.Title as="h4">Siguiente Guardia:</Card.Title>
+              </Card.Header>
+              <Card.Body>
+                {nextGuardQuery.data.nextGuard && (
+                  <React.Fragment>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Inicio:</span>{" "}
+                      {moment(nextGuardQuery.data.nextGuard.start_time).format(DEFAULT_DATETIME_FORMAT)}
+                      <span style={{ fontWeight: "bold" }}> Fin:</span>{" "}
+                      {moment(nextGuardQuery.data.nextGuard.end_time).format(DEFAULT_DATETIME_FORMAT)}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Encargados:</span>{" "}
+                      {nextGuardQuery.data.nextGuard.volunteers.map((volunteer) => volunteer.name).join(", ")}
+                    </p>
+                  </React.Fragment>
+                )}
+              </Card.Body>
+            </Card>
+          </div>
+        </Row>
+
         <div
           className="d-flex align-items-center w-100"
           style={{ marginBottom: "10px", justifyContent: "space-between" }}

@@ -22,6 +22,24 @@ export const GET_GUARDS = gql`
   ${GUARDS_ALL_FIELDS_FRAGMENT}
 `;
 
+export const CURRENT_GUARD = gql`
+  query currentGuard {
+    currentGuard {
+      ...guardAllFields
+    }
+  }
+  ${GUARDS_ALL_FIELDS_FRAGMENT}
+`;
+
+export const NEXT_GUARD = gql`
+  query nextGuard {
+    nextGuard {
+      ...guardAllFields
+    }
+  }
+  ${GUARDS_ALL_FIELDS_FRAGMENT}
+`;
+
 export const GET_GUARDS_DISABLED = gql`
   query getGuardsDisabled {
     guardsDisabled {

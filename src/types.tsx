@@ -506,6 +506,8 @@ export type Query = {
   guards: Array<Guard>;
   guardsDisabled: Array<Guard>;
   guard: Guard;
+  currentGuard?: Maybe<Guard>;
+  nextGuard?: Maybe<Guard>;
   events: Array<Event>;
   eventsDisabled: Array<Event>;
   event: Event;
@@ -897,6 +899,18 @@ export type GetGuardsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetGuardsQuery = { __typename?: "Query" } & {
   guards: Array<{ __typename?: "Guard" } & GuardAllFieldsFragment>;
+};
+
+export type CurrentGuardQueryVariables = Exact<{ [key: string]: never }>;
+
+export type CurrentGuardQuery = { __typename?: "Query" } & {
+  currentGuard?: Maybe<{ __typename?: "Guard" } & GuardAllFieldsFragment>;
+};
+
+export type NextGuardQueryVariables = Exact<{ [key: string]: never }>;
+
+export type NextGuardQuery = { __typename?: "Query" } & {
+  nextGuard?: Maybe<{ __typename?: "Guard" } & GuardAllFieldsFragment>;
 };
 
 export type GetGuardsDisabledQueryVariables = Exact<{ [key: string]: never }>;
@@ -2092,6 +2106,84 @@ export function withGetGuards<TProps, TChildProps = {}, TDataName extends string
   });
 }
 export type GetGuardsQueryResult = ApolloReactCommon.QueryResult<GetGuardsQuery, GetGuardsQueryVariables>;
+export const CurrentGuardDocument = gql`
+  query currentGuard {
+    currentGuard {
+      ...guardAllFields
+    }
+  }
+  ${GuardAllFieldsFragmentDoc}
+`;
+export type CurrentGuardComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<CurrentGuardQuery, CurrentGuardQueryVariables>,
+  "query"
+>;
+
+export const CurrentGuardComponent = (props: CurrentGuardComponentProps) => (
+  <ApolloReactComponents.Query<CurrentGuardQuery, CurrentGuardQueryVariables> query={CurrentGuardDocument} {...props} />
+);
+
+export type CurrentGuardProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<CurrentGuardQuery, CurrentGuardQueryVariables>;
+} & TChildProps;
+export function withCurrentGuard<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    CurrentGuardQuery,
+    CurrentGuardQueryVariables,
+    CurrentGuardProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    CurrentGuardQuery,
+    CurrentGuardQueryVariables,
+    CurrentGuardProps<TChildProps, TDataName>
+  >(CurrentGuardDocument, {
+    alias: "currentGuard",
+    ...operationOptions,
+  });
+}
+export type CurrentGuardQueryResult = ApolloReactCommon.QueryResult<CurrentGuardQuery, CurrentGuardQueryVariables>;
+export const NextGuardDocument = gql`
+  query nextGuard {
+    nextGuard {
+      ...guardAllFields
+    }
+  }
+  ${GuardAllFieldsFragmentDoc}
+`;
+export type NextGuardComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<NextGuardQuery, NextGuardQueryVariables>,
+  "query"
+>;
+
+export const NextGuardComponent = (props: NextGuardComponentProps) => (
+  <ApolloReactComponents.Query<NextGuardQuery, NextGuardQueryVariables> query={NextGuardDocument} {...props} />
+);
+
+export type NextGuardProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<NextGuardQuery, NextGuardQueryVariables>;
+} & TChildProps;
+export function withNextGuard<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    NextGuardQuery,
+    NextGuardQueryVariables,
+    NextGuardProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    NextGuardQuery,
+    NextGuardQueryVariables,
+    NextGuardProps<TChildProps, TDataName>
+  >(NextGuardDocument, {
+    alias: "nextGuard",
+    ...operationOptions,
+  });
+}
+export type NextGuardQueryResult = ApolloReactCommon.QueryResult<NextGuardQuery, NextGuardQueryVariables>;
 export const GetGuardsDisabledDocument = gql`
   query getGuardsDisabled {
     guardsDisabled {
