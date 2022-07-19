@@ -106,13 +106,13 @@ const HomePage = () => {
     <>
       <Container fluid>
         <Row>
-          <div className="col-6">
-            <Card className={"card-stats" + (currentGuardQuery.data.currentGuard ? " flashing-card" : "")}>
-              <Card.Header>
-                <Card.Title as="h4">Guardia Actual:</Card.Title>
-              </Card.Header>
-              <Card.Body>
-                {currentGuardQuery.data.currentGuard && (
+          {currentGuardQuery.data.currentGuard && (
+            <div className="col-6">
+              <Card className={"card-stats flashing-card"}>
+                <Card.Header>
+                  <Card.Title as="h4">Guardia Actual:</Card.Title>
+                </Card.Header>
+                <Card.Body>
                   <React.Fragment>
                     <p>
                       <span style={{ fontWeight: "bold" }}>Inicio:</span>{" "}
@@ -125,18 +125,18 @@ const HomePage = () => {
                       {currentGuardQuery.data.currentGuard.volunteers.map((volunteer) => volunteer.name).join(", ")}
                     </p>
                   </React.Fragment>
-                )}
-              </Card.Body>
-            </Card>
-          </div>
+                </Card.Body>
+              </Card>
+            </div>
+          )}
 
-          <div className="col-6">
-            <Card className="card-stats">
-              <Card.Header>
-                <Card.Title as="h4">Siguiente Guardia:</Card.Title>
-              </Card.Header>
-              <Card.Body>
-                {nextGuardQuery.data.nextGuard && (
+          {nextGuardQuery.data.nextGuard && (
+            <div className="col-6">
+              <Card className="card-stats">
+                <Card.Header>
+                  <Card.Title as="h4">Siguiente Guardia:</Card.Title>
+                </Card.Header>
+                <Card.Body>
                   <React.Fragment>
                     <p>
                       <span style={{ fontWeight: "bold" }}>Inicio:</span>{" "}
@@ -149,10 +149,10 @@ const HomePage = () => {
                       {nextGuardQuery.data.nextGuard.volunteers.map((volunteer) => volunteer.name).join(", ")}
                     </p>
                   </React.Fragment>
-                )}
-              </Card.Body>
-            </Card>
-          </div>
+                </Card.Body>
+              </Card>
+            </div>
+          )}
         </Row>
 
         <div
