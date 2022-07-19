@@ -2,9 +2,12 @@ import React from "react";
 
 import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "informed";
 
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
-import { CreateServiceInput, UpdateServiceInput } from "types";
-import { RESOURCES_OPTIONS } from "../../../utils/constants";
+import { Button, Col, Form, Row } from "react-bootstrap";
+import { CreateServiceInput, GetSubTypesQuery, UpdateServiceInput } from "types";
+import { CODES, RESOURCES_OPTIONS_1040, RESOURCES_OPTIONS_1041 } from "../../../utils/constants";
+import { useQuery } from "react-apollo";
+import { GET_SUB_TYPES } from "../../../queries/subType";
+import Spinner from "../../spinner";
 
 type FireReportFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
@@ -14,6 +17,16 @@ type FireReportFieldsProps = {
 };
 
 const ResourcesField = ({ formApi, formState, arrayRemove, isCreate }: FireReportFieldsProps) => {
+  const getSubTypesQuery = useQuery<GetSubTypesQuery>(GET_SUB_TYPES);
+
+  if (getSubTypesQuery.loading) return <Spinner />;
+
+  const subtypeCode = getSubTypesQuery.data.subTypes.find(
+    (subType) => subType.id === formState.values.sub_type?._id
+  )?.code;
+
+  const RESOURCES_OPTIONS =
+    subtypeCode === CODES.FIRE ? RESOURCES_OPTIONS_1040 : subtypeCode === CODES.ACCIDENT ? RESOURCES_OPTIONS_1041 : [];
   return (
     <div>
       <Row>

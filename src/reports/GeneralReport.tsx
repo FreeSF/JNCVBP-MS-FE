@@ -9,7 +9,9 @@ import {
   INVOLVED_ELEMENTS_OPTIONS,
   MAGNITUDE_1041_OPTIONS,
   QUANTITIES_1044_1045_OPTIONS,
-  RESOURCES_OPTIONS,
+  RESCUE_TYPE_OPTIONS,
+  RESOURCES_OPTIONS_1040,
+  RESOURCES_OPTIONS_1041,
 } from "../utils/constants";
 import { useQuery } from "react-apollo";
 import { GET_REPORT } from "../queries/Reports";
@@ -207,11 +209,11 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               </View>
               <View style={{ width: "33.33%" }}>
                 <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Recursos Utilizados</Text>
-                {report.resourcesUsedCount1040.map((resource) => (
+                {RESOURCES_OPTIONS_1040.map((resource) => (
                   <View>
                     <Text>
-                      {RESOURCES_OPTIONS.find((option) => option.id === resource.id)?.name || resource.id}{" "}
-                      {resource.count}
+                      {resource.name}{" "}
+                      {report.resourcesUsedCount1040.find((theResource) => theResource.id === resource.id)?.count || 0}
                     </Text>
                   </View>
                 ))}
@@ -319,11 +321,11 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               </View>
               <View style={{ width: "33.33%" }}>
                 <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Recursos Utilizados</Text>
-                {report.resourcesUsedCount1041.map((resource) => (
+                {RESOURCES_OPTIONS_1041.map((resource) => (
                   <View>
                     <Text>
-                      {RESOURCES_OPTIONS.find((option) => option.id === resource.id)?.name || resource.id}{" "}
-                      {resource.count}
+                      {resource.name}{" "}
+                      {report.resourcesUsedCount1041.find((theResource) => theResource.id === resource.id)?.count || 0}
                     </Text>
                   </View>
                 ))}
@@ -375,10 +377,11 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               </View>
               <View style={{ width: "33.33%" }}>
                 <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Tipo de Rescate</Text>
-                {report.rescueTypeCount.map((row) => (
+                {RESCUE_TYPE_OPTIONS.map((rescueType) => (
                   <View>
                     <Text>
-                      {row.name} {row.count}
+                      {rescueType.name}{" "}
+                      {report.rescueTypeCount.find((theRescueType) => theRescueType.id === rescueType.id)?.count || 0}
                     </Text>
                   </View>
                 ))}
