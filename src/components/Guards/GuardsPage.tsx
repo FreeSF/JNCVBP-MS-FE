@@ -11,20 +11,27 @@ import {
   RemoveGuardMutationVariables,
   ServicesAllFieldsFragment,
 } from "../../types";
-import { CURRENT_GUARD, GET_GUARDS, NEXT_GUARD, REMOVE_GUARD } from "../../queries/Guards";
+import { CURRENT_GUARD, GET_GUARDS, GET_GUARDS_DISABLED, NEXT_GUARD, REMOVE_GUARD } from "../../queries/Guards";
 import Spinner from "../spinner";
 import { get_guard_columns } from "utils/columns";
 import StandardTable from "../utils/standardTable";
 
 const GuardsPage = (props) => {
   const getGuardsQuery = useQuery<GetGuardsQuery>(GET_GUARDS);
-  const [removeGuard, removedService] = useMutation<RemoveGuardMutation, RemoveGuardMutationVariables>(REMOVE_GUARD);
+  const [removeGuard, removedService] = useMutation<RemoveGuardMutation, RemoveGuardMutationVariables>(REMOVE_GUARD, {
+    refetchQueries: [
+      { query: GET_GUARDS },
+      { query: GET_GUARDS_DISABLED },
+      { query: CURRENT_GUARD },
+      { query: NEXT_GUARD },
+    ],
+  });
   const history = useHistory();
 
   if (getGuardsQuery.loading) return <Spinner />;
 
   const columns: ColumnDescription[] = get_guard_columns({
-    dataField: "actions",
+    dataField: undefined,
     text: "Acciones",
     formatter: (cell, row: ServicesAllFieldsFragment) => (
       <div>
@@ -37,7 +44,6 @@ const GuardsPage = (props) => {
           onClick={() =>
             removeGuard({
               variables: { id: row.id },
-              refetchQueries: [{ query: GET_GUARDS }, { query: CURRENT_GUARD }, { query: NEXT_GUARD }],
             })
           }
         >
@@ -51,7 +57,7 @@ const GuardsPage = (props) => {
     <Container fluid>
       <Row>
         <Col md="12">
-          <Card className="strpied-tabled-with-hover">
+          <Card>
             <Card.Header>
               <Card.Title as="h4">
                 Lista de Guardias
@@ -60,7 +66,7 @@ const GuardsPage = (props) => {
                   Agregar
                 </Button>
               </Card.Title>
-              <p className="cardu-category">({getGuardsQuery.data?.guards?.length || 0}) Rangos en el sistema </p>
+              <p className="cardu-category">({getGuardsQuery.data?.guards?.length || 0}) Guardias en el sistema </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
               {getGuardsQuery.loading ? (

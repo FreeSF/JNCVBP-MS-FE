@@ -11,7 +11,7 @@ import {
   GetVolunteersQuery,
   VolunteerAllFieldsFragment,
 } from "../../types";
-import { DELETE_VOLUNTEER, GET_VOLUNTEERS } from "../../queries/volunteers";
+import { DELETE_VOLUNTEER, GET_VOLUNTEERS, GET_VOLUNTEERS_DISABLED } from "../../queries/volunteers";
 import { get_blood_type, get_formatted_date, get_volunteer_status } from "utils/constants";
 import Spinner from "../spinner";
 import { get_volunteer_columns } from "utils/columns";
@@ -21,7 +21,7 @@ const VolunteersPage = (props: RouteComponentProps) => {
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
   const [deleteClient, deletedClient] = useMutation<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>(
     DELETE_VOLUNTEER,
-    { refetchQueries: [{ query: GET_VOLUNTEERS }] }
+    { refetchQueries: [{ query: GET_VOLUNTEERS }, { query: GET_VOLUNTEERS_DISABLED }] }
   );
   const handleCreate = () => props.history.push("/volunteers/create");
   const handleEdit = (id: string) => props.history.push("/volunteers/" + id + "/edit");
@@ -31,7 +31,7 @@ const VolunteersPage = (props: RouteComponentProps) => {
     headerStyle: () => {
       return { width: "20%" };
     },
-    dataField: "actions",
+    dataField: undefined,
     text: "Acciones",
     formatter: (cell, row: VolunteerAllFieldsFragment) => (
       <div>
@@ -50,7 +50,7 @@ const VolunteersPage = (props: RouteComponentProps) => {
     <Container fluid>
       <Row>
         <Col md="12">
-          <Card className="strpied-tabled-with-hover">
+          <Card>
             <Card.Header>
               <Card.Title as="h4">
                 Lista de Voluntarios

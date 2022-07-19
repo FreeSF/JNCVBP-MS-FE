@@ -15,17 +15,19 @@ import {
 } from "../../types";
 import StandardTable from "../utils/standardTable";
 import Spinner from "../spinner";
-import { GET_SERVICES, REMOVE_SERVICE } from "../../queries/services";
+import { GET_SERVICES, GET_SERVICES_DISABLED, REMOVE_SERVICE } from "../../queries/services";
 import SingleServiceReport from "../../reports/SingleServiceReport";
 import moment from "moment";
 import { DEFAULT_DATE_FORMAT, DEFAULT_DATETIME_FORMAT } from "../../utils/constants";
+import { get_service_columns } from "../../utils/columns";
 
 const ServicesPage = (props: RouteComponentProps) => {
   const getServicesQuery = useQuery<GetServicesQuery>(GET_SERVICES);
   const [renderReport, setRenderReport] = useState<string>();
 
   const [removeService, removedService] = useMutation<RemoveServiceMutation, RemoveServiceMutationVariables>(
-    REMOVE_SERVICE
+    REMOVE_SERVICE,
+    { refetchQueries: [{ query: GET_SERVICES }, { query: GET_SERVICES_DISABLED }] }
   );
 
   const handleCreate = () => props.history.push("/services/create");
@@ -34,63 +36,30 @@ const ServicesPage = (props: RouteComponentProps) => {
 
   if (getServicesQuery.loading) return <Spinner />;
 
-  const columns: ColumnDescription[] = [
-    {
-      dataField: "date",
-      text: "Fecha",
-      formatter: (cell, row) => moment(cell).format(DEFAULT_DATETIME_FORMAT),
-      searchable: false,
-    },
-    {
-      dataField: "officer_in_charge.name",
-      text: "Oficial",
-    },
-    {
-      dataField: "locality",
-      text: "Localidad",
-    },
-    {
-      dataField: "sub_type.code",
-      text: "Código",
-    },
-    {
-      dataField: "sub_type.name",
-      text: "Sub Tipo",
-    },
-    {
-      dataField: "volunteers",
-      text: "Voluntarios",
-      formatter: (cell: Volunteer[]) => cell.map((volunteer) => volunteer.name).join(","),
-    },
-    {
-      dataField: undefined,
-      text: "Acciones",
-      formatter: (cell, row: ServicesAllFieldsFragment) => (
-        <div>
-          <Button className="btn-fill btn-sm" href={`/services/${row.id}`} variant="info">
-            Ver
-          </Button>
-          <Button className="btn-fill btn-sm" href={`/services/${row.id}/edit`} variant="success">
-            Editar
-          </Button>
-          <Button
-            className="btn-sm"
-            variant="danger"
-            onClick={() => removeService({ variables: { id: row.id }, refetchQueries: [{ query: GET_SERVICES }] })}
-          >
-            Eliminar
-          </Button>
-        </div>
-      ),
-    },
-  ];
+  const columns: ColumnDescription[] = get_service_columns({
+    dataField: undefined,
+    text: "Acciones",
+    formatter: (cell, row: ServicesAllFieldsFragment) => (
+      <div>
+        <Button className="btn-fill btn-sm" href={`/services/${row.id}`} variant="info">
+          Ver
+        </Button>
+        <Button className="btn-fill btn-sm" href={`/services/${row.id}/edit`} variant="success">
+          Editar
+        </Button>
+        <Button className="btn-sm" variant="danger" onClick={() => removeService({ variables: { id: row.id } })}>
+          Eliminar
+        </Button>
+      </div>
+    ),
+  });
   if (getServicesQuery.loading) return <Spinner />;
 
   return (
     <Container fluid>
       <Row>
         <Col md="12">
-          <Card className="strpied-tabled-with-hover">
+          <Card>
             <Card.Header>
               <Card.Title as="h4">
                 Lista de Servicios

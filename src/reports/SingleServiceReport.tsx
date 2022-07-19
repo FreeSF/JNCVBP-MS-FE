@@ -76,7 +76,7 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
   return (
     //<PDFViewer style={styles.viewer}>
     <Document>
-      <Page size="A4" style={styles.page} debug={false}>
+      <Page size="LEGAL" style={styles.page} debug={false}>
         <View style={{ border: "1px solid blue", width: "100%", fontSize: "12px" }}>
           <Text style={{ textAlign: "center", width: "100%", marginTop: "10px" }}>
             {service.sub_type.code === CODES.FIRE

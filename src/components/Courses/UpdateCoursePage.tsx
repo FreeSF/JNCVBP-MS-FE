@@ -18,7 +18,6 @@ import CourseForm from "./CourseForm";
 
 const UpdateCoursePage = (props) => {
   const [loadCourse, loadResult] = useLazyQuery<FindCourseQuery, FindCourseQueryVariables>(FIND_COURSE, {
-    fetchPolicy: "no-cache",
     onCompleted: (data) => {
       const details = data.course?.details.map((detail) => ({
         volunteer: { _id: detail.volunteer.id },

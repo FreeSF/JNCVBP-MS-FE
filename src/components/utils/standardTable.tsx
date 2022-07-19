@@ -3,6 +3,7 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import styled from "styled-components";
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 interface TheProps {
   columns: ColumnDescription<any, any>[];
@@ -11,13 +12,14 @@ interface TheProps {
 }
 
 const StandardTable: React.FC<TheProps> = (props) => {
+  const theColumns = props.columns.map((theColumn) => ({ ...theColumn, sort: !!theColumn.dataField }));
   return (
     <Wrapper>
-      <ToolkitProvider hover keyField={props.keyField || "id"} data={props.data} columns={props.columns} search>
+      <ToolkitProvider hover keyField={props.keyField || "id"} data={props.data} columns={theColumns} search>
         {({ searchProps, baseProps }) => (
           <React.Fragment>
             <CustomSearch {...searchProps} />
-            <BootstrapTable {...baseProps} {...searchProps} pagination={paginationFactory()} />
+            <BootstrapTable {...baseProps} {...searchProps} pagination={paginationFactory()} bootstrap4={true} />
           </React.Fragment>
         )}
       </ToolkitProvider>

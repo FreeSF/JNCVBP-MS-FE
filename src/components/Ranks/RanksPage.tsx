@@ -23,7 +23,7 @@ const RanksPage = (props: RouteComponentProps) => {
     headerStyle: () => {
       return { width: "15%" };
     },
-    dataField: "",
+    dataField: undefined,
     text: "Acciones",
     formatter: (cell, row: RankAllFieldsFragment) => (
       <div>
@@ -45,7 +45,7 @@ const RanksPage = (props: RouteComponentProps) => {
     <Container fluid>
       <Row>
         <Col md="12">
-          <Card className="strpied-tabled-with-hover">
+          <Card>
             <Card.Header>
               <Card.Title as="h4">
                 Lista de Rangos
