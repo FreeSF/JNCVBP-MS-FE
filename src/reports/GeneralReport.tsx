@@ -93,7 +93,9 @@ const GeneralReport: React.FC<TheProps> = (props) => {
             CBV de Capitán Miranda
           </Text>
           <View style={{ flexDirection: "row", marginBottom: "10px" }}>
-            <Text style={{ width: "30%", fontWeight: "bold" }}>Fecha de Envío: / / </Text>
+            <Text style={{ width: "30%", fontWeight: "bold" }}>
+              Fecha de Envío:{"     "}/{"     "}/{"     "}
+            </Text>
             <Text style={{ width: "25%" }}>Hora:_______</Text>
             <Text style={{ width: "25%" }}>Mes:_______</Text>
             <Text style={{ width: "20%" }}>Año:_______</Text>
@@ -128,7 +130,9 @@ const GeneralReport: React.FC<TheProps> = (props) => {
             <Text>Fax habilitado (para posible reenvío): </Text>
             <Text style={{ borderBottom: "1px solid black", flexGrow: 1 }} />
           </View>
-          <Text style={{ marginTop: "6px" }}>Fecha de cierre del informe: / / </Text>
+          <Text style={{ marginTop: "6px" }}>
+            Fecha de cierre del informe:{"     "}/{"     "}/{"     "}
+          </Text>
 
           <View style={{ flexDirection: "row", marginTop: "4px" }}>
             <Text>Cantidad total de Servicio: {report.count1040 + report.count1041 + report.count1043}</Text>
