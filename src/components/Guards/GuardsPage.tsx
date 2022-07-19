@@ -11,7 +11,7 @@ import {
   RemoveGuardMutationVariables,
   ServicesAllFieldsFragment,
 } from "../../types";
-import { GET_GUARDS, REMOVE_GUARD } from "../../queries/Guards";
+import { CURRENT_GUARD, GET_GUARDS, NEXT_GUARD, REMOVE_GUARD } from "../../queries/Guards";
 import Spinner from "../spinner";
 import { get_guard_columns } from "utils/columns";
 import StandardTable from "../utils/standardTable";
@@ -34,7 +34,12 @@ const GuardsPage = (props) => {
         <Button
           className="btn-sm"
           variant="danger"
-          onClick={() => removeGuard({ variables: { id: row.id }, refetchQueries: [{ query: GET_GUARDS }] })}
+          onClick={() =>
+            removeGuard({
+              variables: { id: row.id },
+              refetchQueries: [{ query: GET_GUARDS }, { query: CURRENT_GUARD }, { query: NEXT_GUARD }],
+            })
+          }
         >
           Eliminar
         </Button>

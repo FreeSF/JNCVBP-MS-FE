@@ -1,6 +1,7 @@
 // develop site 'https://jncvbp-ms.herokuapp.com/graphql';
 
 import moment from "moment";
+import _ from "lodash";
 
 // For Development
 // export const API_URL = "http://localhost:3000/graphql";
@@ -98,16 +99,25 @@ export const QUANTITIES_1044_1045_OPTIONS = [
   { id: "enfermos", name: "Enfermo/s" },
 ];
 
-export const RESOURCES_OPTIONS = [
+export const RESOURCES_OPTIONS_1040 = [
+  { id: "agua", name: "Agua (L)" },
+  { id: "polvo", name: "Polvo químico (Kg)" },
+  { id: "gas", name: "Gas carbónico (Kg)" },
+  { id: "espuma", name: "Espuma (L)" },
+  { id: "combustible", name: "Combustible (L)" },
+  { id: "bomberos", name: "Bomberos" },
+  { id: "tiempo", name: "Tiempo total (min)" },
+];
+
+export const RESOURCES_OPTIONS_1041 = [
   { id: "combustible", name: "Combustible (L)" },
   { id: "bomberos", name: "Bomberos" },
   { id: "kilometros", name: "Km. recorridos (Km)" },
   { id: "tiempo", name: "Tiempo total (min)" },
-  { id: "agua", name: "Agua (L)" },
-  { id: "polvo", name: "Polvo químico" },
-  { id: "gas", name: "Gas carbónico (Kg)" },
-  { id: "espuma", name: "Espuma (L)" },
+  { id: "moviles", name: "Nómina de móviles" },
 ];
+
+export const RESOURCES_OPTIONS = _.uniqBy([...RESOURCES_OPTIONS_1040, ...RESOURCES_OPTIONS_1041], "id");
 
 export const RESCUE_TYPE_OPTIONS = [
   { id: "vivienda", name: "En Vivienda" },
