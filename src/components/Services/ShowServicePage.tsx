@@ -91,40 +91,39 @@ const ShowServicePage = (props) => {
         <p>{service.description}</p>
         <label>Asistencia de Voluntarios:</label>
         <p>{service.volunteers.map((volunteer) => volunteer.name).join(", ")}</p>
+        {service.sub_type.code === CODES.FIRE}
 
-        {service.sub_type.code === CODES.FIRE ||
-          (service.sub_type.code === CODES.ACCIDENT && (
-            <React.Fragment>
-              <label>Recursos Utilizados:</label>
-              <p>
-                {service.resources_used
-                  .map(
-                    (resource) =>
-                      `${
-                        RESOURCES_OPTIONS.find((option) => option.id === resource.resource)?.name || resource.resource
-                      }: ${resource.quantity}`
-                  )
-                  .join(", ")}
-              </p>
-            </React.Fragment>
-          ))}
+        {(service.sub_type.code === CODES.FIRE || service.sub_type.code === CODES.ACCIDENT) && (
+          <React.Fragment>
+            <label>Recursos Utilizados:</label>
+            <p>
+              {service.resources_used
+                .map(
+                  (resource) =>
+                    `${
+                      RESOURCES_OPTIONS.find((option) => option.id === resource.resource)?.name || resource.resource
+                    }: ${resource.quantity}`
+                )
+                .join(", ")}
+            </p>
+          </React.Fragment>
+        )}
 
-        {service.sub_type.code === CODES.RESCUE ||
-          (service.sub_type.code === CODES.ACCIDENT && (
-            <React.Fragment>
-              <label>Cantidad 10.44:</label>
-              <p>
-                {service.quantities1044
-                  .map(
-                    (element) =>
-                      `${
-                        QUANTITIES_1044_1045_OPTIONS.find((item) => item.id === element.name)?.name || element.name
-                      }: ${element.quantity}`
-                  )
-                  .join(", ")}
-              </p>
-            </React.Fragment>
-          ))}
+        {(service.sub_type.code === CODES.RESCUE || service.sub_type.code === CODES.ACCIDENT) && (
+          <React.Fragment>
+            <label>Cantidad 10.44:</label>
+            <p>
+              {service.quantities1044
+                .map(
+                  (element) =>
+                    `${QUANTITIES_1044_1045_OPTIONS.find((item) => item.id === element.name)?.name || element.name}: ${
+                      element.quantity
+                    }`
+                )
+                .join(", ")}
+            </p>
+          </React.Fragment>
+        )}
 
         {/* Fire */}
         {service.sub_type.code === CODES.FIRE && (

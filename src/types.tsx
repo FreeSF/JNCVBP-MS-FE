@@ -150,8 +150,22 @@ export type CreateVolunteerInput = {
   rank: OnlyIdTypeInput;
 };
 
-export type Detail = {
-  __typename?: "Detail";
+export type Detail1040 = {
+  __typename?: "Detail1040";
+  id?: Maybe<Scalars["String"]>;
+  name: Scalars["String"];
+  count: Scalars["Float"];
+};
+
+export type Detail1041 = {
+  __typename?: "Detail1041";
+  id?: Maybe<Scalars["String"]>;
+  name: Scalars["String"];
+  count: Scalars["Float"];
+};
+
+export type Detail1043 = {
+  __typename?: "Detail1043";
   id?: Maybe<Scalars["String"]>;
   name: Scalars["String"];
   count: Scalars["Float"];
@@ -586,23 +600,23 @@ export type Report = {
   date?: Maybe<Scalars["DateTime"]>;
   startDate?: Maybe<Scalars["DateTime"]>;
   endDate?: Maybe<Scalars["DateTime"]>;
-  subTypeCount1040?: Maybe<Array<Detail>>;
-  subTypeCount1041?: Maybe<Array<Detail>>;
-  subTypeCount1043?: Maybe<Array<Detail>>;
+  subTypeCount1040?: Maybe<Array<Detail1040>>;
+  subTypeCount1041?: Maybe<Array<Detail1041>>;
+  subTypeCount1043?: Maybe<Array<Detail1043>>;
   count1040?: Maybe<Scalars["Float"]>;
   count1041?: Maybe<Scalars["Float"]>;
   count1043?: Maybe<Scalars["Float"]>;
-  damageCount?: Maybe<Array<Detail>>;
-  quantities1044Count1040?: Maybe<Array<Detail>>;
-  quantities1044Count1041?: Maybe<Array<Detail>>;
-  quantities1044Count1043?: Maybe<Array<Detail>>;
-  possibleCausesCount?: Maybe<Array<Detail>>;
-  resourcesUsedCount1040?: Maybe<Array<Detail>>;
-  resourcesUsedCount1041?: Maybe<Array<Detail>>;
-  damage1041Count?: Maybe<Array<Detail>>;
-  involvedElementsCount?: Maybe<Array<Detail>>;
-  magnitude1041Count?: Maybe<Array<Detail>>;
-  rescueTypeCount?: Maybe<Array<Detail>>;
+  damageCount?: Maybe<Array<Detail1040>>;
+  quantities1044Count1040?: Maybe<Array<Detail1040>>;
+  quantities1044Count1041?: Maybe<Array<Detail1041>>;
+  quantities1044Count1043?: Maybe<Array<Detail1043>>;
+  possibleCausesCount?: Maybe<Array<Detail1040>>;
+  resourcesUsedCount1040?: Maybe<Array<Detail1040>>;
+  resourcesUsedCount1041?: Maybe<Array<Detail1041>>;
+  damage1041Count?: Maybe<Array<Detail1041>>;
+  involvedElementsCount?: Maybe<Array<Detail1041>>;
+  magnitude1041Count?: Maybe<Array<Detail1041>>;
+  rescueTypeCount?: Maybe<Array<Detail1043>>;
 };
 
 export type ResourceUsed = {
@@ -976,20 +990,20 @@ export type ReportAllFieldsFragment = { __typename?: "Report" } & Pick<
   Report,
   "date" | "startDate" | "endDate" | "count1040" | "count1041" | "count1043"
 > & {
-    subTypeCount1040?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
-    subTypeCount1041?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
-    subTypeCount1043?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
-    damageCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
-    quantities1044Count1040?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
-    quantities1044Count1041?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
-    quantities1044Count1043?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
-    involvedElementsCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
-    magnitude1041Count?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "count">>>;
-    possibleCausesCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
-    resourcesUsedCount1040?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
-    resourcesUsedCount1041?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
-    rescueTypeCount?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
-    damage1041Count?: Maybe<Array<{ __typename?: "Detail" } & Pick<Detail, "id" | "name" | "count">>>;
+    subTypeCount1040?: Maybe<Array<{ __typename?: "Detail1040" } & Pick<Detail1040, "id" | "name" | "count">>>;
+    subTypeCount1041?: Maybe<Array<{ __typename?: "Detail1041" } & Pick<Detail1041, "id" | "name" | "count">>>;
+    subTypeCount1043?: Maybe<Array<{ __typename?: "Detail1043" } & Pick<Detail1043, "id" | "name" | "count">>>;
+    damageCount?: Maybe<Array<{ __typename?: "Detail1040" } & Pick<Detail1040, "id" | "count">>>;
+    quantities1044Count1040?: Maybe<Array<{ __typename?: "Detail1040" } & Pick<Detail1040, "id" | "count">>>;
+    quantities1044Count1041?: Maybe<Array<{ __typename?: "Detail1041" } & Pick<Detail1041, "id" | "count">>>;
+    quantities1044Count1043?: Maybe<Array<{ __typename?: "Detail1043" } & Pick<Detail1043, "id" | "count">>>;
+    involvedElementsCount?: Maybe<Array<{ __typename?: "Detail1041" } & Pick<Detail1041, "id" | "count">>>;
+    magnitude1041Count?: Maybe<Array<{ __typename?: "Detail1041" } & Pick<Detail1041, "id" | "count">>>;
+    possibleCausesCount?: Maybe<Array<{ __typename?: "Detail1040" } & Pick<Detail1040, "id" | "name" | "count">>>;
+    resourcesUsedCount1040?: Maybe<Array<{ __typename?: "Detail1040" } & Pick<Detail1040, "id" | "name" | "count">>>;
+    resourcesUsedCount1041?: Maybe<Array<{ __typename?: "Detail1041" } & Pick<Detail1041, "id" | "name" | "count">>>;
+    rescueTypeCount?: Maybe<Array<{ __typename?: "Detail1043" } & Pick<Detail1043, "id" | "name" | "count">>>;
+    damage1041Count?: Maybe<Array<{ __typename?: "Detail1041" } & Pick<Detail1041, "id" | "name" | "count">>>;
   };
 
 export type GetReportQueryVariables = Exact<{
