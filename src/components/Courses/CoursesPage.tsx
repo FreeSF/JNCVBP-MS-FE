@@ -12,7 +12,7 @@ import {
   RemoveCourseMutation,
   RemoveCourseMutationVariables,
 } from "../../types";
-import { GET_COURSES, REMOVE_COURSE } from "../../queries/Courses";
+import { GET_COURSES, GET_COURSES_DISABLED, REMOVE_COURSE } from "../../queries/Courses";
 
 import Spinner from "../spinner";
 import { get_course_columns } from "utils/columns";
@@ -27,7 +27,7 @@ const CoursesPage = (props) => {
   if (getCoursesQuery.loading) return <Spinner />;
 
   const columns: ColumnDescription[] = get_course_columns({
-    dataField: "actions",
+    dataField: undefined,
     text: "Acciones",
     formatter: (cell, row: CoursesAllFieldsFragment) => (
       <div>
@@ -37,7 +37,12 @@ const CoursesPage = (props) => {
         <Button
           className="btn-sm"
           variant="danger"
-          onClick={() => removeCourse({ variables: { id: row.id }, refetchQueries: [{ query: GET_COURSES }] })}
+          onClick={() =>
+            removeCourse({
+              variables: { id: row.id },
+              refetchQueries: [{ query: GET_COURSES }, { query: GET_COURSES_DISABLED }],
+            })
+          }
         >
           Eliminar
         </Button>
@@ -49,7 +54,7 @@ const CoursesPage = (props) => {
     <Container fluid>
       <Row>
         <Col md="12">
-          <Card className="strpied-tabled-with-hover">
+          <Card>
             <Card.Header>
               <Card.Title as="h4">
                 Lista de Cursos

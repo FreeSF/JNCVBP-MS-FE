@@ -18,7 +18,6 @@ import { useParams } from "react-router-dom";
 
 const CreateGuardPage = (props) => {
   const [loadGuard, loadResult] = useLazyQuery<FindGuardQuery, FindGuardQueryVariables>(FIND_GUARD, {
-    fetchPolicy: "no-cache",
     onCompleted: (data) => {
       const volunteers = data.guard?.volunteers.map((volunteer) => ({ _id: volunteer.id }));
       setVolunteers(volunteers);

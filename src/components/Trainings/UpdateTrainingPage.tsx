@@ -17,7 +17,6 @@ import Spinner from "../spinner";
 
 const CreateTrainingPage = (props) => {
   const [loadTraining, loadResult] = useLazyQuery<FindTrainingQuery, FindTrainingQueryVariables>(FIND_TRAINING, {
-    fetchPolicy: "no-cache",
     onCompleted: (data) => {
       const volunteers = data.training?.volunteers.map((volunteer) => ({ _id: volunteer.id }));
       setVolunteers(volunteers);

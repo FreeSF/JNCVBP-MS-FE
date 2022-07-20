@@ -7,7 +7,7 @@ import {
   ServicesAllFieldsFragment,
   VolunteerAllFieldsFragment,
 } from "../../types";
-import { GET_EVENTS, REMOVE_EVENT } from "../../queries/events";
+import { GET_EVENTS, GET_EVENTS_DISABLED, REMOVE_EVENT } from "../../queries/events";
 import Spinner from "../spinner";
 import { ColumnDescription } from "react-bootstrap-table-next";
 import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
@@ -19,7 +19,9 @@ import { get_event_columns } from "utils/columns";
 const EventsPage = (props) => {
   const history = useHistory();
   const getEventsQuery = useQuery<GetEventsQuery>(GET_EVENTS);
-  const [removeEvent, removedEvent] = useMutation<RemoveEventMutation, RemoveEventMutationVariables>(REMOVE_EVENT);
+  const [removeEvent, removedEvent] = useMutation<RemoveEventMutation, RemoveEventMutationVariables>(REMOVE_EVENT, {
+    refetchQueries: [{ query: GET_EVENTS }, { query: GET_EVENTS_DISABLED }],
+  });
 
   if (getEventsQuery.loading) return <Spinner />;
 
@@ -31,11 +33,7 @@ const EventsPage = (props) => {
         <Button className="btn-fill btn-sm" onClick={() => history.push(`/events/${row.id}/edit`)} variant="success">
           Editar
         </Button>
-        <Button
-          className="btn-sm"
-          variant="danger"
-          onClick={() => removeEvent({ variables: { id: row.id }, refetchQueries: [{ query: GET_EVENTS }] })}
-        >
+        <Button className="btn-sm" variant="danger" onClick={() => removeEvent({ variables: { id: row.id } })}>
           Eliminar
         </Button>
       </div>
@@ -46,11 +44,11 @@ const EventsPage = (props) => {
     <Container fluid>
       <Row>
         <Col md="12">
-          <Card className="strpied-tabled-with-hover">
+          <Card>
             <Card.Header>
               <Card.Title as="h4">Libro de Novedades</Card.Title>
               <p className="cardu-category">
-                ({getEventsQuery.data?.events.length}) Voluntarios registrados en el sistema{" "}
+                ({getEventsQuery.data?.events.length}) Eventos registrados en el sistema{" "}
               </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">

@@ -20,32 +20,40 @@ import {
   GetUsersDisabledQuery,
   GetVolunteersDisabledQuery,
   RestoreCourseMutation,
+  RestoreEventMutation,
+  RestoreGuardMutation,
+  RestoreRankMutation,
+  RestoreServiceMutation,
+  RestoreTrainingMutation,
+  RestoreUserMutation,
+  RestoreVolunteerMutation,
 } from "../../types";
 import { GET_COURSES, GET_COURSES_DISABLED, RESTORE_COURSE } from "../../queries/Courses";
-import { GET_VOLUNTEERS_DISABLED } from "../../queries/volunteers";
+import { GET_VOLUNTEERS, GET_VOLUNTEERS_DISABLED, RESTORE_VOLUNTEER } from "../../queries/volunteers";
 import { GET_DUTIES_DISABLED } from "../../queries/duties";
-import { GET_EVENTS_DISABLED } from "../../queries/events";
+import { GET_EVENTS, GET_EVENTS_DISABLED, RESTORE_EVENT } from "../../queries/events";
 // import { GET_FIRE_CAUSES_DISABLED } from "../../queries/fireCause";
 // import { GET_FIRE_CLASSES_DISABLED } from "../../queries/fireClass";
 // import { GET_SUB_TYPES_DISABLED } from "../../queries/subType";
-import { GET_GUARDS_DISABLED } from "../../queries/Guards";
-import { GET_RANKS_DISABLED } from "../../queries/ranks";
-import { GET_SERVICES, GET_SERVICES_DISABLED } from "../../queries/services";
-import { GET_TRAININGS_DISABLED } from "../../queries/Trainings";
+import { GET_GUARDS, GET_GUARDS_DISABLED, RESTORE_GUARD } from "../../queries/Guards";
+import { GET_RANKS, GET_RANKS_DISABLED, RESTORE_RANK } from "../../queries/ranks";
+import { GET_SERVICES, GET_SERVICES_DISABLED, RESTORE_SERVICE } from "../../queries/services";
+import { GET_TRAININGS, GET_TRAININGS_DISABLED, RESTORE_TRAINING } from "../../queries/Trainings";
 import {
   get_course_columns,
   get_duty_columns,
   get_event_columns,
   get_guard_columns,
   get_rank_columns,
+  get_service_columns,
   get_training_columns,
   get_users_columns,
   get_volunteer_columns,
 } from "utils/columns";
-import { GET_USERS_DISABLED } from "../../queries/Users";
+import { GET_USERS, GET_USERS_DISABLED, RESTORE_USER } from "../../queries/Users";
+import StandardTable from "../utils/standardTable";
 
 const COURSE = "Cursos";
-const DUTY = "Tipo de Servicios";
 // const FIRE_CAUSE = "Causa de fuego";
 // const FIRE_CLASS = "Clase de fuego";
 // const SUB_TYPE = "Sub tipo";
@@ -60,14 +68,13 @@ const VOLUNTEER = "Voluntarios";
 
 const OPTIONS = [
   { value: COURSE, label: COURSE },
-  { value: DUTY, label: DUTY },
   // { value: FIRE_CAUSE, label: FIRE_CAUSE },
   // { value: FIRE_CLASS, label: FIRE_CLASS },
   // { value: SUB_TYPE, label: SUB_TYPE },
   { value: EVENT, label: EVENT },
   { value: GUARD, label: GUARD },
   { value: USERS, label: USERS },
-  { value: RANK, label: RANK },
+  //{ value: RANK, label: RANK },
   { value: SERVICE, label: SERVICE },
   { value: TRAINING, label: TRAINING },
   // { value: USER, label: USER},
@@ -76,40 +83,46 @@ const OPTIONS = [
 
 const RecycleBinPage = (props) => {
   const [type, setType] = useState({ value: COURSE, label: COURSE });
-  const [loadCourses, courses] = useLazyQuery<GetCoursesDisabledQuery>(GET_COURSES_DISABLED, {
-    fetchPolicy: "no-cache",
-  });
+  const [loadCourses, courses] = useLazyQuery<GetCoursesDisabledQuery>(GET_COURSES_DISABLED);
   const [restoreCourse, restoredCourse] = useMutation<RestoreCourseMutation>(RESTORE_COURSE, {
-    fetchPolicy: "no-cache",
+    refetchQueries: [{ query: GET_COURSES_DISABLED }, { query: GET_COURSES }],
   });
-  const [loadDuties, duties] = useLazyQuery<GetDutiesDisabledQuery>(GET_DUTIES_DISABLED, { fetchPolicy: "no-cache" });
-  const [loadEvents, events] = useLazyQuery<GetEventsDisabledQuery>(GET_EVENTS_DISABLED, { fetchPolicy: "no-cache" });
+  const [restoreEvent, restoredEvent] = useMutation<RestoreEventMutation>(RESTORE_EVENT, {
+    refetchQueries: [{ query: GET_EVENTS_DISABLED }, { query: GET_EVENTS }],
+  });
+  const [restoreGuard, restoredGuard] = useMutation<RestoreGuardMutation>(RESTORE_GUARD, {
+    refetchQueries: [{ query: GET_GUARDS_DISABLED }, { query: GET_GUARDS }],
+  });
+  const [restoreUser, restoredUser] = useMutation<RestoreUserMutation>(RESTORE_USER, {
+    refetchQueries: [{ query: GET_USERS_DISABLED }, { query: GET_USERS }],
+  });
+  const [restoreRank, restoredRank] = useMutation<RestoreRankMutation>(RESTORE_RANK, {
+    refetchQueries: [{ query: GET_RANKS_DISABLED }, { query: GET_RANKS }],
+  });
+  const [restoreService, restoredService] = useMutation<RestoreServiceMutation>(RESTORE_SERVICE, {
+    refetchQueries: [{ query: GET_SERVICES_DISABLED }, { query: GET_SERVICES }],
+  });
+  const [restoreTraining, restoredTraining] = useMutation<RestoreTrainingMutation>(RESTORE_TRAINING, {
+    refetchQueries: [{ query: GET_TRAININGS_DISABLED }, { query: GET_TRAININGS }],
+  });
+  const [restoreVolunteer, restoredVolunteer] = useMutation<RestoreVolunteerMutation>(RESTORE_VOLUNTEER, {
+    refetchQueries: [{ query: GET_VOLUNTEERS_DISABLED }, { query: GET_VOLUNTEERS }],
+  });
+  const [loadEvents, events] = useLazyQuery<GetEventsDisabledQuery>(GET_EVENTS_DISABLED);
   // const [loadFireCause, fireCauses] = useLazyQuery<GetFireCausesDisabledQuery>(GET_FIRE_CAUSES_DISABLED, {fetchPolicy: "no-cache"});
   // const [loadFireClass, fireClasses] = useLazyQuery<GetFireClassesDisabledQuery>(GET_FIRE_CLASSES_DISABLED, {fetchPolicy: "no-cache"});
   // const [loadSubType, subTypes] = useLazyQuery<GetSubTypesDisabledQuery>(GET_SUB_TYPES_DISABLED, {fetchPolicy: "no-cache"});
-  const [loadGuards, guards] = useLazyQuery<GetGuardsDisabledQuery>(GET_GUARDS_DISABLED, { fetchPolicy: "no-cache" });
-  const [loadRanks, ranks] = useLazyQuery<GetRanksDisabledQuery>(GET_RANKS_DISABLED, { fetchPolicy: "no-cache" });
-  const [loadServices, services] = useLazyQuery<GetServicesDisabledQuery>(GET_SERVICES_DISABLED, {
-    fetchPolicy: "no-cache",
-  });
-  const [loadTrainings, trainings] = useLazyQuery<GetTrainingsDisabledQuery>(GET_TRAININGS_DISABLED, {
-    fetchPolicy: "no-cache",
-  });
-  const [loadVolunteers, volunteers] = useLazyQuery<GetVolunteersDisabledQuery>(GET_VOLUNTEERS_DISABLED, {
-    fetchPolicy: "no-cache",
-  });
-  const [loadUsers, users] = useLazyQuery<GetUsersDisabledQuery>(GET_USERS_DISABLED, {
-    fetchPolicy: "no-cache",
-  });
+  const [loadGuards, guards] = useLazyQuery<GetGuardsDisabledQuery>(GET_GUARDS_DISABLED);
+  const [loadRanks, ranks] = useLazyQuery<GetRanksDisabledQuery>(GET_RANKS_DISABLED);
+  const [loadServices, services] = useLazyQuery<GetServicesDisabledQuery>(GET_SERVICES_DISABLED);
+  const [loadTrainings, trainings] = useLazyQuery<GetTrainingsDisabledQuery>(GET_TRAININGS_DISABLED);
+  const [loadVolunteers, volunteers] = useLazyQuery<GetVolunteersDisabledQuery>(GET_VOLUNTEERS_DISABLED);
+  const [loadUsers, users] = useLazyQuery<GetUsersDisabledQuery>(GET_USERS_DISABLED);
 
   useEffect(() => {
     switch (type.value) {
       case COURSE: {
         loadCourses();
-        break;
-      }
-      case DUTY: {
-        loadDuties();
         break;
       }
       case EVENT: {
@@ -156,14 +169,42 @@ const RecycleBinPage = (props) => {
   }, [type]);
 
   const restoreColumn = {
-    dataField: "",
+    dataField: undefined,
     text: "Acciones",
     formatter: (cell, row) => (
       <button
         onClick={() => {
           switch (type.value) {
             case COURSE: {
-              restoreCourse({ variables: { id: row.id } }).then(() => loadCourses());
+              restoreCourse({ variables: { id: row.id } });
+              break;
+            }
+            case EVENT: {
+              restoreEvent({ variables: { id: row.id } });
+              break;
+            }
+            case GUARD: {
+              restoreGuard({ variables: { id: row.id } });
+              break;
+            }
+            case USERS: {
+              restoreUser({ variables: { id: row.id } });
+              break;
+            }
+            /*case RANK: {
+              restoreRank({ variables: { id: row.id } });
+              break;
+            }*/
+            case SERVICE: {
+              restoreService({ variables: { id: row.id } });
+              break;
+            }
+            case TRAINING: {
+              restoreTraining({ variables: { id: row.id } });
+              break;
+            }
+            case VOLUNTEER: {
+              restoreVolunteer({ variables: { id: row.id } });
               break;
             }
           }
@@ -187,11 +228,6 @@ const RecycleBinPage = (props) => {
     case COURSE: {
       columns = get_course_columns(restoreColumn);
       data = courses.called && !courses.loading ? courses.data.coursesDisabled : [];
-      break;
-    }
-    case DUTY: {
-      columns = get_duty_columns(restoreColumn);
-      data = duties.called && !duties.loading ? duties.data.dutiesDisabled : [];
       break;
     }
     case EVENT: {
@@ -221,12 +257,13 @@ const RecycleBinPage = (props) => {
       data = users.called && !users.loading ? users.data.usersDisabled : [];
       break;
     }
-    case RANK: {
+    /*case RANK: {
       columns = get_rank_columns(restoreColumn);
       data = ranks.called && !ranks.loading ? ranks.data.ranksDisabled : [];
       break;
-    }
+    }*/
     case SERVICE: {
+      columns = get_service_columns(restoreColumn);
       data = services.called && !services.loading ? services.data.servicesDisabled : [];
       break;
     }
@@ -246,7 +283,7 @@ const RecycleBinPage = (props) => {
     <Container fluid>
       <Row>
         <Col md="12">
-          <Card className="strpied-tabled-with-hover">
+          <Card>
             <Card.Header>
               <Card.Title as="h4">
                 Papelera de Reciclaje
@@ -257,7 +294,7 @@ const RecycleBinPage = (props) => {
               <p className="cardu-category">({data?.length || 0}) encontrados </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              <BootstrapTable keyField="id" data={data} columns={columns} />
+              <StandardTable keyField="id" data={data} columns={columns} />
             </Card.Body>
           </Card>
         </Col>

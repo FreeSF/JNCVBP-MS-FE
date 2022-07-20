@@ -4,10 +4,12 @@ import {
   GuardAllFieldsFragment,
   TrainingAllFieldsFragment,
   UserAllFieldsFragment,
+  Volunteer,
   VolunteerAllFieldsFragment,
 } from "types";
 import {
   DEFAULT_DATE_FORMAT,
+  DEFAULT_DATETIME_FORMAT,
   get_blood_type,
   get_formatted_date,
   get_formatted_datetime,
@@ -86,6 +88,41 @@ export const get_users_columns = (options) => {
       dataField: "admin",
       text: "Rol",
       formatter: (cell, row: UserAllFieldsFragment) => (row?.isAdmin ? "Administrador" : "Usuario"),
+    },
+    options,
+  ];
+
+  return columns;
+};
+
+export const get_service_columns = (options) => {
+  const columns: ColumnDescription[] = [
+    {
+      dataField: "date",
+      text: "Fecha",
+      formatter: (cell, row) => moment(cell).format(DEFAULT_DATETIME_FORMAT),
+      searchable: false,
+    },
+    {
+      dataField: "officer_in_charge.name",
+      text: "Oficial",
+    },
+    {
+      dataField: "locality",
+      text: "Localidad",
+    },
+    {
+      dataField: "sub_type.code",
+      text: "Código",
+    },
+    {
+      dataField: "sub_type.name",
+      text: "Sub Tipo",
+    },
+    {
+      dataField: "volunteers",
+      text: "Voluntarios",
+      formatter: (cell: Volunteer[]) => cell.map((volunteer) => volunteer.name).join(","),
     },
     options,
   ];

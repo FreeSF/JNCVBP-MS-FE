@@ -56,7 +56,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
 
   return (
     <Document>
-      <Page size="A4" style={styles.page} debug={false}>
+      <Page size="LEGAL" style={styles.page} debug={false}>
         <View style={{ width: "100%", fontSize: "12px" }}>
           <Text
             style={{

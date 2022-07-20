@@ -4,7 +4,7 @@ import { ColumnDescription } from "react-bootstrap-table-next";
 import { useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "react-apollo";
 import { GetUsersQuery, RemoveUserMutation, RemoveUserMutationVariables, ServicesAllFieldsFragment } from "../../types";
-import { GET_USERS, REMOVE_USER } from "../../queries/Users";
+import { GET_USERS, GET_USERS_DISABLED, REMOVE_USER } from "../../queries/Users";
 import Spinner from "../spinner";
 import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
 import { get_users_columns } from "../../utils/columns";
@@ -13,7 +13,9 @@ const UsersPage = (props) => {
   const history = useHistory();
   const getUsersQuery = useQuery<GetUsersQuery>(GET_USERS);
 
-  const [removeUser, removedUSer] = useMutation<RemoveUserMutation, RemoveUserMutationVariables>(REMOVE_USER);
+  const [removeUser, removedUSer] = useMutation<RemoveUserMutation, RemoveUserMutationVariables>(REMOVE_USER, {
+    refetchQueries: [{ query: GET_USERS }, { query: GET_USERS_DISABLED }],
+  });
 
   if (getUsersQuery.loading) return <Spinner />;
 
@@ -25,11 +27,7 @@ const UsersPage = (props) => {
         <Button className="btn-fill btn-sm" href={`/users/${row.id}/edit`} variant="success">
           Editar
         </Button>
-        <Button
-          className="btn-sm"
-          variant="danger"
-          onClick={() => removeUser({ variables: { id: row.id }, refetchQueries: [{ query: GET_USERS }] })}
-        >
+        <Button className="btn-sm" variant="danger" onClick={() => removeUser({ variables: { id: row.id } })}>
           Eliminar
         </Button>
       </div>
@@ -40,7 +38,7 @@ const UsersPage = (props) => {
     <Container fluid>
       <Row>
         <Col md="12">
-          <Card className="strpied-tabled-with-hover">
+          <Card>
             <Card.Header>
               <Card.Title as="h4">
                 Lista de Usuarios
@@ -48,9 +46,7 @@ const UsersPage = (props) => {
                   Agregar
                 </Button>
               </Card.Title>
-              <p className="cardu-category">
-                ({getUsersQuery.data?.users.length}) Voluntarios registrados en el sistema{" "}
-              </p>
+              <p className="cardu-category">({getUsersQuery.data?.users.length}) Usuarios registrados en el sistema </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
               {getUsersQuery.loading ? (

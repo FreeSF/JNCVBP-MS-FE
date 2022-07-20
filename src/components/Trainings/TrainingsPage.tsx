@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "react-apollo";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
 
-import { GET_TRAININGS, REMOVE_TRAINING } from "../../queries/Trainings";
+import { GET_TRAININGS, GET_TRAININGS_DISABLED, REMOVE_TRAINING } from "../../queries/Trainings";
 import {
   GetTrainingsQuery,
   RemoveTrainingMutation,
@@ -21,25 +21,22 @@ import StandardTable from "../utils/standardTable";
 const TrainingsPage = (props) => {
   const getTrainingsQuery = useQuery<GetTrainingsQuery>(GET_TRAININGS);
   const [removeTraining, removedTraining] = useMutation<RemoveTrainingMutation, RemoveTrainingMutationVariables>(
-    REMOVE_TRAINING
+    REMOVE_TRAINING,
+    { refetchQueries: [{ query: GET_TRAININGS }, { query: GET_TRAININGS_DISABLED }] }
   );
   const history = useHistory();
 
   if (getTrainingsQuery.loading) return <Spinner />;
 
   const columns: ColumnDescription[] = get_training_columns({
-    dataField: "actions",
+    dataField: undefined,
     text: "Acciones",
     formatter: (cell, row: TrainingAllFieldsFragment) => (
       <div>
         <Button className="btn-fill btn-sm" onClick={() => history.push(`/trainings/${row.id}/edit`)} variant="success">
           Editar{" "}
         </Button>
-        <Button
-          className="btn-sm"
-          variant="danger"
-          onClick={() => removeTraining({ variables: { id: row.id }, refetchQueries: [{ query: GET_TRAININGS }] })}
-        >
+        <Button className="btn-sm" variant="danger" onClick={() => removeTraining({ variables: { id: row.id } })}>
           Eliminar
         </Button>
       </div>
@@ -50,7 +47,7 @@ const TrainingsPage = (props) => {
     <Container fluid>
       <Row>
         <Col md="12">
-          <Card className="strpied-tabled-with-hover">
+          <Card>
             <Card.Header>
               <Card.Title as="h4">
                 Lista de Prácticas
