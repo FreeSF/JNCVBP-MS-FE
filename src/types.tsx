@@ -54,7 +54,7 @@ export type CreateDutyInput = {
 
 export type CreateEventInput = {
   description: Scalars["String"];
-  created_by?: Maybe<OnlyIdVolunteerInput>;
+  created_by?: Maybe<OnlyIdUserInput>;
 };
 
 export type CreateFireCauseInput = {
@@ -184,7 +184,8 @@ export type Event = {
   id: Scalars["String"];
   _id: Scalars["String"];
   description: Scalars["String"];
-  created_by?: Maybe<Volunteer>;
+  created_by?: Maybe<User>;
+  createdAt?: Maybe<Scalars["DateTime"]>;
 };
 
 export type FireCause = {
@@ -475,6 +476,10 @@ export type OnlyIdTypeInput = {
   id: Scalars["String"];
 };
 
+export type OnlyIdUserInput = {
+  _id: Scalars["String"];
+};
+
 export type OnlyIdVolunteerInput = {
   _id: Scalars["String"];
 };
@@ -707,7 +712,7 @@ export type UpdateDutyInput = {
 
 export type UpdateEventInput = {
   description?: Maybe<Scalars["String"]>;
-  created_by?: Maybe<OnlyIdVolunteerInput>;
+  created_by?: Maybe<OnlyIdUserInput>;
   id: Scalars["String"];
 };
 
@@ -1176,8 +1181,8 @@ export type RestoreDutyMutation = { __typename?: "Mutation" } & {
   restoreDuty: { __typename?: "Duty" } & Pick<Duty, "id">;
 };
 
-export type EventAllFieldsFragment = { __typename?: "Event" } & Pick<Event, "id" | "description"> & {
-    created_by?: Maybe<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>;
+export type EventAllFieldsFragment = { __typename?: "Event" } & Pick<Event, "id" | "description" | "createdAt"> & {
+    created_by?: Maybe<{ __typename?: "User" } & UserAllFieldsFragment>;
   };
 
 export type GetEventsQueryVariables = Exact<{ [key: string]: never }>;
@@ -1649,6 +1654,14 @@ export const TrainingAllFieldsFragmentDoc = gql`
   }
   ${VolunteerAllFieldsFragmentDoc}
 `;
+export const DutyAllFieldsFragmentDoc = gql`
+  fragment dutyAllFields on Duty {
+    id
+    name
+    isDeletable
+    description
+  }
+`;
 export const UserAllFieldsFragmentDoc = gql`
   fragment userAllFields on User {
     id
@@ -1659,23 +1672,16 @@ export const UserAllFieldsFragmentDoc = gql`
     username
   }
 `;
-export const DutyAllFieldsFragmentDoc = gql`
-  fragment dutyAllFields on Duty {
-    id
-    name
-    isDeletable
-    description
-  }
-`;
 export const EventAllFieldsFragmentDoc = gql`
   fragment eventAllFields on Event {
     id
     description
+    createdAt
     created_by {
-      ...volunteerAllFields
+      ...userAllFields
     }
   }
-  ${VolunteerAllFieldsFragmentDoc}
+  ${UserAllFieldsFragmentDoc}
 `;
 export const SubTypeAllFieldsFragmentDoc = gql`
   fragment subTypeAllFields on SubType {
