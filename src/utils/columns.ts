@@ -38,7 +38,12 @@ export const get_duty_columns = (options) => {
 };
 
 export const get_event_columns = (options) => {
-  const columns: ColumnDescription[] = [{ dataField: "description", text: "Descripción" }, options];
+  const columns: ColumnDescription[] = [
+    { dataField: "createdAt", text: "Fecha", formatter: (cell, row) => moment(cell).format(DEFAULT_DATETIME_FORMAT) },
+    { dataField: "description", text: "Descripción" },
+    { dataField: "created_by", text: "Creado por", formatter: (cell, row) => `${cell?.firstName} ${cell?.lastName}` },
+    options,
+  ];
 
   return columns;
 };
@@ -101,7 +106,6 @@ export const get_service_columns = (options) => {
       dataField: "date",
       text: "Fecha",
       formatter: (cell, row) => moment(cell).format(DEFAULT_DATETIME_FORMAT),
-      searchable: false,
     },
     {
       dataField: "officer_in_charge.name",

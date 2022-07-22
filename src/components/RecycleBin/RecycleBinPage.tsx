@@ -172,7 +172,8 @@ const RecycleBinPage = (props) => {
     dataField: undefined,
     text: "Acciones",
     formatter: (cell, row) => (
-      <button
+      <Button
+        className="btn-fill btn-sm"
         onClick={() => {
           switch (type.value) {
             case COURSE: {
@@ -211,7 +212,7 @@ const RecycleBinPage = (props) => {
         }}
       >
         Restaurar
-      </button>
+      </Button>
     ),
   };
 
@@ -285,8 +286,8 @@ const RecycleBinPage = (props) => {
         <Col md="12">
           <Card>
             <Card.Header>
-              <Card.Title as="h4">
-                Papelera de Reciclaje
+              <Card.Title>
+                <span className="h4">Papelera de Reciclaje</span>
                 <div className="pull-right ml-2" style={{ display: "inline-flex" }}>
                   <Select value={type} onChange={setType} options={OPTIONS} />
                 </div>

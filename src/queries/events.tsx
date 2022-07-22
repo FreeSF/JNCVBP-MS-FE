@@ -1,15 +1,16 @@
 import { gql } from "apollo-boost";
-import { volunteerAllFieldsFragment } from "./volunteers";
+import { USER_ALL_FIELDS_FRAGMENT } from "./Users";
 
 const EVENT_ALL_FIELDS_FRAGMENT = gql`
   fragment eventAllFields on Event {
     id
     description
+    createdAt
     created_by {
-      ...volunteerAllFields
+      ...userAllFields
     }
   }
-  ${volunteerAllFieldsFragment}
+  ${USER_ALL_FIELDS_FRAGMENT}
 `;
 
 export const GET_EVENTS = gql`

@@ -15,7 +15,13 @@ const StandardTable: React.FC<TheProps> = (props) => {
   const theColumns = props.columns.map((theColumn) => ({ ...theColumn, sort: !!theColumn.dataField }));
   return (
     <Wrapper>
-      <ToolkitProvider hover keyField={props.keyField || "id"} data={props.data} columns={theColumns} search>
+      <ToolkitProvider
+        hover
+        keyField={props.keyField || "id"}
+        data={props.data}
+        columns={theColumns}
+        search={{ searchFormatted: true }}
+      >
         {({ searchProps, baseProps }) => (
           <React.Fragment>
             <CustomSearch {...searchProps} />

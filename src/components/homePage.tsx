@@ -54,7 +54,7 @@ const HomePage = () => {
     ...reportQuery.data.report.subTypeCount1040,
     ...reportQuery.data.report.subTypeCount1041,
     ...reportQuery.data.report.subTypeCount1043,
-  ];
+  ].filter((subType) => subType.count);
   const all1044 = [
     ...reportQuery.data.report.quantities1044Count1040,
     ...reportQuery.data.report.quantities1044Count1041,
