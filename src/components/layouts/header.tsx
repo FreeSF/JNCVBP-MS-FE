@@ -59,43 +59,6 @@ const Header = () => {
             <span style={{ marginTop: "auto", marginBottom: "auto" }}>
               Usuario: {currentUserQuery.data?.currentUser?.username}
             </span>
-            <Dropdown as={Nav.Item}>
-              <Dropdown.Toggle
-                // aria-expanded={false}
-                // aria-haspopup={true}
-                as={Nav.Link}
-                data-toggle="dropdown"
-                id="navbarDropdownMenuLink"
-                variant="default"
-                className="m-0"
-              >
-                <span className="no-icon">Opciones</span>
-              </Dropdown.Toggle>
-              <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
-                <Dropdown.Item>
-                  {" "}
-                  <NavLink to={"/duties"} className="dropdown-item">
-                    Tipos de Servicio
-                  </NavLink>
-                </Dropdown.Item>
-                <div className="divider"></div>
-                <Dropdown.Item>
-                  {" "}
-                  <NavLink
-                    to={"#"}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      localStorage.setItem(AUTH_TOKEN_NAME, undefined);
-                      history.push("/login");
-                      currentUserQuery.refetch();
-                    }}
-                    className="dropdown-item"
-                  >
-                    Salir
-                  </NavLink>
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
             <Nav.Item>
               <Nav.Link className="m-0" href="#url" onClick={(e) => e.preventDefault()}>
                 {/* <span className="no-icon">Log out</span> */}
