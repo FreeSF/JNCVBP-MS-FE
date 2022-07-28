@@ -96,8 +96,8 @@ export type CreateServiceInput = {
   crew?: Maybe<Scalars["String"]>;
   officer_in_charge?: Maybe<OnlyIdVolunteerInput>;
   sub_type?: Maybe<OnlyIdSubTypeInput>;
-  fire_type_total_surface?: Maybe<Scalars["Float"]>;
-  fire_type_burned_surface?: Maybe<Scalars["Float"]>;
+  fire_type_total_surface?: Maybe<Scalars["String"]>;
+  fire_type_burned_surface?: Maybe<Scalars["String"]>;
   fire_type_description?: Maybe<Scalars["String"]>;
   affected_owner?: Maybe<Scalars["String"]>;
   affected_owner_description?: Maybe<Scalars["String"]>;
@@ -657,8 +657,8 @@ export type Service = {
   crew?: Maybe<Scalars["String"]>;
   officer_in_charge?: Maybe<Volunteer>;
   sub_type?: Maybe<SubType>;
-  fire_type_total_surface?: Maybe<Scalars["Float"]>;
-  fire_type_burned_surface?: Maybe<Scalars["Float"]>;
+  fire_type_total_surface?: Maybe<Scalars["String"]>;
+  fire_type_burned_surface?: Maybe<Scalars["String"]>;
   fire_type_description?: Maybe<Scalars["String"]>;
   affected_owner?: Maybe<Scalars["String"]>;
   affected_owner_description?: Maybe<Scalars["String"]>;
@@ -759,8 +759,8 @@ export type UpdateServiceInput = {
   crew?: Maybe<Scalars["String"]>;
   officer_in_charge?: Maybe<OnlyIdVolunteerInput>;
   sub_type?: Maybe<OnlyIdSubTypeInput>;
-  fire_type_total_surface?: Maybe<Scalars["Float"]>;
-  fire_type_burned_surface?: Maybe<Scalars["Float"]>;
+  fire_type_total_surface?: Maybe<Scalars["String"]>;
+  fire_type_burned_surface?: Maybe<Scalars["String"]>;
   fire_type_description?: Maybe<Scalars["String"]>;
   affected_owner?: Maybe<Scalars["String"]>;
   affected_owner_description?: Maybe<Scalars["String"]>;

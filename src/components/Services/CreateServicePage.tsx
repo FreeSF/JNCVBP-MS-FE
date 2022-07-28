@@ -38,8 +38,8 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
 
     // Fire
     fire_type_description: "----",
-    fire_type_total_surface: 0,
-    fire_type_burned_surface: 0,
+    fire_type_total_surface: "",
+    fire_type_burned_surface: "",
     affected_owner: "",
     affected_owner_description: "",
     possible_cause: undefined,

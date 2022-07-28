@@ -43,7 +43,17 @@ const EventForm = (props) => {
     >
       {({ formApi, formState }) => (
         <Row>
-          <div style={{ borderRadius: "4px", color: "#565656", width: "500px" }}>
+          <div
+            style={{
+              borderRadius: "4px",
+              color: "#565656",
+              width: "500px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
             <Text
               className="form-control"
               minLength={3}

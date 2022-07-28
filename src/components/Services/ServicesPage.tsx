@@ -40,7 +40,7 @@ const ServicesPage = (props: RouteComponentProps) => {
     dataField: undefined,
     text: "Acciones",
     formatter: (cell, row: ServicesAllFieldsFragment) => (
-      <div>
+      <div style={{ display: "flex", gap: "10px" }}>
         <Button className="btn-fill btn-sm" href={`/services/${row.id}`} variant="info">
           Ver
         </Button>
@@ -67,6 +67,9 @@ const ServicesPage = (props: RouteComponentProps) => {
                   Agregar
                 </Button>
               </Card.Title>
+              <p className="cardu-category">
+                ({getServicesQuery.data?.services?.length || 0}) Servicios en el sistema{" "}
+              </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
               <StandardTable keyField={"id"} data={getServicesQuery.data?.services} columns={columns} />

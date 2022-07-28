@@ -42,13 +42,13 @@ const FireReportView = ({
         <Col md="2">
           <Form.Group>
             <label>Superficie Total:</label>
-            <Text className="form-control" field="fire_type_total_surface" type="number" />
+            <Text className="form-control" field="fire_type_total_surface" type="text" />
           </Form.Group>
         </Col>
         <Col md="2">
           <Form.Group>
             <label>Superficie Quemada:</label>
-            <Text className="form-control" field="fire_type_burned_surface" type="number" />
+            <Text className="form-control" field="fire_type_burned_surface" type="text" />
           </Form.Group>
         </Col>
         <Col md="3">
