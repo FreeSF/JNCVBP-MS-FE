@@ -85,7 +85,7 @@ const servicesRoutes = [
   {
     path: "/services",
     name: "Servicios",
-    icon: "fas fa-ambulance",
+    icon: "fa fa-ambulance",
     component: ServicesPage,
     showOnSidebar: true,
   },
@@ -110,7 +110,7 @@ const volunteerRoutes = [
   {
     path: "/volunteers",
     name: "Voluntarios",
-    icon: "fas fa-user-nurse",
+    icon: "fa fa-handshake-angle",
     component: VolunteersPage,
     showOnSidebar: true,
   },
@@ -159,7 +159,7 @@ const guardRoutes = [
   {
     path: "/guards",
     name: "Guardias",
-    icon: "fas fa-hospital-user",
+    icon: "fa fa-calendar-days",
     component: GuardsPage,
     showOnSidebar: true,
   },
@@ -184,7 +184,7 @@ const eventRoutes = [
   {
     path: "/events",
     name: "Libro de Novedades",
-    icon: "fas fa-clock",
+    icon: "fa fa-rectangle-list",
     component: EventsPage,
     showOnSidebar: true,
   },
@@ -199,7 +199,7 @@ const trainingRoutes = [
   {
     path: "/trainings",
     name: "Prácticas",
-    icon: "fas fa-briefcase-medical",
+    icon: "fa fa-person-through-window",
     component: TrainingsPage,
     showOnSidebar: true,
   },
@@ -219,7 +219,7 @@ const coursesRoutes = [
   {
     path: "/courses",
     name: "Cursos",
-    icon: "fas fa-book-medical",
+    icon: "fa fa-person-chalkboard",
     component: CoursesPage,
     showOnSidebar: true,
   },
@@ -244,7 +244,7 @@ const routes = [
   {
     path: "/",
     name: "Inicio",
-    icon: "nc-icon nc-chart-pie-35",
+    icon: "fa fa-chart-pie",
     component: HomePage,
     showOnSidebar: true,
   },
@@ -268,8 +268,8 @@ const routes = [
   ...usersRoutes,
   {
     path: "/recycleBin",
-    name: "Papelera de Reciclaje",
-    icon: "nc-icon nc-chart-pie-35",
+    name: "Pap. de Reciclaje",
+    icon: "fa fa-trash",
     component: RecycleBinPage,
     showOnSidebar: true,
     onlyAdmin: true,

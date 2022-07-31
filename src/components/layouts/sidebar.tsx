@@ -29,7 +29,7 @@ function Sidebar({ color, image, routes }) {
           backgroundImage: `url(${require("../../assets/img/sidebar-3.jpg")})`,
         }}
       />
-      <div className="sidebar-wrapper">
+      <div className="sidebar-wrapper" style={{ paddingBottom: 0 }}>
         <div className="logo d-flex align-items-center justify-content-start">
           <a href="/" className="simple-text logo-mini mx-1">
             <div className="logo-img">
@@ -66,7 +66,8 @@ function Sidebar({ color, image, routes }) {
               className="nav-link"
               activeClassName="active"
             >
-              Salir
+              <i className="fa fa-arrow-right-from-bracket" />
+              <p>Salir</p>
             </NavLink>
           </li>
         </Nav>
