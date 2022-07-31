@@ -25,6 +25,7 @@ import { FindServiceQuery, ServicesAllFieldsFragment } from "../types";
 import { useQuery } from "react-apollo";
 import Spinner from "../components/spinner";
 import moment from "moment";
+import styled from "styled-components";
 
 /*const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -77,12 +78,12 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
     //<PDFViewer style={styles.viewer}>
     <Document>
       <Page size="LEGAL" style={styles.page} debug={false}>
-        <View style={{ width: "100%", fontSize: "12px" }}>
+        <View style={{ width: "100%", fontSize: "12px", padding: "6px" }}>
           <Text
             style={{
               textAlign: "center",
               width: "100%",
-              marginTop: "10px",
+              //marginTop: "10px",
               textTransform: "uppercase",
               fontSize: "16px",
             }}
@@ -106,10 +107,11 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
           >{`Número: ___ Compañía: ___ Fecha: ${moment(service.date).format(DEFAULT_DATE_FORMAT)}`}</Text>
           <View
             style={{
-              /*border: '1px solid black',*/ marginTop: "6px",
+              borderBottom: "2px solid black",
+              marginTop: "6px",
               paddingTop: "2px",
-              paddingBottom: "2px",
-              marginBottom: "4px",
+              paddingBottom: "10px",
+              marginBottom: "10px",
             }}
           >
             <View
@@ -182,23 +184,27 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
           {/* 10.40 */}
           {service.sub_type.code === CODES.FIRE && (
             <View style={{ /*border: '1px solid black',*/ padding: "2px" }}>
-              <View style={{ marginTop: "12px" }}>
-                <View style={{ flexDirection: "row", fontSize: "14px", textDecoration: "underline" }}>
-                  <Text style={{ width: "50%" }}>Tipo</Text>
+              <View
+                style={
+                  {
+                    /*border: '1px solid black'*/
+                  }
+                }
+              >
+                <View style={{ flexDirection: "row", textDecoration: "underline", marginBottom: "4px" }}>
+                  <Text style={{ width: "50%" }}>1. Tipo</Text>
                   <Text style={{ width: "25%" }}>Superficie del Local</Text>
                   <Text style={{ width: "25%" }}>Superficie Incendiada</Text>
                 </View>
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: "row", fontSize: "10px" }}>
                   <Text style={{ width: "50%" }}>- {service.fire_type_description || service.sub_type.name}</Text>
                   <Text style={{ width: "25%" }}>- {service.fire_type_total_surface}</Text>
                   <Text style={{ width: "25%" }}>- {service.fire_type_burned_surface}</Text>
                 </View>
               </View>
               <View style={{ marginTop: "12px" }}>
-                <Text style={{ width: "25%", fontSize: "14px", textDecoration: "underline" }}>
-                  Propietarios Afectados:
-                </Text>
-                <Text>
+                <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>2. Propietarios Afectados:</Text>
+                <Text style={{ fontSize: "10px" }}>
                   -{" "}
                   {`${
                     AFFECTED_OWNER_OPTIONS.find((owner) => owner.id === service.affected_owner)?.name ||
@@ -208,13 +214,15 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
               </View>
               <View style={{ flexDirection: "row", marginTop: "12px" }}>
                 <View style={{ width: "50%" }}>
-                  <Text style={{ fontSize: "14px", textDecoration: "underline" }}>Causas Posibles:</Text>
+                  <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>3. Causas Posibles:</Text>
                   <Text>- {`${service.possible_cause_other_description || service.possible_cause.name}`}</Text>
                 </View>
                 <View style={{ width: "50%" }}>
-                  <Text style={{ fontSize: "14px", textDecoration: "underline" }}>Agentes Extintores Utilizados:</Text>
+                  <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>
+                    4. Agentes Extintores Utilizados:
+                  </Text>
                   {service.resources_used.map((resource) => (
-                    <Text>
+                    <Text style={{ fontSize: "10px" }}>
                       -{" "}
                       {`${
                         RESOURCES_OPTIONS.find((option) => option.id === resource.resource)?.name || resource.resource
@@ -225,14 +233,14 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
               </View>
               <View style={{ flexDirection: "row", marginTop: "12px" }}>
                 <View style={{ width: "50%" }}>
-                  <Text style={{ fontSize: "14px", textDecoration: "underline" }}>Fuego Clase:</Text>
+                  <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>5. Fuego Clase:</Text>
                   {service.fire_class.map((fireClass) => (
-                    <Text>- {`${fireClass.name}`}</Text>
+                    <Text style={{ fontSize: "10px" }}>- {`${fireClass.name}`}</Text>
                   ))}
                 </View>
                 <View style={{ width: "25%" }}>
-                  <Text style={{ fontSize: "14px", textDecoration: "underline" }}>Proporción:</Text>
-                  <Text>
+                  <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>6. Proporción:</Text>
+                  <Text style={{ fontSize: "10px" }}>
                     -{" "}
                     {`${
                       PROPORTION_OPTIONS.find((proportion) => proportion.id === service.magnitude)?.name ||
@@ -241,35 +249,37 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                   </Text>
                 </View>
                 <View style={{ width: "25%" }}>
-                  <Text style={{ fontSize: "14px", textDecoration: "underline" }}>Destrucción:</Text>
-                  <Text>
+                  <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>7. Destrucción:</Text>
+                  <Text style={{ fontSize: "10px" }}>
                     - {`${DAMAGE_OPTIONS.find((damage) => damage.id === service.damage)?.name || service.damage}`}
                   </Text>
                 </View>
               </View>
               <View style={{ marginTop: "12px" }}>
-                <Text style={{ fontSize: "14px", textDecoration: "underline" }}>Vehículos Utilizados:</Text>
-                <Text> {service.vehicles_used}</Text>
+                <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>8. Vehículos Utilizados:</Text>
+                <Text style={{ fontSize: "10px" }}> {service.vehicles_used}</Text>
               </View>
               <View style={{ marginTop: "12px" }}>
-                <Text style={{ fontSize: "14px", textDecoration: "underline" }}>Otras Unidades de Apoyo:</Text>
-                <Text> {service.other_units}</Text>
+                <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>9. Otras Unidades de Apoyo:</Text>
+                <Text style={{ fontSize: "10px" }}> {service.other_units}</Text>
               </View>
               <View style={{ marginTop: "12px" }}>
-                <Text style={{ fontSize: "14px", textDecoration: "underline" }}>Otras Ocurrencias:</Text>
-                <Text> {service.other_occurrences}</Text>
+                <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>10. Otras Ocurrencias:</Text>
+                <Text style={{ fontSize: "10px" }}> {service.other_occurrences}</Text>
               </View>
               <View style={{ marginTop: "12px" }}>
-                <Text style={{ fontSize: "14px", textDecoration: "underline" }}>Fuerza Policial a cargo:</Text>
-                <Text> {service.police_force_in_charge}</Text>
+                <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>11. Fuerza Policial a cargo:</Text>
+                <Text style={{ fontSize: "10px" }}> {service.police_force_in_charge}</Text>
               </View>
               <View style={{ marginTop: "12px" }}>
-                <Text style={{ fontSize: "14px", textDecoration: "underline" }}>Juzgado de Crimen oficiado por:</Text>
-                <Text> {service.judge_in_charge}</Text>
+                <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>
+                  12. Juzgado de Crimen oficiado por:
+                </Text>
+                <Text style={{ fontSize: "10px" }}> {service.judge_in_charge}</Text>
               </View>
               <View style={{ marginTop: "12px" }}>
-                <Text style={{ fontSize: "14px", textDecoration: "underline" }}>Otros datos de interés:</Text>
-                <Text> {service.description}</Text>
+                <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>13. Otros datos de interés:</Text>
+                <Text style={{ fontSize: "10px" }}> {service.description}</Text>
               </View>
             </View>
           )}
@@ -277,22 +287,24 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
           {/* 10.41 */}
           {service.sub_type.code === CODES.ACCIDENT && (
             <View style={{ /*border: '1px solid black',*/ padding: "2px" }}>
-              <View style={{ marginTop: "12px" }}>
-                <View style={{ flexDirection: "row", textDecoration: "underline", fontSize: "14px" }}>
-                  <Text style={{ width: "34%" }}>Tipo</Text>
-                  <Text style={{ width: "33%" }}>Magnitudes</Text>
-                  <Text style={{ width: "33%" }}>Cantidad de 10.44</Text>
+              <View>
+                <View style={{ flexDirection: "row", textDecoration: "underline", marginBottom: "4px" }}>
+                  <Text style={{ width: "34%" }}>1. Tipo</Text>
+                  <Text style={{ width: "33%" }}>2. Magnitudes</Text>
+                  <Text style={{ width: "33%" }}>3. Cantidad de 10.44</Text>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  <Text style={{ width: "34%" }}>- {service.sub_type.name}</Text>
+                  <Text style={{ width: "34%", fontSize: "10px" }}>- {service.sub_type.name}</Text>
                   <View style={{ flexDirection: "column", width: "33%" }}>
                     {service.damage1041.map((damage) => (
-                      <Text>- {DAMAGE_1041_OPTIONS.find((item) => item.id === damage)?.name || damage}</Text>
+                      <Text style={{ fontSize: "10px" }}>
+                        - {DAMAGE_1041_OPTIONS.find((item) => item.id === damage)?.name || damage}
+                      </Text>
                     ))}
                   </View>
                   <View style={{ flexDirection: "column", width: "33%" }}>
                     {service.quantities1044.map((the1044) => (
-                      <Text>
+                      <Text style={{ fontSize: "10px" }}>
                         - {QUANTITIES_1044_1045_OPTIONS.find((item) => item.id === the1044.name)?.name || the1044.name}:{" "}
                         {the1044.quantity}
                       </Text>
@@ -302,25 +314,29 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
               </View>
 
               <View style={{ marginTop: "12px" }}>
-                <View style={{ flexDirection: "row", textDecoration: "underline", fontSize: "14px" }}>
-                  <Text style={{ width: "34%" }}>Involucrados</Text>
-                  <Text style={{ width: "33%" }}>Magnitudes</Text>
-                  <Text style={{ width: "33%" }}>Recursos Usados</Text>
+                <View style={{ flexDirection: "row", textDecoration: "underline", marginBottom: "4px" }}>
+                  <Text style={{ width: "34%" }}>4. Involucrados</Text>
+                  <Text style={{ width: "33%" }}>5. Magnitudes</Text>
+                  <Text style={{ width: "33%" }}>6. Recursos Usados</Text>
                 </View>
                 <View style={{ flexDirection: "row" }}>
                   <View style={{ flexDirection: "column", width: "34%" }}>
                     {service.involved_elements.map((element) => (
-                      <Text>- {INVOLVED_ELEMENTS_OPTIONS.find((item) => item.id === element)?.name || element}</Text>
+                      <Text style={{ fontSize: "10px" }}>
+                        - {INVOLVED_ELEMENTS_OPTIONS.find((item) => item.id === element)?.name || element}
+                      </Text>
                     ))}
                   </View>
                   <View style={{ flexDirection: "column", width: "33%" }}>
                     {service.magnitude1041.map((magnitude) => (
-                      <Text>- {MAGNITUDE_1041_OPTIONS.find((item) => item.id === magnitude)?.name || magnitude}</Text>
+                      <Text style={{ fontSize: "10px" }}>
+                        - {MAGNITUDE_1041_OPTIONS.find((item) => item.id === magnitude)?.name || magnitude}
+                      </Text>
                     ))}
                   </View>
                   <View style={{ flexDirection: "column", width: "33%" }}>
                     {service.resources_used.map((resource) => (
-                      <Text>
+                      <Text style={{ fontSize: "10px" }}>
                         -{" "}
                         {`${
                           RESOURCES_OPTIONS.find((option) => option.id === resource.resource)?.name || resource.resource
@@ -331,29 +347,29 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                 </View>
               </View>
 
-              <Text style={{ fontSize: "14px", textDecoration: "underline", marginTop: "12px" }}>
-                Mencione el mayor problema presente y el motivo en los servicios según la hoja 10.41
+              <Text style={{ textDecoration: "underline", marginTop: "12px", marginBottom: "4px" }}>
+                7. Mencione el mayor problema presente y el motivo en los servicios según la hoja 10.41
               </Text>
-              <Text> {service.description}</Text>
+              <Text style={{ fontSize: "10px" }}> {service.description}</Text>
             </View>
           )}
 
           {service.sub_type.code === CODES.RESCUE && (
             <View style={{ /*border: '1px solid black',*/ padding: "2px" }}>
-              <View style={{ marginTop: "12px" }}>
-                <View style={{ flexDirection: "row", textDecoration: "underline", fontSize: "14px" }}>
-                  <Text style={{ width: "34%" }}>Tipo</Text>
-                  <Text style={{ width: "33%" }}>Tipo de Rescate</Text>
-                  <Text style={{ width: "33%" }}>Cantidad de 10.44/10.45</Text>
+              <View>
+                <View style={{ flexDirection: "row", textDecoration: "underline", marginBottom: "4px" }}>
+                  <Text style={{ width: "34%" }}>1. Tipo</Text>
+                  <Text style={{ width: "33%" }}>2. Tipo de Rescate</Text>
+                  <Text style={{ width: "33%" }}>3. Cantidad de 10.44/10.45</Text>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  <Text style={{ width: "34%" }}>- {service.sub_type.name}</Text>
-                  <Text style={{ width: "33%" }}>
+                  <Text style={{ width: "34%", fontSize: "10px" }}>- {service.sub_type.name}</Text>
+                  <Text style={{ width: "33%", fontSize: "10px" }}>
                     - {RESCUE_TYPE_OPTIONS.find((item) => item.id === service.rescue_type)?.name || service.rescue_type}
                   </Text>
                   <View style={{ flexDirection: "column", width: "33%" }}>
                     {service.quantities1044.map((the1044) => (
-                      <Text>
+                      <Text style={{ fontSize: "10px" }}>
                         - {QUANTITIES_1044_1045_OPTIONS.find((item) => item.id === the1044.name)?.name || the1044.name}:{" "}
                         {the1044.quantity}
                       </Text>
@@ -362,19 +378,18 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                 </View>
               </View>
 
-              <Text style={{ fontSize: "14px", textDecoration: "underline", marginTop: "12px" }}>
-                Otros datos de interés
+              <Text style={{ fontSize: "14px", textDecoration: "underline", marginTop: "12px", marginBottom: "4px" }}>
+                4. Otros datos de interés
               </Text>
               <Text> {service.description}</Text>
             </View>
           )}
 
           <View style={{ /*border: '1px solid black',*/ padding: "2px", marginTop: "12px" }}>
-            <Text style={{ fontSize: "14px", textDecoration: "underline" }}>Nómina de Voluntarios:</Text>
-
+            <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>Nómina de Voluntarios:</Text>
             <View style={{ flexDirection: "row" }}>
               {service.volunteers.map((volunteer) => (
-                <Text style={{ width: "33.333%" }}>- {volunteer.name}</Text>
+                <Text style={{ width: "33.333%", fontSize: "10px" }}>- {volunteer.name}</Text>
               ))}
             </View>
           </View>
