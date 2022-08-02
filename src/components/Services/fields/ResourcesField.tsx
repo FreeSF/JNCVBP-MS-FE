@@ -4,7 +4,7 @@ import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "in
 
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { CreateServiceInput, GetSubTypesQuery, UpdateServiceInput } from "types";
-import { CODES, RESOURCES_OPTIONS_1040, RESOURCES_OPTIONS_1041 } from "../../../utils/constants";
+import { CODES, OTHER_ID, OTHER_NAME, RESOURCES_OPTIONS_1040, RESOURCES_OPTIONS_1041 } from "../../../utils/constants";
 import { useQuery } from "react-apollo";
 import { GET_SUB_TYPES } from "../../../queries/subType";
 import Spinner from "../../spinner";
@@ -55,7 +55,6 @@ const ResourcesField = ({ formApi, formState, arrayRemove, isCreate }: FireRepor
         return (
           <React.Fragment key={index}>
             <Row>
-              <Col md="2"></Col>
               <Col md="4">
                 <Form.Group>
                   <InformedSelect
@@ -66,10 +65,14 @@ const ResourcesField = ({ formApi, formState, arrayRemove, isCreate }: FireRepor
                     {RESOURCES_OPTIONS.map((option) => (
                       <option value={option.id} key={option.id}>
                         {option.name}
+                        {option.id === OTHER_ID && " (Especificar):"}
                       </option>
                     ))}
                   </InformedSelect>
                 </Form.Group>
+              </Col>
+              <Col md="2" hidden={value.resource !== OTHER_ID}>
+                <Text className="form-control" field={`resources_used[${index}].resource_other`} />
               </Col>
               <Col md="2">
                 <Form.Group>

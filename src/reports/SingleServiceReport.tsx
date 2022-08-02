@@ -16,6 +16,8 @@ import {
   DEFAULT_DATETIME_FORMAT,
   INVOLVED_ELEMENTS_OPTIONS,
   MAGNITUDE_1041_OPTIONS,
+  OTHER_ID,
+  OTHER_NAME,
   PROPORTION_OPTIONS,
   QUANTITIES_1044_1045_OPTIONS,
   RESCUE_TYPE_OPTIONS,
@@ -197,9 +199,16 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                   <Text style={{ width: "25%" }}>Superficie Incendiada</Text>
                 </View>
                 <View style={{ flexDirection: "row", fontSize: "10px" }}>
-                  <Text style={{ width: "50%" }}>- {service.fire_type_description || service.sub_type.name}</Text>
-                  <Text style={{ width: "25%" }}>- {service.fire_type_total_surface}</Text>
-                  <Text style={{ width: "25%" }}>- {service.fire_type_burned_surface}</Text>
+                  <Text style={{ width: "50%" }}>
+                    - {service.sub_type.name}
+                    {service.sub_type.name === OTHER_NAME && `: ${service.fire_type_description}`}
+                  </Text>
+                  <Text style={{ width: "25%" }}>
+                    {service.fire_type_total_surface && `- ${service.fire_type_total_surface}`}
+                  </Text>
+                  <Text style={{ width: "25%" }}>
+                    {service.fire_type_burned_surface && `- ${service.fire_type_burned_surface}`}
+                  </Text>
                 </View>
               </View>
               <View style={{ marginTop: "12px" }}>
@@ -209,13 +218,16 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                   {`${
                     AFFECTED_OWNER_OPTIONS.find((owner) => owner.id === service.affected_owner)?.name ||
                     service.affected_owner
-                  } - ${service.affected_owner_description}`}
+                  }: ${service.affected_owner_description || ""}`}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", marginTop: "12px" }}>
                 <View style={{ width: "50%" }}>
                   <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>3. Causas Posibles:</Text>
-                  <Text>- {`${service.possible_cause_other_description || service.possible_cause.name}`}</Text>
+                  <Text style={{ fontSize: "10px" }}>
+                    {service.possible_cause.name}
+                    {service.possible_cause.name === OTHER_NAME && `: ${service.possible_cause_other_description}`}
+                  </Text>
                 </View>
                 <View style={{ width: "50%" }}>
                   <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>
@@ -226,6 +238,10 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                       -{" "}
                       {`${
                         RESOURCES_OPTIONS.find((option) => option.id === resource.resource)?.name || resource.resource
+                      }${
+                        RESOURCES_OPTIONS.find((option) => option.id === resource.resource)?.id === OTHER_ID
+                          ? ` - ${resource.resource_other}`
+                          : ""
                       }: ${resource.quantity}`}
                     </Text>
                   ))}

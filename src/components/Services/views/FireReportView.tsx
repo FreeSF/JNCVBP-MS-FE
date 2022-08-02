@@ -3,16 +3,26 @@ import React from "react";
 import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "informed";
 
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
-import { CreateServiceInput, UpdateServiceInput } from "types";
+import {
+  CreateServiceInput,
+  FireCause,
+  FireCauseAllFieldsFragment,
+  FireClassAllFieldsFragment,
+  GetSubTypesQuery,
+  UpdateServiceInput,
+} from "types";
 import ResourcesField from "../fields/ResourcesField";
-import { AFFECTED_OWNER_OPTIONS, CODES, DAMAGE_OPTIONS, PROPORTION_OPTIONS } from "utils/constants";
+import { AFFECTED_OWNER_OPTIONS, CODES, DAMAGE_OPTIONS, OTHER_NAME, PROPORTION_OPTIONS } from "utils/constants";
+import { useQuery } from "react-apollo";
+import { GET_SUB_TYPES } from "../../../queries/subType";
+import Spinner from "../../spinner";
 
 type FireReportFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
   formState: FormState<CreateServiceInput | UpdateServiceInput>;
   arrayRemove: any;
-  fireCausesOptions: any;
-  fireClassesOptions: any;
+  fireCausesOptions: Array<FireCauseAllFieldsFragment>;
+  fireClassesOptions: Array<FireClassAllFieldsFragment>;
   isCreate: boolean;
 };
 
@@ -24,6 +34,14 @@ const FireReportView = ({
   fireClassesOptions,
   isCreate,
 }: FireReportFieldsProps) => {
+  const getSubTypesQuery = useQuery<GetSubTypesQuery>(GET_SUB_TYPES);
+
+  if (getSubTypesQuery.loading) return <Spinner />;
+
+  const otherSubType = getSubTypesQuery.data.subTypes.find(
+    (subType) => subType.name === OTHER_NAME && subType.code === CODES.FIRE
+  );
+
   return (
     <div>
       <Row>
@@ -33,7 +51,10 @@ const FireReportView = ({
       </Row>
 
       <Row>
-        <Col md="2">
+        <Col
+          md="2"
+          hidden={formState.values.sub_type && otherSubType ? formState.values.sub_type._id !== otherSubType.id : false}
+        >
           <Form.Group>
             <label>Tipo de fuego (otro):</label>
             <Text className="form-control" field="fire_type_description" type="text" />
@@ -42,13 +63,13 @@ const FireReportView = ({
         <Col md="2">
           <Form.Group>
             <label>Superficie Total:</label>
-            <Text className="form-control" field="fire_type_total_surface" type="text" />
+            <Text className="form-control" field="fire_type_total_surface" type="text" allowEmptyString={true} />
           </Form.Group>
         </Col>
         <Col md="2">
           <Form.Group>
             <label>Superficie Quemada:</label>
-            <Text className="form-control" field="fire_type_burned_surface" type="text" />
+            <Text className="form-control" field="fire_type_burned_surface" type="text" allowEmptyString={true} />
           </Form.Group>
         </Col>
         <Col md="3">
