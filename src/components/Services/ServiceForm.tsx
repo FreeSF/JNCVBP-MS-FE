@@ -24,7 +24,7 @@ import Spinner from "../spinner";
 import { CODES } from "utils/constants";
 
 import DefaultServiceView from "./views/DefaultServiceView";
-import FireReportFields from "./views/FireReportView";
+import FireReportView from "./views/FireReportView";
 import AccidentReportView from "./views/AccidentReportView";
 import RescueReportView from "./views/RescueReportView";
 
@@ -130,7 +130,7 @@ const ServiceForm = (props: theProps) => {
             <hr />
 
             <div style={{ display: selectedCode == CODES.FIRE ? "" : "none" }}>
-              <FireReportFields
+              <FireReportView
                 fireCausesOptions={getFireCausesQuery.data.fireCauses}
                 fireClassesOptions={getFireClassesQuery.data.fireClasses}
                 formState={formState}

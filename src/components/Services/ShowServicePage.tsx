@@ -16,6 +16,8 @@ import {
   DEFAULT_DATE_FORMAT,
   INVOLVED_ELEMENTS_OPTIONS,
   MAGNITUDE_1041_OPTIONS,
+  OTHER_ID,
+  OTHER_NAME,
   QUANTITIES_1044_1045_OPTIONS,
   RESCUE_TYPE_OPTIONS,
   RESOURCES_OPTIONS,
@@ -58,7 +60,10 @@ const ShowServicePage = (props) => {
 
       <div className="card-body">
         <label>Tipo:</label>
-        <p>{`${service.sub_type.code} ${service.sub_type.name}`}</p>
+        <p>
+          {`${service.sub_type.code} ${service.sub_type.name}`}
+          {service.sub_type.name === OTHER_NAME && `: ${service.fire_type_description}`}
+        </p>
         <label>Oficial a cargo:</label>
         <p>{service.officer_in_charge.name}</p>
         <label>Fecha:</label>
@@ -100,8 +105,10 @@ const ShowServicePage = (props) => {
               {service.resources_used
                 .map(
                   (resource) =>
-                    `${
-                      RESOURCES_OPTIONS.find((option) => option.id === resource.resource)?.name || resource.resource
+                    `${RESOURCES_OPTIONS.find((option) => option.id === resource.resource)?.name || resource.resource}${
+                      RESOURCES_OPTIONS.find((option) => option.id === resource.resource)?.id === OTHER_ID
+                        ? ` - ${resource.resource_other}`
+                        : ""
                     }: ${resource.quantity}`
                 )
                 .join(", ")}
@@ -128,16 +135,15 @@ const ShowServicePage = (props) => {
         {/* Fire */}
         {service.sub_type.code === CODES.FIRE && (
           <React.Fragment>
-            <label>Tipo de fuego (otro):</label>
-            <p>{service.fire_type_description}</p>
             <label>Superficie Total:</label>
             <p>{service.fire_type_total_surface}</p>
             <label>Superficie Quemada:</label>
             <p>{service.fire_type_burned_surface}</p>
             <label>Causa Posible:</label>
-            <p>{service.possible_cause.name}</p>
-            <label>Causa Posible (otro):</label>
-            <p>{service.possible_cause_other_description}</p>
+            <p>
+              {service.possible_cause.name}
+              {service.possible_cause.name === OTHER_NAME && `: ${service.possible_cause_other_description}`}
+            </p>
             <label>Proporción:</label>
             <p>{service.magnitude}</p>
             <label>Destrucción:</label>

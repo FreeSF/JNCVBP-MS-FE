@@ -627,11 +627,13 @@ export type Report = {
 export type ResourceUsed = {
   __typename?: "ResourceUsed";
   resource?: Maybe<Scalars["String"]>;
+  resource_other?: Maybe<Scalars["String"]>;
   quantity?: Maybe<Scalars["Float"]>;
 };
 
 export type ResourceUsedInput = {
   resource?: Maybe<Scalars["String"]>;
+  resource_other?: Maybe<Scalars["String"]>;
   quantity?: Maybe<Scalars["Float"]>;
 };
 
@@ -1389,7 +1391,9 @@ export type ServicesAllFieldsFragment = { __typename?: "Service" } & Pick<
     possible_cause?: Maybe<{ __typename?: "FireCause" } & FireCauseAllFieldsFragment>;
     fire_class?: Maybe<Array<{ __typename?: "FireClass" } & FireClassAllFieldsFragment>>;
     quantities1044?: Maybe<Array<{ __typename?: "Quantity1044" } & Pick<Quantity1044, "name" | "quantity">>>;
-    resources_used?: Maybe<Array<{ __typename?: "ResourceUsed" } & Pick<ResourceUsed, "resource" | "quantity">>>;
+    resources_used?: Maybe<
+      Array<{ __typename?: "ResourceUsed" } & Pick<ResourceUsed, "resource" | "resource_other" | "quantity">>
+    >;
   };
 
 export type GetServicesQueryVariables = Exact<{ [key: string]: never }>;
@@ -1757,6 +1761,7 @@ export const ServicesAllFieldsFragmentDoc = gql`
     magnitude1041
     resources_used {
       resource
+      resource_other
       quantity
     }
     rescue_type

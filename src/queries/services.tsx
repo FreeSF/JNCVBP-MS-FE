@@ -60,6 +60,7 @@ const serviceAllFieldsFragment = gql`
     magnitude1041
     resources_used {
       resource
+      resource_other
       quantity
     }
 

@@ -31,6 +31,9 @@ export const BLOOD_TYPES = [
   { id: "0-", description: "0 RH(-)" },
 ];
 
+export const OTHER_NAME = "Otro";
+export const OTHER_ID = "other";
+
 export const CODES = {
   ACCIDENT: "10.41",
   FIRE: "10.40",
@@ -107,6 +110,7 @@ export const RESOURCES_OPTIONS_1040 = [
   { id: "combustible", name: "Combustible (L)" },
   { id: "bomberos", name: "Bomberos" },
   { id: "tiempo", name: "Tiempo total (min)" },
+  { id: OTHER_ID, name: OTHER_NAME },
 ];
 
 export const RESOURCES_OPTIONS_1041 = [
