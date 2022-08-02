@@ -161,34 +161,38 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               <Text style={{ borderBottom: "1px solid black", flexGrow: 1 }} />
             </View>
 
-            <View style={{ flexDirection: "row", marginTop: "4px" }}>
+            <View style={{ flexDirection: "row", marginTop: "4px", fontSize: "10px" }}>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Servicio 10.40</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Servicio 10.40
+                </Text>
                 {report.subTypeCount1040.map((row) => (
                   <View>
                     <Text>
-                      {row.name} {row.count}
+                      - {row.name}: {row.count}
                     </Text>
                   </View>
                 ))}
               </View>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Magnitudes</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>Magnitudes</Text>
                 {DAMAGE_OPTIONS.map((damage) => (
                   <View>
                     <Text>
-                      {damage.name}{" "}
+                      - {damage.name}:{" "}
                       {props.report.damageCount.find((theDamage) => theDamage.id === damage.id)?.count || 0}
                     </Text>
                   </View>
                 ))}
               </View>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Cantidad de 10.44/10.45</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Cantidad de 10.44/10.45
+                </Text>
                 {QUANTITIES_1044_1045_OPTIONS.map((damage) => (
                   <View>
                     <Text>
-                      {damage.name}{" "}
+                      - {damage.name}:{" "}
                       {report.quantities1044Count1040.find((the1044) => the1044.id === damage.id)?.count || 0}
                     </Text>
                   </View>
@@ -196,36 +200,42 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               </View>
             </View>
 
-            <View style={{ flexDirection: "row", marginTop: "4px" }}>
+            <View style={{ flexDirection: "row", marginTop: "4px", fontSize: "10px" }}>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Causas Posibles</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Causas Posibles
+                </Text>
                 {report.possibleCausesCount.map((row) => (
                   <View>
                     <Text>
-                      {row.name} {row.count}
+                      - {row.name}: {row.count}
                     </Text>
                   </View>
                 ))}
               </View>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Recursos Utilizados</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Recursos Utilizados
+                </Text>
                 {RESOURCES_OPTIONS_1040.map((resource) => (
                   <View>
                     <Text>
-                      {resource.name}{" "}
+                      - {resource.name}:{" "}
                       {report.resourcesUsedCount1040.find((theResource) => theResource.id === resource.id)?.count || 0}
                     </Text>
                   </View>
                 ))}
               </View>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Móviles / Km.</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Móviles / Km.
+                </Text>
                 <View>
                   <View style={{ flexDirection: "row" }}>
-                    <Text>Total de Km. </Text>
+                    <Text>- Total de Km. </Text>
                     <Text style={{ borderBottom: "1px solid black", flexGrow: 1 }} />
                   </View>
-                  <Text>Nómina de Móviles utilizadas. </Text>
+                  <Text>- Nómina de Móviles utilizadas. </Text>
                   <View style={{ flexDirection: "row" }}>
                     <Text style={{ borderBottom: "1px solid black", flexGrow: 1 }}> </Text>
                   </View>
@@ -233,7 +243,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               </View>
             </View>
 
-            <View style={{ flexDirection: "row", marginTop: "4px" }}>
+            <View style={{ flexDirection: "row", marginTop: "6px" }}>
               <Text style={{ textDecoration: "underline" }}>
                 Mencione el mayor problema presente y el motivo en los servicios según la hoja 10.40
               </Text>
@@ -262,33 +272,40 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               <Text style={{ borderBottom: "1px solid black", flexGrow: 1 }} />
             </View>
 
-            <View style={{ flexDirection: "row", marginTop: "4px" }}>
+            <View style={{ flexDirection: "row", marginTop: "4px", fontSize: "10px" }}>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Servicio 10.41</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Servicio 10.41
+                </Text>
                 {report.subTypeCount1041.map((row) => (
                   <View>
                     <Text>
-                      {row.name} {row.count}
+                      - {row.name}: {row.count}
                     </Text>
                   </View>
                 ))}
               </View>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Magnitudes (damage1041)</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Magnitudes (damage1041)
+                </Text>
                 {DAMAGE_1041_OPTIONS.map((damage) => (
                   <View>
                     <Text>
-                      {damage.name} {report.damage1041Count.find((theDamage) => theDamage.id === damage.id)?.count || 0}
+                      - {damage.name}:{" "}
+                      {report.damage1041Count.find((theDamage) => theDamage.id === damage.id)?.count || 0}
                     </Text>
                   </View>
                 ))}
               </View>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Cantidad de 10.44/10.45</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Cantidad de 10.44/10.45
+                </Text>
                 {QUANTITIES_1044_1045_OPTIONS.map((damage) => (
                   <View>
                     <Text>
-                      {damage.name}{" "}
+                      - {damage.name}:{" "}
                       {report.quantities1044Count1041.find((the1044) => the1044.id === damage.id)?.count || 0}
                     </Text>
                   </View>
@@ -296,35 +313,41 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               </View>
             </View>
 
-            <View style={{ flexDirection: "row", marginTop: "4px" }}>
+            <View style={{ flexDirection: "row", marginTop: "4px", fontSize: "10px" }}>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Elementos Involucrados</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Elementos Involucrados
+                </Text>
                 {INVOLVED_ELEMENTS_OPTIONS.map((item) => (
                   <View>
                     <Text>
-                      {item.name}{" "}
+                      - {item.name}:{" "}
                       {report.involvedElementsCount.find((theDamage) => theDamage.id === item.id)?.count || 0}
                     </Text>
                   </View>
                 ))}
               </View>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Seguridad de involucrados</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Seguridad de involucrados
+                </Text>
                 {MAGNITUDE_1041_OPTIONS.map((damage) => (
                   <View>
                     <Text>
-                      {damage.name}{" "}
+                      - {damage.name}:{" "}
                       {report.magnitude1041Count.find((theDamage) => theDamage.id === damage.id)?.count || 0}
                     </Text>
                   </View>
                 ))}
               </View>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Recursos Utilizados</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Recursos Utilizados
+                </Text>
                 {RESOURCES_OPTIONS_1041.map((resource) => (
                   <View>
                     <Text>
-                      {resource.name}{" "}
+                      - {resource.name}:{" "}
                       {report.resourcesUsedCount1041.find((theResource) => theResource.id === resource.id)?.count || 0}
                     </Text>
                   </View>
@@ -364,23 +387,27 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               <Text style={{ borderBottom: "1px solid black", flexGrow: 1 }} />
             </View>
 
-            <View style={{ marginTop: "6px", flexDirection: "row" }}>
+            <View style={{ marginTop: "6px", flexDirection: "row", fontSize: "10px" }}>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Servicio 10.43</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Servicio 10.43
+                </Text>
                 {report.subTypeCount1043.map((row) => (
                   <View>
                     <Text>
-                      {row.name} {row.count}
+                      - {row.name}: {row.count}
                     </Text>
                   </View>
                 ))}
               </View>
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Tipo de Rescate</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Tipo de Rescate
+                </Text>
                 {RESCUE_TYPE_OPTIONS.map((rescueType) => (
                   <View>
                     <Text>
-                      {rescueType.name}{" "}
+                      - {rescueType.name}:{" "}
                       {report.rescueTypeCount.find((theRescueType) => theRescueType.id === rescueType.id)?.count || 0}
                     </Text>
                   </View>
@@ -388,11 +415,13 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               </View>
 
               <View style={{ width: "33.33%" }}>
-                <Text style={{ textDecoration: "underline", fontSize: "13px" }}>Cantidad de 10.44/10.45</Text>
+                <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>
+                  Cantidad de 10.44/10.45
+                </Text>
                 {QUANTITIES_1044_1045_OPTIONS.map((damage) => (
                   <View>
                     <Text>
-                      {damage.name}{" "}
+                      - {damage.name}:{" "}
                       {report.quantities1044Count1043.find((the1044) => the1044.id === damage.id)?.count || 0}
                     </Text>
                   </View>
