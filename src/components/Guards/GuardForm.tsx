@@ -1,5 +1,5 @@
 import React from "react";
-import { FormApi, FormState, Select, Text } from "informed"; //Form
+import { FormApi, FormState, Select, Text, TextArea } from "informed"; //Form
 import _ from "lodash";
 
 import DateTimePicker from "react-datetime-picker";
@@ -71,11 +71,13 @@ const GuardForm = ({ formApi, formState, volunteers, setVolunteers }: GuardFormP
                 </Form.Group>
               </Col>
             </Row>
+            <label>Observaciones: </label>
+            <TextArea className="form-control" field="observations" />
             <hr />
             <Row>
               <Col md="12">
                 <Form.Group>
-                  <h4 style={{ display: "inline" }}>Asistencia de Voluntarios (*)</h4>
+                  <h4 style={{ display: "inline" }}>Asistencia de Voluntarios</h4>
                   <Button
                     className="pull-right ml-2"
                     variant="success"
@@ -147,7 +149,7 @@ const GuardForm = ({ formApi, formState, volunteers, setVolunteers }: GuardFormP
               );
             })}
 
-            <Button disabled={volunteers.length === 0} className="btn-fill btn-pull-right" variant="info" type="submit">
+            <Button className="btn-fill btn-pull-right" variant="info" type="submit">
               Guardar
             </Button>
             <div className="clearfix"></div>

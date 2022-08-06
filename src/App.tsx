@@ -25,8 +25,8 @@ const getRoutes = (routes, currentUser: UserAllFieldsFragment) => {
       exact
       path={route.path}
       render={(props) => {
-        if (route.onlyAdmin && !currentUser?.isAdmin) return <div />;
         if (!route.noAuthRoute && !currentUser) window.location.href = "/login";
+        if (route.onlyAdmin && !currentUser?.isAdmin) return <div />;
         if (route.hideTheSidebar) return <route.component {...props} />;
         else {
           return (

@@ -6,6 +6,8 @@ import { useMutation } from "react-apollo";
 import { CREATE_USER, GET_USERS } from "../../queries/Users";
 import { Container } from "react-bootstrap";
 import UserForm from "./UserForm";
+import { NotificationManager } from "react-notifications";
+import _ from "lodash";
 
 const CreateUserPage = (props) => {
   const [formRef, setFormRef] = useState<FormApi<CreateUserInput>>(null);
@@ -26,9 +28,16 @@ const CreateUserPage = (props) => {
         input: formRef.getState().values,
       },
       refetchQueries: [{ query: GET_USERS }],
-    }).then((value) => {
-      props.history.push("/users");
-    });
+    })
+      .then((value) => {
+        props.history.push("/users");
+      })
+      .catch((error) => {
+        const status = _.get(error, "graphQLErrors[0].extensions.exception.status");
+        if (status === 409) {
+          NotificationManager.error("El nombre de usuario ya se encuentra en uso");
+        }
+      });
   };
 
   return (

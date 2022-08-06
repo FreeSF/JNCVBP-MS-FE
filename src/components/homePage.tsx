@@ -124,6 +124,10 @@ const HomePage = () => {
                       <span style={{ fontWeight: "bold" }}>Encargados:</span>{" "}
                       {currentGuardQuery.data.currentGuard.volunteers.map((volunteer) => volunteer.name).join(", ")}
                     </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Observaciones:</span>{" "}
+                      {currentGuardQuery.data.currentGuard.observations}
+                    </p>
                   </React.Fragment>
                 </Card.Body>
               </Card>
@@ -147,6 +151,10 @@ const HomePage = () => {
                     <p>
                       <span style={{ fontWeight: "bold" }}>Encargados:</span>{" "}
                       {nextGuardQuery.data.nextGuard.volunteers.map((volunteer) => volunteer.name).join(", ")}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Observaciones:</span>{" "}
+                      {nextGuardQuery.data.nextGuard.observations}
                     </p>
                   </React.Fragment>
                 </Card.Body>

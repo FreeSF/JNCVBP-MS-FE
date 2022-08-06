@@ -103,7 +103,14 @@ const UserForm = (props: theProps) => {
                 )}
               </React.Fragment>
             )}
-            <Button className="btn-fill btn-pull-right" variant="info" type="submit">
+
+            <Button
+              className="btn-fill btn-pull-right"
+              style={{ marginTop: "8px" }}
+              variant="info"
+              type="submit"
+              disabled={!props.formState.values.username || !props.formState.values.password}
+            >
               Guardar
             </Button>
             <div className="clearfix"></div>

@@ -6,6 +6,7 @@ const GUARDS_ALL_FIELDS_FRAGMENT = gql`
     id
     start_time
     end_time
+    observations
     volunteers {
       ...volunteerAllFields
     }

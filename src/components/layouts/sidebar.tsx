@@ -26,14 +26,15 @@ function Sidebar({ color, image, routes }) {
       <div
         className="sidebar-background"
         style={{
-          backgroundImage: `url(${require("../../assets/img/sidebar-3.jpg")})`,
+          //backgroundImage: `url(${require("../../assets/img/sidebar-3.jpg")})`,
+          backgroundImage: `url(https://scontent.fasu9-1.fna.fbcdn.net/v/t39.30808-6/228270871_213568027372367_6705029781981773471_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a26aad&_nc_ohc=FmixYnWyQDgAX_x-o96&_nc_ht=scontent.fasu9-1.fna&oh=00_AT-znWVa0wazBz_kt7ydkWHoTDjn1NZXcMRQWR6aOsCORQ&oe=62F09A8B)`,
         }}
       />
       <div className="sidebar-wrapper" style={{ paddingBottom: 0 }}>
         <div className="logo d-flex align-items-center justify-content-start">
           <a href="/" className="simple-text logo-mini mx-1">
             <div className="logo-img">
-              <img src={require("../../assets/img/reactlogo.png")} alt="..." />
+              <img src={require("../../assets/img/logo.png")} alt="..." />
             </div>
           </a>
           <a className="simple-text" href="/">
