@@ -40,7 +40,7 @@ const ServicesPage = (props: RouteComponentProps) => {
     dataField: undefined,
     text: "Acciones",
     formatter: (cell, row: ServicesAllFieldsFragment) => (
-      <div style={{ display: "flex", gap: "10px" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
         <Button className="btn-fill btn-sm" href={`/services/${row.id}`} variant="info">
           Ver
         </Button>
