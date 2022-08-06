@@ -18,6 +18,7 @@ import {
   MAGNITUDE_1041_OPTIONS,
   OTHER_ID,
   OTHER_NAME,
+  PROPORTION_OPTIONS,
   QUANTITIES_1044_1045_OPTIONS,
   RESCUE_TYPE_OPTIONS,
   RESOURCES_OPTIONS,
@@ -145,7 +146,9 @@ const ShowServicePage = (props) => {
               {service.possible_cause.name === OTHER_NAME && `: ${service.possible_cause_other_description}`}
             </p>
             <label>Proporción:</label>
-            <p>{service.magnitude}</p>
+            <p>
+              {PROPORTION_OPTIONS.find((proportion) => proportion.id === service.magnitude)?.name || service.magnitude}
+            </p>
             <label>Destrucción:</label>
             <p>{DAMAGE_OPTIONS.find((damage) => damage.id === service.damage)?.name || service.damage}</p>
             <label>Vehículos Utilizados:</label>

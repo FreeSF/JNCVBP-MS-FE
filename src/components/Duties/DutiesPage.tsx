@@ -26,7 +26,7 @@ const DutiesPage = (props: RouteComponentProps) => {
     dataField: undefined,
     text: "Acciones",
     formatter: (cell, row: DutyAllFieldsFragment) => (
-      <div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
         <Button className="btn-fill btn-sm" variant="success" onClick={() => handleEdit(row.id)}>
           {" "}
           Editar{" "}

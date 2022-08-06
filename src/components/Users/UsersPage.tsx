@@ -23,7 +23,7 @@ const UsersPage = (props) => {
     dataField: undefined,
     text: "Acciones",
     formatter: (cell, row: ServicesAllFieldsFragment) => (
-      <div style={{ display: "flex", gap: "10px" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
         <Button className="btn-fill btn-sm" href={`/users/${row.id}/edit`} variant="success">
           Editar
         </Button>

@@ -59,11 +59,6 @@ const Header = () => {
             <span style={{ marginTop: "auto", marginBottom: "auto" }}>
               Usuario: {currentUserQuery.data?.currentUser?.username}
             </span>
-            <Nav.Item>
-              <Nav.Link className="m-0" href="#url" onClick={(e) => e.preventDefault()}>
-                {/* <span className="no-icon">Log out</span> */}
-              </Nav.Link>
-            </Nav.Item>
           </Nav>
         </Navbar.Collapse>
       </Container>

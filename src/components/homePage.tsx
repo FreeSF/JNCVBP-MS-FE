@@ -124,6 +124,10 @@ const HomePage = () => {
                       <span style={{ fontWeight: "bold" }}>Encargados:</span>{" "}
                       {currentGuardQuery.data.currentGuard.volunteers.map((volunteer) => volunteer.name).join(", ")}
                     </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Observaciones:</span>{" "}
+                      {currentGuardQuery.data.currentGuard.observations}
+                    </p>
                   </React.Fragment>
                 </Card.Body>
               </Card>
@@ -147,6 +151,10 @@ const HomePage = () => {
                     <p>
                       <span style={{ fontWeight: "bold" }}>Encargados:</span>{" "}
                       {nextGuardQuery.data.nextGuard.volunteers.map((volunteer) => volunteer.name).join(", ")}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Observaciones:</span>{" "}
+                      {nextGuardQuery.data.nextGuard.observations}
                     </p>
                   </React.Fragment>
                 </Card.Body>
@@ -308,18 +316,13 @@ const HomePage = () => {
             <Card>
               <Card.Header>
                 <Card.Title as="h4">Tipo de Servicio</Card.Title>
-                <p className="card-category">Last Campaign Performance</p>
+                <p className="card-category">Mes Actual</p>
               </Card.Header>
               <Card.Body>
                 <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
                   {/*@ts-ignore*/}
                   <ReactApexChart options={typeOptions} series={typeSeries} type="pie" width={"94%"} />
                 </div>
-                {/*<hr></hr>
-                  <div className="stats">
-                  <i className="far fa-clock"></i>
-                  Campaign sent 2 days ago
-                  </div>*/}
               </Card.Body>
             </Card>
           </Col>
@@ -327,7 +330,7 @@ const HomePage = () => {
             <Card>
               <Card.Header>
                 <Card.Title as="h4">Sub tipos</Card.Title>
-                <p className="card-category">Last Campaign Performance</p>
+                <p className="card-category">Mes Actual</p>
               </Card.Header>
               <Card.Body>
                 <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
@@ -341,7 +344,7 @@ const HomePage = () => {
             <Card>
               <Card.Header>
                 <Card.Title as="h4">Cantidad de 10.44/10.45</Card.Title>
-                <p className="card-category">Last Campaign Performance</p>
+                <p className="card-category">Mes Actual</p>
               </Card.Header>
               <Card.Body>
                 <div className="ct-chart ct-perfect-fourth" id="chartPreferences">

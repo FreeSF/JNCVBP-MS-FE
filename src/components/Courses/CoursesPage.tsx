@@ -30,7 +30,7 @@ const CoursesPage = (props) => {
     dataField: undefined,
     text: "Acciones",
     formatter: (cell, row: CoursesAllFieldsFragment) => (
-      <div style={{ display: "flex", gap: "10px" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
         <Button className="btn-fill btn-sm" onClick={() => history.push(`/courses/${row.id}/edit`)} variant="success">
           Editar
         </Button>

@@ -201,18 +201,6 @@ const VolunteerForm = ({ volunteer, formApi, formState }: VolunteerProps) => {
               <br></br>
             </p>
           </Card.Body>
-          <hr></hr>
-          <div className="button-container mr-auto ml-auto">
-            <Button className="btn-simple btn-icon" href="#" onClick={(e) => e.preventDefault()} variant="link">
-              <i className="fab fa-facebook-square"></i>
-            </Button>
-            <Button className="btn-simple btn-icon" href="#" onClick={(e) => e.preventDefault()} variant="link">
-              <i className="fab fa-twitter"></i>
-            </Button>
-            <Button className="btn-simple btn-icon" href="#" onClick={(e) => e.preventDefault()} variant="link">
-              <i className="fab fa-google-plus-square"></i>
-            </Button>
-          </div>
         </Card>
       </Col>
     </Row>

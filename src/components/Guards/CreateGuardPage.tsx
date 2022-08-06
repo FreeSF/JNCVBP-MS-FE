@@ -20,6 +20,7 @@ const CreateGuardPage = (_props) => {
     start_time: new Date(new Date().setHours(8, 0, 0, 0)).getTime(), // default 06:00
     end_time: new Date(new Date().setHours(16, 0, 0, 0)).getTime(), // default 16:00
     volunteers: [],
+    observations: "",
   };
 
   const handleSubmit = () => {

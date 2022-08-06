@@ -13,6 +13,8 @@ import { EDIT_USER, FIND_USER, GET_USERS } from "../../queries/Users";
 import Spinner from "../spinner";
 import { Container } from "react-bootstrap";
 import { CURRENT_USER } from "../../queries/Login";
+import { NotificationManager } from "react-notifications";
+import _ from "lodash";
 
 const UpdateUserPage = (props) => {
   const [formRef, setFormRef] = useState<FormApi<UpdateUserInput>>(null);
@@ -43,10 +45,17 @@ const UpdateUserPage = (props) => {
         input: { ...formRef.getState().values, id: props.match.params.id },
       },
       refetchQueries: [{ query: GET_USERS }],
-    }).then((value) => {
-      if (currentUserQuery.data.currentUser.isAdmin) props.history.push("/users");
-      else props.history.push("");
-    });
+    })
+      .then((value) => {
+        if (currentUserQuery.data.currentUser.isAdmin) props.history.push("/users");
+        else props.history.push("");
+      })
+      .catch((error) => {
+        const status = _.get(error, "graphQLErrors[0].extensions.exception.status");
+        if (status === 409) {
+          NotificationManager.error("El nombre de usuario ya se encuentra en uso");
+        }
+      });
   };
 
   return (

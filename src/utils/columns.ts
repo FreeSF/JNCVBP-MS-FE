@@ -65,6 +65,10 @@ export const get_guard_columns = (options) => {
       text: "Voluntarios",
       formatter: (cell: VolunteerAllFieldsFragment[]) => get_formatted_volunteers(cell),
     },
+    {
+      dataField: "observations",
+      text: "Observaciones",
+    },
     options,
   ];
 

@@ -69,6 +69,7 @@ export type CreateGuardInput = {
   start_time: Scalars["Timestamp"];
   end_time: Scalars["Timestamp"];
   volunteers: Array<OnlyIdVolunteerInput>;
+  observations: Scalars["String"];
 };
 
 export type CreateRankInput = {
@@ -208,6 +209,7 @@ export type Guard = {
   start_time: Scalars["Timestamp"];
   end_time: Scalars["Timestamp"];
   volunteers?: Maybe<Array<Volunteer>>;
+  observations?: Maybe<Scalars["String"]>;
 };
 
 export type LoginInput = {
@@ -732,6 +734,7 @@ export type UpdateGuardInput = {
   start_time?: Maybe<Scalars["Timestamp"]>;
   end_time?: Maybe<Scalars["Timestamp"]>;
   volunteers?: Maybe<Array<OnlyIdVolunteerInput>>;
+  observations?: Maybe<Scalars["String"]>;
   id: Scalars["String"];
 };
 
@@ -912,9 +915,10 @@ export type RestoreCourseMutation = { __typename?: "Mutation" } & {
   restoreCourse: { __typename?: "Course" } & CoursesAllFieldsFragment;
 };
 
-export type GuardAllFieldsFragment = { __typename?: "Guard" } & Pick<Guard, "id" | "start_time" | "end_time"> & {
-    volunteers?: Maybe<Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>>;
-  };
+export type GuardAllFieldsFragment = { __typename?: "Guard" } & Pick<
+  Guard,
+  "id" | "start_time" | "end_time" | "observations"
+> & { volunteers?: Maybe<Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>> };
 
 export type GetGuardsQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -1562,6 +1566,7 @@ export const GuardAllFieldsFragmentDoc = gql`
     id
     start_time
     end_time
+    observations
     volunteers {
       ...volunteerAllFields
     }
