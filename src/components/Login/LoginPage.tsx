@@ -49,6 +49,15 @@ const LoginPage = (props) => {
             <Col md="4" className="offset-md-4">
               <Card>
                 <Card.Header>
+                  <div style={{ textAlign: "center" }}>
+                    <div className="card-title">
+                      <img src={require("../../assets/img/logo.png")} style={{ width: "52px" }} />
+                      <span className="h2 fw-bold" style={{ margin: "0", verticalAlign: "middle" }}>
+                        JNCBVP-MS
+                      </span>
+                    </div>
+                  </div>
+                  <hr />
                   <Card.Title as="h4">Iniciar Sesión</Card.Title>
                 </Card.Header>
                 <Card.Body>
