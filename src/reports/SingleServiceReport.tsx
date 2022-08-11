@@ -225,7 +225,7 @@ const SingleServiceReport: React.FC<TheProps> = (props) => {
                 <View style={{ width: "50%" }}>
                   <Text style={{ textDecoration: "underline", marginBottom: "4px" }}>3. Causas Posibles:</Text>
                   <Text style={{ fontSize: "10px" }}>
-                    {service.possible_cause.name}
+                    - {service.possible_cause.name}
                     {service.possible_cause.name === OTHER_NAME && `: ${service.possible_cause_other_description}`}
                   </Text>
                 </View>

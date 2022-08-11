@@ -109,7 +109,7 @@ const UserForm = (props: theProps) => {
               style={{ marginTop: "8px" }}
               variant="info"
               type="submit"
-              disabled={!props.formState.values.username || !props.formState.values.password}
+              disabled={!props.formState.values.username || (updatePassword && !props.formState.values.password)}
             >
               Guardar
             </Button>
