@@ -18,7 +18,11 @@ import {
 } from "./constants";
 
 export const get_course_columns = (options) => {
-  const columns: ColumnDescription[] = [{ dataField: "description", text: "Descripción" }, options];
+  const columns: ColumnDescription[] = [
+    { dataField: "description", text: "Descripción" },
+    { dataField: "date", text: "Fecha", formatter: (cell, row) => get_formatted_date(cell) },
+    options,
+  ];
 
   return columns;
 };
@@ -130,7 +134,7 @@ export const get_service_columns = (options) => {
     {
       dataField: "volunteers",
       text: "Voluntarios",
-      formatter: (cell: Volunteer[]) => cell.map((volunteer) => volunteer.name).join(","),
+      formatter: (cell: Volunteer[]) => cell.map((volunteer) => volunteer.name).join(", "),
     },
     options,
   ];

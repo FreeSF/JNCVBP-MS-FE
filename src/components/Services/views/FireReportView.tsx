@@ -8,6 +8,7 @@ import {
   FireCause,
   FireCauseAllFieldsFragment,
   FireClassAllFieldsFragment,
+  GetFireCausesQuery,
   GetSubTypesQuery,
   UpdateServiceInput,
 } from "types";
@@ -16,6 +17,7 @@ import { AFFECTED_OWNER_OPTIONS, CODES, DAMAGE_OPTIONS, OTHER_NAME, PROPORTION_O
 import { useQuery } from "react-apollo";
 import { GET_SUB_TYPES } from "../../../queries/subType";
 import Spinner from "../../spinner";
+import { GET_FIRE_CAUSES } from "../../../queries/fireCause";
 
 type FireReportFieldsProps = {
   formApi: FormApi<CreateServiceInput | UpdateServiceInput>;
@@ -35,12 +37,15 @@ const FireReportView = ({
   isCreate,
 }: FireReportFieldsProps) => {
   const getSubTypesQuery = useQuery<GetSubTypesQuery>(GET_SUB_TYPES);
+  const getFireCausesQuery = useQuery<GetFireCausesQuery>(GET_FIRE_CAUSES);
 
-  if (getSubTypesQuery.loading) return <Spinner />;
+  if (getSubTypesQuery.loading || getFireCausesQuery.loading) return <Spinner />;
 
   const otherSubType = getSubTypesQuery.data.subTypes.find(
     (subType) => subType.name === OTHER_NAME && subType.code === CODES.FIRE
   );
+
+  const otherFireCause = getFireCausesQuery.data.fireCauses.find((fireCause) => fireCause.name === OTHER_NAME);
 
   return (
     <div>
@@ -88,12 +93,14 @@ const FireReportView = ({
             </InformedSelect>
           </Form.Group>
         </Col>
-        <Col md="3">
-          <Form.Group>
-            <label>Causa Posible (otro):</label>
-            <Text className="form-control" field="possible_cause_other_description" type="text" />
-          </Form.Group>
-        </Col>
+        {formState.values.possible_cause?._id === otherFireCause.id && (
+          <Col md="3">
+            <Form.Group>
+              <label>Causa Posible (otro):</label>
+              <Text className="form-control" field="possible_cause_other_description" type="text" />
+            </Form.Group>
+          </Col>
+        )}
       </Row>
 
       {/* TODO: Add to Services Entity and styles*/}

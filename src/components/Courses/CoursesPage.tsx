@@ -63,7 +63,7 @@ const CoursesPage = (props) => {
                   Agregar
                 </Button>
               </Card.Title>
-              <p className="cardu-category">({getCoursesQuery.data?.courses?.length || 0}) Rangos en el sistema </p>
+              <p className="cardu-category">({getCoursesQuery.data?.courses?.length || 0}) Cursos en el sistema </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
               {getCoursesQuery.loading ? (
