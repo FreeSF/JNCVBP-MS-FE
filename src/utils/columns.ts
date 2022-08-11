@@ -134,7 +134,7 @@ export const get_service_columns = (options) => {
     {
       dataField: "volunteers",
       text: "Voluntarios",
-      formatter: (cell: Volunteer[]) => cell.map((volunteer) => volunteer.name).join(","),
+      formatter: (cell: Volunteer[]) => cell.map((volunteer) => volunteer.name).join(", "),
     },
     options,
   ];
