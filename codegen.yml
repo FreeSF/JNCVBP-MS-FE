@@ -1,0 +1,14 @@
+schema: http://localhost:3000/graphql
+documents:
+  - ./src/queries/*.tsx
+  - ./src/queries/*.ts
+  - ./src/components/**/*.tsx
+
+pluckConfig:
+  globalIdentifier: gql
+generates:
+  ./src/types.tsx:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
