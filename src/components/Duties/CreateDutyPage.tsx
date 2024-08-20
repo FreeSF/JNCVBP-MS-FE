@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/client";
 
 import { Form as IForm, FormApi } from "informed"; //Form
 import { Container } from "react-bootstrap";

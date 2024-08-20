@@ -4,7 +4,7 @@ import { Button, Card, Table, Container, Row, Col, Form, OverlayTrigger, Tooltip
 import Select from "react-select";
 import { BlobProvider } from "@react-pdf/renderer";
 import GeneralReport from "../reports/GeneralReport";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import { CurrentGuardQuery, GetCurrentUserQuery, GetReportQuery, GetVolunteersQuery, NextGuardQuery } from "../types";
 import { GET_REPORT } from "../queries/Reports";
 import Spinner from "./spinner";

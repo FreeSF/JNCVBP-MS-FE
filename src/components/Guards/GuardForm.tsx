@@ -8,7 +8,7 @@ import { CreateGuardInput, GetVolunteersQuery, UpdateGuardInput } from "types";
 
 import Spinner from "components/spinner";
 import { GET_VOLUNTEERS } from "queries/volunteers";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import { addDays } from "date-fns";
 
 type GuardFormProps = {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, FormApi } from "informed";
 
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation, useQuery } from "@apollo/client";
 import Spinner from "../spinner";
 
 import {

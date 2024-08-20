@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation, useQuery } from "@apollo/client";
 
 import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
 import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";

@@ -4,7 +4,7 @@ import { NavLink, useHistory, useLocation } from "react-router-dom";
 import { Container, Dropdown, Navbar, Nav, Button } from "react-bootstrap";
 import routes from "routes.js";
 import EventForm from "components/Events/EventForm";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import { GetCurrentUserQuery } from "../../types";
 import { CURRENT_USER } from "../../queries/Login";
 import { AUTH_TOKEN_NAME } from "../../utils/constants";

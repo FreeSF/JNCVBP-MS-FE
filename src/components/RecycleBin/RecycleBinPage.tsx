@@ -4,7 +4,7 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
 import Select from "react-select";
 
-import { useLazyQuery, useMutation } from "react-apollo";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import {
   GetCoursesDisabledQuery,
   GetDutiesDisabledQuery,

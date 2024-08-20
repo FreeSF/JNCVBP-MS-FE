@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, FormApi } from "informed";
 import { Container } from "react-bootstrap";
 
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation, useQuery } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 
 import { CreateCourseInput, CreateCourseMutation, CreateCourseMutationVariables } from "../../types";

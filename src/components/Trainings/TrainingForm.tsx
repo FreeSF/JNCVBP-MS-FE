@@ -1,6 +1,6 @@
 import React from "react";
 import { FormApi, Select, Text } from "informed"; //Form
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import _ from "lodash";
 
 import DatePicker from "react-datepicker";

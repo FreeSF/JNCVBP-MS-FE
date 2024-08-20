@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AUTH_TOKEN_NAME } from "../../utils/constants";
 import { LoginMutation, LoginMutationVariables } from "../../types";
 import { LOGIN } from "../../queries/Login";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/client";
 import { Redirect, BrowserRouter } from "react-router-dom";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { ErrorText, notEmptyValidation } from "components/utils/Validations";

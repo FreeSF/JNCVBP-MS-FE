@@ -5,7 +5,7 @@ import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "in
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { CreateServiceInput, GetSubTypesQuery, UpdateServiceInput } from "types";
 import { CODES, OTHER_ID, OTHER_NAME, RESOURCES_OPTIONS_1040, RESOURCES_OPTIONS_1041 } from "../../../utils/constants";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import { GET_SUB_TYPES } from "../../../queries/subType";
 import Spinner from "../../spinner";
 

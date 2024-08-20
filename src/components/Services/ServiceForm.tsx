@@ -5,7 +5,7 @@ import _ from "lodash";
 import DatePicker from "react-datepicker";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import {
   CreateServiceInput,
   GetFireCausesQuery,
