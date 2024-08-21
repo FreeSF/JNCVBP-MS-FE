@@ -24,7 +24,7 @@ import {
   RESOURCES_OPTIONS,
 } from "../utils/constants";
 import { FindServiceQuery, ServicesAllFieldsFragment } from "../types";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import Spinner from "../components/spinner";
 import moment from "moment";
 import styled from "styled-components";

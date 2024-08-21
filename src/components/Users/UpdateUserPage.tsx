@@ -8,7 +8,7 @@ import {
   UpdateUserInput,
 } from "../../types";
 import UserForm from "./UserForm";
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation, useQuery } from "@apollo/client";
 import { EDIT_USER, FIND_USER, GET_USERS } from "../../queries/Users";
 import Spinner from "../spinner";
 import { Container } from "react-bootstrap";

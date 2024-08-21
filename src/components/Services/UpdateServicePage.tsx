@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation, useQuery } from "@apollo/client";
 import { EditServiceMutation, EditServiceMutationVariables, FindServiceQuery, UpdateServiceInput } from "../../types";
 import { EDIT_SERVICE, FIND_SERVICE, GET_SERVICES } from "../../queries/services";
 import Spinner from "../spinner";

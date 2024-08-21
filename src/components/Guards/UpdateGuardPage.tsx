@@ -9,7 +9,7 @@ import {
   FindGuardQueryVariables,
   UpdateGuardInput,
 } from "../../types";
-import { useMutation, useLazyQuery } from "react-apollo";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import { CURRENT_GUARD, EDIT_GUARD, FIND_GUARD, GET_GUARDS, NEXT_GUARD } from "../../queries/Guards";
 
 import GuardForm from "./GuardForm";

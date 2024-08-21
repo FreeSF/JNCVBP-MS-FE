@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { useLocation, NavLink, useHistory } from "react-router-dom";
 
 import { Nav } from "react-bootstrap";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import { GetCurrentUserQuery } from "../../types";
 import { CURRENT_USER } from "../../queries/Login";
 import Spinner from "../spinner";

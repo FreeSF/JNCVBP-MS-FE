@@ -14,7 +14,7 @@ import {
 } from "types";
 import ResourcesField from "../fields/ResourcesField";
 import { AFFECTED_OWNER_OPTIONS, CODES, DAMAGE_OPTIONS, OTHER_NAME, PROPORTION_OPTIONS } from "utils/constants";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import { GET_SUB_TYPES } from "../../../queries/subType";
 import Spinner from "../../spinner";
 import { GET_FIRE_CAUSES } from "../../../queries/fireCause";

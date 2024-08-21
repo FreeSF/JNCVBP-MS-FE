@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation, useQuery } from "@apollo/client";
 
 import moment from "moment";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";

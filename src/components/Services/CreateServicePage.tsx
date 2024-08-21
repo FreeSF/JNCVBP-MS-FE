@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Form, FormApi, Text, Select } from "informed";
 import { RouteComponentProps } from "react-router-dom";
-import { useLazyQuery, useMutation, useQuery } from "react-apollo";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { CreateServiceInput, CreateServiceMutation, CreateServiceMutationVariables } from "../../types";
 import { CREATE_SERVICE, EDIT_SERVICE, FIND_SERVICE, GET_SERVICES } from "../../queries/services";
 import ServiceForm from "./ServiceForm";

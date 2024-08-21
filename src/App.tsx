@@ -11,7 +11,7 @@ import "react-notifications/lib/notifications.css";
 import routes from "routes.js";
 import { setDefaultLocale, registerLocale } from "react-datepicker";
 import { NotificationContainer } from "react-notifications";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import { GetCurrentUserQuery, UserAllFieldsFragment } from "./types";
 import { CURRENT_USER } from "./queries/Login";
 import Spinner from "./components/spinner";

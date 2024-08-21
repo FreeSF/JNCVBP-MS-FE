@@ -2,7 +2,7 @@ import React from "react";
 import StandardTable from "../utils/standardTable";
 import { ColumnDescription } from "react-bootstrap-table-next";
 import { useHistory } from "react-router-dom";
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation, useQuery } from "@apollo/client";
 import { GetUsersQuery, RemoveUserMutation, RemoveUserMutationVariables, ServicesAllFieldsFragment } from "../../types";
 import { GET_USERS, GET_USERS_DISABLED, REMOVE_USER } from "../../queries/Users";
 import Spinner from "../spinner";

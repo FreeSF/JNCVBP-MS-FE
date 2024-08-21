@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FormApi, Form as IForm, Text } from "informed";
 
 import { CreateEventInput, CreateEventMutation, CreateEventMutationVariables, GetCurrentUserQuery } from "../../types";
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_EVENT, GET_EVENTS } from "../../queries/events";
 
 import { Button, Row } from "react-bootstrap";
