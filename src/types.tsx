@@ -68,8 +68,8 @@ export type CreateFireClassInput = {
 export type CreateGuardInput = {
   start_time: Scalars["Timestamp"];
   end_time: Scalars["Timestamp"];
-  volunteers: Array<OnlyIdVolunteerInput>;
-  observations: Scalars["String"];
+  volunteers?: Maybe<Array<OnlyIdVolunteerInput>>;
+  observations?: Maybe<Scalars["String"]>;
 };
 
 export type CreateRankInput = {
@@ -486,6 +486,12 @@ export type OnlyIdVolunteerInput = {
   _id: Scalars["String"];
 };
 
+export type PaginatedGuards = {
+  __typename?: "PaginatedGuards";
+  items: Array<Guard>;
+  totalSize: Scalars["Int"];
+};
+
 export type Quantity1044 = {
   __typename?: "Quantity1044";
   name?: Maybe<Scalars["String"]>;
@@ -525,6 +531,7 @@ export type Query = {
   fireClassesDisabled: Array<FireClass>;
   fireClass: FireClass;
   guards: Array<Guard>;
+  paginatedGuards: PaginatedGuards;
   guardsDisabled: Array<Guard>;
   guard: Guard;
   currentGuard?: Maybe<Guard>;
@@ -571,6 +578,11 @@ export type QueryFireCauseArgs = {
 
 export type QueryFireClassArgs = {
   id: Scalars["Int"];
+};
+
+export type QueryPaginatedGuardsArgs = {
+  offset: Scalars["Float"];
+  limit: Scalars["Float"];
 };
 
 export type QueryGuardArgs = {
@@ -924,6 +936,17 @@ export type GetGuardsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetGuardsQuery = { __typename?: "Query" } & {
   guards: Array<{ __typename?: "Guard" } & GuardAllFieldsFragment>;
+};
+
+export type GetPaginatedGuardsQueryVariables = Exact<{
+  limit: Scalars["Float"];
+  offset: Scalars["Float"];
+}>;
+
+export type GetPaginatedGuardsQuery = { __typename?: "Query" } & {
+  page: { __typename?: "PaginatedGuards" } & Pick<PaginatedGuards, "totalSize"> & {
+      items: Array<{ __typename?: "Guard" } & GuardAllFieldsFragment>;
+    };
 };
 
 export type CurrentGuardQueryVariables = Exact<{ [key: string]: never }>;
@@ -2136,6 +2159,55 @@ export function withGetGuards<TProps, TChildProps = {}, TDataName extends string
   });
 }
 export type GetGuardsQueryResult = ApolloReactCommon.QueryResult<GetGuardsQuery, GetGuardsQueryVariables>;
+export const GetPaginatedGuardsDocument = gql`
+  query getPaginatedGuards($limit: Float!, $offset: Float!) {
+    page: paginatedGuards(limit: $limit, offset: $offset) {
+      items {
+        ...guardAllFields
+      }
+      totalSize
+    }
+  }
+  ${GuardAllFieldsFragmentDoc}
+`;
+export type GetPaginatedGuardsComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetPaginatedGuardsQuery, GetPaginatedGuardsQueryVariables>,
+  "query"
+> &
+  ({ variables: GetPaginatedGuardsQueryVariables; skip?: boolean } | { skip: boolean });
+
+export const GetPaginatedGuardsComponent = (props: GetPaginatedGuardsComponentProps) => (
+  <ApolloReactComponents.Query<GetPaginatedGuardsQuery, GetPaginatedGuardsQueryVariables>
+    query={GetPaginatedGuardsDocument}
+    {...props}
+  />
+);
+
+export type GetPaginatedGuardsProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetPaginatedGuardsQuery, GetPaginatedGuardsQueryVariables>;
+} & TChildProps;
+export function withGetPaginatedGuards<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetPaginatedGuardsQuery,
+    GetPaginatedGuardsQueryVariables,
+    GetPaginatedGuardsProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetPaginatedGuardsQuery,
+    GetPaginatedGuardsQueryVariables,
+    GetPaginatedGuardsProps<TChildProps, TDataName>
+  >(GetPaginatedGuardsDocument, {
+    alias: "getPaginatedGuards",
+    ...operationOptions,
+  });
+}
+export type GetPaginatedGuardsQueryResult = ApolloReactCommon.QueryResult<
+  GetPaginatedGuardsQuery,
+  GetPaginatedGuardsQueryVariables
+>;
 export const CurrentGuardDocument = gql`
   query currentGuard {
     currentGuard {

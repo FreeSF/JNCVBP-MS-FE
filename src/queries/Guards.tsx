@@ -23,6 +23,18 @@ export const GET_GUARDS = gql`
   ${GUARDS_ALL_FIELDS_FRAGMENT}
 `;
 
+export const GET_PAGINATED_GUARDS = gql`
+  query getPaginatedGuards($limit: Float!, $offset: Float!) {
+    page: paginatedGuards(limit: $limit, offset: $offset) {
+      items {
+        ...guardAllFields
+      }
+      totalSize
+    }
+  }
+  ${GUARDS_ALL_FIELDS_FRAGMENT}
+`;
+
 export const CURRENT_GUARD = gql`
   query currentGuard {
     currentGuard {
