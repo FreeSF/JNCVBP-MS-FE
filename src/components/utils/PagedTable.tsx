@@ -19,7 +19,9 @@ const PagedTable: React.FC<TheProps> = (props) => {
   const theColumns = props.columns.map((theColumn) => ({ ...theColumn, sort: !!theColumn.dataField }));
   const [currentPage, setCurrentPage] = useState(1);
   const [currentSizePerPage, setCurrentSizePerPage] = useState(10);
-  const theQuery = useQuery(props.query, { variables: { limit: currentSizePerPage, offset: 0 } });
+  const [sortField, setSortField] = useState("id");
+  const [sortOrder, setSortOrder] = useState("desc");
+  const theQuery = useQuery(props.query, { variables: { limit: currentSizePerPage, offset: 0, sortField, sortOrder } });
 
   //console.log({theQuery: _.cloneDeep(theQuery)});
   if (theQuery.loading) return <Spinner />;
@@ -61,11 +63,20 @@ const PagedTable: React.FC<TheProps> = (props) => {
                 sort: false,
                 cellEdit: false,
               }}
+              sort={{ dataField: sortField, order: sortOrder }}
               loading={theQuery.loading}
               onTableChange={(type, newState) => {
-                theQuery.refetch({ offset: (newState.page - 1) * newState.sizePerPage, limit: newState.sizePerPage });
+                console.log({ type, newState });
+                theQuery.refetch({
+                  offset: (newState.page - 1) * newState.sizePerPage,
+                  limit: newState.sizePerPage,
+                  sortField: newState.sortField,
+                  sortOrder: newState.sortOrder,
+                });
                 setCurrentPage(newState.page);
                 setCurrentSizePerPage(newState.sizePerPage);
+                setSortField(newState.sortField);
+                setSortOrder(newState.sortOrder);
               }}
             />
           </>

@@ -581,6 +581,8 @@ export type QueryFireClassArgs = {
 };
 
 export type QueryPaginatedGuardsArgs = {
+  sortOrder?: Maybe<Scalars["String"]>;
+  sortField?: Maybe<Scalars["String"]>;
   offset: Scalars["Float"];
   limit: Scalars["Float"];
 };
@@ -941,6 +943,8 @@ export type GetGuardsQuery = { __typename?: "Query" } & {
 export type GetPaginatedGuardsQueryVariables = Exact<{
   limit: Scalars["Float"];
   offset: Scalars["Float"];
+  sortField?: Maybe<Scalars["String"]>;
+  sortOrder?: Maybe<Scalars["String"]>;
 }>;
 
 export type GetPaginatedGuardsQuery = { __typename?: "Query" } & {
@@ -2160,8 +2164,8 @@ export function withGetGuards<TProps, TChildProps = {}, TDataName extends string
 }
 export type GetGuardsQueryResult = ApolloReactCommon.QueryResult<GetGuardsQuery, GetGuardsQueryVariables>;
 export const GetPaginatedGuardsDocument = gql`
-  query getPaginatedGuards($limit: Float!, $offset: Float!) {
-    page: paginatedGuards(limit: $limit, offset: $offset) {
+  query getPaginatedGuards($limit: Float!, $offset: Float!, $sortField: String, $sortOrder: String) {
+    page: paginatedGuards(limit: $limit, offset: $offset, sortField: $sortField, sortOrder: $sortOrder) {
       items {
         ...guardAllFields
       }
