@@ -581,10 +581,11 @@ export type QueryFireClassArgs = {
 };
 
 export type QueryPaginatedGuardsArgs = {
+  searchText?: Maybe<Scalars["String"]>;
   sortOrder?: Maybe<Scalars["String"]>;
   sortField?: Maybe<Scalars["String"]>;
-  offset: Scalars["Float"];
-  limit: Scalars["Float"];
+  offset?: Maybe<Scalars["Float"]>;
+  limit?: Maybe<Scalars["Float"]>;
 };
 
 export type QueryGuardArgs = {
@@ -941,10 +942,11 @@ export type GetGuardsQuery = { __typename?: "Query" } & {
 };
 
 export type GetPaginatedGuardsQueryVariables = Exact<{
-  limit: Scalars["Float"];
-  offset: Scalars["Float"];
+  limit?: Maybe<Scalars["Float"]>;
+  offset?: Maybe<Scalars["Float"]>;
   sortField?: Maybe<Scalars["String"]>;
   sortOrder?: Maybe<Scalars["String"]>;
+  searchText?: Maybe<Scalars["String"]>;
 }>;
 
 export type GetPaginatedGuardsQuery = { __typename?: "Query" } & {
@@ -2164,8 +2166,14 @@ export function withGetGuards<TProps, TChildProps = {}, TDataName extends string
 }
 export type GetGuardsQueryResult = ApolloReactCommon.QueryResult<GetGuardsQuery, GetGuardsQueryVariables>;
 export const GetPaginatedGuardsDocument = gql`
-  query getPaginatedGuards($limit: Float!, $offset: Float!, $sortField: String, $sortOrder: String) {
-    page: paginatedGuards(limit: $limit, offset: $offset, sortField: $sortField, sortOrder: $sortOrder) {
+  query getPaginatedGuards($limit: Float, $offset: Float, $sortField: String, $sortOrder: String, $searchText: String) {
+    page: paginatedGuards(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      searchText: $searchText
+    ) {
       items {
         ...guardAllFields
       }
@@ -2177,8 +2185,7 @@ export const GetPaginatedGuardsDocument = gql`
 export type GetPaginatedGuardsComponentProps = Omit<
   ApolloReactComponents.QueryComponentOptions<GetPaginatedGuardsQuery, GetPaginatedGuardsQueryVariables>,
   "query"
-> &
-  ({ variables: GetPaginatedGuardsQueryVariables; skip?: boolean } | { skip: boolean });
+>;
 
 export const GetPaginatedGuardsComponent = (props: GetPaginatedGuardsComponentProps) => (
   <ApolloReactComponents.Query<GetPaginatedGuardsQuery, GetPaginatedGuardsQueryVariables>

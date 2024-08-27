@@ -24,8 +24,14 @@ export const GET_GUARDS = gql`
 `;
 
 export const GET_PAGINATED_GUARDS = gql`
-  query getPaginatedGuards($limit: Float!, $offset: Float!, $sortField: String, $sortOrder: String) {
-    page: paginatedGuards(limit: $limit, offset: $offset, sortField: $sortField, sortOrder: $sortOrder) {
+  query getPaginatedGuards($limit: Float, $offset: Float, $sortField: String, $sortOrder: String, $searchText: String) {
+    page: paginatedGuards(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      searchText: $searchText
+    ) {
       items {
         ...guardAllFields
       }

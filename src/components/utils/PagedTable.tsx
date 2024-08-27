@@ -20,8 +20,11 @@ const PagedTable: React.FC<TheProps> = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentSizePerPage, setCurrentSizePerPage] = useState(10);
   const [sortField, setSortField] = useState("id");
-  const [sortOrder, setSortOrder] = useState("desc");
-  const theQuery = useQuery(props.query, { variables: { limit: currentSizePerPage, offset: 0, sortField, sortOrder } });
+  const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
+  const [searchText, setSearchText] = useState("");
+  const theQuery = useQuery(props.query, {
+    variables: { limit: currentSizePerPage, offset: 0, sortField, sortOrder, searchText: "" },
+  });
 
   //console.log({theQuery: _.cloneDeep(theQuery)});
   if (theQuery.loading) return <Spinner />;
@@ -32,7 +35,7 @@ const PagedTable: React.FC<TheProps> = (props) => {
         keyField={props.keyField || "id"}
         data={theQuery.data?.page?.items || []}
         columns={theColumns}
-        //search={{ searchFormatted: true }}
+        search={true}
       >
         {({ searchProps, baseProps }) => (
           <>
@@ -58,20 +61,19 @@ const PagedTable: React.FC<TheProps> = (props) => {
               })}
               bootstrap4={true}
               remote={{
-                filter: false,
+                filter: true,
                 pagination: true,
-                sort: false,
+                sort: true,
                 cellEdit: false,
               }}
               sort={{ dataField: sortField, order: sortOrder }}
-              loading={theQuery.loading}
               onTableChange={(type, newState) => {
-                console.log({ type, newState });
                 theQuery.refetch({
                   offset: (newState.page - 1) * newState.sizePerPage,
                   limit: newState.sizePerPage,
                   sortField: newState.sortField,
                   sortOrder: newState.sortOrder,
+                  searchText: searchProps.searchText || "",
                 });
                 setCurrentPage(newState.page);
                 setCurrentSizePerPage(newState.sizePerPage);
