@@ -65,11 +65,6 @@ export const get_guard_columns = (options) => {
       formatter: (cell, row: GuardAllFieldsFragment) => get_formatted_datetime(row.end_time),
     },
     {
-      dataField: "volunteers",
-      text: "Voluntarios",
-      formatter: (cell: VolunteerAllFieldsFragment[]) => get_formatted_volunteers(cell),
-    },
-    {
       dataField: "observations",
       text: "Observaciones",
     },
@@ -185,7 +180,7 @@ export const get_volunteer_columns = (options) => {
       text: "Grupo Sanguíneo",
       formatter: (cell, row: VolunteerAllFieldsFragment) => get_blood_type(row.blood_type),
     },
-    { dataField: "rank.name", text: "Rango" },
+    //{ dataField: "rank.name", text: "Rango" },
     {
       dataField: "incorporation_date",
       text: "Fecha de Reclutamiento",

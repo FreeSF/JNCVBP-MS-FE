@@ -27,6 +27,30 @@ export const GET_VOLUNTEERS = gql`
   ${volunteerAllFieldsFragment}
 `;
 
+export const GET_PAGINATED_VOLUNTEERS = gql`
+  query getPaginatedVolunteers(
+    $limit: Float
+    $offset: Float
+    $sortField: String
+    $sortOrder: String
+    $searchText: String
+  ) {
+    page: paginatedVolunteers(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      searchText: $searchText
+    ) {
+      items {
+        ...volunteerAllFields
+      }
+      totalSize
+    }
+  }
+  ${volunteerAllFieldsFragment}
+`;
+
 export const GET_VOLUNTEERS_DISABLED = gql`
   query getVolunteersDisabled {
     volunteersDisabled {

@@ -492,6 +492,12 @@ export type PaginatedGuards = {
   totalSize: Scalars["Int"];
 };
 
+export type PaginatedVolunteers = {
+  __typename?: "PaginatedVolunteers";
+  items: Array<Volunteer>;
+  totalSize: Scalars["Int"];
+};
+
 export type Quantity1044 = {
   __typename?: "Quantity1044";
   name?: Maybe<Scalars["String"]>;
@@ -519,6 +525,7 @@ export type Query = {
   servicesDisabled: Array<Service>;
   service: Service;
   volunteers: Array<Volunteer>;
+  paginatedVolunteers: PaginatedVolunteers;
   volunteersDisabled: Array<Volunteer>;
   volunteer: Volunteer;
   subTypes: Array<SubType>;
@@ -562,6 +569,14 @@ export type QueryRankArgs = {
 
 export type QueryServiceArgs = {
   id: Scalars["String"];
+};
+
+export type QueryPaginatedVolunteersArgs = {
+  searchText?: Maybe<Scalars["String"]>;
+  sortOrder?: Maybe<Scalars["String"]>;
+  sortField?: Maybe<Scalars["String"]>;
+  offset?: Maybe<Scalars["Float"]>;
+  limit?: Maybe<Scalars["Float"]>;
 };
 
 export type QueryVolunteerArgs = {
@@ -1504,6 +1519,20 @@ export type GetVolunteersQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetVolunteersQuery = { __typename?: "Query" } & {
   volunteers: Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>;
+};
+
+export type GetPaginatedVolunteersQueryVariables = Exact<{
+  limit?: Maybe<Scalars["Float"]>;
+  offset?: Maybe<Scalars["Float"]>;
+  sortField?: Maybe<Scalars["String"]>;
+  sortOrder?: Maybe<Scalars["String"]>;
+  searchText?: Maybe<Scalars["String"]>;
+}>;
+
+export type GetPaginatedVolunteersQuery = { __typename?: "Query" } & {
+  page: { __typename?: "PaginatedVolunteers" } & Pick<PaginatedVolunteers, "totalSize"> & {
+      items: Array<{ __typename?: "Volunteer" } & VolunteerAllFieldsFragment>;
+    };
 };
 
 export type GetVolunteersDisabledQueryVariables = Exact<{ [key: string]: never }>;
@@ -5096,6 +5125,66 @@ export function withGetVolunteers<TProps, TChildProps = {}, TDataName extends st
   });
 }
 export type GetVolunteersQueryResult = ApolloReactCommon.QueryResult<GetVolunteersQuery, GetVolunteersQueryVariables>;
+export const GetPaginatedVolunteersDocument = gql`
+  query getPaginatedVolunteers(
+    $limit: Float
+    $offset: Float
+    $sortField: String
+    $sortOrder: String
+    $searchText: String
+  ) {
+    page: paginatedVolunteers(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      searchText: $searchText
+    ) {
+      items {
+        ...volunteerAllFields
+      }
+      totalSize
+    }
+  }
+  ${VolunteerAllFieldsFragmentDoc}
+`;
+export type GetPaginatedVolunteersComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetPaginatedVolunteersQuery, GetPaginatedVolunteersQueryVariables>,
+  "query"
+>;
+
+export const GetPaginatedVolunteersComponent = (props: GetPaginatedVolunteersComponentProps) => (
+  <ApolloReactComponents.Query<GetPaginatedVolunteersQuery, GetPaginatedVolunteersQueryVariables>
+    query={GetPaginatedVolunteersDocument}
+    {...props}
+  />
+);
+
+export type GetPaginatedVolunteersProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetPaginatedVolunteersQuery, GetPaginatedVolunteersQueryVariables>;
+} & TChildProps;
+export function withGetPaginatedVolunteers<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetPaginatedVolunteersQuery,
+    GetPaginatedVolunteersQueryVariables,
+    GetPaginatedVolunteersProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetPaginatedVolunteersQuery,
+    GetPaginatedVolunteersQueryVariables,
+    GetPaginatedVolunteersProps<TChildProps, TDataName>
+  >(GetPaginatedVolunteersDocument, {
+    alias: "getPaginatedVolunteers",
+    ...operationOptions,
+  });
+}
+export type GetPaginatedVolunteersQueryResult = ApolloReactCommon.QueryResult<
+  GetPaginatedVolunteersQuery,
+  GetPaginatedVolunteersQueryVariables
+>;
 export const GetVolunteersDisabledDocument = gql`
   query getVolunteersDisabled {
     volunteersDisabled {

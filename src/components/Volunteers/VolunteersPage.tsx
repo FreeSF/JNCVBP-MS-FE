@@ -11,11 +11,17 @@ import {
   GetVolunteersQuery,
   VolunteerAllFieldsFragment,
 } from "../../types";
-import { DELETE_VOLUNTEER, GET_VOLUNTEERS, GET_VOLUNTEERS_DISABLED } from "../../queries/volunteers";
+import {
+  DELETE_VOLUNTEER,
+  GET_PAGINATED_VOLUNTEERS,
+  GET_VOLUNTEERS,
+  GET_VOLUNTEERS_DISABLED,
+} from "../../queries/volunteers";
 import { get_blood_type, get_formatted_date, get_volunteer_status } from "utils/constants";
 import Spinner from "../spinner";
 import { get_volunteer_columns } from "utils/columns";
 import StandardTable from "../utils/standardTable";
+import PagedTable from "../utils/PagedTable";
 
 const VolunteersPage = (props: RouteComponentProps) => {
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
@@ -58,16 +64,9 @@ const VolunteersPage = (props: RouteComponentProps) => {
                   Agregar
                 </Button>
               </Card.Title>
-              <p className="cardu-category">
-                ({getVolunteersQuery.data?.volunteers.length}) Voluntarios registrados en el sistema{" "}
-              </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              {getVolunteersQuery.loading ? (
-                <Spinner />
-              ) : (
-                <StandardTable columns={columns} data={getVolunteersQuery.data?.volunteers} />
-              )}
+              <PagedTable columns={columns} query={GET_PAGINATED_VOLUNTEERS} />
             </Card.Body>
           </Card>
         </Col>
