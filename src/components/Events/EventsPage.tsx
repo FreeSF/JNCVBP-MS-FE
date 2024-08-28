@@ -7,14 +7,13 @@ import {
   ServicesAllFieldsFragment,
   VolunteerAllFieldsFragment,
 } from "../../types";
-import { GET_EVENTS, GET_EVENTS_DISABLED, REMOVE_EVENT } from "../../queries/events";
+import { GET_EVENTS, GET_EVENTS_DISABLED, GET_PAGINATED_EVENTS, REMOVE_EVENT } from "../../queries/events";
 import Spinner from "../spinner";
 import { ColumnDescription } from "react-bootstrap-table-next";
 import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
-import { GET_GUARDS } from "../../queries/Guards";
 import { useHistory } from "react-router-dom";
-import StandardTable from "../utils/standardTable";
 import { get_event_columns } from "utils/columns";
+import PagedTable from "../utils/PagedTable";
 
 const EventsPage = (props) => {
   const history = useHistory();
@@ -47,16 +46,9 @@ const EventsPage = (props) => {
           <Card>
             <Card.Header>
               <Card.Title as="h4">Libro de Novedades</Card.Title>
-              <p className="cardu-category">
-                ({getEventsQuery.data?.events.length}) Eventos registrados en el sistema{" "}
-              </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              {getEventsQuery.loading ? (
-                <Spinner />
-              ) : (
-                <StandardTable columns={columns} data={getEventsQuery.data?.events} />
-              )}
+              <PagedTable columns={columns} query={GET_PAGINATED_EVENTS} />
             </Card.Body>
           </Card>
         </Col>
