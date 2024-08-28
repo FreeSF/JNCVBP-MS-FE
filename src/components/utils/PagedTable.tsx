@@ -21,7 +21,6 @@ const PagedTable: React.FC<TheProps> = (props) => {
   const [currentSizePerPage, setCurrentSizePerPage] = useState(10);
   const [sortField, setSortField] = useState("id");
   const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
-  const [searchText, setSearchText] = useState("");
   const theQuery = useQuery(props.query, {
     variables: { limit: currentSizePerPage, offset: 0, sortField, sortOrder, searchText: "" },
   });

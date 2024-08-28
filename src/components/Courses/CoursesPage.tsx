@@ -12,11 +12,12 @@ import {
   RemoveCourseMutation,
   RemoveCourseMutationVariables,
 } from "../../types";
-import { GET_COURSES, GET_COURSES_DISABLED, REMOVE_COURSE } from "../../queries/Courses";
+import { GET_COURSES, GET_COURSES_DISABLED, GET_PAGINATED_COURSES, REMOVE_COURSE } from "../../queries/Courses";
 
 import Spinner from "../spinner";
 import { get_course_columns } from "utils/columns";
 import StandardTable from "../utils/standardTable";
+import PagedTable from "../utils/PagedTable";
 
 const CoursesPage = (props) => {
   const getCoursesQuery = useQuery<GetCoursesQuery>(GET_COURSES);
@@ -63,14 +64,9 @@ const CoursesPage = (props) => {
                   Agregar
                 </Button>
               </Card.Title>
-              <p className="cardu-category">({getCoursesQuery.data?.courses?.length || 0}) Cursos en el sistema </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              {getCoursesQuery.loading ? (
-                <Spinner />
-              ) : (
-                <StandardTable keyField={"id"} data={getCoursesQuery.data?.courses} columns={columns} />
-              )}
+              <PagedTable keyField={"id"} query={GET_PAGINATED_COURSES} columns={columns} />
             </Card.Body>
           </Card>
         </Col>

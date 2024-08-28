@@ -25,6 +25,30 @@ export const GET_COURSES = gql`
   ${COURSES_ALL_FIELDS_FRAGMENT}
 `;
 
+export const GET_PAGINATED_COURSES = gql`
+  query getPaginatedCourses(
+    $limit: Float
+    $offset: Float
+    $sortField: String
+    $sortOrder: String
+    $searchText: String
+  ) {
+    page: paginatedCourses(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      searchText: $searchText
+    ) {
+      items {
+        ...coursesAllFields
+      }
+      totalSize
+    }
+  }
+  ${COURSES_ALL_FIELDS_FRAGMENT}
+`;
+
 export const GET_COURSES_DISABLED = gql`
   query getCoursesDisabled {
     coursesDisabled {
