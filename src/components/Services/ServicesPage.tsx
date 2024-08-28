@@ -4,7 +4,6 @@ import { useMutation, useQuery } from "@apollo/client";
 
 import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
 import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
-import { BlobProvider, Document, Page, Text, View } from "@react-pdf/renderer";
 
 import {
   GetServicesQuery,
@@ -13,13 +12,10 @@ import {
   ServicesAllFieldsFragment,
   Volunteer,
 } from "../../types";
-import StandardTable from "../utils/standardTable";
 import Spinner from "../spinner";
-import { GET_SERVICES, GET_SERVICES_DISABLED, REMOVE_SERVICE } from "../../queries/services";
-import SingleServiceReport from "../../reports/SingleServiceReport";
-import moment from "moment";
-import { DEFAULT_DATE_FORMAT, DEFAULT_DATETIME_FORMAT } from "../../utils/constants";
+import { GET_PAGINATED_SERVICES, GET_SERVICES, GET_SERVICES_DISABLED, REMOVE_SERVICE } from "../../queries/services";
 import { get_service_columns } from "../../utils/columns";
+import PagedTable from "../utils/PagedTable";
 
 const ServicesPage = (props: RouteComponentProps) => {
   const getServicesQuery = useQuery<GetServicesQuery>(GET_SERVICES);
@@ -67,12 +63,9 @@ const ServicesPage = (props: RouteComponentProps) => {
                   Agregar
                 </Button>
               </Card.Title>
-              <p className="cardu-category">
-                ({getServicesQuery.data?.services?.length || 0}) Servicios en el sistema{" "}
-              </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              <StandardTable keyField={"id"} data={getServicesQuery.data?.services} columns={columns} />
+              <PagedTable keyField={"id"} query={GET_PAGINATED_SERVICES} columns={columns} />
             </Card.Body>
           </Card>
         </Col>

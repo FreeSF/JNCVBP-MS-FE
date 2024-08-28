@@ -111,26 +111,26 @@ export const get_service_columns = (options) => {
       formatter: (cell, row) => moment(cell).format(DEFAULT_DATETIME_FORMAT),
     },
     {
-      dataField: "officer_in_charge.name",
-      text: "Oficial",
-    },
-    {
       dataField: "locality",
       text: "Localidad",
     },
     {
-      dataField: "sub_type.code",
-      text: "Código",
+      dataField: "address",
+      text: "Dirección",
     },
     {
-      dataField: "sub_type.name",
-      text: "Sub Tipo",
+      dataField: "alerted_by",
+      text: "Comunicado por",
     },
+    {
+      dataField: "type",
+      text: "Tipo",
+    } /*,
     {
       dataField: "volunteers",
       text: "Voluntarios",
       formatter: (cell: Volunteer[]) => cell.map((volunteer) => volunteer.name).join(", "),
-    },
+    }*/,
     options,
   ];
 

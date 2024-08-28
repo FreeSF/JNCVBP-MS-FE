@@ -498,6 +498,18 @@ export type PaginatedGuards = {
   totalSize: Scalars["Int"];
 };
 
+export type PaginatedServices = {
+  __typename?: "PaginatedServices";
+  items: Array<Service>;
+  totalSize: Scalars["Int"];
+};
+
+export type PaginatedTrainings = {
+  __typename?: "PaginatedTrainings";
+  items: Array<Training>;
+  totalSize: Scalars["Int"];
+};
+
 export type PaginatedVolunteers = {
   __typename?: "PaginatedVolunteers";
   items: Array<Volunteer>;
@@ -528,6 +540,7 @@ export type Query = {
   ranksDisabled: Array<Rank>;
   rank: Rank;
   services: Array<Service>;
+  paginatedServices: PaginatedServices;
   servicesDisabled: Array<Service>;
   service: Service;
   volunteers: Array<Volunteer>;
@@ -553,6 +566,7 @@ export type Query = {
   eventsDisabled: Array<Event>;
   event: Event;
   trainings: Array<Training>;
+  paginatedTrainings: PaginatedTrainings;
   trainingsDisabled: Array<Training>;
   training: Training;
   courses: Array<Course>;
@@ -572,6 +586,14 @@ export type QueryDutyArgs = {
 
 export type QueryRankArgs = {
   id: Scalars["String"];
+};
+
+export type QueryPaginatedServicesArgs = {
+  searchText?: Maybe<Scalars["String"]>;
+  sortOrder?: Maybe<Scalars["String"]>;
+  sortField?: Maybe<Scalars["String"]>;
+  offset?: Maybe<Scalars["Float"]>;
+  limit?: Maybe<Scalars["Float"]>;
 };
 
 export type QueryServiceArgs = {
@@ -616,6 +638,14 @@ export type QueryGuardArgs = {
 
 export type QueryEventArgs = {
   id: Scalars["String"];
+};
+
+export type QueryPaginatedTrainingsArgs = {
+  searchText?: Maybe<Scalars["String"]>;
+  sortOrder?: Maybe<Scalars["String"]>;
+  sortField?: Maybe<Scalars["String"]>;
+  offset?: Maybe<Scalars["Float"]>;
+  limit?: Maybe<Scalars["Float"]>;
 };
 
 export type QueryTrainingArgs = {
@@ -923,8 +953,8 @@ export type GetPaginatedCoursesQueryVariables = Exact<{
 }>;
 
 export type GetPaginatedCoursesQuery = { __typename?: "Query" } & {
-  page: { __typename?: "PaginatedGuards" } & Pick<PaginatedGuards, "totalSize"> & {
-      items: Array<{ __typename?: "Guard" } & GuardAllFieldsFragment>;
+  page: { __typename?: "PaginatedCourses" } & Pick<PaginatedCourses, "totalSize"> & {
+      items: Array<{ __typename?: "Course" } & CoursesAllFieldsFragment>;
     };
 };
 
@@ -1105,6 +1135,20 @@ export type GetTrainingsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetTrainingsQuery = { __typename?: "Query" } & {
   trainings: Array<{ __typename?: "Training" } & TrainingAllFieldsFragment>;
+};
+
+export type GetPaginatedTrainingsQueryVariables = Exact<{
+  limit?: Maybe<Scalars["Float"]>;
+  offset?: Maybe<Scalars["Float"]>;
+  sortField?: Maybe<Scalars["String"]>;
+  sortOrder?: Maybe<Scalars["String"]>;
+  searchText?: Maybe<Scalars["String"]>;
+}>;
+
+export type GetPaginatedTrainingsQuery = { __typename?: "Query" } & {
+  page: { __typename?: "PaginatedTrainings" } & Pick<PaginatedTrainings, "totalSize"> & {
+      items: Array<{ __typename?: "Training" } & TrainingAllFieldsFragment>;
+    };
 };
 
 export type GetTrainingsDisabledQueryVariables = Exact<{ [key: string]: never }>;
@@ -1910,7 +1954,7 @@ export const GetPaginatedCoursesDocument = gql`
     $sortOrder: String
     $searchText: String
   ) {
-    page: paginatedGuards(
+    page: paginatedCourses(
       limit: $limit
       offset: $offset
       sortField: $sortField
@@ -1918,12 +1962,12 @@ export const GetPaginatedCoursesDocument = gql`
       searchText: $searchText
     ) {
       items {
-        ...guardAllFields
+        ...coursesAllFields
       }
       totalSize
     }
   }
-  ${GuardAllFieldsFragmentDoc}
+  ${CoursesAllFieldsFragmentDoc}
 `;
 export type GetPaginatedCoursesComponentProps = Omit<
   ApolloReactComponents.QueryComponentOptions<GetPaginatedCoursesQuery, GetPaginatedCoursesQueryVariables>,
@@ -2859,6 +2903,66 @@ export function withGetTrainings<TProps, TChildProps = {}, TDataName extends str
   });
 }
 export type GetTrainingsQueryResult = ApolloReactCommon.QueryResult<GetTrainingsQuery, GetTrainingsQueryVariables>;
+export const GetPaginatedTrainingsDocument = gql`
+  query getPaginatedTrainings(
+    $limit: Float
+    $offset: Float
+    $sortField: String
+    $sortOrder: String
+    $searchText: String
+  ) {
+    page: paginatedTrainings(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      searchText: $searchText
+    ) {
+      items {
+        ...trainingAllFields
+      }
+      totalSize
+    }
+  }
+  ${TrainingAllFieldsFragmentDoc}
+`;
+export type GetPaginatedTrainingsComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetPaginatedTrainingsQuery, GetPaginatedTrainingsQueryVariables>,
+  "query"
+>;
+
+export const GetPaginatedTrainingsComponent = (props: GetPaginatedTrainingsComponentProps) => (
+  <ApolloReactComponents.Query<GetPaginatedTrainingsQuery, GetPaginatedTrainingsQueryVariables>
+    query={GetPaginatedTrainingsDocument}
+    {...props}
+  />
+);
+
+export type GetPaginatedTrainingsProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetPaginatedTrainingsQuery, GetPaginatedTrainingsQueryVariables>;
+} & TChildProps;
+export function withGetPaginatedTrainings<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetPaginatedTrainingsQuery,
+    GetPaginatedTrainingsQueryVariables,
+    GetPaginatedTrainingsProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetPaginatedTrainingsQuery,
+    GetPaginatedTrainingsQueryVariables,
+    GetPaginatedTrainingsProps<TChildProps, TDataName>
+  >(GetPaginatedTrainingsDocument, {
+    alias: "getPaginatedTrainings",
+    ...operationOptions,
+  });
+}
+export type GetPaginatedTrainingsQueryResult = ApolloReactCommon.QueryResult<
+  GetPaginatedTrainingsQuery,
+  GetPaginatedTrainingsQueryVariables
+>;
 export const GetTrainingsDisabledDocument = gql`
   query getTrainingsDisabled {
     trainingsDisabled {
