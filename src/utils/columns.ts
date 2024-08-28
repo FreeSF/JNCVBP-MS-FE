@@ -154,12 +154,13 @@ export const get_training_columns = (options) => {
       dataField: "date",
       text: "Fecha",
       formatter: (cell, row: TrainingAllFieldsFragment) => get_formatted_date(row.date),
-    },
+    } /*,
     {
       dataField: "volunteers",
       text: "Voluntarios",
+      sort: false,
       formatter: (cell: VolunteerAllFieldsFragment[]) => get_formatted_volunteers(cell),
-    },
+    }*/,
     options,
   ];
 

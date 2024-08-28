@@ -5,7 +5,12 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
 
-import { GET_TRAININGS, GET_TRAININGS_DISABLED, REMOVE_TRAINING } from "../../queries/Trainings";
+import {
+  GET_PAGINATED_TRAININGS,
+  GET_TRAININGS,
+  GET_TRAININGS_DISABLED,
+  REMOVE_TRAINING,
+} from "../../queries/Trainings";
 import {
   GetTrainingsQuery,
   RemoveTrainingMutation,
@@ -17,6 +22,7 @@ import Spinner from "../spinner";
 import { get_formatted_date, get_formatted_volunteers } from "utils/constants";
 import { get_training_columns } from "utils/columns";
 import StandardTable from "../utils/standardTable";
+import PagedTable from "../utils/PagedTable";
 
 const TrainingsPage = (props) => {
   const getTrainingsQuery = useQuery<GetTrainingsQuery>(GET_TRAININGS);
@@ -56,16 +62,9 @@ const TrainingsPage = (props) => {
                   Agregar
                 </Button>
               </Card.Title>
-              <p className="cardu-category">
-                ({getTrainingsQuery.data?.trainings?.length || 0}) Prácticas en el sistema{" "}
-              </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              {getTrainingsQuery.loading ? (
-                <Spinner />
-              ) : (
-                <StandardTable keyField={"id"} data={getTrainingsQuery.data?.trainings} columns={columns} />
-              )}
+              <PagedTable keyField={"id"} query={GET_PAGINATED_TRAININGS} columns={columns} />
             </Card.Body>
           </Card>
         </Col>
