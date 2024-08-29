@@ -516,6 +516,12 @@ export type PaginatedTrainings = {
   totalSize: Scalars["Int"];
 };
 
+export type PaginatedUsers = {
+  __typename?: "PaginatedUsers";
+  items: Array<User>;
+  totalSize: Scalars["Int"];
+};
+
 export type PaginatedVolunteers = {
   __typename?: "PaginatedVolunteers";
   items: Array<Volunteer>;
@@ -537,6 +543,7 @@ export type Query = {
   __typename?: "Query";
   currentUser?: Maybe<User>;
   users: Array<User>;
+  paginatedUsers: PaginatedUsers;
   usersDisabled: Array<User>;
   user: User;
   duties: Array<Duty>;
@@ -581,6 +588,14 @@ export type Query = {
   coursesDisabled: Array<Course>;
   course: Course;
   report: Report;
+};
+
+export type QueryPaginatedUsersArgs = {
+  searchText?: Maybe<Scalars["String"]>;
+  sortOrder?: Maybe<Scalars["String"]>;
+  sortField?: Maybe<Scalars["String"]>;
+  offset?: Maybe<Scalars["Float"]>;
+  limit?: Maybe<Scalars["Float"]>;
 };
 
 export type QueryUserArgs = {
@@ -1221,6 +1236,20 @@ export type GetUsersQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetUsersQuery = { __typename?: "Query" } & {
   users: Array<{ __typename?: "User" } & UserAllFieldsFragment>;
+};
+
+export type GetPaginatedUsersQueryVariables = Exact<{
+  limit?: Maybe<Scalars["Float"]>;
+  offset?: Maybe<Scalars["Float"]>;
+  sortField?: Maybe<Scalars["String"]>;
+  sortOrder?: Maybe<Scalars["String"]>;
+  searchText?: Maybe<Scalars["String"]>;
+}>;
+
+export type GetPaginatedUsersQuery = { __typename?: "Query" } & {
+  page: { __typename?: "PaginatedUsers" } & Pick<PaginatedUsers, "totalSize"> & {
+      items: Array<{ __typename?: "User" } & UserAllFieldsFragment>;
+    };
 };
 
 export type GetUsersDisabledQueryVariables = Exact<{ [key: string]: never }>;
@@ -3328,6 +3357,60 @@ export function withGetUsers<TProps, TChildProps = {}, TDataName extends string 
   );
 }
 export type GetUsersQueryResult = ApolloReactCommon.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
+export const GetPaginatedUsersDocument = gql`
+  query getPaginatedUsers($limit: Float, $offset: Float, $sortField: String, $sortOrder: String, $searchText: String) {
+    page: paginatedUsers(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      searchText: $searchText
+    ) {
+      items {
+        ...userAllFields
+      }
+      totalSize
+    }
+  }
+  ${UserAllFieldsFragmentDoc}
+`;
+export type GetPaginatedUsersComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<GetPaginatedUsersQuery, GetPaginatedUsersQueryVariables>,
+  "query"
+>;
+
+export const GetPaginatedUsersComponent = (props: GetPaginatedUsersComponentProps) => (
+  <ApolloReactComponents.Query<GetPaginatedUsersQuery, GetPaginatedUsersQueryVariables>
+    query={GetPaginatedUsersDocument}
+    {...props}
+  />
+);
+
+export type GetPaginatedUsersProps<TChildProps = {}, TDataName extends string = "data"> = {
+  [key in TDataName]: ApolloReactHoc.DataValue<GetPaginatedUsersQuery, GetPaginatedUsersQueryVariables>;
+} & TChildProps;
+export function withGetPaginatedUsers<TProps, TChildProps = {}, TDataName extends string = "data">(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    GetPaginatedUsersQuery,
+    GetPaginatedUsersQueryVariables,
+    GetPaginatedUsersProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    GetPaginatedUsersQuery,
+    GetPaginatedUsersQueryVariables,
+    GetPaginatedUsersProps<TChildProps, TDataName>
+  >(GetPaginatedUsersDocument, {
+    alias: "getPaginatedUsers",
+    ...operationOptions,
+  });
+}
+export type GetPaginatedUsersQueryResult = ApolloReactCommon.QueryResult<
+  GetPaginatedUsersQuery,
+  GetPaginatedUsersQueryVariables
+>;
 export const GetUsersDisabledDocument = gql`
   query getUsersDisabled {
     usersDisabled {
