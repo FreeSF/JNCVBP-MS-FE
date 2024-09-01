@@ -73,12 +73,12 @@ const PagedTable: React.FC<TheProps> = ({ disabled = false, ...props }) => {
                   limit: newState.sizePerPage,
                   sortField: newState.sortField,
                   sortOrder: newState.sortOrder,
-                  searchText: searchProps.searchText || "",
+                  searchText: searchProps.searchText,
                 });
                 setCurrentPage(newState.page);
                 setCurrentSizePerPage(newState.sizePerPage);
-                setSortField(newState.sortField);
-                setSortOrder(newState.sortOrder);
+                setSortField(newState.sortField || "id");
+                setSortOrder(newState.sortOrder || "desc");
               }}
             />
           </>
