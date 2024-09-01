@@ -13,16 +13,17 @@ interface TheProps {
   columns: ColumnDescription<any, any>[];
   keyField?: string;
   query: DocumentNode;
+  disabled?: boolean;
 }
 
-const PagedTable: React.FC<TheProps> = (props) => {
+const PagedTable: React.FC<TheProps> = ({ disabled = false, ...props }) => {
   const theColumns = props.columns.map((theColumn) => ({ ...theColumn, sort: !!theColumn.dataField }));
   const [currentPage, setCurrentPage] = useState(1);
   const [currentSizePerPage, setCurrentSizePerPage] = useState(10);
   const [sortField, setSortField] = useState("id");
   const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
   const theQuery = useQuery(props.query, {
-    variables: { limit: currentSizePerPage, offset: 0, sortField, sortOrder, searchText: "" },
+    variables: { limit: currentSizePerPage, offset: 0, sortField, sortOrder, searchText: "", disabled: !!disabled },
   });
 
   //console.log({theQuery: _.cloneDeep(theQuery)});

@@ -591,6 +591,7 @@ export type Query = {
 };
 
 export type QueryPaginatedUsersArgs = {
+  disabled?: Maybe<Scalars["Boolean"]>;
   searchText?: Maybe<Scalars["String"]>;
   sortOrder?: Maybe<Scalars["String"]>;
   sortField?: Maybe<Scalars["String"]>;
@@ -611,6 +612,7 @@ export type QueryRankArgs = {
 };
 
 export type QueryPaginatedServicesArgs = {
+  disabled?: Maybe<Scalars["Boolean"]>;
   searchText?: Maybe<Scalars["String"]>;
   sortOrder?: Maybe<Scalars["String"]>;
   sortField?: Maybe<Scalars["String"]>;
@@ -623,6 +625,7 @@ export type QueryServiceArgs = {
 };
 
 export type QueryPaginatedVolunteersArgs = {
+  disabled?: Maybe<Scalars["Boolean"]>;
   searchText?: Maybe<Scalars["String"]>;
   sortOrder?: Maybe<Scalars["String"]>;
   sortField?: Maybe<Scalars["String"]>;
@@ -647,6 +650,7 @@ export type QueryFireClassArgs = {
 };
 
 export type QueryPaginatedGuardsArgs = {
+  disabled?: Maybe<Scalars["Boolean"]>;
   searchText?: Maybe<Scalars["String"]>;
   sortOrder?: Maybe<Scalars["String"]>;
   sortField?: Maybe<Scalars["String"]>;
@@ -659,6 +663,7 @@ export type QueryGuardArgs = {
 };
 
 export type QueryPaginatedEventsArgs = {
+  disabled?: Maybe<Scalars["Boolean"]>;
   searchText?: Maybe<Scalars["String"]>;
   sortOrder?: Maybe<Scalars["String"]>;
   sortField?: Maybe<Scalars["String"]>;
@@ -671,6 +676,7 @@ export type QueryEventArgs = {
 };
 
 export type QueryPaginatedTrainingsArgs = {
+  disabled?: Maybe<Scalars["Boolean"]>;
   searchText?: Maybe<Scalars["String"]>;
   sortOrder?: Maybe<Scalars["String"]>;
   sortField?: Maybe<Scalars["String"]>;
@@ -683,6 +689,7 @@ export type QueryTrainingArgs = {
 };
 
 export type QueryPaginatedCoursesArgs = {
+  disabled?: Maybe<Scalars["Boolean"]>;
   searchText?: Maybe<Scalars["String"]>;
   sortOrder?: Maybe<Scalars["String"]>;
   sortField?: Maybe<Scalars["String"]>;
@@ -980,6 +987,7 @@ export type GetPaginatedCoursesQueryVariables = Exact<{
   sortField?: Maybe<Scalars["String"]>;
   sortOrder?: Maybe<Scalars["String"]>;
   searchText?: Maybe<Scalars["String"]>;
+  disabled?: Maybe<Scalars["Boolean"]>;
 }>;
 
 export type GetPaginatedCoursesQuery = { __typename?: "Query" } & {
@@ -1364,6 +1372,7 @@ export type GetPaginatedEventsQueryVariables = Exact<{
   sortField?: Maybe<Scalars["String"]>;
   sortOrder?: Maybe<Scalars["String"]>;
   searchText?: Maybe<Scalars["String"]>;
+  disabled?: Maybe<Scalars["Boolean"]>;
 }>;
 
 export type GetPaginatedEventsQuery = { __typename?: "Query" } & {
@@ -2025,6 +2034,7 @@ export const GetPaginatedCoursesDocument = gql`
     $sortField: String
     $sortOrder: String
     $searchText: String
+    $disabled: Boolean
   ) {
     page: paginatedCourses(
       limit: $limit
@@ -2032,6 +2042,7 @@ export const GetPaginatedCoursesDocument = gql`
       sortField: $sortField
       sortOrder: $sortOrder
       searchText: $searchText
+      disabled: $disabled
     ) {
       items {
         ...coursesAllFields
@@ -4030,13 +4041,21 @@ export function withGetEvents<TProps, TChildProps = {}, TDataName extends string
 }
 export type GetEventsQueryResult = ApolloReactCommon.QueryResult<GetEventsQuery, GetEventsQueryVariables>;
 export const GetPaginatedEventsDocument = gql`
-  query getPaginatedEvents($limit: Float, $offset: Float, $sortField: String, $sortOrder: String, $searchText: String) {
+  query getPaginatedEvents(
+    $limit: Float
+    $offset: Float
+    $sortField: String
+    $sortOrder: String
+    $searchText: String
+    $disabled: Boolean
+  ) {
     page: paginatedEvents(
       limit: $limit
       offset: $offset
       sortField: $sortField
       sortOrder: $sortOrder
       searchText: $searchText
+      disabled: $disabled
     ) {
       items {
         ...eventAllFields

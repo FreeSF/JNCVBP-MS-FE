@@ -88,6 +88,7 @@ export const GET_PAGINATED_SERVICES = gql`
     $sortField: String
     $sortOrder: String
     $searchText: String
+    $disabled: Boolean
   ) {
     page: paginatedServices(
       limit: $limit
@@ -95,6 +96,7 @@ export const GET_PAGINATED_SERVICES = gql`
       sortField: $sortField
       sortOrder: $sortOrder
       searchText: $searchText
+      disabled: $disabled
     ) {
       items {
         ...servicesAllFields

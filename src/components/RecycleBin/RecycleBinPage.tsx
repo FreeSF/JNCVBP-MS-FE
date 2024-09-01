@@ -28,17 +28,27 @@ import {
   RestoreUserMutation,
   RestoreVolunteerMutation,
 } from "../../types";
-import { GET_COURSES, GET_COURSES_DISABLED, RESTORE_COURSE } from "../../queries/Courses";
-import { GET_VOLUNTEERS, GET_VOLUNTEERS_DISABLED, RESTORE_VOLUNTEER } from "../../queries/volunteers";
+import { GET_COURSES, GET_COURSES_DISABLED, GET_PAGINATED_COURSES, RESTORE_COURSE } from "../../queries/Courses";
+import {
+  GET_PAGINATED_VOLUNTEERS,
+  GET_VOLUNTEERS,
+  GET_VOLUNTEERS_DISABLED,
+  RESTORE_VOLUNTEER,
+} from "../../queries/volunteers";
 import { GET_DUTIES_DISABLED } from "../../queries/duties";
-import { GET_EVENTS, GET_EVENTS_DISABLED, RESTORE_EVENT } from "../../queries/events";
+import { GET_EVENTS, GET_EVENTS_DISABLED, GET_PAGINATED_EVENTS, RESTORE_EVENT } from "../../queries/events";
 // import { GET_FIRE_CAUSES_DISABLED } from "../../queries/fireCause";
 // import { GET_FIRE_CLASSES_DISABLED } from "../../queries/fireClass";
 // import { GET_SUB_TYPES_DISABLED } from "../../queries/subType";
-import { GET_GUARDS, GET_GUARDS_DISABLED, RESTORE_GUARD } from "../../queries/Guards";
+import { GET_GUARDS, GET_GUARDS_DISABLED, GET_PAGINATED_GUARDS, RESTORE_GUARD } from "../../queries/Guards";
 import { GET_RANKS, GET_RANKS_DISABLED, RESTORE_RANK } from "../../queries/ranks";
-import { GET_SERVICES, GET_SERVICES_DISABLED, RESTORE_SERVICE } from "../../queries/services";
-import { GET_TRAININGS, GET_TRAININGS_DISABLED, RESTORE_TRAINING } from "../../queries/Trainings";
+import { GET_PAGINATED_SERVICES, GET_SERVICES, GET_SERVICES_DISABLED, RESTORE_SERVICE } from "../../queries/services";
+import {
+  GET_PAGINATED_TRAININGS,
+  GET_TRAININGS,
+  GET_TRAININGS_DISABLED,
+  RESTORE_TRAINING,
+} from "../../queries/Trainings";
 import {
   get_course_columns,
   get_duty_columns,
@@ -50,8 +60,11 @@ import {
   get_users_columns,
   get_volunteer_columns,
 } from "utils/columns";
-import { GET_USERS, GET_USERS_DISABLED, RESTORE_USER } from "../../queries/Users";
+import { GET_PAGINATED_USERS, GET_USERS, GET_USERS_DISABLED, RESTORE_USER } from "../../queries/Users";
 import StandardTable from "../utils/standardTable";
+import PagedTable from "../utils/PagedTable";
+import { DocumentNode } from "graphql";
+import { tr } from "date-fns/locale";
 
 const COURSE = "Cursos";
 // const FIRE_CAUSE = "Causa de fuego";
@@ -225,15 +238,18 @@ const RecycleBinPage = (props) => {
   ];
 
   let data = [];
+  let query: DocumentNode;
   switch (type.value) {
     case COURSE: {
       columns = get_course_columns(restoreColumn);
       data = courses.called && !courses.loading ? courses.data.coursesDisabled : [];
+      query = GET_PAGINATED_COURSES;
       break;
     }
     case EVENT: {
       columns = get_event_columns(restoreColumn);
       data = events.called && !events.loading ? events.data.eventsDisabled : [];
+      query = GET_PAGINATED_EVENTS;
       break;
     }
     // case FIRE_CAUSE: {
@@ -251,11 +267,13 @@ const RecycleBinPage = (props) => {
     case GUARD: {
       columns = get_guard_columns(restoreColumn);
       data = guards.called && !guards.loading ? guards.data.guardsDisabled : [];
+      query = GET_PAGINATED_GUARDS;
       break;
     }
     case USERS: {
       columns = get_users_columns(restoreColumn);
       data = users.called && !users.loading ? users.data.usersDisabled : [];
+      query = GET_PAGINATED_USERS;
       break;
     }
     /*case RANK: {
@@ -266,16 +284,19 @@ const RecycleBinPage = (props) => {
     case SERVICE: {
       columns = get_service_columns(restoreColumn);
       data = services.called && !services.loading ? services.data.servicesDisabled : [];
+      query = GET_PAGINATED_SERVICES;
       break;
     }
     case TRAINING: {
       columns = get_training_columns(restoreColumn);
       data = trainings.called && !trainings.loading ? trainings.data.trainingsDisabled : [];
+      query = GET_PAGINATED_TRAININGS;
       break;
     }
     case VOLUNTEER: {
       columns = get_volunteer_columns(restoreColumn);
       data = volunteers.called && !volunteers.loading ? volunteers.data.volunteersDisabled : [];
+      query = GET_PAGINATED_VOLUNTEERS;
       break;
     }
   }
@@ -295,7 +316,7 @@ const RecycleBinPage = (props) => {
               <p className="cardu-category">({data?.length || 0}) encontrados </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              <StandardTable keyField="id" data={data} columns={columns} />
+              <PagedTable keyField="id" query={query} columns={columns} disabled={true} />
             </Card.Body>
           </Card>
         </Col>

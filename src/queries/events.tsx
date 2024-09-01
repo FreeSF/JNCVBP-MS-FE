@@ -23,13 +23,21 @@ export const GET_EVENTS = gql`
 `;
 
 export const GET_PAGINATED_EVENTS = gql`
-  query getPaginatedEvents($limit: Float, $offset: Float, $sortField: String, $sortOrder: String, $searchText: String) {
+  query getPaginatedEvents(
+    $limit: Float
+    $offset: Float
+    $sortField: String
+    $sortOrder: String
+    $searchText: String
+    $disabled: Boolean
+  ) {
     page: paginatedEvents(
       limit: $limit
       offset: $offset
       sortField: $sortField
       sortOrder: $sortOrder
       searchText: $searchText
+      disabled: $disabled
     ) {
       items {
         ...eventAllFields

@@ -21,13 +21,21 @@ export const GET_USERS = gql`
 `;
 
 export const GET_PAGINATED_USERS = gql`
-  query getPaginatedUsers($limit: Float, $offset: Float, $sortField: String, $sortOrder: String, $searchText: String) {
+  query getPaginatedUsers(
+    $limit: Float
+    $offset: Float
+    $sortField: String
+    $sortOrder: String
+    $searchText: String
+    $disabled: Boolean
+  ) {
     page: paginatedUsers(
       limit: $limit
       offset: $offset
       sortField: $sortField
       sortOrder: $sortOrder
       searchText: $searchText
+      disabled: $disabled
     ) {
       items {
         ...userAllFields

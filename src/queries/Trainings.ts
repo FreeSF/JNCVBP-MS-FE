@@ -29,6 +29,7 @@ export const GET_PAGINATED_TRAININGS = gql`
     $sortField: String
     $sortOrder: String
     $searchText: String
+    $disabled: Boolean
   ) {
     page: paginatedTrainings(
       limit: $limit
@@ -36,6 +37,7 @@ export const GET_PAGINATED_TRAININGS = gql`
       sortField: $sortField
       sortOrder: $sortOrder
       searchText: $searchText
+      disabled: $disabled
     ) {
       items {
         ...trainingAllFields
