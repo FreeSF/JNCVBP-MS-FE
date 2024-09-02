@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { volunteerAllFieldsFragment } from "./volunteers";
+import { volunteerAllFieldsFragment, volunteerNameFieldFragment } from "./volunteers";
 
 const GUARDS_ALL_FIELDS_FRAGMENT = gql`
   fragment guardAllFields on Guard {
@@ -8,12 +8,13 @@ const GUARDS_ALL_FIELDS_FRAGMENT = gql`
     end_time
     observations
     volunteers {
-      ...volunteerAllFields
+      ...volunteerNameField
     }
   }
-  ${volunteerAllFieldsFragment}
+  ${volunteerNameFieldFragment}
 `;
 
+// Inefficient
 export const GET_GUARDS = gql`
   query getGuards {
     guards {

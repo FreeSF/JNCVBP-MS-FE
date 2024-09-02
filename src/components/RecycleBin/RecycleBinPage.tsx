@@ -7,12 +7,7 @@ import Select from "react-select";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import {
   GetCoursesDisabledQuery,
-  GetDutiesDisabledQuery,
   GetEventsDisabledQuery,
-  // GetFireCausesDisabledQuery,
-  // GetFireCausesQuery,
-  // GetFireClassesDisabledQuery,
-  // GetSubTypesDisabledQuery,
   GetGuardsDisabledQuery,
   GetRanksDisabledQuery,
   GetServicesDisabledQuery,
@@ -37,10 +32,7 @@ import {
 } from "../../queries/volunteers";
 import { GET_DUTIES_DISABLED } from "../../queries/duties";
 import { GET_EVENTS, GET_EVENTS_DISABLED, GET_PAGINATED_EVENTS, RESTORE_EVENT } from "../../queries/events";
-// import { GET_FIRE_CAUSES_DISABLED } from "../../queries/fireCause";
-// import { GET_FIRE_CLASSES_DISABLED } from "../../queries/fireClass";
-// import { GET_SUB_TYPES_DISABLED } from "../../queries/subType";
-import { GET_GUARDS, GET_GUARDS_DISABLED, GET_PAGINATED_GUARDS, RESTORE_GUARD } from "../../queries/Guards";
+import { CURRENT_GUARD, GET_PAGINATED_GUARDS, NEXT_GUARD, RESTORE_GUARD } from "../../queries/Guards";
 import { GET_RANKS, GET_RANKS_DISABLED, RESTORE_RANK } from "../../queries/ranks";
 import { GET_PAGINATED_SERVICES, GET_SERVICES, GET_SERVICES_DISABLED, RESTORE_SERVICE } from "../../queries/services";
 import {
@@ -51,46 +43,33 @@ import {
 } from "../../queries/Trainings";
 import {
   get_course_columns,
-  get_duty_columns,
   get_event_columns,
   get_guard_columns,
-  get_rank_columns,
   get_service_columns,
   get_training_columns,
   get_users_columns,
   get_volunteer_columns,
 } from "utils/columns";
 import { GET_PAGINATED_USERS, GET_USERS, GET_USERS_DISABLED, RESTORE_USER } from "../../queries/Users";
-import StandardTable from "../utils/standardTable";
 import PagedTable from "../utils/PagedTable";
 import { DocumentNode } from "graphql";
-import { tr } from "date-fns/locale";
 
 const COURSE = "Cursos";
-// const FIRE_CAUSE = "Causa de fuego";
-// const FIRE_CLASS = "Clase de fuego";
-// const SUB_TYPE = "Sub tipo";
 const EVENT = "Eventos";
 const GUARD = "Guardias";
 const USERS = "Usuarios";
 const RANK = "Rangos";
 const SERVICE = "Servicios";
 const TRAINING = "Prácticas";
-// const USER = "Usuario";
 const VOLUNTEER = "Voluntarios";
 
 const OPTIONS = [
   { value: COURSE, label: COURSE },
-  // { value: FIRE_CAUSE, label: FIRE_CAUSE },
-  // { value: FIRE_CLASS, label: FIRE_CLASS },
-  // { value: SUB_TYPE, label: SUB_TYPE },
   { value: EVENT, label: EVENT },
   { value: GUARD, label: GUARD },
   { value: USERS, label: USERS },
-  //{ value: RANK, label: RANK },
   { value: SERVICE, label: SERVICE },
   { value: TRAINING, label: TRAINING },
-  // { value: USER, label: USER},
   { value: VOLUNTEER, label: VOLUNTEER },
 ];
 
@@ -104,7 +83,7 @@ const RecycleBinPage = (props) => {
     refetchQueries: [{ query: GET_EVENTS_DISABLED }, { query: GET_EVENTS }],
   });
   const [restoreGuard, restoredGuard] = useMutation<RestoreGuardMutation>(RESTORE_GUARD, {
-    refetchQueries: [{ query: GET_GUARDS_DISABLED }, { query: GET_GUARDS }],
+    refetchQueries: [{ query: CURRENT_GUARD }, { query: NEXT_GUARD }],
   });
   const [restoreUser, restoredUser] = useMutation<RestoreUserMutation>(RESTORE_USER, {
     refetchQueries: [{ query: GET_USERS_DISABLED }, { query: GET_USERS }],
@@ -141,18 +120,6 @@ const RecycleBinPage = (props) => {
         loadEvents();
         break;
       }
-      // case FIRE_CAUSE: {
-      //   loadFireCause();
-      //   break;
-      // }
-      // case FIRE_CLASS: {
-      //   loadFireClass();
-      //   break;
-      // }
-      // case SUB_TYPE: {
-      //   loadSubType();
-      //   break;
-      // }
       case GUARD: {
         loadGuards();
         break;
@@ -232,65 +199,48 @@ const RecycleBinPage = (props) => {
     restoreColumn,
   ];
 
-  let data = [];
+  //let data = [];
   let query: DocumentNode;
   switch (type.value) {
     case COURSE: {
       columns = get_course_columns(restoreColumn);
-      data = courses.called && !courses.loading ? courses.data.coursesDisabled : [];
+      //data = courses.called && !courses.loading ? courses.data.coursesDisabled : [];
       query = GET_PAGINATED_COURSES;
       break;
     }
     case EVENT: {
       columns = get_event_columns(restoreColumn);
-      data = events.called && !events.loading ? events.data.eventsDisabled : [];
+      //data = events.called && !events.loading ? events.data.eventsDisabled : [];
       query = GET_PAGINATED_EVENTS;
       break;
     }
-    // case FIRE_CAUSE: {
-    //   data = fireCauses.called && !fireCauses.loading ? fireCauses.data.fireCausesDisabled : [];
-    //   break;
-    // }
-    // case FIRE_CLASS: {
-    //   data = fireClasses.called && !fireClasses.loading ? fireClasses.data.fireClassesDisabled : [];
-    //   break;
-    // }
-    // case SUB_TYPE: {
-    //   data = subTypes.called && !subTypes.loading ? subTypes.data.subTypesDisabled : [];
-    //   break;
-    // }
     case GUARD: {
       columns = get_guard_columns(restoreColumn);
-      data = guards.called && !guards.loading ? guards.data.guardsDisabled : [];
+      //data = guards.called && !guards.loading ? guards.data.guardsDisabled : [];
       query = GET_PAGINATED_GUARDS;
       break;
     }
     case USERS: {
       columns = get_users_columns(restoreColumn);
-      data = users.called && !users.loading ? users.data.usersDisabled : [];
+      //data = users.called && !users.loading ? users.data.usersDisabled : [];
       query = GET_PAGINATED_USERS;
       break;
     }
-    /*case RANK: {
-      columns = get_rank_columns(restoreColumn);
-      data = ranks.called && !ranks.loading ? ranks.data.ranksDisabled : [];
-      break;
-    }*/
     case SERVICE: {
       columns = get_service_columns(restoreColumn);
-      data = services.called && !services.loading ? services.data.servicesDisabled : [];
+      //data = services.called && !services.loading ? services.data.servicesDisabled : [];
       query = GET_PAGINATED_SERVICES;
       break;
     }
     case TRAINING: {
       columns = get_training_columns(restoreColumn);
-      data = trainings.called && !trainings.loading ? trainings.data.trainingsDisabled : [];
+      //data = trainings.called && !trainings.loading ? trainings.data.trainingsDisabled : [];
       query = GET_PAGINATED_TRAININGS;
       break;
     }
     case VOLUNTEER: {
       columns = get_volunteer_columns(restoreColumn);
-      data = volunteers.called && !volunteers.loading ? volunteers.data.volunteersDisabled : [];
+      //data = volunteers.called && !volunteers.loading ? volunteers.data.volunteersDisabled : [];
       query = GET_PAGINATED_VOLUNTEERS;
       break;
     }
@@ -308,7 +258,6 @@ const RecycleBinPage = (props) => {
                   <Select value={type} onChange={setType} options={OPTIONS} />
                 </div>
               </Card.Title>
-              <p className="cardu-category">({data?.length || 0}) encontrados </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
               <PagedTable

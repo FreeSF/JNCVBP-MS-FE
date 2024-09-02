@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { volunteerAllFieldsFragment } from "./volunteers";
+import { volunteerAllFieldsFragment, volunteerNameFieldFragment } from "./volunteers";
 
 const COURSES_ALL_FIELDS_FRAGMENT = gql`
   fragment coursesAllFields on Course {
@@ -9,11 +9,11 @@ const COURSES_ALL_FIELDS_FRAGMENT = gql`
     details {
       score
       volunteer {
-        ...volunteerAllFields
+        ...volunteerNameField
       }
     }
   }
-  ${volunteerAllFieldsFragment}
+  ${volunteerNameFieldFragment}
 `;
 
 export const GET_COURSES = gql`

@@ -33,7 +33,6 @@ const PagedTable: React.FC<TheProps> = ({ disabled = false, ...props }) => {
   const tableRef = useRef(null);
 
   const refreshFunction = () => {
-    console.log("refresh called");
     theQuery.refetch({
       offset,
       limit: currentSizePerPage,
@@ -108,7 +107,6 @@ const PagedTable: React.FC<TheProps> = ({ disabled = false, ...props }) => {
               }}
               ref={tableRef}
             />
-            <button onClick={refreshFunction}>Refresh</button>
           </>
         )}
       </ToolkitProvider>

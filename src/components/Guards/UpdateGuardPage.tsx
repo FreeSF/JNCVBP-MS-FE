@@ -10,7 +10,7 @@ import {
   UpdateGuardInput,
 } from "../../types";
 import { useMutation, useLazyQuery } from "@apollo/client";
-import { CURRENT_GUARD, EDIT_GUARD, FIND_GUARD, GET_GUARDS, NEXT_GUARD } from "../../queries/Guards";
+import { CURRENT_GUARD, EDIT_GUARD, FIND_GUARD /*, GET_GUARDS*/, NEXT_GUARD } from "../../queries/Guards";
 
 import GuardForm from "./GuardForm";
 import Spinner from "components/spinner";
@@ -45,7 +45,7 @@ const CreateGuardPage = (props) => {
           id: props.match.params.id,
         },
       },
-      refetchQueries: [{ query: GET_GUARDS }, { query: CURRENT_GUARD }, { query: NEXT_GUARD }],
+      refetchQueries: [/*{ query: GET_GUARDS },*/ { query: CURRENT_GUARD }, { query: NEXT_GUARD }],
     }).then((value) => {
       props.history.push("/guards");
     });
@@ -55,6 +55,7 @@ const CreateGuardPage = (props) => {
     id: loadResult.data.guard.id,
     start_time: loadResult.data.guard.start_time,
     end_time: loadResult.data.guard.end_time,
+    observations: loadResult.data.guard.observations,
     volunteers: loadResult.data.guard.volunteers.map((volunteer) => ({ _id: volunteer.id })),
   };
 

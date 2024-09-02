@@ -17,6 +17,12 @@ export const volunteerAllFieldsFragment = gql`
   }
   ${rankAllFieldsFragment}
 `;
+export const volunteerNameFieldFragment = gql`
+  fragment volunteerNameField on Volunteer {
+    id
+    name
+  }
+`;
 
 export const GET_VOLUNTEERS = gql`
   query getVolunteers {
