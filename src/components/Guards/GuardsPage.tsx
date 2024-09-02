@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
@@ -26,6 +26,7 @@ const GuardsPage = (props) => {
     ],
   });
   const history = useHistory();
+  const refreshTable = useRef(() => {});
 
   const columns: ColumnDescription[] = get_guard_columns({
     dataField: undefined,
@@ -41,7 +42,7 @@ const GuardsPage = (props) => {
           onClick={() =>
             removeGuard({
               variables: { id: row.id },
-            })
+            }).then(() => refreshTable.current())
           }
         >
           Eliminar
@@ -65,7 +66,12 @@ const GuardsPage = (props) => {
               </Card.Title>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              <PagedTable keyField={"id"} query={GET_PAGINATED_GUARDS} columns={columns} />
+              <PagedTable
+                keyField={"id"}
+                query={GET_PAGINATED_GUARDS}
+                columns={columns}
+                refreshFunction={refreshTable}
+              />
             </Card.Body>
           </Card>
         </Col>

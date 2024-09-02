@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
@@ -14,6 +14,8 @@ interface TheProps {
   keyField?: string;
   query: DocumentNode;
   disabled?: boolean;
+  queryRef?: any;
+  refreshFunction?: any;
 }
 
 const PagedTable: React.FC<TheProps> = ({ disabled = false, ...props }) => {
@@ -22,9 +24,29 @@ const PagedTable: React.FC<TheProps> = ({ disabled = false, ...props }) => {
   const [currentSizePerPage, setCurrentSizePerPage] = useState(10);
   const [sortField, setSortField] = useState("id");
   const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
+  const [offset, setOffset] = useState(0);
+  const [searchText, setSearchText] = useState("");
   const theQuery = useQuery(props.query, {
     variables: { limit: currentSizePerPage, offset: 0, sortField, sortOrder, searchText: "", disabled: !!disabled },
   });
+  const toolkitProviderRef = useRef(null);
+  const tableRef = useRef(null);
+
+  const refreshFunction = () => {
+    console.log("refresh called");
+    theQuery.refetch({
+      offset,
+      limit: currentSizePerPage,
+      sortField: sortField,
+      sortOrder: sortOrder,
+      searchText: searchText,
+      disabled: !!disabled,
+    });
+  };
+
+  if (props.refreshFunction) {
+    props.refreshFunction.current = refreshFunction;
+  }
 
   //console.log({theQuery: _.cloneDeep(theQuery)});
   if (theQuery.loading) return <Spinner />;
@@ -36,6 +58,7 @@ const PagedTable: React.FC<TheProps> = ({ disabled = false, ...props }) => {
         data={theQuery.data?.page?.items || []}
         columns={theColumns}
         search={true}
+        ref={toolkitProviderRef}
       >
         {({ searchProps, baseProps }) => (
           <>
@@ -68,19 +91,24 @@ const PagedTable: React.FC<TheProps> = ({ disabled = false, ...props }) => {
               }}
               sort={{ dataField: sortField, order: sortOrder }}
               onTableChange={(type, newState) => {
+                const newOffset = (newState.page - 1) * newState.sizePerPage;
                 theQuery.refetch({
-                  offset: (newState.page - 1) * newState.sizePerPage,
+                  offset: newOffset,
                   limit: newState.sizePerPage,
                   sortField: newState.sortField,
                   sortOrder: newState.sortOrder,
                   searchText: searchProps.searchText,
                 });
-                setCurrentPage(newState.page);
+                setOffset(newOffset);
                 setCurrentSizePerPage(newState.sizePerPage);
                 setSortField(newState.sortField || "id");
                 setSortOrder(newState.sortOrder || "desc");
+                setCurrentPage(newState.page);
+                setSearchText(searchProps.searchText);
               }}
+              ref={tableRef}
             />
+            <button onClick={refreshFunction}>Refresh</button>
           </>
         )}
       </ToolkitProvider>

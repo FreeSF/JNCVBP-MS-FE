@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 
@@ -11,27 +11,19 @@ import {
   GetVolunteersQuery,
   VolunteerAllFieldsFragment,
 } from "../../types";
-import {
-  DELETE_VOLUNTEER,
-  GET_PAGINATED_VOLUNTEERS,
-  GET_VOLUNTEERS,
-  GET_VOLUNTEERS_DISABLED,
-} from "../../queries/volunteers";
-import { get_blood_type, get_formatted_date, get_volunteer_status } from "utils/constants";
-import Spinner from "../spinner";
+import { DELETE_VOLUNTEER, GET_PAGINATED_VOLUNTEERS, GET_VOLUNTEERS } from "../../queries/volunteers";
 import { get_volunteer_columns } from "utils/columns";
-import StandardTable from "../utils/standardTable";
 import PagedTable from "../utils/PagedTable";
 
 const VolunteersPage = (props: RouteComponentProps) => {
-  const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
-  const [deleteClient, deletedClient] = useMutation<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>(
-    DELETE_VOLUNTEER,
-    { refetchQueries: [{ query: GET_VOLUNTEERS }, { query: GET_VOLUNTEERS_DISABLED }] }
-  );
+  const [removeVolunteer] = useMutation<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>(DELETE_VOLUNTEER, {
+    refetchQueries: [{ query: GET_VOLUNTEERS }],
+  });
   const handleCreate = () => props.history.push("/volunteers/create");
   const handleEdit = (id: string) => props.history.push("/volunteers/" + id + "/edit");
-  const handleDelete = (id: string) => deleteClient({ variables: { id: id } });
+
+  const refreshTable = useRef(() => {});
+  const handleDelete = (id: string) => removeVolunteer({ variables: { id: id } }).then(() => refreshTable.current());
 
   const columns: ColumnDescription[] = get_volunteer_columns({
     headerStyle: () => {
@@ -66,7 +58,7 @@ const VolunteersPage = (props: RouteComponentProps) => {
               </Card.Title>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              <PagedTable columns={columns} query={GET_PAGINATED_VOLUNTEERS} />
+              <PagedTable columns={columns} query={GET_PAGINATED_VOLUNTEERS} refreshFunction={refreshTable} />
             </Card.Body>
           </Card>
         </Col>

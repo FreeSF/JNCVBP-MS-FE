@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 
@@ -30,6 +30,8 @@ const ServicesPage = (props: RouteComponentProps) => {
 
   const history = useHistory();
 
+  const refreshTable = useRef(() => {});
+
   if (getServicesQuery.loading) return <Spinner />;
 
   const columns: ColumnDescription[] = get_service_columns({
@@ -43,7 +45,11 @@ const ServicesPage = (props: RouteComponentProps) => {
         <Button className="btn-fill btn-sm" href={`/services/${row.id}/edit`} variant="success">
           Editar
         </Button>
-        <Button className="btn-sm" variant="danger" onClick={() => removeService({ variables: { id: row.id } })}>
+        <Button
+          className="btn-sm"
+          variant="danger"
+          onClick={() => removeService({ variables: { id: row.id } }).then(() => refreshTable.current())}
+        >
           Eliminar
         </Button>
       </div>
@@ -65,7 +71,12 @@ const ServicesPage = (props: RouteComponentProps) => {
               </Card.Title>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              <PagedTable keyField={"id"} query={GET_PAGINATED_SERVICES} columns={columns} />
+              <PagedTable
+                keyField={"id"}
+                query={GET_PAGINATED_SERVICES}
+                columns={columns}
+                refreshFunction={refreshTable}
+              />
             </Card.Body>
           </Card>
         </Col>

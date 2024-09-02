@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
@@ -119,18 +119,17 @@ const RecycleBinPage = (props) => {
     refetchQueries: [{ query: GET_TRAININGS_DISABLED }, { query: GET_TRAININGS }],
   });
   const [restoreVolunteer, restoredVolunteer] = useMutation<RestoreVolunteerMutation>(RESTORE_VOLUNTEER, {
-    refetchQueries: [{ query: GET_VOLUNTEERS_DISABLED }, { query: GET_VOLUNTEERS }],
+    refetchQueries: [{ query: GET_VOLUNTEERS }, { query: GET_PAGINATED_VOLUNTEERS }],
   });
   const [loadEvents, events] = useLazyQuery<GetEventsDisabledQuery>(GET_EVENTS_DISABLED);
-  // const [loadFireCause, fireCauses] = useLazyQuery<GetFireCausesDisabledQuery>(GET_FIRE_CAUSES_DISABLED, {fetchPolicy: "no-cache"});
-  // const [loadFireClass, fireClasses] = useLazyQuery<GetFireClassesDisabledQuery>(GET_FIRE_CLASSES_DISABLED, {fetchPolicy: "no-cache"});
-  // const [loadSubType, subTypes] = useLazyQuery<GetSubTypesDisabledQuery>(GET_SUB_TYPES_DISABLED, {fetchPolicy: "no-cache"});
   const [loadGuards, guards] = useLazyQuery<GetGuardsDisabledQuery>(GET_GUARDS_DISABLED);
   const [loadRanks, ranks] = useLazyQuery<GetRanksDisabledQuery>(GET_RANKS_DISABLED);
   const [loadServices, services] = useLazyQuery<GetServicesDisabledQuery>(GET_SERVICES_DISABLED);
   const [loadTrainings, trainings] = useLazyQuery<GetTrainingsDisabledQuery>(GET_TRAININGS_DISABLED);
   const [loadVolunteers, volunteers] = useLazyQuery<GetVolunteersDisabledQuery>(GET_VOLUNTEERS_DISABLED);
   const [loadUsers, users] = useLazyQuery<GetUsersDisabledQuery>(GET_USERS_DISABLED);
+
+  const refreshTable = useRef(() => {});
 
   useEffect(() => {
     switch (type.value) {
@@ -190,35 +189,31 @@ const RecycleBinPage = (props) => {
         onClick={() => {
           switch (type.value) {
             case COURSE: {
-              restoreCourse({ variables: { id: row.id } });
+              restoreCourse({ variables: { id: row.id } }).then(() => refreshTable.current());
               break;
             }
             case EVENT: {
-              restoreEvent({ variables: { id: row.id } });
+              restoreEvent({ variables: { id: row.id } }).then(() => refreshTable.current());
               break;
             }
             case GUARD: {
-              restoreGuard({ variables: { id: row.id } });
+              restoreGuard({ variables: { id: row.id } }).then(() => refreshTable.current());
               break;
             }
             case USERS: {
-              restoreUser({ variables: { id: row.id } });
+              restoreUser({ variables: { id: row.id } }).then(() => refreshTable.current());
               break;
             }
-            /*case RANK: {
-              restoreRank({ variables: { id: row.id } });
-              break;
-            }*/
             case SERVICE: {
-              restoreService({ variables: { id: row.id } });
+              restoreService({ variables: { id: row.id } }).then(() => refreshTable.current());
               break;
             }
             case TRAINING: {
-              restoreTraining({ variables: { id: row.id } });
+              restoreTraining({ variables: { id: row.id } }).then(() => refreshTable.current());
               break;
             }
             case VOLUNTEER: {
-              restoreVolunteer({ variables: { id: row.id } });
+              restoreVolunteer({ variables: { id: row.id } }).then(() => refreshTable.current());
               break;
             }
           }
@@ -316,7 +311,13 @@ const RecycleBinPage = (props) => {
               <p className="cardu-category">({data?.length || 0}) encontrados </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              <PagedTable keyField="id" query={query} columns={columns} disabled={true} />
+              <PagedTable
+                keyField="id"
+                query={query}
+                columns={columns}
+                disabled={true}
+                refreshFunction={refreshTable}
+              />
             </Card.Body>
           </Card>
         </Col>

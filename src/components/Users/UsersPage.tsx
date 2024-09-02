@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import StandardTable from "../utils/standardTable";
 import { ColumnDescription } from "react-bootstrap-table-next";
 import { useHistory } from "react-router-dom";
@@ -18,6 +18,8 @@ const UsersPage = (props) => {
     refetchQueries: [{ query: GET_USERS }, { query: GET_USERS_DISABLED }],
   });
 
+  const refreshTable = useRef(() => {});
+
   if (getUsersQuery.loading) return <Spinner />;
 
   const columns: ColumnDescription<any, any>[] = get_users_columns({
@@ -28,7 +30,11 @@ const UsersPage = (props) => {
         <Button className="btn-fill btn-sm" href={`/users/${row.id}/edit`} variant="success">
           Editar
         </Button>
-        <Button className="btn-sm" variant="danger" onClick={() => removeUser({ variables: { id: row.id } })}>
+        <Button
+          className="btn-sm"
+          variant="danger"
+          onClick={() => removeUser({ variables: { id: row.id } }).then(() => refreshTable.current())}
+        >
           Eliminar
         </Button>
       </div>
@@ -50,7 +56,7 @@ const UsersPage = (props) => {
               <p className="cardu-category">({getUsersQuery.data?.users.length}) Usuarios registrados en el sistema </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              <PagedTable columns={columns} query={GET_PAGINATED_USERS} />
+              <PagedTable columns={columns} query={GET_PAGINATED_USERS} refreshFunction={refreshTable} />
             </Card.Body>
           </Card>
         </Col>

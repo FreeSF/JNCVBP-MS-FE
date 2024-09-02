@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 
@@ -25,6 +25,8 @@ const CoursesPage = (props) => {
 
   const [removeCourse, removedCourse] = useMutation<RemoveCourseMutation, RemoveCourseMutationVariables>(REMOVE_COURSE);
 
+  const refreshTable = useRef(() => {});
+
   if (getCoursesQuery.loading) return <Spinner />;
 
   const columns: ColumnDescription[] = get_course_columns({
@@ -42,7 +44,7 @@ const CoursesPage = (props) => {
             removeCourse({
               variables: { id: row.id },
               refetchQueries: [{ query: GET_COURSES }, { query: GET_COURSES_DISABLED }],
-            })
+            }).then(() => refreshTable.current())
           }
         >
           Eliminar
@@ -66,7 +68,12 @@ const CoursesPage = (props) => {
               </Card.Title>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              <PagedTable keyField={"id"} query={GET_PAGINATED_COURSES} columns={columns} />
+              <PagedTable
+                keyField={"id"}
+                query={GET_PAGINATED_COURSES}
+                columns={columns}
+                refreshFunction={refreshTable}
+              />
             </Card.Body>
           </Card>
         </Col>

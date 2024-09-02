@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 
@@ -32,6 +32,8 @@ const TrainingsPage = (props) => {
   );
   const history = useHistory();
 
+  const refreshTable = useRef(() => {});
+
   if (getTrainingsQuery.loading) return <Spinner />;
 
   const columns: ColumnDescription[] = get_training_columns({
@@ -42,7 +44,11 @@ const TrainingsPage = (props) => {
         <Button className="btn-fill btn-sm" onClick={() => history.push(`/trainings/${row.id}/edit`)} variant="success">
           Editar{" "}
         </Button>
-        <Button className="btn-sm" variant="danger" onClick={() => removeTraining({ variables: { id: row.id } })}>
+        <Button
+          className="btn-sm"
+          variant="danger"
+          onClick={() => removeTraining({ variables: { id: row.id } }).then(() => refreshTable.current())}
+        >
           Eliminar
         </Button>
       </div>
@@ -64,7 +70,12 @@ const TrainingsPage = (props) => {
               </Card.Title>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              <PagedTable keyField={"id"} query={GET_PAGINATED_TRAININGS} columns={columns} />
+              <PagedTable
+                keyField={"id"}
+                query={GET_PAGINATED_TRAININGS}
+                columns={columns}
+                refreshFunction={refreshTable}
+              />
             </Card.Body>
           </Card>
         </Col>

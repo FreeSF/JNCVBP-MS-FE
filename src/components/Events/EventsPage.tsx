@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import {
   GetEventsQuery,
@@ -22,6 +22,8 @@ const EventsPage = (props) => {
     refetchQueries: [{ query: GET_EVENTS }, { query: GET_EVENTS_DISABLED }],
   });
 
+  const refreshTable = useRef(() => {});
+
   if (getEventsQuery.loading) return <Spinner />;
 
   const columns: ColumnDescription[] = get_event_columns({
@@ -32,7 +34,11 @@ const EventsPage = (props) => {
         <Button className="btn-fill btn-sm" onClick={() => history.push(`/events/${row.id}/edit`)} variant="success">
           Editar
         </Button>
-        <Button className="btn-sm" variant="danger" onClick={() => removeEvent({ variables: { id: row.id } })}>
+        <Button
+          className="btn-sm"
+          variant="danger"
+          onClick={() => removeEvent({ variables: { id: row.id } }).then(() => refreshTable.current())}
+        >
           Eliminar
         </Button>
       </div>
@@ -48,7 +54,7 @@ const EventsPage = (props) => {
               <Card.Title as="h4">Libro de Novedades</Card.Title>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              <PagedTable columns={columns} query={GET_PAGINATED_EVENTS} />
+              <PagedTable columns={columns} query={GET_PAGINATED_EVENTS} refreshFunction={refreshTable} />
             </Card.Body>
           </Card>
         </Col>
