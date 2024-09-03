@@ -33,7 +33,7 @@ const UpdateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
           id: props.match.params.id,
         },
       },
-      refetchQueries: [{ query: GET_VOLUNTEERS }],
+      refetchQueries: [{ query: GET_VOLUNTEERS }], // Needed for some selects
     }).then(() => {
       props.history.push("/volunteers");
     });

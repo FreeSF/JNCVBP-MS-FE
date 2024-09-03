@@ -1,40 +1,24 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
+import { ColumnDescription } from "react-bootstrap-table-next";
 
-import {
-  GET_PAGINATED_TRAININGS,
-  GET_TRAININGS,
-  GET_TRAININGS_DISABLED,
-  REMOVE_TRAINING,
-} from "../../queries/Trainings";
-import {
-  GetTrainingsQuery,
-  RemoveTrainingMutation,
-  RemoveTrainingMutationVariables,
-  TrainingAllFieldsFragment,
-  VolunteerAllFieldsFragment,
-} from "../../types";
-import Spinner from "../spinner";
-import { get_formatted_date, get_formatted_volunteers } from "utils/constants";
+import { GET_PAGINATED_TRAININGS, REMOVE_TRAINING } from "../../queries/Trainings";
+import { RemoveTrainingMutation, RemoveTrainingMutationVariables, TrainingAllFieldsFragment } from "../../types";
 import { get_training_columns } from "utils/columns";
-import StandardTable from "../utils/standardTable";
 import PagedTable from "../utils/PagedTable";
 
-const TrainingsPage = (props) => {
-  const getTrainingsQuery = useQuery<GetTrainingsQuery>(GET_TRAININGS);
-  const [removeTraining, removedTraining] = useMutation<RemoveTrainingMutation, RemoveTrainingMutationVariables>(
-    REMOVE_TRAINING,
-    { refetchQueries: [{ query: GET_TRAININGS }, { query: GET_TRAININGS_DISABLED }] }
-  );
+const TrainingsPage = () => {
+  const [removeTraining] = useMutation<RemoveTrainingMutation, RemoveTrainingMutationVariables>(REMOVE_TRAINING);
   const history = useHistory();
 
   const refreshTable = useRef(() => {});
 
-  if (getTrainingsQuery.loading) return <Spinner />;
+  useEffect(() => {
+    refreshTable.current();
+  }, []);
 
   const columns: ColumnDescription[] = get_training_columns({
     dataField: undefined,

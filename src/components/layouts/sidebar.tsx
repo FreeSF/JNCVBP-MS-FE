@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { useLocation, NavLink, useHistory } from "react-router-dom";
 
 import { Nav } from "react-bootstrap";
@@ -8,7 +8,7 @@ import { CURRENT_USER } from "../../queries/Login";
 import Spinner from "../spinner";
 import { AUTH_TOKEN_NAME } from "../../utils/constants";
 
-function Sidebar({ color, image, routes }) {
+const Sidebar = ({ color, image, routes }) => {
   const location = useLocation();
   const history = useHistory();
   const activeRoute = (routeName) => {
@@ -75,6 +75,6 @@ function Sidebar({ color, image, routes }) {
       </div>
     </div>
   );
-}
+};
 
 export default Sidebar;

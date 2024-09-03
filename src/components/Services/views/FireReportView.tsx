@@ -1,11 +1,10 @@
 import React from "react";
 
-import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "informed";
+import { FormApi, FormState, Select as InformedSelect, Text } from "informed";
 
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import {
   CreateServiceInput,
-  FireCause,
   FireCauseAllFieldsFragment,
   FireClassAllFieldsFragment,
   GetFireCausesQuery,
@@ -160,7 +159,6 @@ const FireReportView = ({
                 </option>
               ))}
             </InformedSelect>
-            {/*<Text className="form-control" field="damage" type="text"/>*/}
           </Form.Group>
         </Col>
         <Col md="3">
@@ -234,7 +232,6 @@ const FireReportView = ({
             <Button
               className="pull-right ml-2"
               variant="success"
-              // disabled={volunteers.length == volunteerList.length}
               onClick={(event) => {
                 event.preventDefault();
                 const newFireClasses = formState.values.fire_class || [];

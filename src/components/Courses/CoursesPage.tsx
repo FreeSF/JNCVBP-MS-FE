@@ -1,33 +1,26 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
-import moment from "moment";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
+import { ColumnDescription } from "react-bootstrap-table-next";
 
-import {
-  CoursesAllFieldsFragment,
-  GetCoursesQuery,
-  RemoveCourseMutation,
-  RemoveCourseMutationVariables,
-} from "../../types";
+import { CoursesAllFieldsFragment, RemoveCourseMutation, RemoveCourseMutationVariables } from "../../types";
 import { GET_COURSES, GET_COURSES_DISABLED, GET_PAGINATED_COURSES, REMOVE_COURSE } from "../../queries/Courses";
 
-import Spinner from "../spinner";
 import { get_course_columns } from "utils/columns";
-import StandardTable from "../utils/standardTable";
 import PagedTable from "../utils/PagedTable";
 
-const CoursesPage = (props) => {
-  const getCoursesQuery = useQuery<GetCoursesQuery>(GET_COURSES);
+const CoursesPage = () => {
   const history = useHistory();
 
-  const [removeCourse, removedCourse] = useMutation<RemoveCourseMutation, RemoveCourseMutationVariables>(REMOVE_COURSE);
+  const [removeCourse] = useMutation<RemoveCourseMutation, RemoveCourseMutationVariables>(REMOVE_COURSE);
 
   const refreshTable = useRef(() => {});
 
-  if (getCoursesQuery.loading) return <Spinner />;
+  useEffect(() => {
+    refreshTable.current();
+  }, []);
 
   const columns: ColumnDescription[] = get_course_columns({
     dataField: undefined,

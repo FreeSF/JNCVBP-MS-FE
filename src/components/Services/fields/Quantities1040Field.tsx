@@ -1,8 +1,8 @@
 import React from "react";
 
-import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "informed";
+import { FormApi, FormState, Select as InformedSelect, Text } from "informed";
 
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { CreateServiceInput, UpdateServiceInput } from "types";
 import { QUANTITIES_1044_1045_OPTIONS } from "../../../utils/constants";
 
@@ -21,7 +21,6 @@ const Quantities1040Field = ({ formApi, formState, arrayRemove, isCreate }: Fire
         <Button
           className="pull-right ml-2"
           variant="success"
-          // disabled={volunteers.length == volunteerList.length}
           onClick={(event) => {
             event.preventDefault();
             const newQuantities = formState.values.quantities1044 || [];

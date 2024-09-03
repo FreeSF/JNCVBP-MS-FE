@@ -4,7 +4,6 @@ import {
   GuardAllFieldsFragment,
   TrainingAllFieldsFragment,
   UserAllFieldsFragment,
-  Volunteer,
   VolunteerAllFieldsFragment,
 } from "types";
 import {
@@ -13,7 +12,6 @@ import {
   get_blood_type,
   get_formatted_date,
   get_formatted_datetime,
-  get_formatted_volunteers,
   get_volunteer_status,
 } from "./constants";
 
@@ -125,12 +123,7 @@ export const get_service_columns = (options) => {
     {
       dataField: "type",
       text: "Tipo",
-    } /*,
-    {
-      dataField: "volunteers",
-      text: "Voluntarios",
-      formatter: (cell: Volunteer[]) => cell.map((volunteer) => volunteer.name).join(", "),
-    }*/,
+    },
     options,
   ];
 
@@ -154,13 +147,7 @@ export const get_training_columns = (options) => {
       dataField: "date",
       text: "Fecha",
       formatter: (cell, row: TrainingAllFieldsFragment) => get_formatted_date(row.date),
-    } /*,
-    {
-      dataField: "volunteers",
-      text: "Voluntarios",
-      sort: false,
-      formatter: (cell: VolunteerAllFieldsFragment[]) => get_formatted_volunteers(cell),
-    }*/,
+    },
     options,
   ];
 
@@ -181,7 +168,6 @@ export const get_volunteer_columns = (options) => {
       text: "Grupo Sanguíneo",
       formatter: (cell, row: VolunteerAllFieldsFragment) => get_blood_type(row.blood_type),
     },
-    //{ dataField: "rank.name", text: "Rango" },
     {
       dataField: "incorporation_date",
       text: "Fecha de Reclutamiento",

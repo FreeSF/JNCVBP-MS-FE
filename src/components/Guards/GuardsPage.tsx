@@ -1,32 +1,25 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
+import { ColumnDescription } from "react-bootstrap-table-next";
 
 import { RemoveGuardMutation, RemoveGuardMutationVariables, ServicesAllFieldsFragment } from "../../types";
-import {
-  CURRENT_GUARD,
-  GET_GUARDS_DISABLED,
-  GET_PAGINATED_GUARDS,
-  NEXT_GUARD,
-  REMOVE_GUARD,
-} from "../../queries/Guards";
+import { CURRENT_GUARD, GET_PAGINATED_GUARDS, NEXT_GUARD, REMOVE_GUARD } from "../../queries/Guards";
 import { get_guard_columns } from "utils/columns";
 import PagedTable from "../utils/PagedTable";
 
-const GuardsPage = (props) => {
-  const [removeGuard, removedService] = useMutation<RemoveGuardMutation, RemoveGuardMutationVariables>(REMOVE_GUARD, {
-    refetchQueries: [
-      { query: GET_PAGINATED_GUARDS },
-      { query: GET_GUARDS_DISABLED },
-      { query: CURRENT_GUARD },
-      { query: NEXT_GUARD },
-    ],
+const GuardsPage = () => {
+  const [removeGuard] = useMutation<RemoveGuardMutation, RemoveGuardMutationVariables>(REMOVE_GUARD, {
+    refetchQueries: [{ query: CURRENT_GUARD }, { query: NEXT_GUARD }],
   });
   const history = useHistory();
   const refreshTable = useRef(() => {});
+
+  useEffect(() => {
+    refreshTable.current();
+  }, []);
 
   const columns: ColumnDescription[] = get_guard_columns({
     dataField: undefined,

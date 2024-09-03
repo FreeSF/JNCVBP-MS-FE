@@ -1,38 +1,25 @@
-import React, { useRef, useState } from "react";
-import { RouteComponentProps, useHistory } from "react-router-dom";
-import { useMutation, useQuery } from "@apollo/client";
+import React, { useEffect, useRef } from "react";
+import { RouteComponentProps } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 
-import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
-import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { ColumnDescription } from "react-bootstrap-table-next";
 
-import {
-  GetServicesQuery,
-  RemoveServiceMutation,
-  RemoveServiceMutationVariables,
-  ServicesAllFieldsFragment,
-  Volunteer,
-} from "../../types";
-import Spinner from "../spinner";
-import { GET_PAGINATED_SERVICES, GET_SERVICES, GET_SERVICES_DISABLED, REMOVE_SERVICE } from "../../queries/services";
+import { RemoveServiceMutation, RemoveServiceMutationVariables, ServicesAllFieldsFragment } from "../../types";
+import { GET_PAGINATED_SERVICES, REMOVE_SERVICE } from "../../queries/services";
 import { get_service_columns } from "../../utils/columns";
 import PagedTable from "../utils/PagedTable";
 
 const ServicesPage = (props: RouteComponentProps) => {
-  const getServicesQuery = useQuery<GetServicesQuery>(GET_SERVICES);
-  const [renderReport, setRenderReport] = useState<string>();
-
-  const [removeService, removedService] = useMutation<RemoveServiceMutation, RemoveServiceMutationVariables>(
-    REMOVE_SERVICE,
-    { refetchQueries: [{ query: GET_SERVICES }, { query: GET_SERVICES_DISABLED }] }
-  );
+  const [removeService] = useMutation<RemoveServiceMutation, RemoveServiceMutationVariables>(REMOVE_SERVICE);
 
   const handleCreate = () => props.history.push("/services/create");
 
-  const history = useHistory();
+  useEffect(() => {
+    refreshTable.current();
+  }, []);
 
   const refreshTable = useRef(() => {});
-
-  if (getServicesQuery.loading) return <Spinner />;
 
   const columns: ColumnDescription[] = get_service_columns({
     dataField: undefined,
@@ -55,7 +42,6 @@ const ServicesPage = (props: RouteComponentProps) => {
       </div>
     ),
   });
-  if (getServicesQuery.loading) return <Spinner />;
 
   return (
     <Container fluid>

@@ -1,30 +1,22 @@
-import React, { useRef } from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import {
-  GetEventsQuery,
-  RemoveEventMutation,
-  RemoveEventMutationVariables,
-  ServicesAllFieldsFragment,
-  VolunteerAllFieldsFragment,
-} from "../../types";
-import { GET_EVENTS, GET_EVENTS_DISABLED, GET_PAGINATED_EVENTS, REMOVE_EVENT } from "../../queries/events";
-import Spinner from "../spinner";
+import React, { useEffect, useRef } from "react";
+import { useMutation } from "@apollo/client";
+import { RemoveEventMutation, RemoveEventMutationVariables, ServicesAllFieldsFragment } from "../../types";
+import { GET_PAGINATED_EVENTS, REMOVE_EVENT } from "../../queries/events";
 import { ColumnDescription } from "react-bootstrap-table-next";
-import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { get_event_columns } from "utils/columns";
 import PagedTable from "../utils/PagedTable";
 
-const EventsPage = (props) => {
+const EventsPage = () => {
   const history = useHistory();
-  const getEventsQuery = useQuery<GetEventsQuery>(GET_EVENTS);
-  const [removeEvent, removedEvent] = useMutation<RemoveEventMutation, RemoveEventMutationVariables>(REMOVE_EVENT, {
-    refetchQueries: [{ query: GET_EVENTS }, { query: GET_EVENTS_DISABLED }],
-  });
+  const [removeEvent] = useMutation<RemoveEventMutation, RemoveEventMutationVariables>(REMOVE_EVENT);
 
   const refreshTable = useRef(() => {});
 
-  if (getEventsQuery.loading) return <Spinner />;
+  useEffect(() => {
+    refreshTable.current();
+  }, []);
 
   const columns: ColumnDescription[] = get_event_columns({
     dataField: undefined,

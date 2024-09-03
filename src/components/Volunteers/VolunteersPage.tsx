@@ -1,28 +1,26 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
-import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
-import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { ColumnDescription } from "react-bootstrap-table-next";
 
-import {
-  DeleteVolunteerMutation,
-  DeleteVolunteerMutationVariables,
-  GetVolunteersQuery,
-  VolunteerAllFieldsFragment,
-} from "../../types";
-import { DELETE_VOLUNTEER, GET_PAGINATED_VOLUNTEERS, GET_VOLUNTEERS } from "../../queries/volunteers";
+import { DeleteVolunteerMutation, DeleteVolunteerMutationVariables, VolunteerAllFieldsFragment } from "../../types";
+import { DELETE_VOLUNTEER, GET_PAGINATED_VOLUNTEERS } from "../../queries/volunteers";
 import { get_volunteer_columns } from "utils/columns";
 import PagedTable from "../utils/PagedTable";
 
 const VolunteersPage = (props: RouteComponentProps) => {
-  const [removeVolunteer] = useMutation<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>(DELETE_VOLUNTEER, {
-    refetchQueries: [{ query: GET_VOLUNTEERS }],
-  });
+  const [removeVolunteer] = useMutation<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>(DELETE_VOLUNTEER);
   const handleCreate = () => props.history.push("/volunteers/create");
   const handleEdit = (id: string) => props.history.push("/volunteers/" + id + "/edit");
 
   const refreshTable = useRef(() => {});
+
+  useEffect(() => {
+    refreshTable.current();
+  }, []);
+
   const handleDelete = (id: string) => removeVolunteer({ variables: { id: id } }).then(() => refreshTable.current());
 
   const columns: ColumnDescription[] = get_volunteer_columns({

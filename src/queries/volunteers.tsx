@@ -24,13 +24,14 @@ export const volunteerNameFieldFragment = gql`
   }
 `;
 
+// Not the best solution, but it works for small amount of data.
 export const GET_VOLUNTEERS = gql`
   query getVolunteers {
     volunteers {
-      ...volunteerAllFields
+      ...volunteerNameField
     }
   }
-  ${volunteerAllFieldsFragment}
+  ${volunteerNameFieldFragment}
 `;
 
 export const GET_PAGINATED_VOLUNTEERS = gql`

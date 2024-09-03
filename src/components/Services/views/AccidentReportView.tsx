@@ -1,6 +1,6 @@
 import React from "react";
 
-import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "informed";
+import { FormApi, FormState, Select as InformedSelect, Text } from "informed";
 
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { CreateServiceInput, UpdateServiceInput } from "types";
@@ -30,7 +30,6 @@ const AccidentReportView = ({ formApi, formState, arrayRemove, isCreate }: Accid
             <Button
               className="pull-right ml-2"
               variant="success"
-              // disabled={volunteers.length == volunteerList.length}
               onClick={(event) => {
                 event.preventDefault();
                 const newDamages = formState.values.damage1041 || [];
@@ -94,7 +93,6 @@ const AccidentReportView = ({ formApi, formState, arrayRemove, isCreate }: Accid
             <Button
               className="pull-right ml-2"
               variant="success"
-              // disabled={volunteers.length == volunteerList.length}
               onClick={(event) => {
                 event.preventDefault();
                 const newInvolvedElements = formState.values.involved_elements || [];
@@ -153,7 +151,6 @@ const AccidentReportView = ({ formApi, formState, arrayRemove, isCreate }: Accid
             <Button
               className="pull-right ml-2"
               variant="success"
-              // disabled={volunteers.length == volunteerList.length}
               onClick={(event) => {
                 event.preventDefault();
                 const newMagnitudes = formState.values.magnitude1041 || [];

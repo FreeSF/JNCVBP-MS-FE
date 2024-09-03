@@ -15,21 +15,21 @@ const initialValues: CreateEventInput = {
   description: "",
 };
 
-const EventForm = (props) => {
+const EventForm = () => {
   const currentUserQuery = useQuery<GetCurrentUserQuery>(CURRENT_USER);
 
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateEventInput>>(null);
-  const [createEvent, createdEvent] = useMutation<CreateEventMutation, CreateEventMutationVariables>(CREATE_EVENT);
+  const [createEvent] = useMutation<CreateEventMutation, CreateEventMutationVariables>(CREATE_EVENT);
 
   if (currentUserQuery.loading) return <Spinner />;
 
-  const handleSubmit = (a) => {
+  const handleSubmit = () => {
     createEvent({
       variables: {
         input: { ...formRefCreate.getState().values, created_by: { _id: currentUserQuery.data.currentUser.id } },
       },
       refetchQueries: [{ query: GET_EVENTS }],
-    }).then((value) => {
+    }).then(() => {
       formRefCreate.reset();
       NotificationManager.success("Novedad creada");
     });

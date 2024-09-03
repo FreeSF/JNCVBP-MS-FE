@@ -1,5 +1,4 @@
 import React from "react";
-import ts from "typescript";
 import ReactDOM from "react-dom";
 import "./stylesheets/index.sass";
 import App from "./App";

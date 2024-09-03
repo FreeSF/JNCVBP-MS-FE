@@ -1,28 +1,21 @@
 import React, { useRef } from "react";
-import StandardTable from "../utils/standardTable";
 import { ColumnDescription } from "react-bootstrap-table-next";
 import { useHistory } from "react-router-dom";
-import { useMutation, useQuery } from "@apollo/client";
-import { GetUsersQuery, RemoveUserMutation, RemoveUserMutationVariables, ServicesAllFieldsFragment } from "../../types";
-import { GET_PAGINATED_USERS, GET_USERS, GET_USERS_DISABLED, REMOVE_USER } from "../../queries/Users";
-import Spinner from "../spinner";
-import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
+import { useMutation } from "@apollo/client";
+import { RemoveUserMutation, RemoveUserMutationVariables, ServicesAllFieldsFragment } from "../../types";
+import { GET_PAGINATED_USERS, REMOVE_USER } from "../../queries/Users";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { get_users_columns } from "../../utils/columns";
 import PagedTable from "../utils/PagedTable";
 
-const UsersPage = (props) => {
+const UsersPage = () => {
   const history = useHistory();
-  const getUsersQuery = useQuery<GetUsersQuery>(GET_USERS);
 
-  const [removeUser, removedUSer] = useMutation<RemoveUserMutation, RemoveUserMutationVariables>(REMOVE_USER, {
-    refetchQueries: [{ query: GET_USERS }, { query: GET_USERS_DISABLED }],
-  });
+  const [removeUser] = useMutation<RemoveUserMutation, RemoveUserMutationVariables>(REMOVE_USER);
 
   const refreshTable = useRef(() => {});
 
-  if (getUsersQuery.loading) return <Spinner />;
-
-  const columns: ColumnDescription<any, any>[] = get_users_columns({
+  const columns: ColumnDescription[] = get_users_columns({
     dataField: undefined,
     text: "Acciones",
     formatter: (cell, row: ServicesAllFieldsFragment) => (
@@ -53,7 +46,6 @@ const UsersPage = (props) => {
                   Agregar
                 </Button>
               </Card.Title>
-              <p className="cardu-category">({getUsersQuery.data?.users.length}) Usuarios registrados en el sistema </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
               <PagedTable columns={columns} query={GET_PAGINATED_USERS} refreshFunction={refreshTable} />
