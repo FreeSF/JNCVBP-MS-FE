@@ -1,5 +1,5 @@
 import React from "react";
-import { FormApi, FormState, Select, Text, TextArea } from "informed"; //Form
+import { FormApi, FormState, Select, Text, TextArea } from "informed";
 import _ from "lodash";
 
 import DateTimePicker from "react-datetime-picker";
@@ -9,7 +9,6 @@ import { CreateGuardInput, GetVolunteersQuery, UpdateGuardInput } from "types";
 import Spinner from "components/spinner";
 import { GET_VOLUNTEERS } from "queries/volunteers";
 import { useQuery } from "@apollo/client";
-import { addDays } from "date-fns";
 
 type GuardFormProps = {
   formApi: FormApi<CreateGuardInput | UpdateGuardInput>;
@@ -82,7 +81,7 @@ const GuardForm = ({ formApi, formState, volunteers, setVolunteers }: GuardFormP
                     className="pull-right ml-2"
                     variant="success"
                     disabled={volunteers.length === volunteerList.length}
-                    onClick={(event) => {
+                    onClick={() => {
                       const selectedVolunteers = volunteers.map((volunteer) => volunteer._id);
                       const newVolunteer = volunteerList.find(
                         (volunteer) => !selectedVolunteers.includes(volunteer.id)
@@ -115,7 +114,7 @@ const GuardForm = ({ formApi, formState, volunteers, setVolunteers }: GuardFormP
                           className="form-control"
                           field={`volunteers[${index}]._id`}
                           initialValue={currentVolunteer._id}
-                          onChange={(_value) => {
+                          onChange={() => {
                             const newVolunteers = _.cloneDeep(volunteers);
                             newVolunteers[index]._id = formState?.values?.volunteers[index]._id;
                             setVolunteers(newVolunteers);
@@ -134,7 +133,7 @@ const GuardForm = ({ formApi, formState, volunteers, setVolunteers }: GuardFormP
                         style={{ height: "40px" }}
                         className="btn-md"
                         variant="danger"
-                        onClick={(_event) => {
+                        onClick={() => {
                           const newVolunteers = _.cloneDeep(volunteers);
                           newVolunteers.splice(index, 1);
                           formApi.setValues({ ...formState.values, volunteers: newVolunteers || [] });

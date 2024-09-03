@@ -17,11 +17,44 @@ export const volunteerAllFieldsFragment = gql`
   }
   ${rankAllFieldsFragment}
 `;
+export const volunteerNameFieldFragment = gql`
+  fragment volunteerNameField on Volunteer {
+    id
+    name
+  }
+`;
 
+// Not the best solution, but it works for small amount of data.
 export const GET_VOLUNTEERS = gql`
   query getVolunteers {
     volunteers {
-      ...volunteerAllFields
+      ...volunteerNameField
+    }
+  }
+  ${volunteerNameFieldFragment}
+`;
+
+export const GET_PAGINATED_VOLUNTEERS = gql`
+  query getPaginatedVolunteers(
+    $limit: Float
+    $offset: Float
+    $sortField: String
+    $sortOrder: String
+    $searchText: String
+    $disabled: Boolean
+  ) {
+    page: paginatedVolunteers(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      searchText: $searchText
+      disabled: $disabled
+    ) {
+      items {
+        ...volunteerAllFields
+      }
+      totalSize
     }
   }
   ${volunteerAllFieldsFragment}

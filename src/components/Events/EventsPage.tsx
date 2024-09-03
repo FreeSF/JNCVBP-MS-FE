@@ -1,29 +1,22 @@
-import React from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import {
-  GetEventsQuery,
-  RemoveEventMutation,
-  RemoveEventMutationVariables,
-  ServicesAllFieldsFragment,
-  VolunteerAllFieldsFragment,
-} from "../../types";
-import { GET_EVENTS, GET_EVENTS_DISABLED, REMOVE_EVENT } from "../../queries/events";
-import Spinner from "../spinner";
+import React, { useEffect, useRef } from "react";
+import { useMutation } from "@apollo/client";
+import { RemoveEventMutation, RemoveEventMutationVariables, ServicesAllFieldsFragment } from "../../types";
+import { GET_PAGINATED_EVENTS, REMOVE_EVENT } from "../../queries/events";
 import { ColumnDescription } from "react-bootstrap-table-next";
-import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
-import { GET_GUARDS } from "../../queries/Guards";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import StandardTable from "../utils/standardTable";
 import { get_event_columns } from "utils/columns";
+import PagedTable from "../utils/PagedTable";
 
-const EventsPage = (props) => {
+const EventsPage = () => {
   const history = useHistory();
-  const getEventsQuery = useQuery<GetEventsQuery>(GET_EVENTS);
-  const [removeEvent, removedEvent] = useMutation<RemoveEventMutation, RemoveEventMutationVariables>(REMOVE_EVENT, {
-    refetchQueries: [{ query: GET_EVENTS }, { query: GET_EVENTS_DISABLED }],
-  });
+  const [removeEvent] = useMutation<RemoveEventMutation, RemoveEventMutationVariables>(REMOVE_EVENT);
 
-  if (getEventsQuery.loading) return <Spinner />;
+  const refreshTable = useRef(() => {});
+
+  useEffect(() => {
+    refreshTable.current();
+  }, []);
 
   const columns: ColumnDescription[] = get_event_columns({
     dataField: undefined,
@@ -33,7 +26,11 @@ const EventsPage = (props) => {
         <Button className="btn-fill btn-sm" onClick={() => history.push(`/events/${row.id}/edit`)} variant="success">
           Editar
         </Button>
-        <Button className="btn-sm" variant="danger" onClick={() => removeEvent({ variables: { id: row.id } })}>
+        <Button
+          className="btn-sm"
+          variant="danger"
+          onClick={() => removeEvent({ variables: { id: row.id } }).then(() => refreshTable.current())}
+        >
           Eliminar
         </Button>
       </div>
@@ -47,16 +44,9 @@ const EventsPage = (props) => {
           <Card>
             <Card.Header>
               <Card.Title as="h4">Libro de Novedades</Card.Title>
-              <p className="cardu-category">
-                ({getEventsQuery.data?.events.length}) Eventos registrados en el sistema{" "}
-              </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              {getEventsQuery.loading ? (
-                <Spinner />
-              ) : (
-                <StandardTable columns={columns} data={getEventsQuery.data?.events} />
-              )}
+              <PagedTable columns={columns} query={GET_PAGINATED_EVENTS} refreshFunction={refreshTable} />
             </Card.Body>
           </Card>
         </Col>

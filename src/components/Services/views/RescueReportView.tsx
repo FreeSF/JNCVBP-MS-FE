@@ -1,11 +1,10 @@
 import React from "react";
 
-import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "informed";
+import { FormApi, FormState, Select as InformedSelect, Text } from "informed";
 
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 import { CreateServiceInput, UpdateServiceInput } from "types";
 import { CODES, RESCUE_TYPE_OPTIONS } from "utils/constants";
-import ResourcesField from "../fields/ResourcesField";
 import Quantities1040Field from "../fields/Quantities1040Field";
 
 type RescueReportFieldsProps = {
@@ -26,7 +25,6 @@ const RescueReportView = ({ formApi, formState, arrayRemove, isCreate }: RescueR
       <Row>
         <Col md="6">
           <Quantities1040Field formApi={formApi} formState={formState} arrayRemove={arrayRemove} isCreate={isCreate} />
-          {/*<ResourcesField formApi={formApi} formState={formState} arrayRemove={arrayRemove} isCreate={isCreate}/>*/}
         </Col>
         <Col md="4">
           <Form.Group>

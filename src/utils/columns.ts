@@ -4,7 +4,6 @@ import {
   GuardAllFieldsFragment,
   TrainingAllFieldsFragment,
   UserAllFieldsFragment,
-  Volunteer,
   VolunteerAllFieldsFragment,
 } from "types";
 import {
@@ -13,7 +12,6 @@ import {
   get_blood_type,
   get_formatted_date,
   get_formatted_datetime,
-  get_formatted_volunteers,
   get_volunteer_status,
 } from "./constants";
 
@@ -65,11 +63,6 @@ export const get_guard_columns = (options) => {
       formatter: (cell, row: GuardAllFieldsFragment) => get_formatted_datetime(row.end_time),
     },
     {
-      dataField: "volunteers",
-      text: "Voluntarios",
-      formatter: (cell: VolunteerAllFieldsFragment[]) => get_formatted_volunteers(cell),
-    },
-    {
       dataField: "observations",
       text: "Observaciones",
     },
@@ -116,25 +109,20 @@ export const get_service_columns = (options) => {
       formatter: (cell, row) => moment(cell).format(DEFAULT_DATETIME_FORMAT),
     },
     {
-      dataField: "officer_in_charge.name",
-      text: "Oficial",
-    },
-    {
       dataField: "locality",
       text: "Localidad",
     },
     {
-      dataField: "sub_type.code",
-      text: "Código",
+      dataField: "address",
+      text: "Dirección",
     },
     {
-      dataField: "sub_type.name",
-      text: "Sub Tipo",
+      dataField: "alerted_by",
+      text: "Comunicado por",
     },
     {
-      dataField: "volunteers",
-      text: "Voluntarios",
-      formatter: (cell: Volunteer[]) => cell.map((volunteer) => volunteer.name).join(", "),
+      dataField: "type",
+      text: "Tipo",
     },
     options,
   ];
@@ -160,11 +148,6 @@ export const get_training_columns = (options) => {
       text: "Fecha",
       formatter: (cell, row: TrainingAllFieldsFragment) => get_formatted_date(row.date),
     },
-    {
-      dataField: "volunteers",
-      text: "Voluntarios",
-      formatter: (cell: VolunteerAllFieldsFragment[]) => get_formatted_volunteers(cell),
-    },
     options,
   ];
 
@@ -185,7 +168,6 @@ export const get_volunteer_columns = (options) => {
       text: "Grupo Sanguíneo",
       formatter: (cell, row: VolunteerAllFieldsFragment) => get_blood_type(row.blood_type),
     },
-    { dataField: "rank.name", text: "Rango" },
     {
       dataField: "incorporation_date",
       text: "Fecha de Reclutamiento",

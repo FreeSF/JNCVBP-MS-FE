@@ -20,7 +20,7 @@ const UpdateUserPage = (props) => {
   const [formRef, setFormRef] = useState<FormApi<UpdateUserInput>>(null);
   const currentUserQuery = useQuery<GetCurrentUserQuery>(CURRENT_USER);
   const findUserQuery = useQuery<FindUserQuery>(FIND_USER, { variables: { id: props.match.params.id } });
-  const [updateUser, updatedUser] = useMutation<EditUserMutation, EditUserMutationVariables>(EDIT_USER);
+  const [updateUser] = useMutation<EditUserMutation, EditUserMutationVariables>(EDIT_USER);
 
   if (findUserQuery.loading || !findUserQuery.called || currentUserQuery.loading) return <Spinner />;
 

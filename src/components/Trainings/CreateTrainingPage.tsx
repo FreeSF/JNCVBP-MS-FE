@@ -12,16 +12,15 @@ import {
 } from "../../types";
 
 import { GET_VOLUNTEERS } from "../../queries/volunteers";
-import { CREATE_TRAINING, GET_TRAININGS } from "../../queries/Trainings";
+import { CREATE_TRAINING } from "../../queries/Trainings";
 import TrainingForm from "./TrainingForm";
+import { RouteComponentProps } from "react-router-dom";
 
-const CreateTrainingPage = (props) => {
+const CreateTrainingPage = (props: RouteComponentProps) => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateTrainingInput>>(null);
   const [volunteers, setVolunteers] = useState<[]>(() => []);
   const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
-  const [createTraining, createdTraining] = useMutation<CreateTrainingMutation, CreateTrainingMutationVariables>(
-    CREATE_TRAINING
-  );
+  const [createTraining] = useMutation<CreateTrainingMutation, CreateTrainingMutationVariables>(CREATE_TRAINING);
 
   const defaultValues: CreateTrainingInput = {
     date: new Date(),
@@ -38,8 +37,7 @@ const CreateTrainingPage = (props) => {
           volunteers: volunteers,
         },
       },
-      refetchQueries: [{ query: GET_TRAININGS }],
-    }).then((value) => {
+    }).then(() => {
       props.history.push("/trainings");
     });
   };

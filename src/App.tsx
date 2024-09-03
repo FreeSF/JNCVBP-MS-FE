@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-//import './App.css';
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 import "./stylesheets/App.sass";
 import Header from "components/layouts/header";
 import Footer from "components/layouts/footer";

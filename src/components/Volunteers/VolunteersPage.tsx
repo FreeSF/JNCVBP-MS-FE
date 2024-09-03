@@ -1,31 +1,27 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
-import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
-import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { ColumnDescription } from "react-bootstrap-table-next";
 
-import {
-  DeleteVolunteerMutation,
-  DeleteVolunteerMutationVariables,
-  GetVolunteersQuery,
-  VolunteerAllFieldsFragment,
-} from "../../types";
-import { DELETE_VOLUNTEER, GET_VOLUNTEERS, GET_VOLUNTEERS_DISABLED } from "../../queries/volunteers";
-import { get_blood_type, get_formatted_date, get_volunteer_status } from "utils/constants";
-import Spinner from "../spinner";
+import { DeleteVolunteerMutation, DeleteVolunteerMutationVariables, VolunteerAllFieldsFragment } from "../../types";
+import { DELETE_VOLUNTEER, GET_PAGINATED_VOLUNTEERS } from "../../queries/volunteers";
 import { get_volunteer_columns } from "utils/columns";
-import StandardTable from "../utils/standardTable";
+import PagedTable from "../utils/PagedTable";
 
 const VolunteersPage = (props: RouteComponentProps) => {
-  const getVolunteersQuery = useQuery<GetVolunteersQuery>(GET_VOLUNTEERS);
-  const [deleteClient, deletedClient] = useMutation<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>(
-    DELETE_VOLUNTEER,
-    { refetchQueries: [{ query: GET_VOLUNTEERS }, { query: GET_VOLUNTEERS_DISABLED }] }
-  );
+  const [removeVolunteer] = useMutation<DeleteVolunteerMutation, DeleteVolunteerMutationVariables>(DELETE_VOLUNTEER);
   const handleCreate = () => props.history.push("/volunteers/create");
   const handleEdit = (id: string) => props.history.push("/volunteers/" + id + "/edit");
-  const handleDelete = (id: string) => deleteClient({ variables: { id: id } });
+
+  const refreshTable = useRef(() => {});
+
+  useEffect(() => {
+    refreshTable.current();
+  }, []);
+
+  const handleDelete = (id: string) => removeVolunteer({ variables: { id: id } }).then(() => refreshTable.current());
 
   const columns: ColumnDescription[] = get_volunteer_columns({
     headerStyle: () => {
@@ -58,16 +54,9 @@ const VolunteersPage = (props: RouteComponentProps) => {
                   Agregar
                 </Button>
               </Card.Title>
-              <p className="cardu-category">
-                ({getVolunteersQuery.data?.volunteers.length}) Voluntarios registrados en el sistema{" "}
-              </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              {getVolunteersQuery.loading ? (
-                <Spinner />
-              ) : (
-                <StandardTable columns={columns} data={getVolunteersQuery.data?.volunteers} />
-              )}
+              <PagedTable columns={columns} query={GET_PAGINATED_VOLUNTEERS} refreshFunction={refreshTable} />
             </Card.Body>
           </Card>
         </Col>

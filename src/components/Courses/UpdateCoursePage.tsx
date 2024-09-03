@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Form, FormApi } from "informed";
-import _ from "lodash";
 
 import { useMutation, useLazyQuery } from "@apollo/client";
 
@@ -11,7 +10,7 @@ import {
   EditCourseMutationVariables,
   FindCourseQueryVariables,
 } from "../../types";
-import { EDIT_COURSE, FIND_COURSE, GET_COURSES } from "../../queries/Courses";
+import { EDIT_COURSE, FIND_COURSE } from "../../queries/Courses";
 import Spinner from "../spinner";
 
 import CourseForm from "./CourseForm";
@@ -29,7 +28,7 @@ const UpdateCoursePage = (props) => {
 
   const [formRef, setFormRef] = useState<FormApi<UpdateCourseInput>>(null);
   const [details, setDetails] = useState<any>();
-  const [updateCourse, updatedCourse] = useMutation<EditCourseMutation, EditCourseMutationVariables>(EDIT_COURSE);
+  const [updateCourse] = useMutation<EditCourseMutation, EditCourseMutationVariables>(EDIT_COURSE);
 
   useEffect(() => {
     loadCourse({ variables: { id: props.match.params.id } });
@@ -47,7 +46,6 @@ const UpdateCoursePage = (props) => {
           id: props.match.params.id,
         },
       },
-      refetchQueries: [{ query: GET_COURSES }],
     }).then((value) => {
       props.history.push("/courses");
     });

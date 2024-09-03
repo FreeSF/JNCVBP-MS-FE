@@ -12,16 +12,14 @@ import { volunteerDefaultValues } from "utils/constants";
 
 const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateVolunteerInput>>(null);
-  const [createVolunteer, createdVolunteer] = useMutation<CreateVolunteerMutation, CreateVolunteerMutationVariables>(
-    CREATE_VOLUNTEER
-  );
+  const [createVolunteer] = useMutation<CreateVolunteerMutation, CreateVolunteerMutationVariables>(CREATE_VOLUNTEER);
 
   const handleSubmit = () => {
     createVolunteer({
       variables: {
         input: formRefCreate.getState().values,
       },
-      refetchQueries: [{ query: GET_VOLUNTEERS }],
+      refetchQueries: [{ query: GET_VOLUNTEERS }], // Needed for some selects
     }).then((_value) => {
       props.history.push("/volunteers");
     });
