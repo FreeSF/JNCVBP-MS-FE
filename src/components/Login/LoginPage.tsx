@@ -7,11 +7,26 @@ import { Redirect, BrowserRouter } from "react-router-dom";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { ErrorText, notEmptyValidation } from "components/utils/Validations";
 
+/**
+ * LoginPage component.
+ * This component renders a login form that allows users to authenticate by entering their username and password.
+ * It uses the `useMutation` hook to perform a login mutation and stores the received access token in local storage upon successful login.
+ * If the login is successful, it redirects the user to the home page.
+ *
+ * @returns {JSX.Element} The login page component.
+ */
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [incorrectCredentials, setIncorrectCredentials] = useState(false);
   const [redirect, setRedirect] = useState(false);
+
+  /**
+   * loginMutation is a GraphQL mutation hook that performs the login operation.
+   * It takes username and password as variables and attempts to authenticate the user.
+   * On successful login, it stores the access token in local storage and triggers a redirect.
+   * If the login fails, it sets the incorrectCredentials state to true.
+   */
   const [loginMutation] = useMutation<LoginMutation, LoginMutationVariables>(LOGIN, {
     onCompleted: (data) => {
       if (data?.login?.access_token) {
@@ -25,6 +40,11 @@ const LoginPage = () => {
     loginMutation({ variables: { username, password } });
   };
 
+  /**
+   * If the user is already logged in, redirect them to the home page.
+   * This check is done by checking if the access token is present in local storage.
+   * If it is, then the user is already logged in and should be redirected to the home page.
+   */
   if (redirect)
     return (
       <BrowserRouter forceRefresh={true}>
