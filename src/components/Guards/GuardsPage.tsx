@@ -1,34 +1,25 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
-import { useQuery, useMutation } from "react-apollo";
+import { useMutation } from "@apollo/client";
 
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
+import { ColumnDescription } from "react-bootstrap-table-next";
 
-import {
-  GetGuardsQuery,
-  RemoveGuardMutation,
-  RemoveGuardMutationVariables,
-  ServicesAllFieldsFragment,
-} from "../../types";
-import { CURRENT_GUARD, GET_GUARDS, GET_GUARDS_DISABLED, NEXT_GUARD, REMOVE_GUARD } from "../../queries/Guards";
-import Spinner from "../spinner";
+import { RemoveGuardMutation, RemoveGuardMutationVariables, ServicesAllFieldsFragment } from "../../types";
+import { CURRENT_GUARD, GET_PAGINATED_GUARDS, NEXT_GUARD, REMOVE_GUARD } from "../../queries/Guards";
 import { get_guard_columns } from "utils/columns";
-import StandardTable from "../utils/standardTable";
+import PagedTable from "../utils/PagedTable";
 
-const GuardsPage = (props) => {
-  const getGuardsQuery = useQuery<GetGuardsQuery>(GET_GUARDS);
-  const [removeGuard, removedService] = useMutation<RemoveGuardMutation, RemoveGuardMutationVariables>(REMOVE_GUARD, {
-    refetchQueries: [
-      { query: GET_GUARDS },
-      { query: GET_GUARDS_DISABLED },
-      { query: CURRENT_GUARD },
-      { query: NEXT_GUARD },
-    ],
+const GuardsPage = () => {
+  const [removeGuard] = useMutation<RemoveGuardMutation, RemoveGuardMutationVariables>(REMOVE_GUARD, {
+    refetchQueries: [{ query: CURRENT_GUARD }, { query: NEXT_GUARD }],
   });
   const history = useHistory();
+  const refreshTable = useRef(() => {});
 
-  if (getGuardsQuery.loading) return <Spinner />;
+  useEffect(() => {
+    refreshTable.current();
+  }, []);
 
   const columns: ColumnDescription[] = get_guard_columns({
     dataField: undefined,
@@ -44,7 +35,7 @@ const GuardsPage = (props) => {
           onClick={() =>
             removeGuard({
               variables: { id: row.id },
-            })
+            }).then(() => refreshTable.current())
           }
         >
           Eliminar
@@ -66,14 +57,14 @@ const GuardsPage = (props) => {
                   Agregar
                 </Button>
               </Card.Title>
-              <p className="cardu-category">({getGuardsQuery.data?.guards?.length || 0}) Guardias en el sistema </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              {getGuardsQuery.loading ? (
-                <Spinner />
-              ) : (
-                <StandardTable keyField={"id"} data={getGuardsQuery.data?.guards} columns={columns} />
-              )}
+              <PagedTable
+                keyField={"id"}
+                query={GET_PAGINATED_GUARDS}
+                columns={columns}
+                refreshFunction={refreshTable}
+              />
             </Card.Body>
           </Card>
         </Col>

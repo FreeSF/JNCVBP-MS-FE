@@ -1,20 +1,17 @@
 import React, { useState } from "react";
-import ChartistGraph from "react-chartist";
-import { Button, Card, Table, Container, Row, Col, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import Select from "react-select";
 import { BlobProvider } from "@react-pdf/renderer";
 import GeneralReport from "../reports/GeneralReport";
-import { useQuery } from "react-apollo";
-import { CurrentGuardQuery, GetCurrentUserQuery, GetReportQuery, GetVolunteersQuery, NextGuardQuery } from "../types";
+import { useQuery } from "@apollo/client";
+import { CurrentGuardQuery, GetReportQuery, NextGuardQuery } from "../types";
 import { GET_REPORT } from "../queries/Reports";
 import Spinner from "./spinner";
-import { endOfDay, endOfMonth, startOfDay, startOfMonth } from "../utils/Utils";
-import DatePicker from "react-datepicker";
+import { endOfMonth, startOfMonth } from "../utils/Utils";
 import moment from "moment";
 import _ from "lodash";
 import ReactApexChart from "react-apexcharts";
 import { CODES, DEFAULT_DATETIME_FORMAT, QUANTITIES_1044_1045_OPTIONS } from "../utils/constants";
-import { CURRENT_USER } from "../queries/Login";
 import { CURRENT_GUARD, NEXT_GUARD } from "../queries/Guards";
 import "./HomePage.sass";
 
@@ -34,8 +31,6 @@ const MONTH_OPTIONS = [
 ];
 
 const HomePage = () => {
-  const [startDate, setStartDate] = useState<Date>(startOfDay(new Date()));
-  const [endDate, setEndDate] = useState<Date>(endOfDay(new Date()));
   const [year, setYear] = useState("" + moment().year());
   const [month, setMonth] = useState(MONTH_OPTIONS.find((option) => option.value === "" + moment().month()));
   const reportQuery = useQuery<GetReportQuery>(GET_REPORT, {

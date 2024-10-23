@@ -11,6 +11,7 @@ interface TheProps {
   keyField?: string;
 }
 
+// Old Table, Deprecated
 const StandardTable: React.FC<TheProps> = (props) => {
   const theColumns = props.columns.map((theColumn) => ({ ...theColumn, sort: !!theColumn.dataField }));
   return (

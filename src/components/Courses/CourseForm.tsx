@@ -1,6 +1,6 @@
 import React from "react";
-import { Text, Select } from "informed"; //Form
-import { useQuery } from "react-apollo";
+import { Text, Select } from "informed";
+import { useQuery } from "@apollo/client";
 import _ from "lodash";
 
 import DatePicker from "react-datepicker";
@@ -72,7 +72,7 @@ const CourseForm = ({ formApi, formState, details, setDetails }: CourseFormProps
                     className="pull-right ml-2"
                     variant="success"
                     disabled={details?.length === volunteerList.length}
-                    onClick={(_event) => {
+                    onClick={() => {
                       const selectedVolunteers = details.map((details) => details.volunteer._id);
                       const newVolunteer = volunteerList.find(
                         (volunteer) => !selectedVolunteers.includes(volunteer.id)

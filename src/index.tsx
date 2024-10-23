@@ -4,10 +4,10 @@ import "./stylesheets/index.sass";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
-import { ApolloProvider } from "react-apollo";
-import { createHttpLink } from "apollo-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { ApolloClient } from "apollo-boost";
+import { ApolloProvider } from "@apollo/client";
+import { createHttpLink } from "@apollo/client";
+import { InMemoryCache } from "@apollo/client";
+import { ApolloClient } from "@apollo/client";
 import * as Constants from "./utils/constants";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -37,7 +37,6 @@ const authLink = setContext((_, { headers }) => {
 const cache = new InMemoryCache();
 
 const client = new ApolloClient({
-  // @ts-ignore
   link: authLink.concat(httpLink),
   cache,
 });

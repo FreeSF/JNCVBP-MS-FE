@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, FormApi } from "informed";
 import { Container } from "react-bootstrap";
 
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 
 import { CreateCourseInput, CreateCourseMutation, CreateCourseMutationVariables } from "../../types";
@@ -10,11 +10,11 @@ import { CREATE_COURSE, GET_COURSES } from "../../queries/Courses";
 
 import CourseForm from "./CourseForm";
 
-const CreateCoursePage = (_props) => {
+const CreateCoursePage = () => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateCourseInput>>(null);
   const [details, setDetails] = useState<[]>([]);
 
-  const [createCourse, createdCourse] = useMutation<CreateCourseMutation, CreateCourseMutationVariables>(CREATE_COURSE);
+  const [createCourse] = useMutation<CreateCourseMutation, CreateCourseMutationVariables>(CREATE_COURSE);
   const history = useHistory();
 
   const defaultValues: CreateCourseInput = {
@@ -32,8 +32,7 @@ const CreateCoursePage = (_props) => {
           details: details,
         },
       },
-      refetchQueries: [{ query: GET_COURSES }],
-    }).then((_value) => {
+    }).then(() => {
       history.push("/courses");
     });
   };

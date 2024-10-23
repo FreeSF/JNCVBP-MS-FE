@@ -1,24 +1,17 @@
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation, useQuery } from "@apollo/client";
 
-import { Form as IForm, FormApi, Text } from "informed"; //Form
+import { Form as IForm, FormApi, Text } from "informed";
 import Spinner from "../spinner";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { EditEventMutation, EditEventMutationVariables, FindEventQuery, UpdateEventInput } from "../../types";
 import { EDIT_EVENT, FIND_EVENT, GET_EVENTS } from "../../queries/events";
-import eventForm from "./EventForm";
-
-const initialValues: UpdateEventInput = {
-  id: undefined,
-  created_by: undefined,
-  description: "",
-};
 
 const UpdateeventPage = (props: RouteComponentProps<{ id: string }>) => {
   const getevent = useQuery<FindEventQuery>(FIND_EVENT, { variables: { id: props.match.params.id } });
   const [formRef, setFormRef] = useState<FormApi<UpdateEventInput>>(null);
-  const [editEvent, editedEvent] = useMutation<EditEventMutation, EditEventMutationVariables>(EDIT_EVENT, {
+  const [editEvent] = useMutation<EditEventMutation, EditEventMutationVariables>(EDIT_EVENT, {
     refetchQueries: [{ query: GET_EVENTS }],
   });
   if (getevent.loading) return <Spinner />;

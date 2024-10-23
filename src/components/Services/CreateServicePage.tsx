@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Form, FormApi, Text, Select } from "informed";
+import React, { useState } from "react";
+import { Form, FormApi } from "informed";
 import { RouteComponentProps } from "react-router-dom";
-import { useLazyQuery, useMutation, useQuery } from "react-apollo";
+import { useMutation } from "@apollo/client";
 import { CreateServiceInput, CreateServiceMutation, CreateServiceMutationVariables } from "../../types";
-import { CREATE_SERVICE, EDIT_SERVICE, FIND_SERVICE, GET_SERVICES } from "../../queries/services";
+import { CREATE_SERVICE, GET_SERVICES } from "../../queries/services";
 import ServiceForm from "./ServiceForm";
-import { CODES } from "utils/constants";
 
 const CreateServicePage: React.FC<TheProps> = (props) => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateServiceInput>>(null);
@@ -70,7 +69,7 @@ const CreateServicePage: React.FC<TheProps> = (props) => {
         input: formRefCreate.getState().values,
       },
       refetchQueries: [{ query: GET_SERVICES }],
-    }).then((value) => {
+    }).then(() => {
       props.history.push("/services");
     });
   };

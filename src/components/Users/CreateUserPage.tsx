@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { FormApi, Form } from "informed";
 import { CreateUserInput, CreateUserMutation, CreateUserMutationVariables } from "../../types";
-import { CREATE_SERVICE, GET_SERVICES } from "../../queries/services";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/client";
 import { CREATE_USER, GET_USERS } from "../../queries/Users";
 import { Container } from "react-bootstrap";
 import UserForm from "./UserForm";
@@ -11,7 +10,7 @@ import _ from "lodash";
 
 const CreateUserPage = (props) => {
   const [formRef, setFormRef] = useState<FormApi<CreateUserInput>>(null);
-  const [createUser, createdUser] = useMutation<CreateUserMutation, CreateUserMutationVariables>(CREATE_USER);
+  const [createUser] = useMutation<CreateUserMutation, CreateUserMutationVariables>(CREATE_USER);
 
   const defaultValues: CreateUserInput = {
     email: "",

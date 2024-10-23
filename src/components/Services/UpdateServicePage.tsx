@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation, useQuery } from "@apollo/client";
 import { EditServiceMutation, EditServiceMutationVariables, FindServiceQuery, UpdateServiceInput } from "../../types";
 import { EDIT_SERVICE, FIND_SERVICE, GET_SERVICES } from "../../queries/services";
 import Spinner from "../spinner";
 import { FormApi, Form } from "informed";
 import ServiceForm from "./ServiceForm";
-import { formatISOWithOptions } from "date-fns/fp";
 
 const UpdateServicePage = (props) => {
   const getService = useQuery<FindServiceQuery>(FIND_SERVICE, { variables: { id: props.match.params.id } });
   const [formRef, setFormRef] = useState<FormApi<UpdateServiceInput>>(null);
-  const [updateService, updatedService] = useMutation<EditServiceMutation, EditServiceMutationVariables>(EDIT_SERVICE);
+  const [updateService] = useMutation<EditServiceMutation, EditServiceMutationVariables>(EDIT_SERVICE);
 
   if (getService.loading || !getService.called) return <Spinner />;
 
@@ -92,7 +91,7 @@ const UpdateServicePage = (props) => {
         },
       },
       refetchQueries: [{ query: GET_SERVICES }],
-    }).then((value) => {
+    }).then(() => {
       props.history.push("/services");
     });
   };

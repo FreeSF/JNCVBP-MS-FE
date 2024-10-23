@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { AUTH_TOKEN_NAME } from "../../utils/constants";
 import { LoginMutation, LoginMutationVariables } from "../../types";
 import { LOGIN } from "../../queries/Login";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/client";
 import { Redirect, BrowserRouter } from "react-router-dom";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { ErrorText, notEmptyValidation } from "components/utils/Validations";
 
-const LoginPage = (props) => {
+const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [incorrectCredentials, setIncorrectCredentials] = useState(false);
   const [redirect, setRedirect] = useState(false);
-  const [loginMutation, loadResult] = useMutation<LoginMutation, LoginMutationVariables>(LOGIN, {
+  const [loginMutation] = useMutation<LoginMutation, LoginMutationVariables>(LOGIN, {
     onCompleted: (data) => {
       if (data?.login?.access_token) {
         localStorage.setItem(AUTH_TOKEN_NAME, data.login.access_token);
@@ -75,6 +75,9 @@ const LoginPage = (props) => {
                           validateOnBlur
                           validate={notEmptyValidation}
                           onChange={(event) => setUsername(event.target.value)}
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter") login();
+                          }}
                         />
                       </Form.Group>
                     </Col>
@@ -90,6 +93,9 @@ const LoginPage = (props) => {
                           validateOnBlur
                           validate={notEmptyValidation}
                           onChange={(event) => setPassword(event.target.value)}
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter") login();
+                          }}
                         />
                       </Form.Group>
                     </Col>

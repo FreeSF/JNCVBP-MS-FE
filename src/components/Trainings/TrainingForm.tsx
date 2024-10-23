@@ -1,12 +1,12 @@
 import React from "react";
-import { FormApi, Select, Text } from "informed"; //Form
-import { useQuery } from "react-apollo";
+import { Select, Text } from "informed"; //Form
+import { useQuery } from "@apollo/client";
 import _ from "lodash";
 
 import DatePicker from "react-datepicker";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 
-import { CreateTrainingInput, GetVolunteersQuery, UpdateTrainingInput } from "../../types";
+import { GetVolunteersQuery } from "../../types";
 import { GET_VOLUNTEERS } from "queries/volunteers";
 import Spinner from "components/spinner";
 import { ErrorText, notEmptyValidation } from "components/utils/Validations";

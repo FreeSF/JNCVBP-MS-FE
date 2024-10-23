@@ -8,7 +8,7 @@ import {
   UpdateUserInput,
 } from "../../types";
 import UserForm from "./UserForm";
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation, useQuery } from "@apollo/client";
 import { EDIT_USER, FIND_USER, GET_USERS } from "../../queries/Users";
 import Spinner from "../spinner";
 import { Container } from "react-bootstrap";
@@ -20,7 +20,7 @@ const UpdateUserPage = (props) => {
   const [formRef, setFormRef] = useState<FormApi<UpdateUserInput>>(null);
   const currentUserQuery = useQuery<GetCurrentUserQuery>(CURRENT_USER);
   const findUserQuery = useQuery<FindUserQuery>(FIND_USER, { variables: { id: props.match.params.id } });
-  const [updateUser, updatedUser] = useMutation<EditUserMutation, EditUserMutationVariables>(EDIT_USER);
+  const [updateUser] = useMutation<EditUserMutation, EditUserMutationVariables>(EDIT_USER);
 
   if (findUserQuery.loading || !findUserQuery.called || currentUserQuery.loading) return <Spinner />;
 

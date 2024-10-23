@@ -1,40 +1,25 @@
-import React, { useState } from "react";
-import { RouteComponentProps, useHistory } from "react-router-dom";
-import { useMutation, useQuery } from "react-apollo";
+import React, { useEffect, useRef } from "react";
+import { RouteComponentProps } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 
-import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
-import BootstrapTable, { ColumnDescription } from "react-bootstrap-table-next";
-import { BlobProvider, Document, Page, Text, View } from "@react-pdf/renderer";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { ColumnDescription } from "react-bootstrap-table-next";
 
-import {
-  GetServicesQuery,
-  RemoveServiceMutation,
-  RemoveServiceMutationVariables,
-  ServicesAllFieldsFragment,
-  Volunteer,
-} from "../../types";
-import StandardTable from "../utils/standardTable";
-import Spinner from "../spinner";
-import { GET_SERVICES, GET_SERVICES_DISABLED, REMOVE_SERVICE } from "../../queries/services";
-import SingleServiceReport from "../../reports/SingleServiceReport";
-import moment from "moment";
-import { DEFAULT_DATE_FORMAT, DEFAULT_DATETIME_FORMAT } from "../../utils/constants";
+import { RemoveServiceMutation, RemoveServiceMutationVariables, ServicesAllFieldsFragment } from "../../types";
+import { GET_PAGINATED_SERVICES, REMOVE_SERVICE } from "../../queries/services";
 import { get_service_columns } from "../../utils/columns";
+import PagedTable from "../utils/PagedTable";
 
 const ServicesPage = (props: RouteComponentProps) => {
-  const getServicesQuery = useQuery<GetServicesQuery>(GET_SERVICES);
-  const [renderReport, setRenderReport] = useState<string>();
-
-  const [removeService, removedService] = useMutation<RemoveServiceMutation, RemoveServiceMutationVariables>(
-    REMOVE_SERVICE,
-    { refetchQueries: [{ query: GET_SERVICES }, { query: GET_SERVICES_DISABLED }] }
-  );
+  const [removeService] = useMutation<RemoveServiceMutation, RemoveServiceMutationVariables>(REMOVE_SERVICE);
 
   const handleCreate = () => props.history.push("/services/create");
 
-  const history = useHistory();
+  useEffect(() => {
+    refreshTable.current();
+  }, []);
 
-  if (getServicesQuery.loading) return <Spinner />;
+  const refreshTable = useRef(() => {});
 
   const columns: ColumnDescription[] = get_service_columns({
     dataField: undefined,
@@ -47,13 +32,16 @@ const ServicesPage = (props: RouteComponentProps) => {
         <Button className="btn-fill btn-sm" href={`/services/${row.id}/edit`} variant="success">
           Editar
         </Button>
-        <Button className="btn-sm" variant="danger" onClick={() => removeService({ variables: { id: row.id } })}>
+        <Button
+          className="btn-sm"
+          variant="danger"
+          onClick={() => removeService({ variables: { id: row.id } }).then(() => refreshTable.current())}
+        >
           Eliminar
         </Button>
       </div>
     ),
   });
-  if (getServicesQuery.loading) return <Spinner />;
 
   return (
     <Container fluid>
@@ -67,12 +55,14 @@ const ServicesPage = (props: RouteComponentProps) => {
                   Agregar
                 </Button>
               </Card.Title>
-              <p className="cardu-category">
-                ({getServicesQuery.data?.services?.length || 0}) Servicios en el sistema{" "}
-              </p>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive">
-              <StandardTable keyField={"id"} data={getServicesQuery.data?.services} columns={columns} />
+              <PagedTable
+                keyField={"id"}
+                query={GET_PAGINATED_SERVICES}
+                columns={columns}
+                refreshFunction={refreshTable}
+              />
             </Card.Body>
           </Card>
         </Col>

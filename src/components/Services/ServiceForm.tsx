@@ -1,11 +1,10 @@
 import React from "react";
-import { FormApi, FormState, Select as InformedSelect, Text, TextArea } from "informed";
-import _ from "lodash";
+import { FormApi, FormState, Select as InformedSelect, Text } from "informed";
 
 import DatePicker from "react-datepicker";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import {
   CreateServiceInput,
   GetFireCausesQuery,

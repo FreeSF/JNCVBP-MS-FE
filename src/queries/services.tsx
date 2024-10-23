@@ -81,6 +81,32 @@ export const GET_SERVICES = gql`
   ${serviceAllFieldsFragment}
 `;
 
+export const GET_PAGINATED_SERVICES = gql`
+  query getPaginatedServices(
+    $limit: Float
+    $offset: Float
+    $sortField: String
+    $sortOrder: String
+    $searchText: String
+    $disabled: Boolean
+  ) {
+    page: paginatedServices(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      searchText: $searchText
+      disabled: $disabled
+    ) {
+      items {
+        ...servicesAllFields
+      }
+      totalSize
+    }
+  }
+  ${serviceAllFieldsFragment}
+`;
+
 export const GET_SERVICES_DISABLED = gql`
   query getServicesDisabled {
     servicesDisabled {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/client";
 
 import { Form as IForm, FormApi } from "informed"; //Form
 import { Container } from "react-bootstrap";
@@ -12,16 +12,14 @@ import { volunteerDefaultValues } from "utils/constants";
 
 const CreateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateVolunteerInput>>(null);
-  const [createVolunteer, createdVolunteer] = useMutation<CreateVolunteerMutation, CreateVolunteerMutationVariables>(
-    CREATE_VOLUNTEER
-  );
+  const [createVolunteer] = useMutation<CreateVolunteerMutation, CreateVolunteerMutationVariables>(CREATE_VOLUNTEER);
 
   const handleSubmit = () => {
     createVolunteer({
       variables: {
         input: formRefCreate.getState().values,
       },
-      refetchQueries: [{ query: GET_VOLUNTEERS }],
+      refetchQueries: [{ query: GET_VOLUNTEERS }], // Needed for some selects
     }).then((_value) => {
       props.history.push("/volunteers");
     });

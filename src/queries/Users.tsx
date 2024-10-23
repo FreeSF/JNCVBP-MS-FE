@@ -20,6 +20,32 @@ export const GET_USERS = gql`
   ${USER_ALL_FIELDS_FRAGMENT}
 `;
 
+export const GET_PAGINATED_USERS = gql`
+  query getPaginatedUsers(
+    $limit: Float
+    $offset: Float
+    $sortField: String
+    $sortOrder: String
+    $searchText: String
+    $disabled: Boolean
+  ) {
+    page: paginatedUsers(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      searchText: $searchText
+      disabled: $disabled
+    ) {
+      items {
+        ...userAllFields
+      }
+      totalSize
+    }
+  }
+  ${USER_ALL_FIELDS_FRAGMENT}
+`;
+
 export const GET_USERS_DISABLED = gql`
   query getUsersDisabled {
     usersDisabled {

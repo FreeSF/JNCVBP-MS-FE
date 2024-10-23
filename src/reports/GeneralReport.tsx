@@ -1,11 +1,8 @@
-/* eslint-disable react/jsx-key */
-import { Page, StyleSheet, Document, View, Text, Font } from "@react-pdf/renderer";
+import { Page, StyleSheet, Document, View, Text } from "@react-pdf/renderer";
 import React from "react";
-import { FindCourseQuery, GetSubTypesDisabledQuery, GetSubTypesQuery, Report } from "../types";
 import {
   DAMAGE_1041_OPTIONS,
   DAMAGE_OPTIONS,
-  DEFAULT_DATE_FORMAT,
   INVOLVED_ELEMENTS_OPTIONS,
   MAGNITUDE_1041_OPTIONS,
   QUANTITIES_1044_1045_OPTIONS,
@@ -13,21 +10,13 @@ import {
   RESOURCES_OPTIONS_1040,
   RESOURCES_OPTIONS_1041,
 } from "../utils/constants";
-import { useQuery } from "react-apollo";
-import { GET_REPORT } from "../queries/Reports";
-import { GET_SUB_TYPES, GET_SUB_TYPES_DISABLED } from "../queries/subType";
-import Spinner from "../components/spinner";
-import moment from "moment";
-
-// Register font
-//Font.register({ family: 'Roboto', src: 'https://fonts.googleapis.com/css2?family=Roboto&display=swap' });
+import { Report } from "../types";
 
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
     backgroundColor: "#E4E4E4",
     padding: "10px",
-    //fontFamily: 'Roboto'
   },
   section: {
     margin: 10,
@@ -48,11 +37,24 @@ interface TheProps {
 const GeneralReport: React.FC<TheProps> = (props) => {
   const report: Report = props.report;
 
-  /*const getSubTypesDisabledQuery = useQuery<GetSubTypesDisabledQuery>(GET_SUB_TYPES_DISABLED);
-  const getSubTypesQuery = useQuery<GetSubTypesQuery>(GET_SUB_TYPES);
+  // Test Data
+  const fire = [1, 3, 2, 1, 1, 1, 1];
+  const fireMagn = [4, 4, 2, 0];
+  const fire1044 = [4, 6, 0, 2, 1];
+  const fireCauses = [3, 0, 5, 2, 0, 0];
+  const fireResources = [2500, 20, 30, 200, 500, 7, 640, 0];
 
-  if(getSubTypesQuery.loading || getSubTypesDisabledQuery.loading)
-    return <Spinner/>*/
+  const accidents = [0, 4, 2, 4, 2];
+  const accidentsMag = [6, 3, 0, 1, 2];
+  const accidentsMag1044 = [4, 5, 0, 1, 2];
+
+  const accidentsInv = [6, 10, 2, 0, 0];
+  const accidentsSeg = [4, 4, 8, 6];
+  const accidentsRec = [700, 2, 320, 800, 2];
+
+  const rescue = [0, 0, 2, 2, 1, 3];
+  const rescueResc = [3, 0, 2, 0, 1, 0, 2];
+  const rescue1044 = [5, 3, 0, 1, 0];
 
   return (
     <Document>
@@ -102,9 +104,6 @@ const GeneralReport: React.FC<TheProps> = (props) => {
             <Text style={{ width: "25%" }}>Mes:_______</Text>
             <Text style={{ width: "20%" }}>Año:_______</Text>
           </View>
-          {/*<View style={{flexDirection: "row", border: "1px solid red"}}>
-            <Text>Fecha: {moment(report.startDate).format(DEFAULT_DATE_FORMAT)} al {moment(report.endDate).format(DEFAULT_DATE_FORMAT)}</Text>
-          </View>*/}
           <Text style={{ fontSize: "15px", textDecoration: "underline" }}>Datos de Envío.</Text>
           <View style={{ flexDirection: "row", marginTop: "4px" }}>
             <Text style={{ width: "50%" }}>CBV de Capitán Miranda</Text>
@@ -167,7 +166,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                   Servicio 10.40
                 </Text>
                 {report.subTypeCount1040.map((row) => (
-                  <View>
+                  <View key={row.id}>
                     <Text>
                       - {row.name}: {row.count}
                     </Text>
@@ -177,7 +176,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
               <View style={{ width: "33.33%" }}>
                 <Text style={{ textDecoration: "underline", fontSize: "13px", marginBottom: "2px" }}>Magnitudes</Text>
                 {DAMAGE_OPTIONS.map((damage) => (
-                  <View>
+                  <View key={damage.id}>
                     <Text>
                       - {damage.name}:{" "}
                       {props.report.damageCount.find((theDamage) => theDamage.id === damage.id)?.count || 0}
@@ -190,7 +189,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                   Cantidad de 10.44/10.45
                 </Text>
                 {QUANTITIES_1044_1045_OPTIONS.map((damage) => (
-                  <View>
+                  <View key={damage.id}>
                     <Text>
                       - {damage.name}:{" "}
                       {report.quantities1044Count1040.find((the1044) => the1044.id === damage.id)?.count || 0}
@@ -206,7 +205,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                   Causas Posibles
                 </Text>
                 {report.possibleCausesCount.map((row) => (
-                  <View>
+                  <View key={row.id}>
                     <Text>
                       - {row.name}: {row.count}
                     </Text>
@@ -218,7 +217,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                   Recursos Utilizados
                 </Text>
                 {RESOURCES_OPTIONS_1040.map((resource) => (
-                  <View>
+                  <View key={resource.id}>
                     <Text>
                       - {resource.name}:{" "}
                       {report.resourcesUsedCount1040.find((theResource) => theResource.id === resource.id)?.count || 0}
@@ -278,7 +277,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                   Servicio 10.41
                 </Text>
                 {report.subTypeCount1041.map((row) => (
-                  <View>
+                  <View key={row.id}>
                     <Text>
                       - {row.name}: {row.count}
                     </Text>
@@ -290,7 +289,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                   Magnitudes (damage1041)
                 </Text>
                 {DAMAGE_1041_OPTIONS.map((damage) => (
-                  <View>
+                  <View key={damage.id}>
                     <Text>
                       - {damage.name}:{" "}
                       {report.damage1041Count.find((theDamage) => theDamage.id === damage.id)?.count || 0}
@@ -303,7 +302,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                   Cantidad de 10.44/10.45
                 </Text>
                 {QUANTITIES_1044_1045_OPTIONS.map((damage) => (
-                  <View>
+                  <View key={damage.id}>
                     <Text>
                       - {damage.name}:{" "}
                       {report.quantities1044Count1041.find((the1044) => the1044.id === damage.id)?.count || 0}
@@ -319,7 +318,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                   Elementos Involucrados
                 </Text>
                 {INVOLVED_ELEMENTS_OPTIONS.map((item) => (
-                  <View>
+                  <View key={item.id}>
                     <Text>
                       - {item.name}:{" "}
                       {report.involvedElementsCount.find((theDamage) => theDamage.id === item.id)?.count || 0}
@@ -332,7 +331,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                   Seguridad de involucrados
                 </Text>
                 {MAGNITUDE_1041_OPTIONS.map((damage) => (
-                  <View>
+                  <View key={damage.id}>
                     <Text>
                       - {damage.name}:{" "}
                       {report.magnitude1041Count.find((theDamage) => theDamage.id === damage.id)?.count || 0}
@@ -345,7 +344,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                   Recursos Utilizados
                 </Text>
                 {RESOURCES_OPTIONS_1041.map((resource) => (
-                  <View>
+                  <View key={resource.id}>
                     <Text>
                       - {resource.name}:{" "}
                       {report.resourcesUsedCount1041.find((theResource) => theResource.id === resource.id)?.count || 0}
@@ -393,7 +392,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                   Servicio 10.43
                 </Text>
                 {report.subTypeCount1043.map((row) => (
-                  <View>
+                  <View key={row.id}>
                     <Text>
                       - {row.name}: {row.count}
                     </Text>
@@ -405,7 +404,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                   Tipo de Rescate
                 </Text>
                 {RESCUE_TYPE_OPTIONS.map((rescueType) => (
-                  <View>
+                  <View key={rescueType.id}>
                     <Text>
                       - {rescueType.name}:{" "}
                       {report.rescueTypeCount.find((theRescueType) => theRescueType.id === rescueType.id)?.count || 0}
@@ -419,7 +418,7 @@ const GeneralReport: React.FC<TheProps> = (props) => {
                   Cantidad de 10.44/10.45
                 </Text>
                 {QUANTITIES_1044_1045_OPTIONS.map((damage) => (
-                  <View>
+                  <View key={damage.id}>
                     <Text>
                       - {damage.name}:{" "}
                       {report.quantities1044Count1043.find((the1044) => the1044.id === damage.id)?.count || 0}

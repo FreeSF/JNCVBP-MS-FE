@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation, useQuery } from "@apollo/client";
 
 import { Form as IForm, FormApi } from "informed"; //Form
 import { Container } from "react-bootstrap";
@@ -33,7 +33,7 @@ const UpdateVolunteerPage = (props: RouteComponentProps<{ id: string }>) => {
           id: props.match.params.id,
         },
       },
-      refetchQueries: [{ query: GET_VOLUNTEERS }],
+      refetchQueries: [{ query: GET_VOLUNTEERS }], // Needed for some selects
     }).then(() => {
       props.history.push("/volunteers");
     });

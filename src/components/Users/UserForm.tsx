@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Checkbox, FormApi, FormState, Select as InformedSelect, Text, TextArea } from "informed";
+import { Checkbox, FormApi, FormState, Text } from "informed";
 import { CreateUserInput, GetCurrentUserQuery, UpdateUserInput } from "../../types";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import { CURRENT_USER } from "../../queries/Login";
 import Spinner from "../spinner";
 

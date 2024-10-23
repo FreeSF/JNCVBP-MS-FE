@@ -22,6 +22,32 @@ export const GET_TRAININGS = gql`
   ${TRAINING_ALL_FIELDS_FRAGMENT}
 `;
 
+export const GET_PAGINATED_TRAININGS = gql`
+  query getPaginatedTrainings(
+    $limit: Float
+    $offset: Float
+    $sortField: String
+    $sortOrder: String
+    $searchText: String
+    $disabled: Boolean
+  ) {
+    page: paginatedTrainings(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      searchText: $searchText
+      disabled: $disabled
+    ) {
+      items {
+        ...trainingAllFields
+      }
+      totalSize
+    }
+  }
+  ${TRAINING_ALL_FIELDS_FRAGMENT}
+`;
+
 export const GET_TRAININGS_DISABLED = gql`
   query getTrainingsDisabled {
     trainingsDisabled {

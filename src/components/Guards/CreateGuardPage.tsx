@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { Form as Form, FormApi } from "informed";
 import { Container } from "react-bootstrap";
 
-import { useMutation } from "react-apollo";
-import { useHistory, useParams } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { useHistory } from "react-router-dom";
 import { CreateGuardInput, CreateGuardMutation, CreateGuardMutationVariables } from "../../types";
 
-import { CREATE_GUARD, CURRENT_GUARD, GET_GUARDS, NEXT_GUARD } from "../../queries/Guards";
+import { CREATE_GUARD, CURRENT_GUARD /*, GET_GUARDS*/, NEXT_GUARD } from "../../queries/Guards";
 import GuardForm from "./GuardForm";
 
-const CreateGuardPage = (_props) => {
+const CreateGuardPage = () => {
   const [formRefCreate, setFormRefCreate] = useState<FormApi<CreateGuardInput>>(null);
   const [volunteers, setVolunteers] = useState<[]>([]);
 
-  const [createGuard, createdGuard] = useMutation<CreateGuardMutation, CreateGuardMutationVariables>(CREATE_GUARD);
+  const [createGuard] = useMutation<CreateGuardMutation, CreateGuardMutationVariables>(CREATE_GUARD);
   const history = useHistory();
 
   const defaultValues: CreateGuardInput = {
@@ -32,8 +32,8 @@ const CreateGuardPage = (_props) => {
           volunteers: volunteers,
         },
       },
-      refetchQueries: [{ query: GET_GUARDS }, { query: CURRENT_GUARD }, { query: NEXT_GUARD }],
-    }).then((_value) => {
+      refetchQueries: [/*{ query: GET_GUARDS },*/ { query: CURRENT_GUARD }, { query: NEXT_GUARD }],
+    }).then(() => {
       history.push("/guards");
     });
   };

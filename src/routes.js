@@ -1,17 +1,8 @@
 import HomePage from "components/homePage";
 
-import CreateDutyPage from "components/Duties/CreateDutyPage";
-import DutiesPage from "components/Duties/DutiesPage";
-import UpdateDutyPage from "components/Duties/UpdateDutyPage";
-
-import CreateRankPage from "components/Ranks/CreateRankPage";
-import UpdateRankPage from "components/Ranks/UpdateRankPage";
-import RanksPage from "components/Ranks/RanksPage";
-
 import VolunteersPage from "components/Volunteers/VolunteersPage";
 import CreateVolunteerPage from "components/Volunteers/CreateVolunteerPage";
 import UpdateVolunteerPage from "components/Volunteers/UpdateVolunteerPage";
-import ShowVolunteerPage from "components/Volunteers/ShowVolunteerPage";
 
 import ServicesPage from "components/Services/ServicesPage";
 import CreateServicePage from "components/Services/CreateServicePage";
@@ -30,7 +21,6 @@ import UpdateTrainingPage from "./components/Trainings/UpdateTrainingPage";
 import CoursesPage from "./components/Courses/CoursesPage";
 import CreateCoursePage from "./components/Courses/CreateCoursePage";
 import UpdateCoursePage from "./components/Courses/UpdateCoursePage";
-import ShowCoursePage from "./components/Courses/ShowCoursePage";
 
 import UsersPage from "./components/Users/UsersPage";
 import CreateUserPage from "./components/Users/CreateUserPage";
@@ -41,45 +31,6 @@ import UpdateEventPage from "components/Events/UpdateEventPage";
 
 import LoginPage from "./components/Login/LoginPage";
 import RecycleBinPage from "./components/RecycleBin/RecycleBinPage";
-
-const dutiesRoutes = [
-  {
-    path: "/duties",
-    name: "Tipos de Servicios",
-    // icon: "fas fa-ambulance",
-    icon: "nc-icon nc-settings-90",
-    component: DutiesPage,
-  },
-  {
-    path: "/duties/create",
-    name: "Crear Tipo de Servicio",
-    component: CreateDutyPage,
-  },
-  {
-    path: "/duties/:id/edit",
-    name: "Editar Tipo de Servicio",
-    component: UpdateDutyPage,
-  },
-];
-
-const ranksRoutes = [
-  {
-    path: "/ranks",
-    name: "Rangos",
-    icon: "nc-icon nc-vector",
-    component: RanksPage,
-  },
-  {
-    path: "/ranks/create",
-    name: "Crear Rango",
-    component: CreateRankPage,
-  },
-  {
-    path: "/ranks/:id/edit",
-    name: "Editar Rango",
-    component: UpdateRankPage,
-  },
-];
 
 const servicesRoutes = [
   {
@@ -123,11 +74,6 @@ const volunteerRoutes = [
     path: "/volunteers/create",
     name: "Crear Voluntario",
     component: CreateVolunteerPage,
-  },
-  {
-    path: "/volunteers/:id",
-    name: "Voluntario",
-    component: ShowVolunteerPage,
   },
 ];
 
@@ -233,11 +179,6 @@ const coursesRoutes = [
     name: "Editar Curso",
     component: UpdateCoursePage,
   },
-  {
-    path: "/courses/:id",
-    name: "Curso",
-    component: ShowCoursePage,
-  },
 ];
 
 const routes = [
@@ -258,8 +199,6 @@ const routes = [
     noAuthRoute: true,
   },
   ...volunteerRoutes,
-  ...dutiesRoutes,
-  ...ranksRoutes,
   ...guardRoutes,
   ...coursesRoutes,
   ...trainingRoutes,

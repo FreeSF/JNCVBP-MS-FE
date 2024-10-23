@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { volunteerAllFieldsFragment } from "./volunteers";
+import { volunteerNameFieldFragment } from "./volunteers";
 
 const COURSES_ALL_FIELDS_FRAGMENT = gql`
   fragment coursesAllFields on Course {
@@ -9,17 +9,43 @@ const COURSES_ALL_FIELDS_FRAGMENT = gql`
     details {
       score
       volunteer {
-        ...volunteerAllFields
+        ...volunteerNameField
       }
     }
   }
-  ${volunteerAllFieldsFragment}
+  ${volunteerNameFieldFragment}
 `;
 
 export const GET_COURSES = gql`
   query getCourses {
     courses {
       ...coursesAllFields
+    }
+  }
+  ${COURSES_ALL_FIELDS_FRAGMENT}
+`;
+
+export const GET_PAGINATED_COURSES = gql`
+  query getPaginatedCourses(
+    $limit: Float
+    $offset: Float
+    $sortField: String
+    $sortOrder: String
+    $searchText: String
+    $disabled: Boolean
+  ) {
+    page: paginatedCourses(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      searchText: $searchText
+      disabled: $disabled
+    ) {
+      items {
+        ...coursesAllFields
+      }
+      totalSize
     }
   }
   ${COURSES_ALL_FIELDS_FRAGMENT}

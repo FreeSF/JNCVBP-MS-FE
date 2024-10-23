@@ -1,5 +1,5 @@
 import { gql } from "apollo-boost";
-import { volunteerAllFieldsFragment } from "./volunteers";
+import { volunteerAllFieldsFragment, volunteerNameFieldFragment } from "./volunteers";
 
 const GUARDS_ALL_FIELDS_FRAGMENT = gql`
   fragment guardAllFields on Guard {
@@ -8,16 +8,43 @@ const GUARDS_ALL_FIELDS_FRAGMENT = gql`
     end_time
     observations
     volunteers {
-      ...volunteerAllFields
+      ...volunteerNameField
     }
   }
-  ${volunteerAllFieldsFragment}
+  ${volunteerNameFieldFragment}
 `;
 
+// Inefficient
 export const GET_GUARDS = gql`
   query getGuards {
     guards {
       ...guardAllFields
+    }
+  }
+  ${GUARDS_ALL_FIELDS_FRAGMENT}
+`;
+
+export const GET_PAGINATED_GUARDS = gql`
+  query getPaginatedGuards(
+    $limit: Float
+    $offset: Float
+    $sortField: String
+    $sortOrder: String
+    $searchText: String
+    $disabled: Boolean
+  ) {
+    page: paginatedGuards(
+      limit: $limit
+      offset: $offset
+      sortField: $sortField
+      sortOrder: $sortOrder
+      searchText: $searchText
+      disabled: $disabled
+    ) {
+      items {
+        ...guardAllFields
+      }
+      totalSize
     }
   }
   ${GUARDS_ALL_FIELDS_FRAGMENT}
