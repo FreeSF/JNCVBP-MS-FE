@@ -1,5 +1,9 @@
 import { gql } from "apollo-boost";
 
+/**
+ * The fragment that defines all the fields that we want to return when querying a report.
+ */
+
 export const REPORT_ALL_FIELDS_FRAGMENT = gql`
   fragment reportAllFields on Report {
     date

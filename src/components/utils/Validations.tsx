@@ -1,6 +1,9 @@
 import { asField, BasicText } from "informed";
 import React from "react";
-// { fieldState, style = {}, shouldShowErrorMessage = true, ...props }
+
+/**
+ * A text field that displays an error message if the fieldState.error is present.
+ */
 export const ErrorText = asField((props) => {
   let errorMessage = null;
 

@@ -1,6 +1,11 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 
+/**
+ * Footer component used in the layouts.
+ *
+ * @returns {React.ReactElement} The rendered footer.
+ */
 const Footer = () => {
   return (
     <footer className="footer px-0 px-lg-3">

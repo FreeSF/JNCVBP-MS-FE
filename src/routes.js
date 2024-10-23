@@ -32,6 +32,20 @@ import UpdateEventPage from "components/Events/UpdateEventPage";
 import LoginPage from "./components/Login/LoginPage";
 import RecycleBinPage from "./components/RecycleBin/RecycleBinPage";
 
+/**
+ * This file defines the routing configuration for the application.
+ * It imports various components representing different pages and maps them to specific paths.
+ * Each route object contains:
+ * - `path`: The URL path for the route.
+ * - `name`: A human-readable name for the route.
+ * - `icon` (optional): An icon class for displaying in the sidebar.
+ * - `component`: The React component to render when the route is accessed.
+ * - `showOnSidebar` (optional): A boolean indicating whether the route should be displayed in the sidebar.
+ * - `onlyAdmin` (optional): A boolean indicating if the route is restricted to admin users only.
+ *
+ * The routes are grouped by feature, such as services, guards, trainings, courses, users, and events.
+ */
+
 const servicesRoutes = [
   {
     path: "/services",

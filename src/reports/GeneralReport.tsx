@@ -12,6 +12,7 @@ import {
 } from "../utils/constants";
 import { Report } from "../types";
 
+// styles for the PDF document
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
@@ -33,7 +34,16 @@ interface TheProps {
   report: any;
 }
 
-// Create Document Component
+/**
+ * GeneralReport is a React component that generates a PDF document that contains
+ * all the information that is needed for a report.
+ *
+ * @param props - The component props.
+ * @prop {Report} report - The report object that contains all the information
+ *                         that is needed for the report.
+ *
+ * @returns A React component that generates a PDF document.
+ */
 const GeneralReport: React.FC<TheProps> = (props) => {
   const report: Report = props.report;
 
