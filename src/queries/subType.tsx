@@ -1,5 +1,11 @@
 import { gql } from "apollo-boost";
 
+/**
+ * SubType queries
+ *
+ * This file contains GraphQL queries related to Sub-Types.
+ */
+
 export const subTypeAllFieldsFragment = gql`
   fragment subTypeAllFields on SubType {
     id
@@ -11,15 +17,6 @@ export const subTypeAllFieldsFragment = gql`
 export const GET_SUB_TYPES = gql`
   query getSubTypes {
     subTypes {
-      ...subTypeAllFields
-    }
-  }
-  ${subTypeAllFieldsFragment}
-`;
-
-export const GET_SUB_TYPES_DISABLED = gql`
-  query getSubTypesDisabled {
-    subTypesDisabled {
       ...subTypeAllFields
     }
   }
