@@ -47,6 +47,33 @@ Please note that this application is for demonstration purposes only and should 
 
 The application's configuration is stored in the `constants.js` file, and environment variables can be defined in an `.env` file.
 
+## GraphQL Codegen
+
+---
+
+GraphQL Codegen is used in this project to automatically generate TypeScript types and React hooks from your GraphQL schema and operations. This helps ensure type-safety and reduces boilerplate code when working with GraphQL in your React application.
+
+### How to Use Codegen
+
+1. Ensure that your GraphQL schema is accessible at the specified endpoint in the `codegen.yml` file.
+2. Place your GraphQL queries and mutations in the `src/queries` or `src/components` directories as specified in the `codegen.yml`.
+3. Run the code generation command to generate the TypeScript types and React hooks.
+
+### How Codegen Works
+
+- The `codegen.yml` configuration file specifies the schema endpoint, documents to process, and the output file for the generated types and hooks.
+- It uses plugins to generate TypeScript types, TypeScript operations, and React Apollo hooks based on the operations defined in your GraphQL documents.
+
+### Running Codegen
+
+To run GraphQL Codegen, use the following command from the root of your project:
+
+```bash
+npm run codegen
+```
+
+This command uses the script defined in your `package.json` to execute the GraphQL Codegen process, based on the configuration provided in the `codegen.yml` file.
+
 ## Getting Started
 
 ---
