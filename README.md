@@ -14,6 +14,8 @@ This Repository is the Frontend of the project, designed to work seamlessly with
 
 The application also uses GraphQL Codegen to generate types for the GraphQL schema. This makes it easier to write type-safe code that is guaranteed to match the schema.
 
+The application also provides support for pagination, sort, and search trough complex GraphQL queries, to improve performance and avoid loading too much data at once.
+
 Please note that this application is for demonstration purposes only and should not be used as a reference for complex architectures. The code and configurations provided are intended to illustrate functionality and best practices for frontend development.
 
 ## Features
