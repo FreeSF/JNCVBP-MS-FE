@@ -8,10 +8,27 @@ import { useQuery } from "@apollo/client";
 import { GetCurrentUserQuery } from "../../types";
 import { CURRENT_USER } from "../../queries/Login";
 
+/**
+ * Header component. It renders the header of the application.
+ * The header contains the navigation for the logged user.
+ *
+ * @returns {JSX.Element} The header component.
+ */
 const Header = () => {
   const location = useLocation();
+
+  // The currentUserQuery is a query that fetches the current user information.
+  // It is used to conditionally render the navigation links in the header.
   const currentUserQuery = useQuery<GetCurrentUserQuery>(CURRENT_USER);
 
+  /**
+   * Returns the brand text based on the current route.
+   * If the current route is a nested route, it returns the parent route name.
+   * If the current route is the home page, it returns "Home".
+   * Otherwise it returns the route name.
+   *
+   * @returns {string} The brand text.
+   */
   const getBrandText = () => {
     // TODO: fix nested routes title (if needed)
     const matchingRoutes = routes.filter((route) => {

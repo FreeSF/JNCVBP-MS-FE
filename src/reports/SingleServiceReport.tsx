@@ -40,7 +40,16 @@ interface TheProps {
   service: ServicesAllFieldsFragment;
 }
 
-// Create Document Component
+/**
+ * SingleServiceReport is a React component that generates a PDF document that contains
+ * all the information of a particular service.
+ *
+ * @param props - The component props.
+ * @prop {ServicesAllFieldsFragment} service - The service object that contains all the information
+ *                                              that is needed for the service.
+ *
+ * @returns A React component that generates a PDF document.
+ */
 const SingleServiceReport: React.FC<TheProps> = (props) => {
   const { service } = props;
   return (

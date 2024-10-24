@@ -15,6 +15,18 @@ import {
   get_volunteer_status,
 } from "./constants";
 
+/**
+ * This file contains functions that return arrays of ColumnDescription objects.
+ *
+ * These arrays are used to define the columns of tables in the application,
+ * they are defined here because they are used in more than one place.
+ *
+ * The columns are defined with the following properties:
+ *  - dataField: the name of the field in the data that should be displayed in the column
+ *  - text: the name of the column
+ *  - formatter: an optional function that formats the data in the column
+ */
+
 export const get_course_columns = (options) => {
   const columns: ColumnDescription[] = [
     { dataField: "description", text: "Descripción" },

@@ -4,6 +4,19 @@ import { subTypeAllFieldsFragment } from "./subType";
 import { fireCauseAllFieldsFragment } from "./fireCause";
 import { fireClassAllFieldsFragment } from "./fireClass";
 
+/**
+ * Services-related GraphQL operations.
+ *
+ * This module contains GraphQL fragments, queries, and mutations related to the "Service" entity.
+ * It allows querying and mutating course data within the application.
+ *
+ * The fragments are essential for reusability and consistency across various GraphQL operations,
+ * ensuring that the same set of fields is queried or mutated as required.
+ *
+ * Note: This module is a part of the broader GraphQL-based data management strategy in the application,
+ * designed to interact with a backend service providing course management features.
+ */
+
 const serviceAllFieldsFragment = gql`
   fragment servicesAllFields on Service {
     id

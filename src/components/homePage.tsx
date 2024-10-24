@@ -14,6 +14,7 @@ import ReactApexChart from "react-apexcharts";
 import { CODES, DEFAULT_DATETIME_FORMAT, QUANTITIES_1044_1045_OPTIONS } from "../utils/constants";
 import { CURRENT_GUARD, NEXT_GUARD } from "../queries/Guards";
 import "./HomePage.sass";
+import { ApexOptions } from "apexcharts";
 
 const MONTH_OPTIONS = [
   { value: "0", label: "Enero" },
@@ -30,19 +31,39 @@ const MONTH_OPTIONS = [
   { value: "11", label: "Diciembre" },
 ];
 
+/**
+ * HomePage component renders the main dashboard of the application.
+ *
+ * The component allows users to view reports and guard information for a selected month and year.
+ *
+ * Features:
+ * - Displays a summary report for the selected month and year.
+ * - Fetches current and next guard information.
+ * - Displays loading spinner while fetching data.
+ * - Allows to download the report as a PDF.
+ */
 const HomePage = () => {
+  // state hooks to keep the selected year and month
   const [year, setYear] = useState("" + moment().year());
   const [month, setMonth] = useState(MONTH_OPTIONS.find((option) => option.value === "" + moment().month()));
+
+  // Fetches report data for the specified date range. It uses the `startDate` and `endDate` variables to get the report summary for the selected month and year.
   const reportQuery = useQuery<GetReportQuery>(GET_REPORT, {
     variables: {
       startDate: startOfMonth(month.value, year).getTime(),
       endDate: endOfMonth(month.value, year).getTime(),
     },
   });
+
+  // Retrieves information about the current guard, which includes details such as the guard's start and end time, volunteers, and any observations.
   const currentGuardQuery = useQuery<CurrentGuardQuery>(CURRENT_GUARD);
+  // Fetches information about the next scheduled guard, which is useful for planning and scheduling purposes.
   const nextGuardQuery = useQuery<NextGuardQuery>(NEXT_GUARD);
+
+  // While the data is loading, the component renders a simple spinner to inform the user that the application is busy fetching data.
   if (reportQuery.loading || currentGuardQuery.loading || nextGuardQuery.loading) return <Spinner />;
 
+  // Combining the options and totals for reports
   const { count1040, count1041, count1043 } = reportQuery.data.report;
   const totalServicesCount = count1040 + count1041 + count1043;
   const allSubtypes = [
@@ -62,7 +83,8 @@ const HomePage = () => {
   );
   const all1044Values = Object.values(all1044Counted);
 
-  const subTypeOptions = {
+  // Chart configurations
+  const subTypeOptions: ApexOptions = {
     chart: {
       type: "pie",
     },
@@ -74,7 +96,7 @@ const HomePage = () => {
   };
   const subTypeSeries = allSubtypes.map((subtype) => subtype.count);
 
-  const typeOptions = {
+  const typeOptions: ApexOptions = {
     chart: {
       type: "pie",
     },
@@ -86,7 +108,7 @@ const HomePage = () => {
   };
   const typeSeries = [count1040, count1041, count1043];
 
-  const quantities1044Options = {
+  const quantities1044Options: ApexOptions = {
     chart: {
       type: "pie",
     },
@@ -129,6 +151,7 @@ const HomePage = () => {
             </div>
           )}
 
+          {/* The next portion of the code is a div that displays a card with the following guard information, if there is one. */}
           {nextGuardQuery.data.nextGuard && (
             <div className="col-6">
               <Card className="card-stats">
@@ -158,6 +181,7 @@ const HomePage = () => {
           )}
         </Row>
 
+        {/* Here is where the month and year selectors are displayed, as well as a button to download the home page as a PDF. */}
         <div
           className="d-flex align-items-center w-100"
           style={{ marginBottom: "10px", justifyContent: "space-between" }}
@@ -194,6 +218,8 @@ const HomePage = () => {
             )}
           </BlobProvider>
         </div>
+
+        {/* Here is where the cards for the home page are displayed. */}
         <Row>
           <Col lg="6">
             <Row>
@@ -307,6 +333,7 @@ const HomePage = () => {
             </Row>
           </Col>
 
+          {/* Here is where the pie charts section is displayed. */}
           <Col lg="6">
             <Card>
               <Card.Header>
@@ -315,7 +342,6 @@ const HomePage = () => {
               </Card.Header>
               <Card.Body>
                 <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
-                  {/*@ts-ignore*/}
                   <ReactApexChart options={typeOptions} series={typeSeries} type="pie" width={"94%"} />
                 </div>
               </Card.Body>
@@ -329,7 +355,6 @@ const HomePage = () => {
               </Card.Header>
               <Card.Body>
                 <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
-                  {/*@ts-ignore*/}
                   <ReactApexChart options={subTypeOptions} series={subTypeSeries} type="pie" width={"94%"} />
                 </div>
               </Card.Body>
@@ -343,7 +368,6 @@ const HomePage = () => {
               </Card.Header>
               <Card.Body>
                 <div className="ct-chart ct-perfect-fourth" id="chartPreferences">
-                  {/*@ts-ignore*/}
                   <ReactApexChart options={quantities1044Options} series={all1044Values} type="pie" width={"94%"} />
                 </div>
               </Card.Body>

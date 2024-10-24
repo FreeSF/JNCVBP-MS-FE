@@ -1,6 +1,19 @@
 import { gql } from "apollo-boost";
 import { volunteerAllFieldsFragment } from "./volunteers";
 
+/**
+ * Trainings-related GraphQL operations.
+ *
+ * This module contains GraphQL fragments, queries, and mutations related to the "Trainings" entity.
+ * It allows querying and mutating course data within the application.
+ *
+ * The fragments are essential for reusability and consistency across various GraphQL operations,
+ * ensuring that the same set of fields is queried or mutated as required.
+ *
+ * Note: This module is a part of the broader GraphQL-based data management strategy in the application,
+ * designed to interact with a backend service providing course management features.
+ */
+
 const TRAINING_ALL_FIELDS_FRAGMENT = gql`
   fragment trainingAllFields on Training {
     id

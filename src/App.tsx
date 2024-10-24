@@ -18,6 +18,9 @@ import Spinner from "./components/spinner";
 registerLocale("es", es);
 setDefaultLocale("es");
 
+/**
+ * Generates an array of React Router <Route> components based on the given routes configuration.
+ */
 const getRoutes = (routes, currentUser: UserAllFieldsFragment) => {
   return routes.map((route, key) => (
     <Route
@@ -48,6 +51,9 @@ const getRoutes = (routes, currentUser: UserAllFieldsFragment) => {
   ));
 };
 
+/**
+ * The `App` component is the root component of the application.
+ */
 const App = () => {
   const currentUserQuery = useQuery<GetCurrentUserQuery>(CURRENT_USER);
 

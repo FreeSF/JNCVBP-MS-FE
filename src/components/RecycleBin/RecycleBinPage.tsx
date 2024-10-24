@@ -51,6 +51,13 @@ const OPTIONS = [
   { value: VOLUNTEER, label: VOLUNTEER },
 ];
 
+/**
+ * RecycleBinPage component
+ *
+ * The component renders a dropdown menu with the available options, and a
+ * PagedTable component with the deleted records of the selected type.
+ * It allows the user to restore each record using the restore button.
+ */
 const RecycleBinPage = () => {
   const [type, setType] = useState({ value: COURSE, label: COURSE });
   const [restoreCourse] = useMutation<RestoreCourseMutation>(RESTORE_COURSE, {

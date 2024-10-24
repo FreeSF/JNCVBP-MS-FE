@@ -8,15 +8,33 @@ import { CURRENT_USER } from "../../queries/Login";
 import Spinner from "../spinner";
 import { AUTH_TOKEN_NAME } from "../../utils/constants";
 
+/**
+ * Sidebar component. It renders a navigation bar with all the routes
+ * defined in the routes array.
+ * @param color the color of the sidebar
+ * @param image the image to be used as the background of the sidebar
+ * @param routes the list of routes to be rendered in the sidebar
+ */
 const Sidebar = ({ color, image, routes }) => {
   const location = useLocation();
   const history = useHistory();
+
+  /**
+   * Function to determine if a route is active or not.
+   * @param routeName the name of the route to check
+   * @returns "active" if the route is active, an empty string if not
+   */
   const activeRoute = (routeName) => {
     if (routeName == "/") {
       return location.pathname == "/" ? "active" : "";
     }
     return location.pathname.indexOf(routeName) > -1 ? "active" : "";
   };
+
+  /**
+   * The currentUserQuery is a query to get the current user.
+   * It uses the CURRENT_USER query defined in the Login query.
+   */
   const currentUserQuery = useQuery<GetCurrentUserQuery>(CURRENT_USER);
 
   if (currentUserQuery.loading) return <Spinner />;
